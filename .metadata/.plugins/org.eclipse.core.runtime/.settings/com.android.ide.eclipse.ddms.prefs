@@ -1,0 +1,3 @@
+ddms.logcat.auotmonitor.level=verbose
+ddms.logcat.automonitor=true
+eclipse.preferences.version=1
