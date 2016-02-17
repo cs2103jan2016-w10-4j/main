@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -19,15 +20,11 @@ public class Storage {
 		}
 	}
 
-	public void update(String task) {
-
+	public void write(ArrayList a) {
+		
 	}
 
-	public String retrieve(String task) {
-		return "";
-	}
-
-	public boolean delete(String task) {
-		return true;
+	public ArrayList<Task> read() {
+		return new ArrayList<>();
 	}
 }

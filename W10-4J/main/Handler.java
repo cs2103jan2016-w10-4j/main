@@ -2,20 +2,17 @@ package main;
 
 import main.Constants.COMMAND_TYPE;
 
-public class Logic {
-	public Logic() {
+public class Handler {
 
-	}
-
-	public String execute(COMMAND_TYPE command, String task) {
+	public String execute(COMMAND_TYPE command, String[] task) {
 
 		switch (command) {
 		case ADD:
 			return add(task);
+		case EDIT:
+			return edit(task);
 		case DELETE:
 			return delete(task);
-		case CLEAR:
-			return clear();
 		case DISPLAY:
 			return display();
 		case INVALID:
@@ -27,15 +24,15 @@ public class Logic {
 		}
 	}
 
-	private String add(String task) {
+	private String add(String[] task) {
+		return "";
+	}
+	
+	private String edit(String[] task) {
 		return "";
 	}
 
-	private String delete(String task) {
-		return "";
-	}
-
-	private String clear() {
+	private String delete(String[] task) {
 		return "";
 	}
 
