@@ -66,7 +66,6 @@ public class UserInterface{
 		textfield.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String s = textfield.getText();
-				System.out.println(s);
 				textfield.setText("");
 				t2.append("> " + s + "\n");
 				Font font = t2.getFont();
