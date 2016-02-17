@@ -9,7 +9,7 @@ public class Parser {
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 
-		return h.execute(commandType, getTask(command));
+		return h.executeCommand(commandType, getTask(command));
 	}
 
 	private COMMAND_TYPE getAction(String command) {

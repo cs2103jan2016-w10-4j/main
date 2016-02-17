@@ -4,7 +4,7 @@ import main.Constants.COMMAND_TYPE;
 
 public class Handler {
 
-	public String execute(COMMAND_TYPE command, String[] task) {
+	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
 		switch (command) {
 		case ADD:
