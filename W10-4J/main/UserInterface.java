@@ -19,7 +19,13 @@ public class UserInterface{
 	}
 	
 	public UserInterface() {
-		JFrame f = new JFrame();
+		JFrame f = new JFrame("Docket");
+		
+		// Random icon image grabbed from web. Should change
+		String icon = ".\\main\\icon\\d.jpg";
+		ImageIcon img = new ImageIcon(icon);
+		f.setIconImage(img.getImage());
+
 		f.setSize(750, 760);
 		f.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -30,19 +36,20 @@ public class UserInterface{
 		Panel panel = new Panel(); 
 		panel.setLayout(new FlowLayout());
 		
-		Label l1 = new Label();
-		l1.setText("Docket");
-		panel.add(l1);
-		
-		TextArea t1 = new TextArea("", 20, 100);
+		TextArea t1 = new TextArea("", 30, 100);
+		t1.setEditable(false);
+		t1.setBackground(Color.white);
 		panel.add(t1);
 		
-		TextArea t2 = new TextArea("", 20, 100);
+		TextArea t2 = new TextArea("", 10, 100);
+		t2.setEditable(false);
+		t2.setBackground(Color.black);
+		t2.setForeground(Color.white);
 		panel.add(t2);
 		
-		Label l2 = new Label();
-		l2.setText("command:");
-		panel.add(l2);
+		Label l1 = new Label();
+		l1.setText("command:");
+		panel.add(l1);
 		
 		TextField textfield = new TextField(85);
 		panel.add(textfield);
@@ -50,5 +57,16 @@ public class UserInterface{
 		f.add(panel);
 		
 		f.setVisible(true);
+		
+		textfield.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				String s = textfield.getText();
+				System.out.println(s);
+				textfield.setText("");
+				t2.append("> " + s + "\n");
+				Font font = t2.getFont();
+				t2.setFont(font.deriveFont(Font.BOLD));
+			}
+		});
 	}
 }
