@@ -70,6 +70,8 @@ public class UserInterface{
 				t2.append("> " + s + "\n");
 				Font font = t2.getFont();
 				t2.setFont(font.deriveFont(Font.BOLD));
+				String output = p.parse(s);
+				//t1.append("> " +output+"\n");
 			}
 		});
 	}

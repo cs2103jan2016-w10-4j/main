@@ -13,12 +13,20 @@ public class Handler {
 			return edit(task);
 		case DELETE:
 			return delete(task);
+		case DONE:
+			return done(task);
 		case DISPLAY:
-			return display();
-		case INVALID:
-			return String.format(Constants.MESSAGE_INVALID_FORMAT, command);
+			return display(task);
+		case SEARCH:
+			return search(task);
+		case RETRIEVE:
+			return retrieve(task);
+		case UNDO:
+			return undo(task);
 		case EXIT:
 			System.exit(0);
+		case INVALID:
+			return String.format(Constants.MESSAGE_INVALID_FORMAT);
 		default:
 			throw new Error("Unrecognized command type");
 		}
@@ -27,7 +35,7 @@ public class Handler {
 	private String add(String[] task) {
 		return "";
 	}
-	
+
 	private String edit(String[] task) {
 		return "";
 	}
@@ -36,7 +44,23 @@ public class Handler {
 		return "";
 	}
 
-	private String display() {
+	private String done(String[] task) {
+		return "";
+	}
+
+	private String display(String[] task) {
+		return "";
+	}
+
+	private String search(String[] task) {
+		return "";
+	}
+
+	private String retrieve(String[] task) {
+		return "";
+	}
+
+	private String undo(String[] task) {
 		return "";
 	}
 }
