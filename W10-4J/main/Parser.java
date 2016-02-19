@@ -1,24 +1,24 @@
 package main;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import main.Constants.COMMAND_TYPE;
 
 public class Parser {
-	LinkedList<String> addCommandList = new LinkedList<>();
-	LinkedList<String> deleteCommandList = new LinkedList<>();
-	LinkedList<String> editCommandList = new LinkedList<>();
-	LinkedList<String> doneCommandList = new LinkedList<>();
-	LinkedList<String> displayCommandList = new LinkedList<>();
-	LinkedList<String> searchCommandList = new LinkedList<>();
-	LinkedList<String> retrieveCommandList = new LinkedList<>();
-	LinkedList<String> undoCommandList = new LinkedList<>();
-	LinkedList<String> exitCommandList = new LinkedList<>();
+	ArrayList<String> addCommandList = new ArrayList<>();
+	ArrayList<String> deleteCommandList = new ArrayList<>();
+	ArrayList<String> editCommandList = new ArrayList<>();
+	ArrayList<String> doneCommandList = new ArrayList<>();
+	ArrayList<String> displayCommandList = new ArrayList<>();
+	ArrayList<String> searchCommandList = new ArrayList<>();
+	ArrayList<String> retrieveCommandList = new ArrayList<>();
+	ArrayList<String> undoCommandList = new ArrayList<>();
+	ArrayList<String> exitCommandList = new ArrayList<>();
 
-	LinkedList<String> addArgumentList = new LinkedList<>();
-	LinkedList<String> editArgumentList = new LinkedList<>();
-	LinkedList<String> displayArgumentList = new LinkedList<>();
-	LinkedList<String> searchArgumentList = new LinkedList<>();
+	ArrayList<String> addArgumentList = new ArrayList<>();
+	ArrayList<String> editArgumentList = new ArrayList<>();
+	ArrayList<String> displayArgumentList = new ArrayList<>();
+	ArrayList<String> searchArgumentList = new ArrayList<>();
 
 	Handler h;
 
@@ -29,35 +29,25 @@ public class Parser {
 
 	public String parse(String command) {
 		String commandTypeString = getFirstWord(command);
-		String[] arguments = getArguments(command);
-		COMMAND_TYPE commandType = getAction(commandTypeString, arguments);
-
-		return h.executeCommand(commandType, getArguments(command));
+		COMMAND_TYPE commandType = getAction(commandTypeString);
+		if(commandType==COMMAND_TYPE.INVALID){
+			return Constants.MESSAGE_INVALID_FORMAT;
+		}
+		String[] arguments = getArguments(commandType, command);
+		return h.executeCommand(commandType, arguments);
 	}
 
-	public COMMAND_TYPE getAction(String command, String[] arguments) {
+	public COMMAND_TYPE getAction(String command) {
 		if (isCommandType(command, addCommandList)) {
-			if (isAddValid(arguments)) {
-				return COMMAND_TYPE.ADD;
-			} else {
-				return COMMAND_TYPE.INVALID;
-			}
+			return COMMAND_TYPE.ADD;
 		} else if (isCommandType(command, deleteCommandList)) {
 			return COMMAND_TYPE.DELETE;
 		} else if (isCommandType(command, editCommandList)) {
-			if (isEditValid(arguments)) {
-				return COMMAND_TYPE.EDIT;
-			} else {
-				return COMMAND_TYPE.INVALID;
-			}
+			return COMMAND_TYPE.EDIT;
 		} else if (isCommandType(command, doneCommandList)) {
 			return COMMAND_TYPE.DONE;
 		} else if (isCommandType(command, displayCommandList)) {
-			if (isDisplayValid(arguments)) {
-				return COMMAND_TYPE.DISPLAY;
-			} else {
-				return COMMAND_TYPE.INVALID;
-			}
+			return COMMAND_TYPE.DISPLAY;
 		} else if (isCommandType(command, searchCommandList)) {
 			return COMMAND_TYPE.SEARCH;
 		} else if (isCommandType(command, retrieveCommandList)) {
@@ -122,8 +112,8 @@ public class Parser {
 		return true;
 	}
 
-	public String[] getArguments(String command) {
-		LinkedList<String> tokens = new LinkedList<String>();
+	public String[] getArguments(COMMAND_TYPE commandType, String command) {
+		ArrayList<String> tokens = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		boolean insideQuote = false;
 		char[] c = command.toCharArray();
@@ -141,14 +131,47 @@ public class Parser {
 		}
 		tokens.add(sb.toString());
 		tokens.remove(0);
-		return tokens.toArray(new String[0]);
+		if (commandType == COMMAND_TYPE.ADD) {
+			return compactArguments(tokens, addArgumentList);
+		} else if (commandType == COMMAND_TYPE.EDIT) {
+			return compactArguments(tokens, editArgumentList);
+		} else if (commandType == COMMAND_TYPE.DISPLAY) {
+			return compactArguments(tokens, displayArgumentList);
+		} else if (commandType == COMMAND_TYPE.SEARCH) {
+			return compactArguments(tokens, searchArgumentList);
+		} else {
+			return tokens.toArray(new String[0]);
+		}
+	}
+
+	public String[] compactArguments(ArrayList<String> token, ArrayList<String> argumentList) {
+		ArrayList<String> arguments = new ArrayList<>();
+		String temp = "";
+		for (int i = 0; i < token.size(); i++) {
+			if (argumentList.contains(token.get(i))) {
+				if (temp.length() != 0) {
+					arguments.add(temp);
+					temp = "";
+				}
+				arguments.add(token.get(i));
+			} else {
+				if (temp.length() != 0) {
+					temp += " ";
+				}
+				temp += token.get(i);
+			}
+		}
+		if (temp.length() != 0) {
+			arguments.add(temp);
+		}
+		return arguments.toArray(new String[0]);
 	}
 
 	public String getFirstWord(String command) {
 		return command.split(" ")[0];
 	}
 
-	public boolean isCommandType(String command, LinkedList<String> commandList) {
+	public boolean isCommandType(String command, ArrayList<String> commandList) {
 		if (commandList.contains(command)) {
 			return true;
 		} else {
