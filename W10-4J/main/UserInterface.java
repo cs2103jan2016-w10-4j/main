@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -28,6 +29,8 @@ public class UserInterface{
 		JTextArea cmdDisplay = new JTextArea();
 		JLabel status = new JLabel();
 		JLabel jLabel1 = new JLabel();
+		
+		setIcon(f);
 
 		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
@@ -41,6 +44,7 @@ public class UserInterface{
 		GroupLayout layout = new GroupLayout(f.getContentPane());
 		f.getContentPane().setLayout(layout);
 
+		// Create a sequential group for horizontal axis
 		setHoriGroup(layout, jLabel1, cmdEntry, jScrollPane1, jScrollPane2, status);
 
 		// Create a parallel group for the vertical axis
@@ -52,6 +56,13 @@ public class UserInterface{
 		f.setVisible(true);
     }
     
+	private static void setIcon(JFrame f) {
+		// Random icon image grabbed from web. Should change
+				String icon = ".\\main\\icon\\d.jpg";
+				ImageIcon img = new ImageIcon(icon);
+				f.setIconImage(img.getImage());
+	}
+    
     public static void textAreaSettings(JTextArea cmdDisplay){
     	cmdDisplay.setColumns(20);
     	cmdDisplay.setLineWrap(true);
@@ -61,8 +72,7 @@ public class UserInterface{
     	cmdDisplay.setFocusable(false);
     	cmdDisplay.setBackground(Color.BLACK);
     	cmdDisplay.setForeground(Color.WHITE);
-		Font font = cmdDisplay.getFont();
-		cmdDisplay.setFont(font.deriveFont(Font.BOLD));
+    	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     }
     
     public static void textPaneSettings(JTextPane outputDisplay){
@@ -157,10 +167,18 @@ public class UserInterface{
 			public void actionPerformed(ActionEvent e){
 				String s = cmdEntry.getText();
 				cmdEntry.setText("");
-				cmdDisplay.append("> " + s + "\n");
+				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
-				//t1.append("> " +output+"\n");
+				if (output.equals(Constants.MESSAGE_INVALID_FORMAT)){
+					printInCommandDisplay(cmdDisplay, Constants.MESSAGE_INVALID_FORMAT);
+				} else {
+					//t1.append("> " +output+"\n");
+				}
 			}
 		});
+    }
+    
+    public static void printInCommandDisplay(JTextArea cmdDisplay, String content){
+    	cmdDisplay.append(content + "\n");
     }
 }
