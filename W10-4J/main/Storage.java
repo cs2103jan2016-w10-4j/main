@@ -33,37 +33,37 @@ public class Storage {
 
 	public ArrayList<Task> read() throws IOException {
 		String content;
-		String contentArr [];
+		String taskHeader;
 		int count = 0;
 		Task taskContent = null;
 		ArrayList<Task> readTaskList = new ArrayList<Task>();
 		
 		while ((content = read.readLine()) != null) {	
-				
+			
 			// Remove the numbering at the start of each task
 			if(count%4 == 0) {
 				content = removeNumbering(content);
 			}
-
-			contentArr = content.split(": ");
 			
-			if(contentArr[0].equals("Event")) {
-				if(count != 0) {
-					readTaskList.add(taskContent);
-				}
-				taskContent = new Task(contentArr[1]);				
-			} else if (contentArr[0].equals("Date")) {
-				taskContent.setDate(contentArr[1]);
-			} else if (contentArr[0].equals("Start Time")) {
-				taskContent.setStartTime(contentArr[1]);
-			} else {
-				taskContent.setEndTime(contentArr[1]);
+			taskHeader = content.substring(0, content.indexOf(": "));
+			content = content.substring(content.indexOf(": ") + 1);
+			
+			if(taskHeader.equals("Event")){
+				String taskName = content;
+				taskContent = new Task(taskName);
+				readTaskList.add(taskContent);
+			} else if (taskHeader.equals("Date")){
+				String taskDate = content;
+				taskContent.setDate(taskDate);
+			}else if (taskHeader.equals("Start Time")){
+				String taskStartTime = content;
+				taskContent.setStartTime(taskStartTime);
+			}else {
+				String taskEndTime = content;
+				taskContent.setEndTime(taskEndTime);
 			}
-			
 			count++;
 		}
-		
-		readTaskList.add(taskContent);
 		return readTaskList;
 	}
 	
