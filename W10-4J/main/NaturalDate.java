@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class NaturalDate {
 
@@ -23,10 +24,10 @@ public class NaturalDate {
 		for (String s : result) {
 			if (isInteger(s)) {
 				int temp = Integer.parseInt(s);
-				if (isDay(temp)) {
-					day.add(temp);
-				} else if (isMonth(temp) && !confirmMonth) {
+				if (isMonth(temp) && !confirmMonth) {
 					month.add(temp);
+				} else if (isDay(temp)) {
+					day.add(temp);
 				} else if (!confirmYear){
 					year = temp;
 					confirmYear = true;
@@ -54,18 +55,23 @@ public class NaturalDate {
 	public String confirmDate(ArrayList<Integer> day, ArrayList<Integer> month, int year,
 			boolean confirmMonth) {
 		int finalDay, finalMonth, finalYear;
-
 		if (confirmMonth) {
 			finalMonth = month.get(0);
 			day.add(year);
 			finalDay = day.get(0);
 			finalYear = day.get(1);
 		} else {
-			day.addAll(month);
-			day.add(year);
-			finalDay = day.get(0);
-			finalMonth = day.get(1);
-			finalYear = day.get(2);
+			month.addAll(day);
+			month.add(year);
+			finalMonth = month.get(0);
+			finalDay = month.get(1);
+			finalYear = month.get(2);
+		}
+		if(finalYear==-1){
+			finalYear = Calendar.getInstance().get(Calendar.YEAR);
+		}
+		if(finalYear<1000){
+			finalYear += 2000;
 		}
 		return String.format("%04d/%02d/%02d", finalYear, finalMonth, finalDay);
 	}

@@ -21,10 +21,12 @@ public class Parser {
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 
 	Handler h;
+	NaturalDate n;
 
 	public Parser() {
 		generateCommandList();
 		h = new Handler();
+		n = new NaturalDate();
 	}
 
 	public String parse(String command) {
@@ -154,6 +156,13 @@ public class Parser {
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
+				} else if (arguments[i].equals("date")) {
+					String date = n.getDate(arguments[i + 1]);
+					if (date == null) {
+						return false;
+					} else {
+						arguments[i + 1] = date;
+					}
 				}
 			}
 		}
@@ -180,6 +189,13 @@ public class Parser {
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
+				} else if (arguments[i].equals("date")) {
+					String date = n.getDate(arguments[i + 1]);
+					if (date == null) {
+						return false;
+					} else {
+						arguments[i + 1] = date;
+					}
 				}
 			}
 		}

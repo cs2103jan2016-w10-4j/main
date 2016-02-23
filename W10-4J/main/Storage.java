@@ -16,7 +16,6 @@ public class Storage {
 			read = new BufferedReader(new FileReader(Constants.fileName));
 			print = new PrintWriter(new FileWriter(Constants.fileName));
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
