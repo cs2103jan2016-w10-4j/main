@@ -39,6 +39,7 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
+
 		return h.executeCommand(commandType, arguments);
 	}
 
@@ -163,6 +164,13 @@ public class Parser {
 					} else {
 						arguments[i + 1] = date;
 					}
+				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
+					String time = n.getTime(arguments[i + 1]);
+					if (time == null) {
+						return false;
+					} else {
+						arguments[i + 1] = time;
+					}
 				}
 			}
 		}
@@ -195,6 +203,13 @@ public class Parser {
 						return false;
 					} else {
 						arguments[i + 1] = date;
+					}
+				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
+					String time = n.getTime(arguments[i + 1]);
+					if (time == null) {
+						return false;
+					} else {
+						arguments[i + 1] = time;
 					}
 				}
 			}
