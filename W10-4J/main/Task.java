@@ -97,7 +97,7 @@ public class Task {
 		return endTime_;
 	}
 	
-	public String getDetails(String details){
+	public String getDetails(){
 		return details_;
 	}
 }

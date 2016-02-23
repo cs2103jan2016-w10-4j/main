@@ -183,6 +183,12 @@ public class Handler {
 			case "date":
 				Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
 				break;
+			case "tasks":
+				// display tasks only
+				break;
+			case "done":
+				// display done tasks only
+				break;
 		}
 		// ***need to consider sorting the done section and the tasks that dun have parameters like dates*** 
 		return "";
@@ -195,8 +201,23 @@ public class Handler {
 		return clone;
 	}
 	
-	private String search(String[] task) {
-		return"";
+	private Task search(String[] task) {
+		// check whether exclude field exists
+		if (task[1]!=null){
+			for (Task eachTask: handlerMemory){
+				if ((eachTask.getName().contains(task[0]) && !eachTask.getName().contains(task[2])) || 
+				(eachTask.getDetails().contains(task[0]) && !eachTask.getDetails().contains(task[2]))){
+					return eachTask;
+				}
+			}
+		} else {
+			for (Task eachTask: handlerMemory){
+				if (eachTask.getName().contains(task[0]) || eachTask.getDetails().contains(task[0])){
+					return eachTask;
+				}
+			}
+		}
+		return null;
 	}
 
 	private String retrieve(String[] task) {
