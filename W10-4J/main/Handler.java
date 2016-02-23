@@ -11,6 +11,7 @@ public class Handler {
 	private static Task[] previousInputStorage = new Task[1];
 	private static String MESSAGE_ADD_PASS = ("Task has been added.");
 	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
+	private static String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
 
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
@@ -63,12 +64,13 @@ public class Handler {
 	}
 	
 	private String delete(String[] task) {
-		for (Task eachTask: handlerMemory){
-			if (eachTask.getName().equals(task[0])){
-				handlerMemory.remove(eachTask);
-			}
+		int taskID = Integer.parseInt(task[0]);
+		if (taskID<=0 || taskID>handlerMemory.size()){
+			return MESSAGE_DELETE_FAIL;
+		} else {
+			handlerMemory.remove(taskID-1);
+			return MESSAGE_DELETE_PASS;
 		}
-		return MESSAGE_DELETE_PASS;
 	}
 
 	private String edit(String[] task) {
