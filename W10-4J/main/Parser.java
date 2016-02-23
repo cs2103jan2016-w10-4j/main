@@ -30,10 +30,13 @@ public class Parser {
 	public String parse(String command) {
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
-		if(commandType==COMMAND_TYPE.INVALID){
+		if (commandType == COMMAND_TYPE.INVALID) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
 		String[] arguments = getArguments(commandType, command);
+		if (!isValid(commandType, arguments)) {
+			return Constants.MESSAGE_INVALID_FORMAT;
+		}
 		return h.executeCommand(commandType, arguments);
 	}
 
@@ -61,55 +64,12 @@ public class Parser {
 		}
 	}
 
-	public boolean isAddValid(String[] arguments) {
-		if (arguments.length == 0) {
+	public boolean isCommandType(String command, ArrayList<String> commandList) {
+		if (commandList.contains(command)) {
+			return true;
+		} else {
 			return false;
 		}
-		for (int i = 1; i < arguments.length; i += 2) {
-			if (!addArgumentList.contains(arguments[i])) {
-				return false;
-			} else {
-				if (i + 1 == arguments.length) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean isEditValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return false;
-		}
-		if (!isInteger(arguments[0])) {
-			return false;
-		}
-		for (int i = 1; i < arguments.length; i += 2) {
-			if (!editArgumentList.contains(arguments[i])) {
-				return false;
-			} else {
-				if (i + 1 == arguments.length) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean isDisplayValid(String[] arguments) {
-		if (arguments.length > 0 && !displayArgumentList.contains(arguments[0])) {
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean isInteger(String s) {
-		try {
-			Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return true;
 	}
 
 	public String[] getArguments(COMMAND_TYPE commandType, String command) {
@@ -167,16 +127,90 @@ public class Parser {
 		return arguments.toArray(new String[0]);
 	}
 
-	public String getFirstWord(String command) {
-		return command.split(" ")[0];
+	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
+		switch (commandType) {
+		case ADD:
+			return isAddValid(arguments);
+		case DELETE:
+			return isDeleteValid(arguments);
+		case EDIT:
+			return isEditValid(arguments);
+		case DONE:
+			return isDoneValid(arguments);
+		case DISPLAY:
+			return isDisplayValid(arguments);
+		default:
+			return true;
+		}
 	}
 
-	public boolean isCommandType(String command, ArrayList<String> commandList) {
-		if (commandList.contains(command)) {
-			return true;
-		} else {
+	public boolean isAddValid(String[] arguments) {
+		if (arguments.length == 0) {
 			return false;
 		}
+		for (int i = 1; i < arguments.length; i += 2) {
+			if (!addArgumentList.contains(arguments[i])) {
+				return false;
+			} else {
+				if (i + 1 == arguments.length) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean isDeleteValid(String[] arguments) {
+		if (arguments.length == 0) {
+			return false;
+		}
+		return isInteger(arguments[0]);
+	}
+
+	public boolean isEditValid(String[] arguments) {
+		if (arguments.length == 0) {
+			return false;
+		}
+		if (!isInteger(arguments[0])) {
+			return false;
+		}
+		for (int i = 1; i < arguments.length; i += 2) {
+			if (!editArgumentList.contains(arguments[i])) {
+				return false;
+			} else {
+				if (i + 1 == arguments.length) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean isDoneValid(String[] arguments) {
+		if (arguments.length == 0) {
+			return false;
+		}
+		return isInteger(arguments[0]);
+	}
+
+	public boolean isDisplayValid(String[] arguments) {
+		if (arguments.length > 0 && !displayArgumentList.contains(arguments[0])) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isInteger(String s) {
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+
+	public String getFirstWord(String command) {
+		return command.split(" ")[0];
 	}
 
 	public void generateCommandList() {
