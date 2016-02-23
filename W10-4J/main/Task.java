@@ -5,6 +5,7 @@ public class Task {
 	private String date_;
 	private String startTime_;
 	private String endTime_;
+	private String details_;
 	
 	public Task(String name){
 		name_ = name;
@@ -26,6 +27,10 @@ public class Task {
 		endTime_ = endTime;
 	}
 	
+	public void setDetails(String details){
+		details_ = details;
+	}
+	
 	public String getName(){
 		return name_;
 	}
@@ -40,5 +45,9 @@ public class Task {
 	
 	public String getEndTime(){
 		return endTime_;
+	}
+	
+	public String getDetails(String details){
+		return details_;
 	}
 }
