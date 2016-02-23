@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import main.Constants.COMMAND_TYPE;
 
@@ -38,6 +39,9 @@ public class Handler {
 	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
 	private static String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
 	private static String MESSAGE_EDIT_PASS = ("Task has been edited.");
+	private static String MESSAGE_DONE_PASS = ("Task has been set to done.");
+	private static String MESSAGE_DONE_FAIL = ("Task cannot be set to done.");
+	private static String MESSAGE_DISPLAY = ("");
 
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
@@ -117,6 +121,8 @@ public class Handler {
 	private String edit(String[] task) {
 		int taskID = Integer.parseInt(task[0]);
 		Task eachTask = handlerMemory.get(taskID-1);
+		// remember previous state
+		clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask));
 		fieldEditor(eachTask, task);
 		return MESSAGE_EDIT_PASS;
 	}
@@ -147,15 +153,50 @@ public class Handler {
 	}
 
 	private String done(String[] task) {
-		return "";
+		int taskID = Integer.parseInt(task[0]);
+		if (taskID<=0 || taskID>handlerMemory.size()){
+			return MESSAGE_DONE_FAIL;
+		} else {
+			Task eachTask = handlerMemory.get(taskID-1);
+			handlerMemory.remove(eachTask);
+			doneStorage.add(eachTask);
+			// remember previous state
+			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
+			return MESSAGE_DONE_PASS;
+		}
 	}
 
 	private String display(String[] task) {
+		String displayField = task[1];
+		ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
+		switch (displayField)
+		{
+			case "alphabetical order":
+				Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+				break;
+			case "starttime":
+				Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
+				break;
+			case "endtime":
+				Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
+				break;
+			case "date":
+				Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
+				break;
+		}
+		// ***need to consider sorting the done section and the tasks that dun have parameters like dates*** 
 		return "";
 	}
-
+	private ArrayList<Task> cloneArray(ArrayList<Task> taskArray){
+		ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
+		for (Task task: taskArray){
+			clone.add(task);
+		}
+		return clone;
+	}
+	
 	private String search(String[] task) {
-		return "";
+		return"";
 	}
 
 	private String retrieve(String[] task) {
