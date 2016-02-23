@@ -7,9 +7,10 @@ import main.Constants.COMMAND_TYPE;
 public class Handler {
 	
 	Storage mainStorage = new Storage();
-	private static ArrayList<Task> tempMemory = new ArrayList<Task>();
+	private static ArrayList<Task> handlerMemory = new ArrayList<Task>();
 	private static Task[] previousInputStorage = new Task[1];
 	private static String MESSAGE_ADD_PASS = ("Task has been added.");
+	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
 
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
@@ -57,16 +58,22 @@ public class Handler {
 		// remember the just added task
 		previousInputStorage[0] = eachTask;
 		// add to arraylist storage
-		tempMemory.add(eachTask);
+		handlerMemory.add(eachTask);
 		return MESSAGE_ADD_PASS;
+	}
+	
+	private String delete(String[] task) {
+		for (Task eachTask: handlerMemory){
+			if (eachTask.getName().equals(task[0])){
+				handlerMemory.remove(eachTask);
+			}
+		}
+		return MESSAGE_DELETE_PASS;
 	}
 
 	private String edit(String[] task) {
+		
 		return MESSAGE_ADD_PASS;
-	}
-
-	private String delete(String[] task) {
-		return "";
 	}
 
 	private String done(String[] task) {
