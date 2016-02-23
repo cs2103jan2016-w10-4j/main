@@ -4,11 +4,36 @@ import java.util.ArrayList;
 
 import main.Constants.COMMAND_TYPE;
 
+class PreviousInput {
+	private String action_;
+	private Task task_;
+	
+	public PreviousInput(String action, Task task){
+		action_ = action;
+		task_ = task;
+	}
+	
+	public String getAction(){
+		return action_;
+	}
+	public Task getTask(){
+		return task_;
+	}
+	public void setAction(String action){
+		action_ = action;
+	}
+	public void setTask(Task task){
+		task_ = task;
+	}
+}
+
 public class Handler {
 	
 	Storage mainStorage = new Storage();
 	private static ArrayList<Task> handlerMemory = new ArrayList<Task>();
-	private static Task[] previousInputStorage = new Task[1];
+	private static ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
+	private static ArrayList<Task> doneStorage = new ArrayList<Task>();
+	
 	private static String MESSAGE_ADD_PASS = ("Task has been added.");
 	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
 	private static String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
@@ -41,6 +66,11 @@ public class Handler {
 			throw new Error("Unrecognized command type");
 		}
 	}
+	
+	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task){
+		taskArray.clear();
+		taskArray.add(task);
+	}
 
 	private String add(String[] task) {
 		Task eachTask = new Task(task[0]);
@@ -64,8 +94,8 @@ public class Handler {
 					break;
 			}
 		}
-		// remember the just added task
-		previousInputStorage[0] = eachTask;
+		// remember previous state
+		clearAndAdd(previousInputStorage, new PreviousInput("add", eachTask));
 		// add to arraylist storage
 		handlerMemory.add(eachTask);
 		return MESSAGE_ADD_PASS;
@@ -76,7 +106,10 @@ public class Handler {
 		if (taskID<=0 || taskID>handlerMemory.size()){
 			return MESSAGE_DELETE_FAIL;
 		} else {
-			handlerMemory.remove(taskID-1);
+			Task eachTask = handlerMemory.get(taskID-1);
+			handlerMemory.remove(eachTask);
+			// remember previous state
+			clearAndAdd(previousInputStorage, new PreviousInput("delete", eachTask));
 			return MESSAGE_DELETE_PASS;
 		}
 	}
