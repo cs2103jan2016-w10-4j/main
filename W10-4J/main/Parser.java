@@ -21,12 +21,12 @@ public class Parser {
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 
 	Handler h;
-	NaturalDate n;
+	NaturalLanguage n;
 
 	public Parser() {
 		generateCommandList();
 		h = new Handler();
-		n = new NaturalDate();
+		n = new NaturalLanguage();
 	}
 
 	public String parse(String command) {

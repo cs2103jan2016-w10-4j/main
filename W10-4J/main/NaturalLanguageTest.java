@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class NaturalDateTest {
+public class NaturalLanguageTest {
 
 	@Test
-	public void test() {
-		NaturalDate n = new NaturalDate();
+	public void testGetDate() {
+		NaturalLanguage n = new NaturalLanguage();
 		String input;
 
 		input = "16jan2016";
@@ -50,20 +50,47 @@ public class NaturalDateTest {
 
 	@Test
 	public void testCharTypeSplit() {
-		NaturalDate n = new NaturalDate();
+		NaturalLanguage n = new NaturalLanguage();
 		String input;
 
 		input = "16jan2016";
-		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.charTypeSplit(input));
+		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.splitStringByCharType(input));
 
 		input = "16 jan 2016";
-		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.charTypeSplit(input));
+		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.splitStringByCharType(input));
 
 		input = "16  jan  2016";
-		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.charTypeSplit(input));
+		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.splitStringByCharType(input));
 
 		input = "16 ? jan ? 2016";
-		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.charTypeSplit(input));
+		assertArrayEquals(input, new String[] { "16", "jan", "2016" }, n.splitStringByCharType(input));
+	}
+	
+	@Test
+	public void testGetTime(){
+		NaturalLanguage n = new NaturalLanguage();
+		String input;
+
+		input = "7:30";
+		assertEquals(input, "07:30", n.getTime(input));
+		
+		input = "07:30";
+		assertEquals(input, "07:30", n.getTime(input));
+		
+		input = "7";
+		assertEquals(input, "07:00", n.getTime(input));
+		
+		input = "07";
+		assertEquals(input, "07:00", n.getTime(input));
+		
+		input = "730";
+		assertEquals(input, "07:30", n.getTime(input));
+		
+		input = "0730";
+		assertEquals(input, "07:30", n.getTime(input));
+		
+		input = "1230";
+		assertEquals(input, "12:30", n.getTime(input));
 	}
 
 }
