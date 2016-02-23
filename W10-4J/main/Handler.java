@@ -12,6 +12,7 @@ public class Handler {
 	private static String MESSAGE_ADD_PASS = ("Task has been added.");
 	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
 	private static String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
+	private static String MESSAGE_EDIT_PASS = ("Task has been edited.");
 
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
@@ -74,8 +75,35 @@ public class Handler {
 	}
 
 	private String edit(String[] task) {
-		
-		return MESSAGE_ADD_PASS;
+		int taskID = Integer.parseInt(task[0]);
+		Task eachTask = handlerMemory.get(taskID-1);
+		fieldEditor(eachTask, task);
+		return MESSAGE_EDIT_PASS;
+	}
+	
+	private void fieldEditor(Task eachTask, String[] task){
+		String action;
+		for (int i=1; i<task.length; i+=2){
+			action = task[i];
+			switch (action)
+			{
+				case "rename":
+					eachTask.setName(task[i+1]);
+					break;
+				case "date":
+					eachTask.setDate(task[i+1]);
+					break;
+				case "start":
+					eachTask.setStartTime(task[i+1]);
+					break;
+				case "end":
+					eachTask.setEndTime(task[i+1]);
+					break;
+				case "details":
+					eachTask.setDetails(task[i+1]);
+					break;
+			}
+		}
 	}
 
 	private String done(String[] task) {
