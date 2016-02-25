@@ -129,6 +129,8 @@ public class Handler {
 		clearAndAdd(previousInputStorage, new PreviousInput("add", eachTask));
 		// add to arraylist storage
 		handlerMemory.add(eachTask);
+		// write to mainStorage
+		mainStorage.write(handlerMemory, doneStorage);
 		return MESSAGE_ADD_PASS;
 	}
 
@@ -139,6 +141,8 @@ public class Handler {
 		} else {
 			Task eachTask = handlerMemory.get(taskID - 1);
 			handlerMemory.remove(eachTask);
+			// write to mainStorage
+			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("delete", eachTask));
 			return MESSAGE_DELETE_PASS;
@@ -149,6 +153,8 @@ public class Handler {
 		int taskID = Integer.parseInt(task[0]);
 		Task eachTask = handlerMemory.get(taskID - 1);
 		Task editedTask = fieldEditor(eachTask, task);
+		// write to mainStorage
+		mainStorage.write(handlerMemory, doneStorage);
 		// remember previous state
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask, editedTask));
 		return MESSAGE_EDIT_PASS;
@@ -187,6 +193,8 @@ public class Handler {
 			Task eachTask = handlerMemory.get(taskID - 1);
 			handlerMemory.remove(eachTask);
 			doneStorage.add(eachTask);
+			// write to mainStorage
+			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
 			return MESSAGE_DONE_PASS;
@@ -348,6 +356,8 @@ public class Handler {
 			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
 			break;
 		}
+		// write to mainStorage
+		mainStorage.write(handlerMemory, doneStorage);
 		return MESSAGE_UNDO_PASS;
 	}
 
