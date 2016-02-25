@@ -62,11 +62,12 @@ public class Storage {
 					count = 1;
 					index = taskDone;
 				} else if (!content.equals(taskOnHand) && !content.equals(taskDone) && index.equals(taskOnHand)){
-					String counter = count + ".";
-					String taskHeader = content.substring(0, content.indexOf(" "));
+					String numberingCounter = count + ".";
+					String numberingOnTask = content.substring(0, content.indexOf(" "));
 					String taskName = content.substring(content.indexOf(": ") + 1);
-
-					if(counter.equals(taskHeader)){
+					
+					// If the number of both the task and counter are equal, implies its the start of a new task
+					if(numberingCounter.equals(numberingOnTask)){
 						task = new Task(taskName);
 						readToDoTaskList.add(task);
 						count++;
@@ -74,11 +75,12 @@ public class Storage {
 						readTaskDetails(readToDoTaskList, content, task);
 					}
 				} else {
-					String counter = count + ".";
-					String taskHeader = content.substring(0, content.indexOf(": "));
+					String numberingCounter = count + ".";
+					String numberingOnTask = content.substring(0, content.indexOf(" "));
 					String taskName = content.substring(content.indexOf(": ") + 1);
 
-					if(counter.equals(taskHeader)){
+					// If the number of both the task and counter are equal, implies its the start of a new task
+					if(numberingCounter.equals(numberingOnTask)){
 						task = new Task(taskName);
 						readDoneTaskList.add(task);
 						count++;
@@ -90,9 +92,74 @@ public class Storage {
 
 			readTaskList.add(readToDoTaskList);
 			readTaskList.add(readDoneTaskList);
-			
 			return readTaskList;
 			
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
+	// Method overloading for read()
+	public ArrayList<ArrayList<Task>> read(BufferedReader reader) {
+		try {
+			String content;
+			String index = null;
+			int count = 0;
+			Task task = null;
+			ArrayList<Task> readToDoTaskList = new ArrayList<Task>();
+			ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
+			ArrayList <ArrayList <Task>> readTaskList = new ArrayList<ArrayList<Task>>();
+
+			while ((content = reader.readLine()) != null) {	
+				if(content.equals(taskOnHand)) {
+					count = 1;
+					index = taskOnHand; 
+				} else if (content.equals(taskDone)) {
+					count = 1;
+					index = taskDone;
+				} else if (!content.equals(taskOnHand) && !content.equals(taskDone) && index.equals(taskOnHand)){
+					String numberingCounter = count + ".";
+					String numberingOnTask = content.substring(0, content.indexOf(" "));
+					String taskName = content.substring(content.indexOf(": ") + 1);
+					
+					// If the number of both the task and counter are equal, implies its the start of a new task
+					if(numberingCounter.equals(numberingOnTask)){
+						task = new Task(taskName);
+						readToDoTaskList.add(task);
+						count++;
+					} else {
+						readTaskDetails(readToDoTaskList, content, task);
+					}
+				} else {
+					String numberingCounter = count + ".";
+					String numberingOnTask = content.substring(0, content.indexOf(" "));
+					String taskName = content.substring(content.indexOf(": ") + 1);
+
+					// If the number of both the task and counter are equal, implies its the start of a new task
+					if(numberingCounter.equals(numberingOnTask)){
+						task = new Task(taskName);
+						readDoneTaskList.add(task);
+						count++;
+					} else {
+						readTaskDetails(readDoneTaskList, content, task);
+					}
+				}
+			}
+
+			readTaskList.add(readToDoTaskList);
+			readTaskList.add(readDoneTaskList);
+			return readTaskList;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
+	public ArrayList<ArrayList<Task>> retrieve(String filename) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			ArrayList<ArrayList<Task>> taskList = read(reader);
+			reader.close();
+			return taskList;
 		} catch (IOException e) {
 			return null;
 		}
@@ -101,6 +168,7 @@ public class Storage {
 	private String checkFileExists(String filename){
 		String statement;
 		File file = new File (filename);
+		
 		if(file.exists()) {
 			statement = "Success";
 		} else {
@@ -110,8 +178,8 @@ public class Storage {
 		return statement;
 	}
 	
-	private void getTaskDetails(String task, ArrayList<Task> taskList) {
-		print.println(task);
+	private void getTaskDetails(String taskCategory, ArrayList<Task> taskList) {
+		print.println(taskCategory);
 
 		for(int i = 0; i < taskList.size(); i++) {
 			int index = i + 1;
@@ -137,22 +205,22 @@ public class Storage {
 		}
 	}
 	
-	private void readTaskDetails(ArrayList<Task> readTaskList, String content, Task taskContent){
-		String taskHeader = content.substring(0, content.indexOf(": "));
+	private void readTaskDetails(ArrayList<Task> readTaskList, String taskContent, Task task){
+		String taskHeader = taskContent.substring(0, taskContent.indexOf(": "));
 
-		content = content.substring(content.indexOf(": ") + 1);
+		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1);
 		if (taskHeader.equals("Date")){
-			String taskDate = content;
-			taskContent.setDate(taskDate);
-		}else if (taskHeader.equals("Start Time")){
-			String taskStartTime = content;
-			taskContent.setStartTime(taskStartTime);
-		}else if (taskHeader.equals("End Time")){
-			String taskEndTime = content;
-			taskContent.setEndTime(taskEndTime);
-		}else {
-			String taskDetails = content;
-			taskContent.setDetails(taskDetails);
+			String taskDate = taskContent;
+			task.setDate(taskDate);
+		} else if (taskHeader.equals("Start Time")){
+			String taskStartTime = taskContent;
+			task.setStartTime(taskStartTime);
+		} else if (taskHeader.equals("End Time")){
+			String taskEndTime = taskContent;
+			task.setEndTime(taskEndTime);
+		} else {
+			String taskDetails = taskContent;
+			task.setDetails(taskDetails);
 		}
 	}
 }
