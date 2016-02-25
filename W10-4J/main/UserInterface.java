@@ -50,6 +50,8 @@ public class UserInterface{
 		// Create a parallel group for the vertical axis
 		setVertGroup(layout, jScrollPane1, jScrollPane2, jLabel1, status, cmdEntry);
 		
+		setWelcomeMessage(outputDisplay);
+		
 		action(p, cmdEntry, cmdDisplay, outputDisplay);
 		
 		f.pack();
@@ -78,6 +80,7 @@ public class UserInterface{
     public static void textPaneSettings(JTextPane outputDisplay){
     	outputDisplay.setEditable(false);
     	outputDisplay.setFocusable(false);
+    	outputDisplay.setContentType("text/html");
     }
     
     public static void horiGroup3(GroupLayout.SequentialGroup h3, GroupLayout layout, JLabel jLabel1, JTextField cmdEntry){
@@ -162,6 +165,12 @@ public class UserInterface{
 		layout.setVerticalGroup(vGroup);
 	}
     
+    public static void setWelcomeMessage(JTextPane displayOutput){
+    	displayOutput.setText("<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
+    			+ "Docket is a simple command line Windows application that allows you to manage your events and deadlines effectively. <br><br>"
+    			+ "To start, enter a task in the command field below.");
+    }
+    
     public static void action(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput){
     	cmdEntry.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -183,7 +192,6 @@ public class UserInterface{
     }
     
     public static void printInDisplayOutput(JTextPane displayOutput, String s) {
-    	displayOutput.setContentType("text/html");
     	displayOutput.setText(s);
     }
     
