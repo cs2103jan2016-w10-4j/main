@@ -8,11 +8,18 @@ import main.Constants.COMMAND_TYPE;
 class PreviousInput {
 	private String action_;
 	private Task task_;
+	// only for edit method in handler
+	private Task editedTask_;
 	
 	public PreviousInput(String action, Task task){
 		action_ = action;
 		task_ = task;
 	}
+	public PreviousInput(String action, Task task, Task editedTask){
+		action_ = action;
+		task_ = task;
+		editedTask_ = editedTask;
+	} 
 	
 	public String getAction(){
 		return action_;
@@ -20,11 +27,17 @@ class PreviousInput {
 	public Task getTask(){
 		return task_;
 	}
+	public Task getEditedTask(){
+		return editedTask_;
+	}
 	public void setAction(String action){
 		action_ = action;
 	}
 	public void setTask(Task task){
 		task_ = task;
+	}
+	public void setEditedTask(Task editedTask){
+		editedTask_ = editedTask;
 	}
 }
 
@@ -41,7 +54,9 @@ public class Handler {
 	private static String MESSAGE_EDIT_PASS = ("Task has been edited.");
 	private static String MESSAGE_DONE_PASS = ("Task has been set to done.");
 	private static String MESSAGE_DONE_FAIL = ("Task cannot be set to done.");
-	private static String MESSAGE_DISPLAY = ("");
+	private static String MESSAGE_SEARCH_PASS = ("Search successful.");
+	private static String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
+	private static String MESSAGE_UNDO_PASS = ("Undo successful.");
 
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
@@ -61,7 +76,7 @@ public class Handler {
 		case RETRIEVE:
 			return retrieve(task);
 		case UNDO:
-			return undo(task);
+			return undo();
 		case EXIT:
 			System.exit(0);
 		case INVALID:
@@ -121,13 +136,13 @@ public class Handler {
 	private String edit(String[] task) {
 		int taskID = Integer.parseInt(task[0]);
 		Task eachTask = handlerMemory.get(taskID-1);
+		Task editedTask = fieldEditor(eachTask, task);
 		// remember previous state
-		clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask));
-		fieldEditor(eachTask, task);
+		clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask, editedTask));
 		return MESSAGE_EDIT_PASS;
 	}
 	
-	private void fieldEditor(Task eachTask, String[] task){
+	private Task fieldEditor(Task eachTask, String[] task){
 		String action;
 		for (int i=1; i<task.length; i+=2){
 			action = task[i];
@@ -150,6 +165,7 @@ public class Handler {
 					break;
 			}
 		}
+		return eachTask;
 	}
 
 	private String done(String[] task) {
@@ -169,6 +185,7 @@ public class Handler {
 	private String display(String[] task) {
 		String displayField = task[1];
 		ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
+		// separate those tasks with dates and those that dun have in null list
 		switch (displayField)
 		{
 			case "alphabetical order":
@@ -188,11 +205,15 @@ public class Handler {
 				break;
 			case "done":
 				// display done tasks only
-				break;
 		}
 		// ***need to consider sorting the done section and the tasks that dun have parameters like dates*** 
 		return "";
 	}
+	
+	private String printTask(ArrayList<Task> taskArray){
+		return "";
+	}
+	
 	private ArrayList<Task> cloneArray(ArrayList<Task> taskArray){
 		ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
 		for (Task task: taskArray){
@@ -201,30 +222,84 @@ public class Handler {
 		return clone;
 	}
 	
-	private Task search(String[] task) {
+	private String search(String[] task) {
 		// check whether exclude field exists
 		if (task[1]!=null){
 			for (Task eachTask: handlerMemory){
 				if ((eachTask.getName().contains(task[0]) && !eachTask.getName().contains(task[2])) || 
 				(eachTask.getDetails().contains(task[0]) && !eachTask.getDetails().contains(task[2]))){
-					return eachTask;
+					return MESSAGE_SEARCH_PASS;
 				}
 			}
 		} else {
 			for (Task eachTask: handlerMemory){
 				if (eachTask.getName().contains(task[0]) || eachTask.getDetails().contains(task[0])){
-					return eachTask;
+					return MESSAGE_SEARCH_PASS;
 				}
 			}
 		}
-		return null;
+		return MESSAGE_SEARCH_FAIL;
 	}
 
 	private String retrieve(String[] task) {
 		return "";
 	}
 
-	private String undo(String[] task) {
-		return "";
+	private String undo() {
+		String actionToBeUndone = previousInputStorage.get(0).getAction();
+		Task previousTask = previousInputStorage.get(0).getTask();
+		switch (actionToBeUndone)
+		{
+			case "add":
+				// to restore to previous state, must unadd the task
+				handlerMemory.remove(taskFinder(handlerMemory, previousTask));
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput("delete", previousTask));
+				break;
+			case "delete":
+				// to restore to previous state, must add the task
+				handlerMemory.add(previousTask);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput("add", previousTask));
+				break;
+			case "edit":
+				// to restore to previous state, must edit again to previous state
+				Task eachTask = previousInputStorage.get(0).getEditedTask();
+				handlerMemory.remove(eachTask);
+				handlerMemory.add(previousTask);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask, previousTask));
+				break;			
+			case "done":
+				// to restore to previous state, must undone the task
+				eachTask = taskFinder(doneStorage, previousTask);
+				doneStorage.remove(eachTask);
+				handlerMemory.add(eachTask);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput("undone", eachTask));
+				break;
+			case "undone":
+				// to restore to previous state, must undone the task
+				eachTask = taskFinder(handlerMemory, previousTask);
+				handlerMemory.remove(eachTask);
+				doneStorage.add(eachTask);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
+				break;
+		}
+		return MESSAGE_UNDO_PASS;
 	}
+	private Task taskFinder(ArrayList<Task> taskArray, Task task){
+		for (Task eachTask: handlerMemory){
+			if (Task.taskNameComparator.compare(eachTask, task)==0 &&
+			Task.taskStarttimeComparator.compare(eachTask, task)==0 &&
+			Task.taskEndtimeComparator.compare(eachTask, task)==0 &&
+			Task.taskDateComparator.compare(eachTask, task)==0 &&
+			Task.taskDetailsComparator.compare(eachTask, task)==0){
+				return eachTask;
+			}
+		}
+		return null;
+	}
+		
 }

@@ -14,6 +14,11 @@ public class Task {
 			return (task1.getName().toLowerCase().compareTo(task2.getName().toLowerCase()));
 		}
 	};
+	public static Comparator<Task> taskDetailsComparator = new Comparator<Task>(){
+		public int compare(Task task1, Task task2){
+			return (task1.getDetails().toLowerCase().compareTo(task2.getDetails().toLowerCase()));
+		}
+	};
 	public static Comparator<Task> taskStarttimeComparator = new Comparator<Task>(){
 		public int compare(Task task1, Task task2){
 			String[] startTime1 = task1.getStartTime().split(":");
