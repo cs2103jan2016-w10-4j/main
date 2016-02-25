@@ -48,11 +48,18 @@ class PreviousInput {
 }
 
 public class Handler {
-
-	Storage mainStorage = new Storage();
-	private static ArrayList<Task> handlerMemory = new ArrayList<Task>();
-	private static ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	private static ArrayList<Task> doneStorage = new ArrayList<Task>();
+	
+	private static ArrayList<Task> handlerMemory;
+	private static ArrayList<Task> doneStorage;
+	private static ArrayList<PreviousInput> previousInputStorage;
+	
+	public Handler(){
+		Storage mainStorage = new Storage();
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read();
+		handlerMemory = getFromStorage.get(0);
+		doneStorage = getFromStorage.get(1);
+		previousInputStorage = new ArrayList<PreviousInput>();
+	}
 
 	private static String MESSAGE_ADD_PASS = ("Task has been added.");
 	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
@@ -189,35 +196,84 @@ public class Handler {
 	private String display(String[] task) {
 		String displayField = task[1];
 		ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
-		// separate those tasks with dates and those that dun have in null list
-		switch (displayField) {
-		case "alphabetical order":
-			Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
-			break;
-		case "starttime":
-			Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
-			break;
-		case "endtime":
-			Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
-			break;
-		case "date":
-			Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
-			break;
-		case "tasks":
-			// display tasks only
-			break;
-		case "done":
-			// display done tasks only
+		ArrayList<Task> exclusiveHandlerMemory = null;
+		switch (displayField)
+		{
+			case "alphabetical order":
+				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "name");
+				Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+				break;
+			case "starttime":
+				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "starttime");
+				Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
+				break;
+			case "endtime":
+				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "endtime");
+				Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
+				break;
+			case "date":
+				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "date");
+				Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
+				break;
+			case "tasks":
+				// display tasks in cloneHandlerMemory only
+				break;
+			case "done":
+				// display done tasks in doneStorage only
+				break;
 		}
-		// ***need to consider sorting the done section and the tasks that dun
-		// have parameters like dates***
+		cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+		// ***need to consider sorting the done section and the tasks that dun have parameters like dates*** 
 		return "";
 	}
-
-	private String printTask(ArrayList<Task> taskArray) {
-		return "";
+	
+	// separate those tasks with the specific parameters and those that dont have in null list
+	private ArrayList<Task> separateArrayList(ArrayList<Task> taskArray, String field){
+		ArrayList<Task> separateArray = new ArrayList<Task>();
+		ArrayList<Task> result = exclusiveSeparation(taskArray, separateArray, field);
+		for (Task task: result){
+			if (taskArray.contains(task)){
+				taskArray.remove(task);
+			}
+		}
+		return result;
 	}
-
+	
+	private ArrayList<Task> exclusiveSeparation (ArrayList<Task> taskArray, ArrayList<Task> result, String field){
+		switch (field)
+		{
+			case "name":
+				 for (Task task: taskArray){
+						if (task.getName()==null){
+							result.add(task);
+						}
+					}
+				break;
+			case "starttime":
+				 for (Task task: taskArray){
+						if (task.getStartTime()==null){
+							result.add(task);
+						}
+					}
+				break;
+			case "endtime":
+				 for (Task task: taskArray){
+						if (task.getEndTime()==null){
+							result.add(task);
+						}
+					}
+				break;
+			case "date":
+				 for (Task task: taskArray){
+						if (task.getDate()==null){
+							result.add(task);
+						}
+					}
+				break;
+		}
+		return result;
+	}
+	
 	private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
 		ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
 		for (Task task : taskArray) {
