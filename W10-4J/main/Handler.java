@@ -216,21 +216,20 @@ public class Handler {
 				Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
 				break;
 			case "tasks":
-				// display tasks in cloneHandlerMemory only
 				break;
 			case "done":
-				// display done tasks in doneStorage only
-				break;
+				return displayFormat(doneStorage);
 		}
 		cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		// ***need to consider sorting the done section and the tasks that dun have parameters like dates*** 
-		return "";
+		return displayFormat(cloneHandlerMemory);
 	}
 	
 	// separate those tasks with the specific parameters and those that dont have in null list
 	private ArrayList<Task> separateArrayList(ArrayList<Task> taskArray, String field){
 		ArrayList<Task> separateArray = new ArrayList<Task>();
 		ArrayList<Task> result = exclusiveSeparation(taskArray, separateArray, field);
+		// edit the clone to remove the excluded tasks
 		for (Task task: result){
 			if (taskArray.contains(task)){
 				taskArray.remove(task);
