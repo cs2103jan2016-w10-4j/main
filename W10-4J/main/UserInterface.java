@@ -50,7 +50,7 @@ public class UserInterface{
 		// Create a parallel group for the vertical axis
 		setVertGroup(layout, jScrollPane1, jScrollPane2, jLabel1, status, cmdEntry);
 		
-		action(p, cmdEntry, cmdDisplay);
+		action(p, cmdEntry, cmdDisplay, outputDisplay);
 		
 		f.pack();
 		f.setVisible(true);
@@ -162,17 +162,17 @@ public class UserInterface{
 		layout.setVerticalGroup(vGroup);
 	}
     
-    public static void action(Parser p, JTextField cmdEntry, JTextArea cmdDisplay){
+    public static void action(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput){
     	cmdEntry.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String s = cmdEntry.getText();
 				cmdEntry.setText("");
 				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
-				if (output.equals(Constants.MESSAGE_INVALID_FORMAT)){
-					printInCommandDisplay(cmdDisplay, Constants.MESSAGE_INVALID_FORMAT);
+				if (isDisplay(output)){
+					printInDisplayOutput(displayOutput, output.substring(1));
 				} else {
-					//t1.append("> " +output+"\n");
+					printInCommandDisplay(cmdDisplay, output);
 				}
 			}
 		});
@@ -180,5 +180,14 @@ public class UserInterface{
     
     public static void printInCommandDisplay(JTextArea cmdDisplay, String content){
     	cmdDisplay.append(content + "\n");
+    }
+    
+    public static void printInDisplayOutput(JTextPane displayOutput, String s) {
+    	displayOutput.setContentType("text/html");
+    	displayOutput.setText(s);
+    }
+    
+    public static boolean isDisplay(String s){
+    	return s.substring(0, 1).equals("0");
     }
 }
