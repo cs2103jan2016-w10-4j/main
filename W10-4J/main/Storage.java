@@ -44,53 +44,58 @@ public class Storage {
 		return status;
 	}
 
-	public ArrayList<ArrayList<Task>> read() throws IOException {
-		String content;
-		String index = null;
-		int count = 0;
-		Task task = null;
-		ArrayList<Task> readToDoTaskList = new ArrayList<Task>();
-		ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
-		ArrayList <ArrayList <Task>> readTaskList = new ArrayList<ArrayList<Task>>();
+	public ArrayList<ArrayList<Task>> read() {
+		try {
+			String content;
+			String index = null;
+			int count = 0;
+			Task task = null;
+			ArrayList<Task> readToDoTaskList = new ArrayList<Task>();
+			ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
+			ArrayList <ArrayList <Task>> readTaskList = new ArrayList<ArrayList<Task>>();
 
-		while ((content = read.readLine()) != null) {	
-			if(content.equals(taskOnHand)) {
-				count = 1;
-				index = taskOnHand; 
-			} else if (content.equals(taskDone)) {
-				count = 1;
-				index = taskDone;
-			} else if (!content.equals(taskOnHand) && !content.equals(taskDone) && index.equals(taskOnHand)){
-				String counter = count + ".";
-				String taskHeader = content.substring(0, content.indexOf(" "));
-				String taskName = content.substring(content.indexOf(": ") + 1);
-				
-				if(counter.equals(taskHeader)){
-					task = new Task(taskName);
-					readToDoTaskList.add(task);
-					count++;
+			while ((content = read.readLine()) != null) {	
+				if(content.equals(taskOnHand)) {
+					count = 1;
+					index = taskOnHand; 
+				} else if (content.equals(taskDone)) {
+					count = 1;
+					index = taskDone;
+				} else if (!content.equals(taskOnHand) && !content.equals(taskDone) && index.equals(taskOnHand)){
+					String counter = count + ".";
+					String taskHeader = content.substring(0, content.indexOf(" "));
+					String taskName = content.substring(content.indexOf(": ") + 1);
+
+					if(counter.equals(taskHeader)){
+						task = new Task(taskName);
+						readToDoTaskList.add(task);
+						count++;
+					} else {
+						readTaskDetails(readToDoTaskList, content, task);
+					}
 				} else {
-					readTaskDetails(readToDoTaskList, content, task);
-				}
-			} else {
-				String counter = count + ".";
-				String taskHeader = content.substring(0, content.indexOf(": "));
-				String taskName = content.substring(content.indexOf(": ") + 1);
-				
-				if(counter.equals(taskHeader)){
-					task = new Task(taskName);
-					readDoneTaskList.add(task);
-					count++;
-				} else {
-					readTaskDetails(readDoneTaskList, content, task);
+					String counter = count + ".";
+					String taskHeader = content.substring(0, content.indexOf(": "));
+					String taskName = content.substring(content.indexOf(": ") + 1);
+
+					if(counter.equals(taskHeader)){
+						task = new Task(taskName);
+						readDoneTaskList.add(task);
+						count++;
+					} else {
+						readTaskDetails(readDoneTaskList, content, task);
+					}
 				}
 			}
-		}
-		
-		readTaskList.add(readToDoTaskList);
-		readTaskList.add(readDoneTaskList);
+
+			readTaskList.add(readToDoTaskList);
+			readTaskList.add(readDoneTaskList);
 			
-		return readTaskList;
+			return readTaskList;
+			
+		} catch (IOException e) {
+			return null;
+		}
 	}
 	
 	private String checkFileExists(String filename){
