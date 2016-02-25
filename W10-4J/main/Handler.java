@@ -52,9 +52,9 @@ public class Handler {
 	private static ArrayList<Task> handlerMemory;
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
+	Storage mainStorage = new Storage();
 	
 	public Handler(){
-		Storage mainStorage = new Storage();
 		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read();
 		handlerMemory = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
@@ -221,7 +221,6 @@ public class Handler {
 				return displayFormat(doneStorage);
 		}
 		cloneHandlerMemory.addAll(exclusiveHandlerMemory);
-		// ***need to consider sorting the done section and the tasks that dun have parameters like dates*** 
 		return displayFormat(cloneHandlerMemory);
 	}
 	
@@ -301,6 +300,10 @@ public class Handler {
 	}
 
 	private String retrieve(String[] task) {
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
+		handlerMemory = getFromStorage.get(0);
+		doneStorage = getFromStorage.get(1);
+		previousInputStorage = new ArrayList<PreviousInput>();
 		return "";
 	}
 
