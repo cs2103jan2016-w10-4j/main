@@ -39,8 +39,11 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
-
-		return h.executeCommand(commandType, arguments);
+		if(commandType == COMMAND_TYPE.DISPLAY){
+			return "0"+h.executeCommand(commandType, arguments);
+		} else{
+			return "1"+h.executeCommand(commandType, arguments);
+		}
 	}
 
 	public COMMAND_TYPE getAction(String command) {

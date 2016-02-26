@@ -5,7 +5,7 @@ public class Constants {
 		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, RETRIEVE, UNDO, EXIT, INVALID
 	};
 	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
-	public static final String fileName = ".txt";
+	public static final String fileName = "mytextfile.txt";
 	public static final String[] addDefaultCommandList = {"add","new","+"};
 	public static final String[] deleteDefaultCommandList = {"delete","del","remove","rm","bin","thrash","-"};
 	public static final String[] editDefaultCommandList = {"edit","change","edittask","e"};
@@ -20,4 +20,14 @@ public class Constants {
 	public static final String[] editDefaultArgumentList = {"rename","date","start","end","details","by","at"};
 	public static final String[] displayDefaultArgumentList = {"by","task","done"};
 	public static final String[] searchDefaultArgumentList = {"excl","exclude"};
+
+	public static final String MESSAGE_ADD_PASS = ("Task has been added.");
+	public static final String MESSAGE_DELETE_PASS = ("Task has been deleted.");
+	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
+	public static final String MESSAGE_EDIT_PASS = ("Task has been edited.");
+	public static final String MESSAGE_DONE_PASS = ("Task has been set to done.");
+	public static final String MESSAGE_DONE_FAIL = ("Task cannot be set to done.");
+	public static final String MESSAGE_SEARCH_PASS = ("Search successful.");
+	public static final String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
+	public static final String MESSAGE_UNDO_PASS = ("Undo successful.");
 }

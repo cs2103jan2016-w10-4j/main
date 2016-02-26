@@ -5,47 +5,6 @@ import java.util.Collections;
 
 import main.Constants.COMMAND_TYPE;
 
-class PreviousInput {
-	private String action_;
-	private Task task_;
-	// only for edit method in handler
-	private Task editedTask_;
-
-	public PreviousInput(String action, Task task) {
-		action_ = action;
-		task_ = task;
-	}
-
-	public PreviousInput(String action, Task task, Task editedTask) {
-		action_ = action;
-		task_ = task;
-		editedTask_ = editedTask;
-	}
-
-	public String getAction() {
-		return action_;
-	}
-
-	public Task getTask() {
-		return task_;
-	}
-
-	public Task getEditedTask() {
-		return editedTask_;
-	}
-
-	public void setAction(String action) {
-		action_ = action;
-	}
-
-	public void setTask(Task task) {
-		task_ = task;
-	}
-
-	public void setEditedTask(Task editedTask) {
-		editedTask_ = editedTask;
-	}
-}
 
 public class Handler {
 	
@@ -60,16 +19,6 @@ public class Handler {
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
 	}
-
-	private static String MESSAGE_ADD_PASS = ("Task has been added.");
-	private static String MESSAGE_DELETE_PASS = ("Task has been deleted.");
-	private static String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
-	private static String MESSAGE_EDIT_PASS = ("Task has been edited.");
-	private static String MESSAGE_DONE_PASS = ("Task has been set to done.");
-	private static String MESSAGE_DONE_FAIL = ("Task cannot be set to done.");
-	private static String MESSAGE_SEARCH_PASS = ("Search successful.");
-	private static String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
-	private static String MESSAGE_UNDO_PASS = ("Undo successful.");
 
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
@@ -131,13 +80,13 @@ public class Handler {
 		handlerMemory.add(eachTask);
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
-		return MESSAGE_ADD_PASS;
+		return Constants.MESSAGE_ADD_PASS;
 	}
 
 	private String delete(String[] task) {
 		int taskID = Integer.parseInt(task[0]);
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
-			return MESSAGE_DELETE_FAIL;
+			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			Task eachTask = handlerMemory.get(taskID - 1);
 			handlerMemory.remove(eachTask);
@@ -145,7 +94,7 @@ public class Handler {
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("delete", eachTask));
-			return MESSAGE_DELETE_PASS;
+			return Constants.MESSAGE_DELETE_PASS;
 		}
 	}
 
@@ -157,7 +106,7 @@ public class Handler {
 		mainStorage.write(handlerMemory, doneStorage);
 		// remember previous state
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask, editedTask));
-		return MESSAGE_EDIT_PASS;
+		return Constants.MESSAGE_EDIT_PASS;
 	}
 
 	private Task fieldEditor(Task eachTask, String[] task) {
@@ -188,7 +137,7 @@ public class Handler {
 	private String done(String[] task) {
 		int taskID = Integer.parseInt(task[0]);
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
-			return MESSAGE_DONE_FAIL;
+			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			Task eachTask = handlerMemory.get(taskID - 1);
 			handlerMemory.remove(eachTask);
@@ -197,39 +146,43 @@ public class Handler {
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
-			return MESSAGE_DONE_PASS;
+			return Constants.MESSAGE_DONE_PASS;
 		}
 	}
 
 	private String display(String[] task) {
-		String displayField = task[1];
-		ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
-		ArrayList<Task> exclusiveHandlerMemory = null;
-		switch (displayField)
-		{
-			case "alphabetical order":
-				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "name");
-				Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
-				break;
-			case "starttime":
-				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "starttime");
-				Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
-				break;
-			case "endtime":
-				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "endtime");
-				Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
-				break;
-			case "date":
-				exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "date");
-				Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
-				break;
-			case "tasks":
-				break;
-			case "done":
-				return displayFormat(doneStorage);
+		if(task.length==0){
+			return displayFormat(handlerMemory);
+		}else{
+			String displayField = task[1];
+			ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
+			ArrayList<Task> exclusiveHandlerMemory = null;
+			switch (displayField)
+			{
+				case "alphabetical order":
+					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "name");
+					Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+					break;
+				case "starttime":
+					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "starttime");
+					Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
+					break;
+				case "endtime":
+					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "endtime");
+					Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
+					break;
+				case "date":
+					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "date");
+					Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
+					break;
+				case "tasks":
+					break;
+				case "done":
+					return displayFormat(doneStorage);
+			}
+			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+			return displayFormat(cloneHandlerMemory);
 		}
-		cloneHandlerMemory.addAll(exclusiveHandlerMemory);
-		return displayFormat(cloneHandlerMemory);
 	}
 	
 	// separate those tasks with the specific parameters and those that dont have in null list
@@ -294,17 +247,17 @@ public class Handler {
 			for (Task eachTask : handlerMemory) {
 				if ((eachTask.getName().contains(task[0]) && !eachTask.getName().contains(task[2]))
 						|| (eachTask.getDetails().contains(task[0]) && !eachTask.getDetails().contains(task[2]))) {
-					return MESSAGE_SEARCH_PASS;
+					return Constants.MESSAGE_SEARCH_PASS;
 				}
 			}
 		} else {
 			for (Task eachTask : handlerMemory) {
 				if (eachTask.getName().contains(task[0]) || eachTask.getDetails().contains(task[0])) {
-					return MESSAGE_SEARCH_PASS;
+					return Constants.MESSAGE_SEARCH_PASS;
 				}
 			}
 		}
-		return MESSAGE_SEARCH_FAIL;
+		return Constants.MESSAGE_SEARCH_FAIL;
 	}
 
 	private String retrieve(String[] task) {
@@ -358,7 +311,7 @@ public class Handler {
 		}
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
-		return MESSAGE_UNDO_PASS;
+		return Constants.MESSAGE_UNDO_PASS;
 	}
 
 	private Task taskFinder(ArrayList<Task> taskArray, Task task) {
