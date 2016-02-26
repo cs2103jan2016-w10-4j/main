@@ -3,14 +3,10 @@ package main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileWriter;
 
 public class Storage {
 	private PrintWriter print;
@@ -19,11 +15,9 @@ public class Storage {
 	private String taskDone = "Tasks that are done:";
 	private String noTaskOnHand = "No tasks on hand!";
 	private String noTaskDone = "No tasks are done!";
-	private String success = "Success";
-	private String failure = "Failure";
 	
 	public Storage() {
-		try {		
+		try {
 			read = new BufferedReader(new FileReader(Constants.fileName));
 			print = new PrintWriter(new FileWriter(Constants.fileName));
 		} catch (IOException e) {
@@ -51,7 +45,7 @@ public class Storage {
 	}
 
 	public ArrayList<ArrayList<Task>> read() {
-		try {		
+		try {
 			String content;
 			String index = null;
 			int count = 0;
@@ -162,43 +156,26 @@ public class Storage {
 	
 	public ArrayList<ArrayList<Task>> retrieve(String filename) {
 		try {
-			// Check if file and directory exists before proceeding on to read the content in the file
-			String outcome = checkFileExists(filename);
-			if(outcome.equals(failure)){
-				File file = new File (filename);
-				Path path = FileSystems.getDefault().getPath(filename);
-				
-				if(file.isDirectory()){
-					Files.createFile(path);
-				} else {
-					String excludeFileName = filename.substring(0, filename.lastIndexOf("/") + 1); 
-					Path pathWithoutFileName = Paths.get(excludeFileName);
-					Files.createDirectories(pathWithoutFileName);
-					Files.createFile(path);
-				}
-			}
-			
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
 			ArrayList<ArrayList<Task>> taskList = read(reader);
 			reader.close();
 			return taskList;
 		} catch (IOException e) {
-			System.out.println(e);
 			return null;
 		}
 	}
 	
 	private String checkFileExists(String filename){
-		String outcome;
+		String statement;
 		File file = new File (filename);
-
+		
 		if(file.exists()) {
-			outcome = success;
+			statement = "Success";
 		} else {
-			outcome = failure;
+			statement = "Failure";
 		}
 		
-		return outcome;
+		return statement;
 	}
 	
 	private void getTaskDetails(String taskCategory, ArrayList<Task> taskList) {
