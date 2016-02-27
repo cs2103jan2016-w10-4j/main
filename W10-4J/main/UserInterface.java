@@ -92,9 +92,9 @@ public class UserInterface{
     
     public static void horiGroupHp(GroupLayout.ParallelGroup hp, JScrollPane jScrollPane2, JScrollPane jScrollPane1, JLabel status){
 		// Add a scroll pane and a label to the parallel group hp
-		hp.addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
-		hp.addComponent(status, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
-		hp.addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);    	
+		hp.addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);
+		hp.addComponent(status, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);
+		hp.addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);    	
     }
     
     public static void setHoriGroup(GroupLayout layout, JLabel jLabel1, JTextField cmdEntry, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JLabel status){
@@ -179,7 +179,7 @@ public class UserInterface{
 				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
 				if (isDisplay(output)){
-					printInDisplayOutput(displayOutput, output.substring(1));
+					printInDisplayOutput(displayOutput, "<table>" + output.substring(1) + "</table>");
 				} else {
 					printInCommandDisplay(cmdDisplay, output.substring(1));
 				}

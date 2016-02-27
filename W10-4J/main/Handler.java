@@ -331,21 +331,20 @@ public class Handler {
 		String output = "";
 		int counter = 1;
 		for (Task t : sortedList) {
-			output += counter + ") Event: " + t.getName() + "<br>";
+			output += "<tr><td align=\"right\">" + counter + ")</td>" + "<td> Event: </td><td>" + t.getName() + "</td></tr>";
 			if (t.getDate() != null) {
-				output += "Date: " + t.getDate() + "<br>";
+				output += "<tr padding-top=0><td></td><td>" + "Date: </td><td>" + t.getDate() + "</td></tr>";
 			}
 			if (t.getStartTime() != null) {
-				output += "StartTime: " + t.getStartTime() + "<br>";
+				output += "<tr><td></td><td>" + "StartTime: </td><td>" + t.getStartTime() + "</td></tr>";
 			}
 			if (t.getEndTime() != null) {
-				output += "EndTime: " + t.getEndTime() + "<br>";
+				output += "<tr><td></td><td>" + "EndTime: </td><td>" + t.getEndTime() + "</td></tr>";
 			}
 			if (t.getDetails() != null) {
-				output += "Details: " + t.getDetails() + "<br>";
+				output += "<tr><td></td><td>" + "Details: </td><td>" + t.getDetails() + "</td></tr>";
 			}
 			counter++;
-			output += "<br>";
 		}
 
 		return output;
