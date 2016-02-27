@@ -181,7 +181,7 @@ public class UserInterface{
 				if (isDisplay(output)){
 					printInDisplayOutput(displayOutput, output.substring(1));
 				} else {
-					printInCommandDisplay(cmdDisplay, output);
+					printInCommandDisplay(cmdDisplay, output.substring(1));
 				}
 			}
 		});

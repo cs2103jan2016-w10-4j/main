@@ -329,8 +329,9 @@ public class Handler {
 
 	private String displayFormat(ArrayList<Task> sortedList) {
 		String output = "";
+		int counter = 1;
 		for (Task t : sortedList) {
-			output += "Event: " + t.getName() + "<br>";
+			output += counter + ") Event: " + t.getName() + "<br>";
 			if (t.getDate() != null) {
 				output += "Date: " + t.getDate() + "<br>";
 			}
@@ -343,6 +344,8 @@ public class Handler {
 			if (t.getDetails() != null) {
 				output += "Details: " + t.getDetails() + "<br>";
 			}
+			counter++;
+			output += "<br>";
 		}
 
 		return output;
