@@ -1,4 +1,4 @@
-package main;
+package UserInterface;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
+
+import Parser.Parser;
 
 public class UserInterface{
 	

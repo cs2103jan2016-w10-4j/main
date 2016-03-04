@@ -1,8 +1,12 @@
-package main;
+package Handler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Storage.Storage;
+import main.Constants;
+import main.Task;
 import main.Constants.COMMAND_TYPE;
 
 
@@ -316,10 +320,14 @@ public class Handler {
 		return false;
 	}
 	private String retrieve(String[] task) {
-		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
-		handlerMemory = getFromStorage.get(0);
-		doneStorage = getFromStorage.get(1);
-		previousInputStorage = new ArrayList<PreviousInput>();
+		try{
+			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
+			handlerMemory = getFromStorage.get(0);
+			doneStorage = getFromStorage.get(1);
+			previousInputStorage = new ArrayList<PreviousInput>();
+		} catch(IOException e){
+			return Constants.MESSAGE_RETRIEVE_FAIL;
+		}
 		return Constants.MESSAGE_RETRIEVE_PASS;
 	}
 

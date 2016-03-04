@@ -1,4 +1,6 @@
-package main;
+package Handler;
+
+import main.Task;
 
 public class PreviousInput {
 	private String action_;

@@ -1,4 +1,4 @@
-package main;
+package Parser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,7 +40,18 @@ public class NaturalLanguage {
 					if (temp == -1) {
 						return null;
 					} else {
-						month.clear();
+						//month.clear();
+						while(!month.isEmpty()){
+							int hold = month.remove(0);
+							if(isDay(hold)){
+								day.add(hold);
+							} else if (!confirmYear) {
+								year = temp;
+								confirmYear = true;
+							} else {
+								return null;
+							}
+						}
 						month.add(temp);
 						confirmMonth = true;
 					}

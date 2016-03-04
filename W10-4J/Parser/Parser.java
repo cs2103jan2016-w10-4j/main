@@ -1,7 +1,9 @@
-package main;
+package Parser;
 
 import java.util.ArrayList;
 
+import Handler.Handler;
+import main.Constants;
 import main.Constants.COMMAND_TYPE;
 
 public class Parser {
@@ -11,6 +13,7 @@ public class Parser {
 	ArrayList<String> doneCommandList = new ArrayList<>();
 	ArrayList<String> displayCommandList = new ArrayList<>();
 	ArrayList<String> searchCommandList = new ArrayList<>();
+	ArrayList<String> setdirCommandList = new ArrayList<>();
 	ArrayList<String> retrieveCommandList = new ArrayList<>();
 	ArrayList<String> undoCommandList = new ArrayList<>();
 	ArrayList<String> exitCommandList = new ArrayList<>();
@@ -59,6 +62,8 @@ public class Parser {
 			return COMMAND_TYPE.DISPLAY;
 		} else if (isCommandType(command, searchCommandList)) {
 			return COMMAND_TYPE.SEARCH;
+		} else if (isCommandType(command, setdirCommandList)) {
+			return COMMAND_TYPE.SETDIR;
 		} else if (isCommandType(command, retrieveCommandList)) {
 			return COMMAND_TYPE.RETRIEVE;
 		} else if (isCommandType(command, undoCommandList)) {
@@ -79,6 +84,13 @@ public class Parser {
 	}
 
 	public String[] getArguments(COMMAND_TYPE commandType, String command) {
+		if (commandType == COMMAND_TYPE.RETRIEVE || commandType == COMMAND_TYPE.SETDIR) {
+			if(command.contains(" ")){
+				return new String[]{command.substring(command.indexOf(" ")+1)};
+			} else{
+				return new String[]{};
+			}
+		}
 		ArrayList<String> tokens = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		boolean insideQuote = false;

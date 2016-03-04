@@ -1,8 +1,8 @@
 package main;
 
 public class Constants {
-	enum COMMAND_TYPE {
-		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, RETRIEVE, UNDO, EXIT, INVALID
+	public enum COMMAND_TYPE {
+		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, SETDIR, RETRIEVE, UNDO, EXIT, INVALID
 	};
 	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
 	public static final String fileName = "mytextfile.txt";
@@ -12,7 +12,8 @@ public class Constants {
 	public static final String[] doneDefaultCommandList = {"done","finish","complete"};
 	public static final String[] displayDefaultCommandList = {"display","ls","list","show","print"};
 	public static final String[] searchDefaultCommandList = {"search","find","contains"};
-	public static final String[] retrieveDefaultCommandList = {"storage","get","open","grab","grep"};
+	public static final String[] setdirDefaultCommandList = {"setdir","cd","setdirectory","set directory"};
+	public static final String[] retrieveDefaultCommandList = {"storage","get","open","grab","grep","retrieve"};
 	public static final String[] undoDefaultCommandList = {"undo","whoops","mb"};
 	public static final String[] exitDefaultCommandList = {"exit","quit"};
 	
@@ -31,4 +32,5 @@ public class Constants {
 	public static final String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
 	public static final String MESSAGE_UNDO_PASS = ("Undo successful.");
 	public static final String MESSAGE_RETRIEVE_PASS = ("Retrieve successful.");
+	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
 }

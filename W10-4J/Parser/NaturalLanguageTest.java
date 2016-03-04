@@ -1,4 +1,4 @@
-package main;
+package Parser;
 
 import static org.junit.Assert.*;
 
@@ -41,11 +41,11 @@ public class NaturalLanguageTest {
 		input = "16 jan 17";
 		assertEquals(input, "2017/01/16", n.getDate(input));
 		
-		input = "jan 16";
-		assertEquals(input, "2016/01/16", n.getDate(input));
+		input = "mar 16";
+		assertEquals(input, "2016/03/16", n.getDate(input));
 		
-		input = "16 jan";
-		assertEquals(input, "2016/01/16", n.getDate(input));
+		input = "12 mar";
+		assertEquals(input, "2016/03/12", n.getDate(input));
 	}
 
 	@Test
