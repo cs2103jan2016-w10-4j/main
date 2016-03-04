@@ -30,4 +30,5 @@ public class Constants {
 	public static final String MESSAGE_SEARCH_PASS = ("Search successful.");
 	public static final String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
 	public static final String MESSAGE_UNDO_PASS = ("Undo successful.");
+	public static final String MESSAGE_RETRIEVE_PASS = ("Retrieve successful.");
 }
