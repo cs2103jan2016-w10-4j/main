@@ -278,6 +278,9 @@ public class Parser {
 		for (int i = 0; i < Constants.searchDefaultCommandList.length; i++) {
 			searchCommandList.add(Constants.searchDefaultCommandList[i]);
 		}
+		for (int i = 0; i < Constants.setdirDefaultCommandList.length; i++) {
+			setdirCommandList.add(Constants.setdirDefaultCommandList[i]);
+		}
 		for (int i = 0; i < Constants.retrieveDefaultCommandList.length; i++) {
 			retrieveCommandList.add(Constants.retrieveDefaultCommandList[i]);
 		}

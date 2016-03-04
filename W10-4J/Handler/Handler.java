@@ -38,6 +38,8 @@ public class Handler {
 			return display(task);
 		case SEARCH:
 			return search(task);
+		case SETDIR:
+			return setdir(task);
 		case RETRIEVE:
 			return retrieve(task);
 		case UNDO:
@@ -318,6 +320,13 @@ public class Handler {
 		}
 		return false;
 	}
+	private String setdir(String[] task){
+		if(mainStorage.setDirectory(task[0])){
+			return Constants.MESSAGE_SETDIR_PASS;
+		} else{
+			return Constants.MESSAGE_SETDIR_FAIL;
+		}
+	}
 	private String retrieve(String[] task) {
 		try{
 			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
@@ -325,7 +334,6 @@ public class Handler {
 			doneStorage = getFromStorage.get(1);
 			previousInputStorage = new ArrayList<PreviousInput>();
 		} catch(Exception e){
-			e.printStackTrace();
 			return Constants.MESSAGE_RETRIEVE_FAIL;
 		}
 		return Constants.MESSAGE_RETRIEVE_PASS;

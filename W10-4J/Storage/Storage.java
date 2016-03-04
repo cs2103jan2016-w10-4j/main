@@ -82,10 +82,14 @@ public class Storage {
 		}
 	}
 
-	public String setDirectory(String filePathName) {
+	public boolean setDirectory(String filePathName){
 		SetDirectory setDirectory = new SetDirectory();
-		String status = setDirectory.setDirectory(filePathName);
-		return status;
+		if(setDirectory.setDirectory(filePathName)){
+			filename = filePathName;
+			return true;
+		} else{
+			return false;
+		}
 	}
 	
 	private String checkFileExists(String filename) {
