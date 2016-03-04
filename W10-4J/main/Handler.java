@@ -54,23 +54,23 @@ public class Handler {
 	}
 
 	private String add(String[] task) {
-		Task eachTask = new Task(task[0]);
+		Task eachTask = new Task(task[0].trim());
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
-			action = task[i];
+			action = task[i].trim();
 			switch (action) {
 			case "date":
-				eachTask.setDate(task[i + 1]);
+				eachTask.setDate(task[i + 1].trim());
 				break;
 			case "start":
-				eachTask.setStartTime(task[i + 1]);
+				eachTask.setStartTime(task[i + 1].trim());
 				break;
 			case "end":
 			case "time":
-				eachTask.setEndTime(task[i + 1]);
+				eachTask.setEndTime(task[i + 1].trim());
 				break;
 			case "details":
-				eachTask.setDetails(task[i + 1]);
+				eachTask.setDetails(task[i + 1].trim());
 				break;
 			}
 		}
@@ -84,7 +84,7 @@ public class Handler {
 	}
 
 	private String delete(String[] task) {
-		int taskID = Integer.parseInt(task[0]);
+		int taskID = Integer.parseInt(task[0].trim());
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
@@ -99,43 +99,53 @@ public class Handler {
 	}
 
 	private String edit(String[] task) {
-		int taskID = Integer.parseInt(task[0]);
+		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = handlerMemory.get(taskID - 1);
-		Task editedTask = fieldEditor(eachTask, task);
+		Task oldTask = cloneTask(eachTask);
+		// edits the task
+		fieldEditor(eachTask, task);
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
 		// remember previous state
-		clearAndAdd(previousInputStorage, new PreviousInput("edit", eachTask, editedTask));
+		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
 		return Constants.MESSAGE_EDIT_PASS;
 	}
 
-	private Task fieldEditor(Task eachTask, String[] task) {
+	private Task cloneTask(Task task){
+		Task result = new Task(task.getName());
+		result.setDate(task.getDate());
+		result.setStartTime(task.getStartTime());
+		result.setEndTime(task.getEndTime());
+		result.setDetails(task.getDetails());
+		return result;
+	}
+	private void fieldEditor(Task eachTask, String[] task) {
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
-			action = task[i];
+			action = task[i].trim();
 			switch (action) {
 			case "rename":
-				eachTask.setName(task[i + 1]);
+				eachTask.setName(task[i + 1].trim());
 				break;
 			case "date":
-				eachTask.setDate(task[i + 1]);
+				eachTask.setDate(task[i + 1].trim());
 				break;
 			case "start":
-				eachTask.setStartTime(task[i + 1]);
+				eachTask.setStartTime(task[i + 1].trim());
 				break;
 			case "end":
-				eachTask.setEndTime(task[i + 1]);
+				eachTask.setEndTime(task[i + 1].trim());
 				break;
 			case "details":
-				eachTask.setDetails(task[i + 1]);
+				eachTask.setDetails(task[i + 1].trim());
 				break;
 			}
 		}
-		return eachTask;
+		return;
 	}
 
 	private String done(String[] task) {
-		int taskID = Integer.parseInt(task[0]);
+		int taskID = Integer.parseInt(task[0].trim());
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
@@ -154,7 +164,7 @@ public class Handler {
 		if(task.length==0){
 			return displayFormat(handlerMemory);
 		}else{
-			String displayField = task[1];
+			String displayField = task[1].trim();
 			ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
 			ArrayList<Task> exclusiveHandlerMemory = null;
 			switch (displayField)
@@ -180,12 +190,14 @@ public class Handler {
 				case "done":
 					return displayFormat(doneStorage);
 			}
-			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+			if (exclusiveHandlerMemory != null){
+				cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+			}
 			return displayFormat(cloneHandlerMemory);
 		}
 	}
 	
-	// separate those tasks with the specific parameters and those that dont have in null list
+	// separate those tasks with the specific parameters and those that dont have in null list called result
 	private ArrayList<Task> separateArrayList(ArrayList<Task> taskArray, String field){
 		ArrayList<Task> separateArray = new ArrayList<Task>();
 		ArrayList<Task> result = exclusiveSeparation(taskArray, separateArray, field);
@@ -242,39 +254,83 @@ public class Handler {
 	}
 
 	private String search(String[] task) {
+		ArrayList<Task> searchHandlerMemory = new ArrayList<Task>();
+		// each task is certain to have a name
 		// check whether exclude field exists
-		if (task[1] != null) {
+		if (task.length > 1) {
 			for (Task eachTask : handlerMemory) {
-				if ((eachTask.getName().contains(task[0]) && !eachTask.getName().contains(task[2]))
-						|| (eachTask.getDetails().contains(task[0]) && !eachTask.getDetails().contains(task[2]))) {
-					return Constants.MESSAGE_SEARCH_PASS;
+				if (eachTask.getDetails()==null){
+					if (searchName(eachTask, task, true)){
+						searchHandlerMemory.add(eachTask);
+					}
+				} else {
+					if (searchNameAndDetails(eachTask, task, true)){
+						searchHandlerMemory.add(eachTask);
+					}
 				}
 			}
 		} else {
 			for (Task eachTask : handlerMemory) {
-				if (eachTask.getName().contains(task[0]) || eachTask.getDetails().contains(task[0])) {
-					return Constants.MESSAGE_SEARCH_PASS;
+				if (eachTask.getDetails()==null){
+					if (searchName(eachTask, task, false)){
+						searchHandlerMemory.add(eachTask);
+					}
+				} else {
+					if (searchNameAndDetails(eachTask, task, false)){
+						searchHandlerMemory.add(eachTask);
+					}
 				}
 			}
+		}
+		if (searchHandlerMemory.size()!=0){
+			return displayFormat(searchHandlerMemory);
 		}
 		return Constants.MESSAGE_SEARCH_FAIL;
 	}
 
+	private boolean searchNameAndDetails(Task eachTask, String[] task, boolean excludeField){
+		// check whether exclude field exists
+		if (excludeField) {
+			if ((eachTask.getName().contains(task[0].trim()) && !eachTask.getName().contains(task[2].trim()))
+					|| (eachTask.getDetails().contains(task[0].trim()) && !eachTask.getDetails().contains(task[2].trim()))) {
+				return true;
+			}
+		} else {
+			if (eachTask.getName().contains(task[0].trim()) || eachTask.getDetails().contains(task[0].trim())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private boolean searchName(Task eachTask, String[] task, boolean excludeField){
+		// check whether exclude field exists
+		if (excludeField) {
+			if ((eachTask.getName().contains(task[0].trim()) && !eachTask.getName().contains(task[2].trim()))) {
+				return true;
+			}
+		} else {
+			if (eachTask.getName().contains(task[0].trim())) {
+				return true;
+			}
+		}
+		return false;
+	}
 	private String retrieve(String[] task) {
 		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
 		handlerMemory = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		return "";
+		return Constants.MESSAGE_RETRIEVE_PASS;
 	}
 
 	private String undo() {
 		String actionToBeUndone = previousInputStorage.get(0).getAction();
 		Task previousTask = previousInputStorage.get(0).getTask();
+		Task eachTask;
 		switch (actionToBeUndone) {
 		case "add":
 			// to restore to previous state, must unadd the task
-			handlerMemory.remove(taskFinder(handlerMemory, previousTask));
+			handlerMemory.remove(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("delete", previousTask));
 			break;
@@ -286,7 +342,7 @@ public class Handler {
 			break;
 		case "edit":
 			// to restore to previous state, must edit again to previous state
-			Task eachTask = previousInputStorage.get(0).getEditedTask();
+			eachTask = previousInputStorage.get(0).getEditedTask();
 			handlerMemory.remove(eachTask);
 			handlerMemory.add(previousTask);
 			// remember previous state
@@ -294,19 +350,19 @@ public class Handler {
 			break;
 		case "done":
 			// to restore to previous state, must undone the task
-			eachTask = taskFinder(doneStorage, previousTask);
-			doneStorage.remove(eachTask);
-			handlerMemory.add(eachTask);
+			//eachTask = taskFinder(doneStorage, previousTask);
+			doneStorage.remove(previousTask);
+			handlerMemory.add(previousTask);
 			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput("undone", eachTask));
+			clearAndAdd(previousInputStorage, new PreviousInput("undone", previousTask));
 			break;
 		case "undone":
 			// to restore to previous state, must undone the task
-			eachTask = taskFinder(handlerMemory, previousTask);
-			handlerMemory.remove(eachTask);
-			doneStorage.add(eachTask);
+			//eachTask = taskFinder(handlerMemory, previousTask);
+			handlerMemory.remove(previousTask);
+			doneStorage.add(previousTask);
 			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
+			clearAndAdd(previousInputStorage, new PreviousInput("done", previousTask));
 			break;
 		}
 		// write to mainStorage
@@ -314,18 +370,18 @@ public class Handler {
 		return Constants.MESSAGE_UNDO_PASS;
 	}
 
-	private Task taskFinder(ArrayList<Task> taskArray, Task task) {
-		for (Task eachTask : handlerMemory) {
-			if (Task.taskNameComparator.compare(eachTask, task) == 0
-					&& Task.taskStarttimeComparator.compare(eachTask, task) == 0
-					&& Task.taskEndtimeComparator.compare(eachTask, task) == 0
-					&& Task.taskDateComparator.compare(eachTask, task) == 0
-					&& Task.taskDetailsComparator.compare(eachTask, task) == 0) {
-				return eachTask;
-			}
-		}
-		return null;
-	}
+//	private Task taskFinder(ArrayList<Task> taskArray, Task task) {
+//		for (Task eachTask : handlerMemory) {
+//			if (Task.taskNameComparator.compare(eachTask, task) == 0
+//					&& Task.taskStarttimeComparator.compare(eachTask, task) == 0
+//					&& Task.taskEndtimeComparator.compare(eachTask, task) == 0
+//					&& Task.taskDateComparator.compare(eachTask, task) == 0
+//					&& Task.taskDetailsComparator.compare(eachTask, task) == 0) {
+//				return eachTask;
+//			}
+//		}
+//		return null;
+//	}
 
 	private String displayFormat(ArrayList<Task> sortedList) {
 		String output = "";

@@ -9,9 +9,10 @@ public class Task {
 	private String endTime_;
 	private String details_;
 	
+	// use trim method to ensure all strings are compared properly
 	public static Comparator<Task> taskNameComparator = new Comparator<Task>(){
 		public int compare(Task task1, Task task2){
-			return (task1.getName().toLowerCase().compareTo(task2.getName().toLowerCase()));
+			return (task1.getName().toLowerCase().trim().compareTo(task2.getName().toLowerCase().trim()));
 		}
 	};
 	public static Comparator<Task> taskDetailsComparator = new Comparator<Task>(){
@@ -23,10 +24,10 @@ public class Task {
 		public int compare(Task task1, Task task2){
 			String[] startTime1 = task1.getStartTime().split(":");
 			String[] startTime2 = task2.getStartTime().split(":");
-			int hour1 = Integer.parseInt(startTime1[0]);
-			int hour2 = Integer.parseInt(startTime2[0]);
-			int min1 = Integer.parseInt(startTime1[1]);
-			int min2 = Integer.parseInt(startTime2[1]);
+			int hour1 = Integer.parseInt(startTime1[0].trim());
+			int hour2 = Integer.parseInt(startTime2[0].trim());
+			int min1 = Integer.parseInt(startTime1[1].trim());
+			int min2 = Integer.parseInt(startTime2[1].trim());
 			if (hour1==hour2){
 				return min1-min2;
 			} else {
@@ -38,10 +39,10 @@ public class Task {
 		public int compare(Task task1, Task task2){
 			String[] endTime1 = task1.getEndTime().split(":");
 			String[] endTime2 = task2.getEndTime().split(":");
-			int hour1 = Integer.parseInt(endTime1[0]);
-			int hour2 = Integer.parseInt(endTime2[0]);
-			int min1 = Integer.parseInt(endTime1[1]);
-			int min2 = Integer.parseInt(endTime2[1]);
+			int hour1 = Integer.parseInt(endTime1[0].trim());
+			int hour2 = Integer.parseInt(endTime2[0].trim());
+			int min1 = Integer.parseInt(endTime1[1].trim());
+			int min2 = Integer.parseInt(endTime2[1].trim());
 			if (hour1==hour2){
 				return min1-min2;
 			} else {
@@ -58,7 +59,7 @@ public class Task {
 		// assumes that the date is in yyyy/mm/dd format
 		String[] date = task.getDate().split("/");
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+		calendar.set(Integer.parseInt(date[0].trim()), Integer.parseInt(date[1].trim()), Integer.parseInt(date[2].trim()));
 		return calendar;
 	}
 	
