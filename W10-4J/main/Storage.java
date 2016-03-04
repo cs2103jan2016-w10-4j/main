@@ -66,7 +66,7 @@ public class Storage {
 		return readTaskList;
 	}
 
-	public ArrayList<ArrayList<Task>> retrieve(String filename) {
+	public ArrayList<ArrayList<Task>> retrieve(String filename) throws IOException {
 		Retrieve retrieve = new Retrieve();
 		updateFilenameIfPathExists();
 		ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(filename);
@@ -82,7 +82,9 @@ public class Storage {
 	private String checkFileExists(String filename) {
 		String outcome;
 		File file = new File(filename);
-
+		//String absoluteFileName = "\"" + filename + "\"";
+		//File file = new File(absoluteFileName);
+		
 		if (file.exists()) {
 			outcome = success;
 		} else {

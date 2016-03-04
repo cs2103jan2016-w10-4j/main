@@ -2,6 +2,7 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class Retrieve {
 	private String success = "Success";
 	private String failure = "Failure";
 	
-	public ArrayList<ArrayList<Task>> retrieveTaskListFromFile(String filename) {
+	public ArrayList<ArrayList<Task>> retrieveTaskListFromFile(String filename) throws FileNotFoundException {
 		try {
 			ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
 			
@@ -36,21 +37,18 @@ public class Retrieve {
 		}
 	}
 	
-	private String checkFileExists(String filename) {
-		try{
-			String outcome;
-			String test = "\"" + filename + "\"";
-			File file = new File(test);
-			System.out.println(test);
-			if (file.exists()) {
-				outcome = success;
-			} else {
-				outcome = failure;
-			}
-			
-			return outcome;
-		} catch (Exception e) {
-			return null;
+	private String checkFileExists(String filename) throws FileNotFoundException {
+		String outcome;
+		//File file = new File(filename);
+		
+		String absoluteFileName = "\"" + filename + "\"";
+		File file = new File(absoluteFileName);
+		if (file.exists()) {
+			outcome = success;
+		} else {
+			outcome = failure;
 		}
+
+		return outcome;
 	}
 }

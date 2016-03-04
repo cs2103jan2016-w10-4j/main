@@ -77,8 +77,10 @@ public class Write {
 	
 	private String checkFileExists(String filename) {
 		String outcome;
-		File file = new File(filename);
+		//File file = new File(filename);
 
+		String absoluteFileName = "\"" + filename + "\"";
+		File file = new File(absoluteFileName);
 		if (file.exists()) {
 			outcome = success;
 		} else {
