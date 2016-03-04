@@ -1,6 +1,5 @@
 package Handler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -325,7 +324,8 @@ public class Handler {
 			handlerMemory = getFromStorage.get(0);
 			doneStorage = getFromStorage.get(1);
 			previousInputStorage = new ArrayList<PreviousInput>();
-		} catch(IOException e){
+		} catch(Exception e){
+			e.printStackTrace();
 			return Constants.MESSAGE_RETRIEVE_FAIL;
 		}
 		return Constants.MESSAGE_RETRIEVE_PASS;

@@ -2,6 +2,7 @@ package Storage;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,11 +71,15 @@ public class Storage {
 		return readTaskList;
 	}
 
-	public ArrayList<ArrayList<Task>> retrieve(String filename) throws IOException {
+	public ArrayList<ArrayList<Task>> retrieve(String filename) throws FileNotFoundException {
 		Retrieve retrieve = new Retrieve();
 		updateFilenameIfPathExists();
-		ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(filename);
-		return taskList;
+		try{
+			ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(filename);
+			return taskList;
+		} catch(FileNotFoundException e){
+			throw new FileNotFoundException();
+		}
 	}
 
 	public String setDirectory(String filePathName) {

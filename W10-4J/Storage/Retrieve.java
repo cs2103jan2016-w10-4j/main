@@ -21,10 +21,7 @@ public class Retrieve {
 			// the content in the file
 			String outcome = checkFileExists(filename);
 			if (outcome.equals(failure)) {
-				ArrayList<Task> readToDoTaskList = new ArrayList<Task>();
-				ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
-				taskList.add(readToDoTaskList);
-				taskList.add(readDoneTaskList);
+				throw new FileNotFoundException();
 			} else {
 				BufferedReader reader = new BufferedReader(new FileReader(filename));
 				Read read = new Read();
@@ -34,17 +31,13 @@ public class Retrieve {
 			
 			return taskList;
 		} catch (IOException e) {
-			System.out.println(e);
 			return null;
 		}
 	}
 	
-	private String checkFileExists(String filename) throws FileNotFoundException {
+	private String checkFileExists(String filename){
 		String outcome;
-		//File file = new File(filename);
-		
-		String absoluteFileName = "\"" + filename + "\"";
-		File file = new File(absoluteFileName);
+		File file = new File(filename);
 		if (file.exists()) {
 			outcome = success;
 		} else {
