@@ -18,7 +18,7 @@ public class Constants {
 	
 	public static final String[] addDefaultArgumentList = {"date","start","end","details","by","at"};
 	public static final String[] editDefaultArgumentList = {"rename","date","start","end","details","by","at"};
-	public static final String[] displayDefaultArgumentList = {"by","task","done"};
+	public static final String[] displayDefaultArgumentList = {"by","alphabetical order","name","starttime","endtime","date","tasks","done"};
 	public static final String[] searchDefaultArgumentList = {"excl","exclude"};
 
 	public static final String MESSAGE_ADD_PASS = ("Task has been added.");
