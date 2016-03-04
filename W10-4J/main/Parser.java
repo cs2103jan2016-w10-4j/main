@@ -39,7 +39,7 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
-		if(commandType == COMMAND_TYPE.DISPLAY){
+		if(commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH){
 			return "0"+h.executeCommand(commandType, arguments);
 		} else{
 			return "1"+h.executeCommand(commandType, arguments);
