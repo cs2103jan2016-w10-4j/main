@@ -322,12 +322,25 @@ public class Handler {
 	}
 	private String setdir(String[] task){
 		if(mainStorage.setDirectory(task[0])){
-			String status = retrieve(task);
+			retrieve(task[0]);
 			return Constants.MESSAGE_SETDIR_PASS;
 		} else{
 			return Constants.MESSAGE_SETDIR_FAIL;
 		}
 	}
+	
+	// Retrieve method for setdir()
+	private void retrieve (String task) {
+		try{
+			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task);
+			handlerMemory = getFromStorage.get(0);
+			doneStorage = getFromStorage.get(1);
+			previousInputStorage = new ArrayList<PreviousInput>();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	private String retrieve(String[] task) {
 		try{
 			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);

@@ -28,7 +28,7 @@ public class Retrieve {
 				taskList = read.readFromFile(reader);
 				reader.close();
 				Write write = new Write();
-				write.writeToFile(filename, taskList);
+				write.writeToFile(Storage.filename, taskList);
 			}
 			
 			return taskList;
