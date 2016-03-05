@@ -1,53 +1,34 @@
 package Storage;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class SetDirectory {
-	private String success = "Success";
-	private String failure = "Failure";
-
 	public boolean setDirectory(String filePathName) {
-		File file = new File(filePathName);
-		Path path = FileSystems.getDefault().getPath(filePathName);
 		try {
-			if (file.isDirectory()) {
-				Files.createFile(path);
-			} else {
+			File file = new File(filePathName);
+			if(!(checkDirectory(file))) {
+				Path path = FileSystems.getDefault().getPath(filePathName);
 				String excludeFileName = filePathName.substring(0, filePathName.lastIndexOf("/") + 1);
 				Path pathWithoutFileName = Paths.get(excludeFileName);
 				Files.createDirectories(pathWithoutFileName);
 				Files.createFile(path);
-			}
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	private boolean checkDirectory(String filePathName) {
-		String outcome = checkFileExists(filePathName);
-		if (outcome.equals(failure)) {
-			return false;
-		} else {
+			} 
 			return true;
+		} catch (IOException e) {
+			return false;
 		}
 	}
 
-	private String checkFileExists(String filename) {
-		String outcome;
-		File file = new File(filename);
-
-		//String absoluteFileName = "\"" + filename + "\"";
-		//File file = new File(absoluteFileName);
+	private boolean checkDirectory(File file) {
 		if (file.exists()) {
-			outcome = success;
+			return true;
 		} else {
-			outcome = failure;
+			return false;
 		}
-		return outcome;
 	}
 }

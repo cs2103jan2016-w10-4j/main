@@ -27,6 +27,8 @@ public class Retrieve {
 				Read read = new Read();
 				taskList = read.readFromFile(reader);
 				reader.close();
+				Write write = new Write();
+				write.writeToFile(filename, taskList);
 			}
 			
 			return taskList;
@@ -43,7 +45,6 @@ public class Retrieve {
 		} else {
 			outcome = failure;
 		}
-
 		return outcome;
 	}
 }

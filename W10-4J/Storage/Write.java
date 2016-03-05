@@ -24,6 +24,7 @@ public class Write {
 	private String failure = "Failure";
 	private String pathVariable = "PATH:";
 	
+	// Applicable if filename == Constants.fileName
 	public String writeToFile(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
 		try {
 			print = new PrintWriter(new FileWriter(Storage.filename));
@@ -50,6 +51,7 @@ public class Write {
 		return status;
 	}
 	
+	// Applicable if filename != Constants.fileName
 	public String writeToFile(String filePathName, ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
 		try {
 			print = new PrintWriter(new FileWriter(Storage.filename));
@@ -76,6 +78,35 @@ public class Write {
 		
 		print.close();
 		return status;
+	}
+	
+	// Applicable for Retrieve without overwriting the Path found in the default text
+	public void writeToFile(String filePathName, ArrayList<ArrayList<Task>> taskList) {
+		try {
+			print = new PrintWriter(new FileWriter(Storage.filename));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String status = checkFileExists(Storage.filename);
+		ArrayList<Task> toDoTaskList = taskList.get(0);
+		ArrayList<Task> doneTaskList = taskList.get(1);
+		
+		if(status.equals(success)) {
+			if (toDoTaskList.isEmpty()) {
+				print.println(noTaskOnHand);
+			} else {
+				getTaskDetails(taskOnHand, toDoTaskList);
+			}
+
+			if (doneTaskList.isEmpty()) {
+				print.println(noTaskDone);
+			} else {
+				getTaskDetails(taskDone, doneTaskList);
+			}
+		}
+		
+		print.close();
 	}
 	
 	private String checkFileExists(String filename) {

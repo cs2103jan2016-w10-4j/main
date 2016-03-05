@@ -322,6 +322,7 @@ public class Handler {
 	}
 	private String setdir(String[] task){
 		if(mainStorage.setDirectory(task[0])){
+			String status = retrieve(task);
 			return Constants.MESSAGE_SETDIR_PASS;
 		} else{
 			return Constants.MESSAGE_SETDIR_FAIL;

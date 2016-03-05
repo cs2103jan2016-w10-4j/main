@@ -25,7 +25,6 @@ public class Read {
 			ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
 			ArrayList<ArrayList<Task>> readTaskList = new ArrayList<ArrayList<Task>>();
 			read = new BufferedReader(new FileReader(Storage.filename));
-			
 			while ((content = read.readLine()) != null) {
 				String path = content.substring(0, content.indexOf(" "));
 				

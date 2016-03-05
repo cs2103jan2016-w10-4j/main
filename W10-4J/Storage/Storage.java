@@ -71,11 +71,11 @@ public class Storage {
 		return readTaskList;
 	}
 
-	public ArrayList<ArrayList<Task>> retrieve(String filename) throws FileNotFoundException {
+	public ArrayList<ArrayList<Task>> retrieve(String fileName) throws FileNotFoundException {
 		Retrieve retrieve = new Retrieve();
 		updateFilenameIfPathExists();
 		try{
-			ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(filename);
+			ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(fileName);
 			return taskList;
 		} catch(FileNotFoundException e){
 			throw new FileNotFoundException();
@@ -86,6 +86,8 @@ public class Storage {
 		SetDirectory setDirectory = new SetDirectory();
 		if(setDirectory.setDirectory(filePathName)){
 			filename = filePathName;
+			Write write = new Write();
+			write.updatePathSentence(filePathName);
 			return true;
 		} else{
 			return false;
@@ -95,9 +97,7 @@ public class Storage {
 	private String checkFileExists(String filename) {
 		String outcome;
 		File file = new File(filename);
-		//String absoluteFileName = "\"" + filename + "\"";
-		//File file = new File(absoluteFileName);
-		
+
 		if (file.exists()) {
 			outcome = success;
 		} else {
