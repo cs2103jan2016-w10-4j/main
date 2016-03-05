@@ -109,13 +109,15 @@ public class Storage {
 	private void updateFilenameIfPathExists() {
 		try {
 			BufferedReader read = new BufferedReader(new FileReader(Constants.fileName));
-			String content;
-
-			while ((content = read.readLine()) != null) {
+			String content = read.readLine();
+			
+			if(content != null) {
 				String path = content.substring(0, content.indexOf(" "));
 				if(path.equals(pathVariable)) {
 					String absolutePath = content.substring(content.indexOf(" ") + 1, content.length());
-					updateFilenameVariable(absolutePath);
+					if(checkFileExists(absolutePath).equals(success)) {
+						updateFilenameVariable(absolutePath);
+					}
 				} 
 			}
 			read.close();
