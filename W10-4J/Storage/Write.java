@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import main.Constants;
 import main.Task;
 
 public class Write {
@@ -152,11 +151,11 @@ public class Write {
 		try {
 			tempFile = new File("temp.txt");
 			printPath = new PrintWriter(new FileWriter("temp.txt"));
-			reader = new BufferedReader(new FileReader(Constants.fileName));
+			reader = new BufferedReader(new FileReader(Storage.defaultFilename));
 			copyFileContent(filePathName, printPath, reader);
 
 			// Revert the copy back and delete the temp file
-			printPath = new PrintWriter(new FileWriter(Constants.fileName));
+			printPath = new PrintWriter(new FileWriter(Storage.defaultFilename));
 			reader = new BufferedReader(new FileReader("temp.txt"));
 			copyFileContent(filePathName, printPath, reader);
 			tempFile.delete();

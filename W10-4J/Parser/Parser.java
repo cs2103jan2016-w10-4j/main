@@ -3,8 +3,6 @@ package Parser;
 import java.util.ArrayList;
 
 import Handler.Handler;
-import main.Constants;
-import main.Constants.COMMAND_TYPE;
 
 public class Parser {
 	ArrayList<String> addCommandList = new ArrayList<>();
@@ -23,6 +21,23 @@ public class Parser {
 	ArrayList<String> displayArgumentList = new ArrayList<>();
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 
+	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
+	public static final String[] addDefaultCommandList = {"add","new","+"};
+	public static final String[] deleteDefaultCommandList = {"delete","del","remove","rm","bin","thrash","-"};
+	public static final String[] editDefaultCommandList = {"edit","change","edittask","e"};
+	public static final String[] doneDefaultCommandList = {"done","finish","complete"};
+	public static final String[] displayDefaultCommandList = {"display","ls","list","show","print"};
+	public static final String[] searchDefaultCommandList = {"search","find","contains"};
+	public static final String[] setdirDefaultCommandList = {"setdir","cd","setdirectory","set directory"};
+	public static final String[] retrieveDefaultCommandList = {"storage","get","open","grab","grep","retrieve"};
+	public static final String[] undoDefaultCommandList = {"undo","whoops","mb"};
+	public static final String[] exitDefaultCommandList = {"exit","quit"};
+	
+	public static final String[] addDefaultArgumentList = {"date","start","end","details","by","at"};
+	public static final String[] editDefaultArgumentList = {"rename","date","start","end","details","by","at"};
+	public static final String[] displayDefaultArgumentList = {"by","alphabetical order","name","starttime","endtime","date","tasks","done"};
+	public static final String[] searchDefaultArgumentList = {"excl","exclude"};
+
 	Handler h;
 	NaturalLanguage n;
 
@@ -34,44 +49,44 @@ public class Parser {
 
 	public String parse(String command) {
 		String commandTypeString = getFirstWord(command);
-		COMMAND_TYPE commandType = getAction(commandTypeString);
-		if (commandType == COMMAND_TYPE.INVALID) {
-			return Constants.MESSAGE_INVALID_FORMAT;
+		String commandType = getAction(commandTypeString);
+		if (commandType.equals("invalid")) {
+			return MESSAGE_INVALID_FORMAT;
 		}
 		String[] arguments = getArguments(commandType, command);
 		if (!isValid(commandType, arguments)) {
-			return Constants.MESSAGE_INVALID_FORMAT;
+			return MESSAGE_INVALID_FORMAT;
 		}
-		if(commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH){
+		if(commandType.equals("display") || commandType.equals("search")){
 			return "0"+h.executeCommand(commandType, arguments);
 		} else{
 			return "1"+h.executeCommand(commandType, arguments);
 		}
 	}
 
-	public COMMAND_TYPE getAction(String command) {
+	public String getAction(String command) {
 		if (isCommandType(command, addCommandList)) {
-			return COMMAND_TYPE.ADD;
+			return "add";
 		} else if (isCommandType(command, deleteCommandList)) {
-			return COMMAND_TYPE.DELETE;
+			return "delete";
 		} else if (isCommandType(command, editCommandList)) {
-			return COMMAND_TYPE.EDIT;
+			return "edit";
 		} else if (isCommandType(command, doneCommandList)) {
-			return COMMAND_TYPE.DONE;
+			return "done";
 		} else if (isCommandType(command, displayCommandList)) {
-			return COMMAND_TYPE.DISPLAY;
+			return "display";
 		} else if (isCommandType(command, searchCommandList)) {
-			return COMMAND_TYPE.SEARCH;
+			return "search";
 		} else if (isCommandType(command, setdirCommandList)) {
-			return COMMAND_TYPE.SETDIR;
+			return "setdir";
 		} else if (isCommandType(command, retrieveCommandList)) {
-			return COMMAND_TYPE.RETRIEVE;
+			return "retrieve";
 		} else if (isCommandType(command, undoCommandList)) {
-			return COMMAND_TYPE.UNDO;
+			return "undo";
 		} else if (isCommandType(command, exitCommandList)) {
-			return COMMAND_TYPE.EXIT;
+			return "exit";
 		} else {
-			return COMMAND_TYPE.INVALID;
+			return "invalid";
 		}
 	}
 
@@ -83,8 +98,8 @@ public class Parser {
 		}
 	}
 
-	public String[] getArguments(COMMAND_TYPE commandType, String command) {
-		if (commandType == COMMAND_TYPE.RETRIEVE || commandType == COMMAND_TYPE.SETDIR) {
+	public String[] getArguments(String commandType, String command) {
+		if (commandType.equals("retrieve") || commandType.equals("setdir")) {
 			if(command.contains(" ")){
 				return new String[]{command.substring(command.indexOf(" ")+1)};
 			} else{
@@ -109,13 +124,13 @@ public class Parser {
 		}
 		tokens.add(sb.toString());
 		tokens.remove(0);
-		if (commandType == COMMAND_TYPE.ADD) {
+		if (commandType.equals("add")) {
 			return compactArguments(tokens, addArgumentList);
-		} else if (commandType == COMMAND_TYPE.EDIT) {
+		} else if (commandType.equals("edit")) {
 			return compactArguments(tokens, editArgumentList);
-		} else if (commandType == COMMAND_TYPE.DISPLAY) {
+		} else if (commandType.equals("display")) {
 			return compactArguments(tokens, displayArgumentList);
-		} else if (commandType == COMMAND_TYPE.SEARCH) {
+		} else if (commandType.equals("search")) {
 			return compactArguments(tokens, searchArgumentList);
 		} else {
 			return tokens.toArray(new String[0]);
@@ -145,17 +160,17 @@ public class Parser {
 		return arguments.toArray(new String[0]);
 	}
 
-	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
+	public boolean isValid(String commandType, String[] arguments) {
 		switch (commandType) {
-		case ADD:
+		case "add":
 			return isAddValid(arguments);
-		case DELETE:
+		case "delete":
 			return isDeleteValid(arguments);
-		case EDIT:
+		case "edit":
 			return isEditValid(arguments);
-		case DONE:
+		case "done":
 			return isDoneValid(arguments);
-		case DISPLAY:
+		case "display":
 			return isDisplayValid(arguments);
 		default:
 			return true;
@@ -260,48 +275,48 @@ public class Parser {
 	}
 
 	public void generateCommandList() {
-		for (int i = 0; i < Constants.addDefaultCommandList.length; i++) {
-			addCommandList.add(Constants.addDefaultCommandList[i]);
+		for (int i = 0; i < addDefaultCommandList.length; i++) {
+			addCommandList.add(addDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.deleteDefaultCommandList.length; i++) {
-			deleteCommandList.add(Constants.deleteDefaultCommandList[i]);
+		for (int i = 0; i < deleteDefaultCommandList.length; i++) {
+			deleteCommandList.add(deleteDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.editDefaultCommandList.length; i++) {
-			editCommandList.add(Constants.editDefaultCommandList[i]);
+		for (int i = 0; i < editDefaultCommandList.length; i++) {
+			editCommandList.add(editDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.doneDefaultCommandList.length; i++) {
-			doneCommandList.add(Constants.doneDefaultCommandList[i]);
+		for (int i = 0; i < doneDefaultCommandList.length; i++) {
+			doneCommandList.add(doneDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.displayDefaultCommandList.length; i++) {
-			displayCommandList.add(Constants.displayDefaultCommandList[i]);
+		for (int i = 0; i < displayDefaultCommandList.length; i++) {
+			displayCommandList.add(displayDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.searchDefaultCommandList.length; i++) {
-			searchCommandList.add(Constants.searchDefaultCommandList[i]);
+		for (int i = 0; i < searchDefaultCommandList.length; i++) {
+			searchCommandList.add(searchDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.setdirDefaultCommandList.length; i++) {
-			setdirCommandList.add(Constants.setdirDefaultCommandList[i]);
+		for (int i = 0; i < setdirDefaultCommandList.length; i++) {
+			setdirCommandList.add(setdirDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.retrieveDefaultCommandList.length; i++) {
-			retrieveCommandList.add(Constants.retrieveDefaultCommandList[i]);
+		for (int i = 0; i < retrieveDefaultCommandList.length; i++) {
+			retrieveCommandList.add(retrieveDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.undoDefaultCommandList.length; i++) {
-			undoCommandList.add(Constants.undoDefaultCommandList[i]);
+		for (int i = 0; i < undoDefaultCommandList.length; i++) {
+			undoCommandList.add(undoDefaultCommandList[i]);
 		}
-		for (int i = 0; i < Constants.exitDefaultCommandList.length; i++) {
-			exitCommandList.add(Constants.exitDefaultCommandList[i]);
+		for (int i = 0; i < exitDefaultCommandList.length; i++) {
+			exitCommandList.add(exitDefaultCommandList[i]);
 		}
 
-		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
-			addArgumentList.add(Constants.addDefaultArgumentList[i]);
+		for (int i = 0; i < addDefaultArgumentList.length; i++) {
+			addArgumentList.add(addDefaultArgumentList[i]);
 		}
-		for (int i = 0; i < Constants.editDefaultArgumentList.length; i++) {
-			editArgumentList.add(Constants.editDefaultArgumentList[i]);
+		for (int i = 0; i < editDefaultArgumentList.length; i++) {
+			editArgumentList.add(editDefaultArgumentList[i]);
 		}
-		for (int i = 0; i < Constants.displayDefaultArgumentList.length; i++) {
-			displayArgumentList.add(Constants.displayDefaultArgumentList[i]);
+		for (int i = 0; i < displayDefaultArgumentList.length; i++) {
+			displayArgumentList.add(displayDefaultArgumentList[i]);
 		}
-		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
-			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
+		for (int i = 0; i < searchDefaultArgumentList.length; i++) {
+			searchArgumentList.add(searchDefaultArgumentList[i]);
 		}
 	}
 }

@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import main.Constants;
-import main.Constants.COMMAND_TYPE;
-
 public class ParserTest {
 
 	@Test
@@ -14,7 +11,7 @@ public class ParserTest {
 		Parser p = new Parser();
 		//assertArrayEquals(new String[]{"filetwo.txt", "some", "other", "things here"}, p.getArguments("\"file one.txt\" filetwo.txt some other \"things here\""));
 		String command, commandTypeString;
-		COMMAND_TYPE commandType;
+		String commandType;
 		
 		command = "add 123";
 		commandTypeString = p.getFirstWord(command);
@@ -83,31 +80,31 @@ public class ParserTest {
 		String command;
 		
 		command = "add";
-		assertEquals(COMMAND_TYPE.ADD,p.getAction(p.getFirstWord(command)));
+		assertEquals("add",p.getAction(p.getFirstWord(command)));
 		
 		command = "new";
-		assertEquals(COMMAND_TYPE.ADD,p.getAction(p.getFirstWord(command)));
+		assertEquals("add",p.getAction(p.getFirstWord(command)));
 		
 		command = "+";
-		assertEquals(COMMAND_TYPE.ADD,p.getAction(p.getFirstWord(command)));
+		assertEquals("add",p.getAction(p.getFirstWord(command)));
 		
 		command = "del";
-		assertEquals(COMMAND_TYPE.DELETE,p.getAction(p.getFirstWord(command)));
+		assertEquals("delete",p.getAction(p.getFirstWord(command)));
 		
 		command = "rm";
-		assertEquals(COMMAND_TYPE.DELETE,p.getAction(p.getFirstWord(command)));
+		assertEquals("delete",p.getAction(p.getFirstWord(command)));
 		
 		command = "bin";
-		assertEquals(COMMAND_TYPE.DELETE,p.getAction(p.getFirstWord(command)));
+		assertEquals("delete",p.getAction(p.getFirstWord(command)));
 		
 		command = "e";
-		assertEquals(COMMAND_TYPE.EDIT,p.getAction(p.getFirstWord(command)));
+		assertEquals("edit",p.getAction(p.getFirstWord(command)));
 		
 		command = "edit";
-		assertEquals(COMMAND_TYPE.EDIT,p.getAction(p.getFirstWord(command)));
+		assertEquals("edit",p.getAction(p.getFirstWord(command)));
 		
 		command = "change";
-		assertEquals(COMMAND_TYPE.EDIT,p.getAction(p.getFirstWord(command)));
+		assertEquals("edit",p.getAction(p.getFirstWord(command)));
 	}
 
 }
