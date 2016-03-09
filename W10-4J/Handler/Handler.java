@@ -1,7 +1,9 @@
 package Handler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import Storage.Storage;
 import main.Task;
@@ -440,19 +442,57 @@ public class Handler {
 	private String displayFormat(ArrayList<Task> sortedList) {
 		String output = "";
 		int counter = 1;
+		
+		/*
+		 * Red - Exceed the stipulated date and endtime
+		 * Green - Have yet to exceed the stipulated date and endtime
+		 * Black - Default color
+		 */
+		String red = "<font color=#ff0000>";
+		String green = "<font color=#00FF00>";
+		String black = "<font color=#000000>";
+		String color = black;
+		
 		for (Task t : sortedList) {
-			output += "<tr><td align=\"right\">" + counter + ")</td>" + "<td> Event: </td><td>" + t.getName() + "</td></tr>";
+			
+			// Determine which color to display
+			if(t.getDate() != null && t.getEndTime() == null) {
+				Date date = new Date();
+			    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd");
+			    
+			    if(t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
+					color = red;
+				} else {
+					color = green;
+				}
+			} else if(t.getEndTime() != null && t.getDate() != null) {
+				Date time = new Date();
+			    SimpleDateFormat timeFormat = new SimpleDateFormat ("HH:mm");
+				
+			    Date date = new Date();
+			    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd");
+			    
+			    if(t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
+					color = red;
+				} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) > 0 && t.getDate().compareTo(dateFormat.format(date)) == 0 ) {
+					color = red;
+				} else {
+					color = green;
+				} 
+			}
+			
+			output += "<tr><td align=\"right\">" + counter + ")</td>" + "<td>" + color + "Event: </td><td>" + color + t.getName() + "</td></tr>";
 			if (t.getDate() != null) {
-				output += "<tr padding-top=0><td></td><td>" + "Date: </td><td>" + t.getDate() + "</td></tr>";
+				output += "<tr padding-top=0><td></td><td>" + color + "Date: </td><td>" + color + t.getDate() + "</td></tr>";
 			}
 			if (t.getStartTime() != null) {
-				output += "<tr><td></td><td>" + "StartTime: </td><td>" + t.getStartTime() + "</td></tr>";
+				output += "<tr><td></td><td>" + color + "StartTime: </td><td>" + color + t.getStartTime() + "</td></tr>";
 			}
 			if (t.getEndTime() != null) {
-				output += "<tr><td></td><td>" + "EndTime: </td><td>" + t.getEndTime() + "</td></tr>";
+				output += "<tr><td></td><td>" + color + "EndTime: </font></td><td>" + color + t.getEndTime() + "</td></tr>";
 			}
 			if (t.getDetails() != null) {
-				output += "<tr><td></td><td>" + "Details: </td><td>" + t.getDetails() + "</td></tr>";
+				output += "<tr><td></td><td>" + color + "Details: </td><td>" + color + t.getDetails() + "</td></tr>";
 			}
 			counter++;
 		}
