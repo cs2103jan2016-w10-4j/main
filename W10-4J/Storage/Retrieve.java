@@ -5,17 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import main.Task;
 
 public class Retrieve {
 	private String success = "Success";
 	private String failure = "Failure";
 	
-	public ArrayList<ArrayList<Task>> retrieveTaskListFromFile(String filename) throws FileNotFoundException {
+	public String[] retrieveTaskListFromFile(String filename) throws FileNotFoundException {
 		try {
-			ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
+			String[] taskList;
 			
 			// Check if file and directory exists before proceeding on to read
 			// the content in the file
@@ -28,7 +25,7 @@ public class Retrieve {
 				taskList = read.readFromFile(reader);
 				reader.close();
 				Write write = new Write();
-				write.writeToFile(Storage.filename, taskList);
+				write.writeToFile(0, Storage.filename, taskList);
 			}
 			
 			return taskList;
