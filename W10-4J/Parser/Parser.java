@@ -15,6 +15,7 @@ public class Parser {
 	ArrayList<String> retrieveCommandList = new ArrayList<>();
 	ArrayList<String> undoCommandList = new ArrayList<>();
 	ArrayList<String> exitCommandList = new ArrayList<>();
+	ArrayList<String> helpCommandList = new ArrayList<>();
 
 	ArrayList<String> addArgumentList = new ArrayList<>();
 	ArrayList<String> editArgumentList = new ArrayList<>();
@@ -22,21 +23,23 @@ public class Parser {
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 
 	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
-	public static final String[] addDefaultCommandList = {"add","new","+"};
-	public static final String[] deleteDefaultCommandList = {"delete","del","remove","rm","bin","thrash","-"};
-	public static final String[] editDefaultCommandList = {"edit","change","edittask","e"};
-	public static final String[] doneDefaultCommandList = {"done","finish","complete"};
-	public static final String[] displayDefaultCommandList = {"display","ls","list","show","print"};
-	public static final String[] searchDefaultCommandList = {"search","find","contains"};
-	public static final String[] setdirDefaultCommandList = {"setdir","cd","setdirectory","set directory"};
-	public static final String[] retrieveDefaultCommandList = {"storage","get","open","grab","grep","retrieve"};
-	public static final String[] undoDefaultCommandList = {"undo","whoops","mb"};
-	public static final String[] exitDefaultCommandList = {"exit","quit"};
-	
-	public static final String[] addDefaultArgumentList = {"date","start","end","details","by","at"};
-	public static final String[] editDefaultArgumentList = {"rename","date","start","end","details","by","at"};
-	public static final String[] displayDefaultArgumentList = {"by","alphabetical order","name","starttime","endtime","date","tasks","done"};
-	public static final String[] searchDefaultArgumentList = {"excl","exclude"};
+	public static final String[] addDefaultCommandList = { "add", "new", "+" };
+	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };
+	public static final String[] editDefaultCommandList = { "edit", "change", "edittask", "e" };
+	public static final String[] doneDefaultCommandList = { "done", "finish", "complete" };
+	public static final String[] displayDefaultCommandList = { "display", "ls", "list", "show", "print" };
+	public static final String[] searchDefaultCommandList = { "search", "find", "contains" };
+	public static final String[] setdirDefaultCommandList = { "setdir", "cd", "setdirectory", "set directory" };
+	public static final String[] retrieveDefaultCommandList = { "storage", "get", "open", "grab", "grep", "retrieve" };
+	public static final String[] undoDefaultCommandList = { "undo", "whoops", "mb" };
+	public static final String[] exitDefaultCommandList = { "exit", "quit" };
+	public static final String[] helpDefaultCommandList = { "help", "h", "?" };
+
+	public static final String[] addDefaultArgumentList = { "date", "start", "end", "details", "by", "at" };
+	public static final String[] editDefaultArgumentList = { "rename", "date", "start", "end", "details", "by", "at" };
+	public static final String[] displayDefaultArgumentList = { "by", "alphabetical order", "name", "starttime",
+			"endtime", "date", "tasks", "done" };
+	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 
 	Handler h;
 	NaturalLanguage n;
@@ -57,10 +60,10 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return MESSAGE_INVALID_FORMAT;
 		}
-		if(commandType.equals("display") || commandType.equals("search")){
-			return "0"+h.executeCommand(commandType, arguments);
-		} else{
-			return "1"+h.executeCommand(commandType, arguments);
+		if (commandType.equals("display") || commandType.equals("search")) {
+			return "0" + h.executeCommand(commandType, arguments);
+		} else {
+			return "1" + h.executeCommand(commandType, arguments);
 		}
 	}
 
@@ -85,6 +88,8 @@ public class Parser {
 			return "undo";
 		} else if (isCommandType(command, exitCommandList)) {
 			return "exit";
+		} else if (isCommandType(command, helpCommandList)) {
+			return "help";
 		} else {
 			return "invalid";
 		}
@@ -100,10 +105,10 @@ public class Parser {
 
 	public String[] getArguments(String commandType, String command) {
 		if (commandType.equals("retrieve") || commandType.equals("setdir")) {
-			if(command.contains(" ")){
-				return new String[]{command.substring(command.indexOf(" ")+1)};
-			} else{
-				return new String[]{};
+			if (command.contains(" ")) {
+				return new String[] { command.substring(command.indexOf(" ") + 1) };
+			} else {
+				return new String[] {};
 			}
 		}
 		ArrayList<String> tokens = new ArrayList<String>();
@@ -172,6 +177,8 @@ public class Parser {
 			return isDoneValid(arguments);
 		case "display":
 			return isDisplayValid(arguments);
+		case "help":
+			return isHelpValid(arguments);
 		default:
 			return true;
 		}
@@ -261,6 +268,16 @@ public class Parser {
 		return true;
 	}
 
+	public boolean isHelpValid(String[] arguments) {
+		if (arguments.length == 0) {
+			return true;
+		} else if (arguments.length == 1) {
+			return addCommandList.contains(arguments[0]);
+		} else {
+			return false;
+		}
+	}
+
 	public static boolean isInteger(String s) {
 		try {
 			Integer.parseInt(s);
@@ -304,6 +321,9 @@ public class Parser {
 		}
 		for (int i = 0; i < exitDefaultCommandList.length; i++) {
 			exitCommandList.add(exitDefaultCommandList[i]);
+		}
+		for (int i = 0; i < helpDefaultCommandList.length; i++) {
+			helpCommandList.add(helpDefaultCommandList[i]);
 		}
 
 		for (int i = 0; i < addDefaultArgumentList.length; i++) {

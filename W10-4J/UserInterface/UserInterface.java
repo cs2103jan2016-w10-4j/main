@@ -16,8 +16,8 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
+import Handler.Help;
 import Parser.Parser;
-import main.Help;
 
 public class UserInterface{
 	

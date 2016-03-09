@@ -28,6 +28,7 @@ public class Handler {
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage = new Storage();
+	Help help = new Help();
 	
 	public Handler(){
 		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read();
@@ -59,6 +60,8 @@ public class Handler {
 			return undo();
 		case "exit":
 			System.exit(0);
+		case "help":
+			return help(task);
 		case "invalid":
 			return String.format(MESSAGE_INVALID_FORMAT);
 		default:
@@ -411,6 +414,14 @@ public class Handler {
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
 		return MESSAGE_UNDO_PASS;
+	}
+	
+	private String help(String[] task){
+		if(task.length==0){
+			return help.helpFullString();
+		} else{
+			return help.helpSpecific(task[0]);
+		}
 	}
 
 //	private Task taskFinder(ArrayList<Task> taskArray, Task task) {
