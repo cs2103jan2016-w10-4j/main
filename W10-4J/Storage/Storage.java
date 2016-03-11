@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import main.Task;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -14,7 +17,6 @@ import java.nio.file.Paths;
 public class Storage {
 	public static final String defaultFilename = "mytextfile.txt";
 	public static String filename = defaultFilename;
-	
 	private String success = "Success";
 	private String failure = "Failure";
 	private String pathVariable = "PATH:";
@@ -42,38 +44,38 @@ public class Storage {
 		}
 	}
 
-	public String write(String [] taskList) {
+	public String write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
 		String status;
 		Write write = new Write();
 		if (filename.equals(defaultFilename)) {
-			status = write.writeToFile(taskList);
+			status = write.writeToFile(toDoTaskList, doneTaskList);
 		} else {
 			updateFilenameIfPathExists();
-			status = write.writeToFile(filename, taskList);
+			status = write.writeToFile(filename, toDoTaskList, doneTaskList);
 		}
 		return status;
 	}
 
-	public String[] read() {
+	public ArrayList<ArrayList<Task>> read() {
 		Read read = new Read();
 		updateFilenameIfPathExists();
-		String[] readTaskList = read.readFromFile();
+		ArrayList<ArrayList<Task>> readTaskList = read.readFromFile();
 		return readTaskList;
 	}
 
 	// Method overloading for read()
-	public String[] read(BufferedReader reader) {
+	public ArrayList<ArrayList<Task>> read(BufferedReader reader) {
 		Read read = new Read();
 		updateFilenameIfPathExists();
-		String[] readTaskList = read.readFromFile(reader);
+		ArrayList<ArrayList<Task>> readTaskList = read.readFromFile(reader);
 		return readTaskList;
 	}
 
-	public String[] retrieve(String fileName) throws FileNotFoundException {
+	public ArrayList<ArrayList<Task>> retrieve(String fileName) throws FileNotFoundException {
 		Retrieve retrieve = new Retrieve();
 		updateFilenameIfPathExists();
 		try{
-			String [] taskList = retrieve.retrieveTaskListFromFile(fileName);
+			ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(fileName);
 			return taskList;
 		} catch(FileNotFoundException e){
 			throw new FileNotFoundException();
