@@ -7,6 +7,7 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 import main.Constants.COMMAND_TYPE;
+import main.Help;
 
 
 public class Handler {
@@ -15,6 +16,7 @@ public class Handler {
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage = new Storage();
+	Help help = new Help();
 	
 	public Handler(){
 		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read();
@@ -48,6 +50,8 @@ public class Handler {
 			System.exit(0);
 		case INVALID:
 			return String.format(Constants.MESSAGE_INVALID_FORMAT);
+		case HELP:
+			return help(task);
 		default:
 			throw new Error("Unrecognized command type");
 		}
@@ -398,6 +402,14 @@ public class Handler {
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
 		return Constants.MESSAGE_UNDO_PASS;
+	}
+	
+	private String help(String[] task){
+		if(task.length==0){
+			return help.helpFullString();
+		} else{
+			return help.helpSpecific(task[0]);
+		}
 	}
 
 //	private Task taskFinder(ArrayList<Task> taskArray, Task task) {

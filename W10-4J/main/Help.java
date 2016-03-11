@@ -39,6 +39,27 @@ public class Help {
 		return help;
 	}
 	
+	public String helpSpecific(String command) {
+
+		switch (command) {
+		case "add":
+			return helpAdd();
+		case "edit":
+		case "delete":
+			return helpDelete();
+		case "done":
+		case "display":
+		case "search":
+		case "setdir":
+		case "retrieve":
+		case "undo":
+		case "exit":
+		case "help":
+		default:
+			throw new Error("Unrecognized command type");
+		}
+	}
+	
 	public String helpWelcome(){
 		return helpWelcome;
 	}

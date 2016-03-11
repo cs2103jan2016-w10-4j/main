@@ -17,6 +17,7 @@ public class Parser {
 	ArrayList<String> retrieveCommandList = new ArrayList<>();
 	ArrayList<String> undoCommandList = new ArrayList<>();
 	ArrayList<String> exitCommandList = new ArrayList<>();
+	ArrayList<String> helpCommandList = new ArrayList<>();
 
 	ArrayList<String> addArgumentList = new ArrayList<>();
 	ArrayList<String> editArgumentList = new ArrayList<>();
@@ -42,10 +43,10 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
-		if(commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH){
-			return "0"+h.executeCommand(commandType, arguments);
-		} else{
-			return "1"+h.executeCommand(commandType, arguments);
+		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH) {
+			return "0" + h.executeCommand(commandType, arguments);
+		} else {
+			return "1" + h.executeCommand(commandType, arguments);
 		}
 	}
 
@@ -70,6 +71,8 @@ public class Parser {
 			return COMMAND_TYPE.UNDO;
 		} else if (isCommandType(command, exitCommandList)) {
 			return COMMAND_TYPE.EXIT;
+		} else if (isCommandType(command, helpCommandList)) {
+			return COMMAND_TYPE.HELP;
 		} else {
 			return COMMAND_TYPE.INVALID;
 		}
@@ -85,10 +88,10 @@ public class Parser {
 
 	public String[] getArguments(COMMAND_TYPE commandType, String command) {
 		if (commandType == COMMAND_TYPE.RETRIEVE || commandType == COMMAND_TYPE.SETDIR) {
-			if(command.contains(" ")){
-				return new String[]{command.substring(command.indexOf(" ")+1)};
-			} else{
-				return new String[]{};
+			if (command.contains(" ")) {
+				return new String[] { command.substring(command.indexOf(" ") + 1) };
+			} else {
+				return new String[] {};
 			}
 		}
 		ArrayList<String> tokens = new ArrayList<String>();
@@ -157,6 +160,8 @@ public class Parser {
 			return isDoneValid(arguments);
 		case DISPLAY:
 			return isDisplayValid(arguments);
+		case HELP:
+			return isHelpValid(arguments);
 		default:
 			return true;
 		}
@@ -246,6 +251,16 @@ public class Parser {
 		return true;
 	}
 
+	public boolean isHelpValid(String[] arguments) {
+		if (arguments.length == 0) {
+			return true;
+		} else if (arguments.length == 1) {
+			return addCommandList.contains(arguments[0]);
+		} else {
+			return false;
+		}
+	}
+
 	public static boolean isInteger(String s) {
 		try {
 			Integer.parseInt(s);
@@ -289,6 +304,9 @@ public class Parser {
 		}
 		for (int i = 0; i < Constants.exitDefaultCommandList.length; i++) {
 			exitCommandList.add(Constants.exitDefaultCommandList[i]);
+		}
+		for (int i = 0; i < Constants.helpDefaultCommandList.length; i++) {
+			helpCommandList.add(Constants.helpDefaultCommandList[i]);
 		}
 
 		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
