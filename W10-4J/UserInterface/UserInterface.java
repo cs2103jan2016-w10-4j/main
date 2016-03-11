@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
 import Parser.Parser;
+import main.Help;
 
 public class UserInterface{
 	
@@ -180,13 +181,21 @@ public class UserInterface{
 				cmdEntry.setText("");
 				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
-				if (isDisplay(output)){
+				if(isHelp(s)){
+					Help help = new Help();
+					printInDisplayOutput(displayOutput, help.helpFullString());
+				} else if (isDisplay(output)){
 					printInDisplayOutput(displayOutput, "<table>" + output.substring(1) + "</table>");
 				} else {
 					printInCommandDisplay(cmdDisplay, output.substring(1));
 				}
+				displayOutput.setCaretPosition(0);
 			}
 		});
+    }
+    
+    public static boolean isHelp(String s){
+    	return s.split(" ")[0].toLowerCase().equals("help");
     }
     
     public static void printInCommandDisplay(JTextArea cmdDisplay, String content){
