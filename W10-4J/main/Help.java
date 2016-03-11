@@ -1,13 +1,18 @@
-package Handler;
+package main;
 
 public class Help {
-
+	
 	private static String help;
-
+	
 	private static final String helpWelcome = "<h1>Welcome to the Docket Help Manual</h1>";
 	private static final String helpFunction = "For help on specific commands, use the following commands:"
-			+ "<ul><li> help add</li>" + "<li> help delete</li>" + "<li> help edit</li>" + "<li> help done</li>"
-			+ "<li> help display</li>" + "<li> help search</li>" + "<li> help storage</li>"
+			+ "<ul><li> help add</li>"
+			+ "<li> help delete</li>"
+			+ "<li> help edit</li>"
+			+ "<li> help done</li>"
+			+ "<li> help display</li>"
+			+ "<li> help search</li>"
+			+ "<li> help storage</li>"
 			+ "<li> help undo</li></ul>";
 	private static final String helpAdd = "<h2> Add Task </h2>Different types of tasks can be added into Task Manager, for example, events and deadlines. <br>"
 			+ "To add events with date, start time and end time into Task Manager, use this command: <br>"
@@ -23,49 +28,26 @@ public class Help {
 	private static final String helpDelete = "<h2> Delete Task </h2>If there is a task on hand that you wish to remove from Task Manager, simply enter the following command: "
 			+ "<span style=\"background-color:#E5E4E2\">delete &#60taskID&#62</span>. "
 			+ "Once user press enter, all task related information will be erased.";
-
-	public Help() {
+	public Help(){
 	}
-
-	public String helpFullString() {
+	
+	public String helpFullString(){
 		help = helpWelcome;
 		help += helpFunction;
 		help += helpAdd;
 		help += helpDelete;
 		return help;
 	}
-
-	public String helpSpecific(String command) {
-
-		switch (command) {
-		case "add":
-			return helpAdd();
-		case "edit":
-		case "delete":
-			return helpDelete();
-		case "done":
-		case "display":
-		case "search":
-		case "setdir":
-		case "retrieve":
-		case "undo":
-		case "exit":
-		case "help":
-		default:
-			throw new Error("Unrecognized command type");
-		}
-	}
-
-	public String helpWelcome() {
+	
+	public String helpWelcome(){
 		return helpWelcome;
 	}
-
-	public String helpAdd() {
-		
+	
+	public String helpAdd(){
 		return helpWelcome + helpAdd;
 	}
-
-	public String helpDelete() {
+	
+	public String helpDelete(){
 		return helpWelcome + helpDelete;
 	}
 }
