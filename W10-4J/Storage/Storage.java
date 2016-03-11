@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import main.Constants;
 import main.Task;
 
 import java.nio.file.FileSystems;
@@ -15,8 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Storage {
-	public static final String defaultFilename = "mytextfile.txt";
-	public static String filename = defaultFilename;
+	public static String filename = Constants.fileName;
 	private String success = "Success";
 	private String failure = "Failure";
 	private String pathVariable = "PATH:";
@@ -47,7 +47,7 @@ public class Storage {
 	public String write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
 		String status;
 		Write write = new Write();
-		if (filename.equals(defaultFilename)) {
+		if (filename.equals(Constants.fileName)) {
 			status = write.writeToFile(toDoTaskList, doneTaskList);
 		} else {
 			updateFilenameIfPathExists();
@@ -108,7 +108,7 @@ public class Storage {
 	
 	private void updateFilenameIfPathExists() {
 		try {
-			BufferedReader read = new BufferedReader(new FileReader(defaultFilename));
+			BufferedReader read = new BufferedReader(new FileReader(Constants.fileName));
 			String content = read.readLine();
 			
 			if(content != null) {

@@ -4,25 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import Storage.Storage;
+import main.Constants;
 import main.Task;
+import main.Constants.COMMAND_TYPE;
 
 
 public class Handler {
-
-	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
-	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
-	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");
-	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
-	public static final String MESSAGE_EDIT_PASS = ("%1$s has been edited.");
-	public static final String MESSAGE_DONE_PASS = ("%1$s has been set to done.");
-	public static final String MESSAGE_DONE_FAIL = ("%1$s cannot be set to done.");
-	public static final String MESSAGE_SEARCH_PASS = ("Search successful.");
-	public static final String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
-	public static final String MESSAGE_UNDO_PASS = ("Undo successful.");
-	public static final String MESSAGE_RETRIEVE_PASS = ("Retrieve successful.");
-	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
-	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
-	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
 	
 	private static ArrayList<Task> handlerMemory;
 	private static ArrayList<Task> doneStorage;
@@ -36,31 +23,31 @@ public class Handler {
 		previousInputStorage = new ArrayList<PreviousInput>();
 	}
 
-	public String executeCommand(String command, String[] task) {
+	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
 		switch (command) {
-		case "add":
+		case ADD:
 			return add(task);
-		case "edit":
+		case EDIT:
 			return edit(task);
-		case "delete":
+		case DELETE:
 			return delete(task);
-		case "done":
+		case DONE:
 			return done(task);
-		case "display":
+		case DISPLAY:
 			return display(task);
-		case "search":
+		case SEARCH:
 			return search(task);
-		case "setdir":
+		case SETDIR:
 			return setdir(task);
-		case "retrieve":
+		case RETRIEVE:
 			return retrieve(task);
-		case "undo":
+		case UNDO:
 			return undo();
-		case "exit":
+		case EXIT:
 			System.exit(0);
-		case "invalid":
-			return String.format(MESSAGE_INVALID_FORMAT);
+		case INVALID:
+			return String.format(Constants.MESSAGE_INVALID_FORMAT);
 		default:
 			throw new Error("Unrecognized command type");
 		}
@@ -98,13 +85,13 @@ public class Handler {
 		handlerMemory.add(eachTask);
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
-		return String.format(MESSAGE_ADD_PASS,eachTask.getName());
+		return Constants.MESSAGE_ADD_PASS;
 	}
 
 	private String delete(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
-			return MESSAGE_DELETE_FAIL;
+			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			Task eachTask = handlerMemory.get(taskID - 1);
 			handlerMemory.remove(eachTask);
@@ -112,7 +99,7 @@ public class Handler {
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("delete", eachTask));
-			return String.format(MESSAGE_DELETE_PASS, eachTask.getName());
+			return Constants.MESSAGE_DELETE_PASS;
 		}
 	}
 
@@ -126,7 +113,7 @@ public class Handler {
 		mainStorage.write(handlerMemory, doneStorage);
 		// remember previous state
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
-		return String.format(MESSAGE_EDIT_PASS, eachTask.getName());
+		return Constants.MESSAGE_EDIT_PASS;
 	}
 
 	private Task cloneTask(Task task){
@@ -165,7 +152,7 @@ public class Handler {
 	private String done(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
-			return MESSAGE_DONE_FAIL;
+			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			Task eachTask = handlerMemory.get(taskID - 1);
 			handlerMemory.remove(eachTask);
@@ -174,7 +161,7 @@ public class Handler {
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
-			return String.format(MESSAGE_DONE_PASS, eachTask.getName());
+			return Constants.MESSAGE_DONE_PASS;
 		}
 	}
 
@@ -303,7 +290,7 @@ public class Handler {
 		if (searchHandlerMemory.size()!=0){
 			return displayFormat(searchHandlerMemory);
 		}
-		return MESSAGE_SEARCH_FAIL;
+		return Constants.MESSAGE_SEARCH_FAIL;
 	}
 
 	private boolean searchNameAndDetails(Task eachTask, String[] task, boolean excludeField){
@@ -336,9 +323,9 @@ public class Handler {
 	private String setdir(String[] task){
 		if(mainStorage.setDirectory(task[0])){
 			retrieve(task[0]);
-			return MESSAGE_SETDIR_PASS;
+			return Constants.MESSAGE_SETDIR_PASS;
 		} else{
-			return MESSAGE_SETDIR_FAIL;
+			return Constants.MESSAGE_SETDIR_FAIL;
 		}
 	}
 	
@@ -361,9 +348,9 @@ public class Handler {
 			doneStorage = getFromStorage.get(1);
 			previousInputStorage = new ArrayList<PreviousInput>();
 		} catch(Exception e){
-			return MESSAGE_RETRIEVE_FAIL;
+			return Constants.MESSAGE_RETRIEVE_FAIL;
 		}
-		return MESSAGE_RETRIEVE_PASS;
+		return Constants.MESSAGE_RETRIEVE_PASS;
 	}
 
 	private String undo() {
@@ -410,7 +397,7 @@ public class Handler {
 		}
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
-		return MESSAGE_UNDO_PASS;
+		return Constants.MESSAGE_UNDO_PASS;
 	}
 
 //	private Task taskFinder(ArrayList<Task> taskArray, Task task) {
