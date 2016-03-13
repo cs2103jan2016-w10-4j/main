@@ -22,6 +22,9 @@ public class Constants {
 	public static final String[] editDefaultArgumentList = {"rename","date","start","end","details","by","at"};
 	public static final String[] displayDefaultArgumentList = {"by","alphabetical order","name","starttime","endtime","date","tasks","done"};
 	public static final String[] searchDefaultArgumentList = {"excl","exclude"};
+	public static final String[] helpDefaultArgumentList = {"add","new","+", "delete","del","remove","rm","bin","thrash","-", "edit","change","edittask","e",
+			"done","finish","complete", "display","ls","list","show","print", "search","find","contains", "setdir","cd","setdirectory","set directory",
+			"storage","get","open","grab","grep","retrieve", "undo","whoops","mb"};
 
 	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
 	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");

@@ -23,6 +23,7 @@ public class Parser {
 	ArrayList<String> editArgumentList = new ArrayList<>();
 	ArrayList<String> displayArgumentList = new ArrayList<>();
 	ArrayList<String> searchArgumentList = new ArrayList<>();
+	ArrayList<String> helpArgumentList = new ArrayList<>();
 
 	Handler h;
 	NaturalLanguage n;
@@ -43,7 +44,7 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
-		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH) {
+		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH || commandType == COMMAND_TYPE.HELP) {
 			return "0" + h.executeCommand(commandType, arguments);
 		} else {
 			return "1" + h.executeCommand(commandType, arguments);
@@ -255,7 +256,7 @@ public class Parser {
 		if (arguments.length == 0) {
 			return true;
 		} else if (arguments.length == 1) {
-			return addCommandList.contains(arguments[0]);
+			return helpArgumentList.contains(arguments[0]);
 		} else {
 			return false;
 		}
@@ -320,6 +321,9 @@ public class Parser {
 		}
 		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
 			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++){
+			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
 		}
 	}
 }

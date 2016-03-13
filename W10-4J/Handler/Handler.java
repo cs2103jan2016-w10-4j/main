@@ -430,7 +430,7 @@ public class Handler {
 	// }
 
 	private String displayFormat(ArrayList<Task> sortedList) {
-		String output = "";
+		String output = "<table>";
 		/*
 		 * Red - Exceed the stipulated date and endtime Green - Have yet to
 		 * exceed the stipulated date and endtime Black - Default color
@@ -487,7 +487,8 @@ public class Handler {
 				output += "<tr><td></td><td>" + color + "Details: </td><td>" + color + t.getDetails() + "</td></tr>";
 			}
 		}
-
+		
+		output += "</table>";
 		return output;
 	}
 }
