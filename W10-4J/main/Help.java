@@ -79,6 +79,8 @@ public class Help {
 		case "display":
 			help += helpDisplay;
 			break;
+			
+			
 		}
 		return help;
 	}
