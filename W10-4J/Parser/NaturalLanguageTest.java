@@ -8,7 +8,7 @@ public class NaturalLanguageTest {
 
 	@Test
 	public void testGetDate() {
-		NaturalLanguage n = new NaturalLanguage();
+		NaturalDate n = new NaturalDate();
 		String input;
 
 		input = "16jan2016";
@@ -50,7 +50,7 @@ public class NaturalLanguageTest {
 
 	@Test
 	public void testCharTypeSplit() {
-		NaturalLanguage n = new NaturalLanguage();
+		NaturalDate n = new NaturalDate();
 		String input;
 
 		input = "16jan2016";
@@ -68,7 +68,7 @@ public class NaturalLanguageTest {
 	
 	@Test
 	public void testGetTime(){
-		NaturalLanguage n = new NaturalLanguage();
+		NaturalTime n = new NaturalTime();
 		String input;
 
 		input = "7:30";

@@ -2,13 +2,9 @@ package Parser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import main.Constants;
 
-public class NaturalLanguage {
-
-	static String[] month = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov",
-			"dec", "january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
-			"november", "december" };
-
+public class NaturalDate {
 	public String getDate(String input) {
 		input = input.trim();
 		String[] result = splitStringByCharType(input);
@@ -40,10 +36,10 @@ public class NaturalLanguage {
 					if (temp == -1) {
 						return null;
 					} else {
-						//month.clear();
-						while(!month.isEmpty()){
+						// month.clear();
+						while (!month.isEmpty()) {
 							int hold = month.remove(0);
-							if(isDay(hold)){
+							if (isDay(hold)) {
 								day.add(hold);
 							} else if (!confirmYear) {
 								year = temp;
@@ -61,35 +57,6 @@ public class NaturalLanguage {
 			}
 		}
 		return confirmDate(day, month, year, confirmMonth);
-	}
-
-	public String getTime(String input) {
-		input = input.trim();
-		ArrayList<Integer> result = splitStringByInt(input);
-		int hour, minute;
-		if (result.size() == 1) {
-			minute = 0;
-			hour = result.get(0);
-			if (hour > 100) {
-				minute = hour % 100;
-				hour /= 100;
-			}
-			if (!isHour(hour)) {
-				return null;
-			}
-		} else if (result.size() == 2) {
-			hour = result.get(0);
-			if (!isHour(hour)) {
-				return null;
-			}
-			minute = result.get(1);
-			if (!isMinute(minute)) {
-				return null;
-			}
-		} else {
-			return null;
-		}
-		return String.format("%02d:%02d", hour, minute);
 	}
 
 	public String[] splitStringByCharType(String input) {
@@ -186,16 +153,6 @@ public class NaturalLanguage {
 		}
 	}
 
-	private int monthValue(String s) {
-		int i = 0;
-		for (i = 0; i < month.length; i++) {
-			if (s.equalsIgnoreCase(month[i])) {
-				return (i + 1) % 12;
-			}
-		}
-		return -1;
-	}
-
 	private static boolean isInteger(String s) {
 		try {
 			Integer.parseInt(s);
@@ -205,6 +162,16 @@ public class NaturalLanguage {
 		return true;
 	}
 
+	private int monthValue(String s) {
+		int i = 0;
+		for (i = 0; i < Constants.month.length; i++) {
+			if (s.equalsIgnoreCase(Constants.month[i])) {
+				return (i + 1) % 12;
+			}
+		}
+		return -1;
+	}
+
 	private static boolean isDay(int s) {
 		return (s > 0 && s < 32);
 	}
@@ -212,13 +179,4 @@ public class NaturalLanguage {
 	private static boolean isMonth(int s) {
 		return (s > 0 && s < 13);
 	}
-
-	private static boolean isHour(int s) {
-		return (s >= 0 && s < 24);
-	}
-
-	private static boolean isMinute(int s) {
-		return (s >= 0 && s < 60);
-	}
-
 }

@@ -25,13 +25,15 @@ public class Parser {
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 	ArrayList<String> helpArgumentList = new ArrayList<>();
 
-	Handler h;
-	NaturalLanguage n;
+	Handler handler;
+	NaturalTime naturalTime;
+	NaturalDate naturalDate;
 
 	public Parser() {
 		generateCommandList();
-		h = new Handler();
-		n = new NaturalLanguage();
+		handler = new Handler();
+		naturalTime = new NaturalTime();
+		naturalDate = new NaturalDate();
 	}
 
 	public String parse(String command) {
@@ -45,9 +47,9 @@ public class Parser {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH || commandType == COMMAND_TYPE.HELP) {
-			return "0" + h.executeCommand(commandType, arguments);
+			return "0" + handler.executeCommand(commandType, arguments);
 		} else {
-			return "1" + h.executeCommand(commandType, arguments);
+			return "1" + handler.executeCommand(commandType, arguments);
 		}
 	}
 
@@ -179,14 +181,14 @@ public class Parser {
 				if (i + 1 == arguments.length) {
 					return false;
 				} else if (arguments[i].equals("date")) {
-					String date = n.getDate(arguments[i + 1]);
+					String date = naturalDate.getDate(arguments[i + 1]);
 					if (date == null) {
 						return false;
 					} else {
 						arguments[i + 1] = date;
 					}
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
-					String time = n.getTime(arguments[i + 1]);
+					String time = naturalTime.getTime(arguments[i + 1]);
 					if (time == null) {
 						return false;
 					} else {
@@ -219,14 +221,14 @@ public class Parser {
 				if (i + 1 == arguments.length) {
 					return false;
 				} else if (arguments[i].equals("date")) {
-					String date = n.getDate(arguments[i + 1]);
+					String date = naturalDate.getDate(arguments[i + 1]);
 					if (date == null) {
 						return false;
 					} else {
 						arguments[i + 1] = date;
 					}
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
-					String time = n.getTime(arguments[i + 1]);
+					String time = naturalTime.getTime(arguments[i + 1]);
 					if (time == null) {
 						return false;
 					} else {

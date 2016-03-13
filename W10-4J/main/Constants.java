@@ -4,7 +4,7 @@ public class Constants {
 	public enum COMMAND_TYPE {
 		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, SETDIR, RETRIEVE, UNDO, EXIT, INVALID, HELP
 	};
-	public static final String MESSAGE_INVALID_FORMAT = "Invalid command format";
+
 	public static final String fileName = "mytextfile.txt";
 	public static final String[] addDefaultCommandList = {"add","new","+"};
 	public static final String[] deleteDefaultCommandList = {"delete","del","remove","rm","bin","thrash","-"};
@@ -25,7 +25,11 @@ public class Constants {
 	public static final String[] helpDefaultArgumentList = {"add","new","+", "delete","del","remove","rm","bin","thrash","-", "edit","change","edittask","e",
 			"done","finish","complete", "display","ls","list","show","print", "search","find","contains", "setdir","cd","setdirectory","set directory",
 			"storage","get","open","grab","grep","retrieve", "undo","whoops","mb"};
-
+	public static final String[] month = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov",
+			"dec", "january", "february", "march", "april", "may", "june", "july", "august", "september", "october",
+			"november", "december" };
+	
+	public static final String MESSAGE_INVALID_FORMAT = "Invalid command format";	
 	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
 	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");
 	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
