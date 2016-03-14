@@ -1,5 +1,5 @@
 package Handler;
-
+import main.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,7 @@ import java.util.Date;
 
 import Storage.Storage;
 import main.Task;
+import main.Constants.COMMAND_TYPE;
 
 
 public class Handler {
@@ -54,7 +55,7 @@ public class Handler {
 		taskUndoer = new Undo(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 	}
 
-	public String executeCommand(String command, String[] task) {
+	public String executeCommand(COMMAND_TYPE command, String[] task) {
 
 		switch (command) {
 		case ADD:
@@ -353,7 +354,7 @@ public class Handler {
 	}
 	private String setdir(String[] task){
 		if(mainStorage.setDirectory(task[0])){
-			retrieve(task[0]);
+			retrieve(task);
 			return MESSAGE_SETDIR_PASS;
 		} else{
 			return MESSAGE_SETDIR_FAIL;
@@ -361,32 +362,19 @@ public class Handler {
 	}
 	
 	// Retrieve method for setdir()
-	private void retrieve (String task) {
-		try{
-			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task);
-			handlerMemory = getFromStorage.get(0);
-			doneStorage = getFromStorage.get(1);
-			previousInputStorage = new ArrayList<PreviousInput>();
-		} catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
->>>>>>> origin/master:W10-4J/Handler/Handler.java
-	private String retrieve(String[] task) {
+	private String retrieve (String[] task) {
 		try{
 			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
 			handlerMemory = getFromStorage.get(0);
 			doneStorage = getFromStorage.get(1);
 			previousInputStorage = new ArrayList<PreviousInput>();
+			return MESSAGE_RETRIEVE_PASS;
 		} catch(Exception e){
-			return MESSAGE_RETRIEVE_FAIL;
+			e.printStackTrace();
 		}
-		return MESSAGE_RETRIEVE_PASS;
+		return MESSAGE_RETRIEVE_FAIL;
 	}
-<<<<<<< HEAD:W10-4J/main/Handler.java
-=======
-
+	
 	private String undo() {
 		String actionToBeUndone = previousInputStorage.get(0).getAction();
 		Task previousTask = previousInputStorage.get(0).getTask();
@@ -441,19 +429,6 @@ public class Handler {
 			return help.helpSpecific(task[0]);
 		}
 	}
-
-//	private Task taskFinder(ArrayList<Task> taskArray, Task task) {
-//		for (Task eachTask : handlerMemory) {
-//			if (Task.taskNameComparator.compare(eachTask, task) == 0
-//					&& Task.taskStarttimeComparator.compare(eachTask, task) == 0
-//					&& Task.taskEndtimeComparator.compare(eachTask, task) == 0
-//					&& Task.taskDateComparator.compare(eachTask, task) == 0
-//					&& Task.taskDetailsComparator.compare(eachTask, task) == 0) {
-//				return eachTask;
-//			}
-//		}
-//		return null;
-//	}
 
 	private String displayFormat(ArrayList<Task> sortedList) {
 		String output = "";
@@ -515,5 +490,4 @@ public class Handler {
 
 		return output;
 	}
->>>>>>> origin/master:W10-4J/Handler/Handler.java
 }
