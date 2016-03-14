@@ -58,6 +58,35 @@ public class Help {
 			+ "<span style=\"background-color:#E5E4E2;\"><b>display</b> tasks</span></li>"
 			+ "<li>To keep track of tasks that you have done, use this command:<br>"
 			+ "<span style=\"background-color:#E5E4E2;\"><b>display</b> done</span></li></ul>";
+	private static final String helpSearch = "<h2> Simple Search </h2> A simple text search for finding an item if the user remembers some keywords from the item description." 
+			+ " To search for a keyword and excluding another, use this command: <br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>search</b> &#60keyword&#62 <b>excl</b> &#60exclude keyword&#62</span>"
+			+ "<ul><li>Examples:<br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>search</b> task <b>excl</b> home</span></li></ul>"
+			+ "To search for a keyword, use this command:<br> "
+			+ "<span style=\"background-color:#E5E4E2;\"><b>search</b> &#60keyword&#62</span>" 
+			+ "<ul><li>Examples:<br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>search</b> task </span></li></ul>";
+	private static final String helpStore = "<h2> Storage </h2> To specify a particular folder to retrieve the task list from, use this command:<br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>retrieve</b> &#60textfile.txt&#62 &#60datapath&#62 </span>"
+			+ "<ul><li>Examples:<br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>retrieve</b> mytextfile.txt C:\\Users\\User\\Desktop </span></li></ul>"
+			+ "To specify a particular folder to store the task list in, use this command:<br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>set directory</b> &#60datapath&#62</span>"
+			+ "<ul><li>Examples:<br>"
+			+ "<span style=\"background-color:#E5E4E2;\"><b>set directory</b> C:\\Users\\User\\Desktop</span></li></ul>";
+	private static final String helpUndo = "<h2> Undo Operations </h2>User can enter the <span style=\"background-color:#E5E4E2;\"><b>undo</b></span> command and the program will undo the most recent action command entered by the user, such as add, delete, edit, done.";
+	private static final String helpNatural = "<h2> Natural Commands </h2> Users can enter commands that sounds like something you would naturally say, in your own language, rather than some thing you would say only because you’re talking to a computer.<br>"
+			+ "Valid Natural Commands:<br>"
+			+ "<ol><li>add: new, + </li>"
+			+ "<li>delete: del, remove, rm, bin, trash, -</li>"
+			+ "<li>edit: change, edittask</li>"
+			+ "<li>done: finish, complete</li>"
+			+ "<li>display: ls, list, show, print</li>"
+			+ "<li>search: find, contains</li>"
+			+ "<li>storage: get, open, grab, grep</li>"
+			+ "<li>undo: whoops, mb</li>"
+			+ "<li>exit: quit</li>";
 	public Help(){
 	}
 	
@@ -79,8 +108,15 @@ public class Help {
 		case "display":
 			help += helpDisplay;
 			break;
-			
-			
+		case "search":
+			help += helpSearch;
+			break;
+		case "storage":
+			help += helpStore;
+			break;
+		case "undo":
+			help += helpUndo;
+			break;
 		}
 		return help;
 	}
@@ -92,6 +128,10 @@ public class Help {
 		help += helpEdit;
 		help += helpDone;
 		help += helpDisplay;
+		help += helpSearch;
+		help += helpStore;
+		help += helpUndo;
+		help += helpNatural;
 		return help;
 	}
 }
