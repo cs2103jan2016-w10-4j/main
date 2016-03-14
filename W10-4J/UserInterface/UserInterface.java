@@ -2,8 +2,11 @@ package UserInterface;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -17,6 +20,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
 import Parser.Parser;
+
 
 public class UserInterface{
 	
@@ -54,6 +58,7 @@ public class UserInterface{
 		
 		setWelcomeMessage(outputDisplay);
 		
+		keyboardActions(outputDisplay);
 		action(p, cmdEntry, cmdDisplay, outputDisplay);
 		
 		f.pack();
@@ -83,6 +88,7 @@ public class UserInterface{
     	outputDisplay.setEditable(false);
     	outputDisplay.setFocusable(false);
     	outputDisplay.setContentType("text/html");
+		outputDisplay.putClientProperty(JTextPane.HONOR_DISPLAY_PROPERTIES, true);
     }
     
     public static void horiGroup3(GroupLayout.SequentialGroup h3, GroupLayout layout, JLabel jLabel1, JTextField cmdEntry){
@@ -180,6 +186,8 @@ public class UserInterface{
 				cmdEntry.setText("");
 				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
+
+				assert output != null;
 				if (isDisplay(output)){
 					printInDisplayOutput(displayOutput, output.substring(1));
 				} else {
@@ -205,4 +213,28 @@ public class UserInterface{
     public static boolean isDisplay(String s){
     	return s.substring(0, 1).equals("0");
     }
+	
+    public static void keyboardActions(JTextPane outputDisplay){
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher(){
+			public boolean dispatchKeyEvent(KeyEvent e){
+				keyPressed(e, outputDisplay);
+				return false;
+			}
+		});
+    }
+	public static void keyPressed(KeyEvent e, JTextPane outputDisplay){
+		if (e.isControlDown() && e.isShiftDown() && (e.getKeyCode() == KeyEvent.VK_EQUALS)){
+			int fontSize = outputDisplay.getFont().getSize();
+			String fontName = outputDisplay.getFont().getFontName();
+			int fontStyle = outputDisplay.getFont().getStyle();
+			Font font = new Font(fontName, fontStyle, fontSize + 1);
+			outputDisplay.setFont(font);
+		} else if (e.isControlDown() && e.isShiftDown() && (e.getKeyCode() == KeyEvent.VK_MINUS)){
+			int fontSize = outputDisplay.getFont().getSize();
+			String fontName = outputDisplay.getFont().getFontName();
+			int fontStyle = outputDisplay.getFont().getStyle();
+			Font font = new Font(fontName, fontStyle, fontSize - 1);
+			outputDisplay.setFont(font);
+		}
+	}
 }
