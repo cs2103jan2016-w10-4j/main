@@ -29,7 +29,7 @@ public class Delete {
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("delete", eachTask));
-			return Constants.MESSAGE_DELETE_PASS;
+			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {

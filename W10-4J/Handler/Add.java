@@ -47,7 +47,7 @@ public class Add {
 		handlerMemory.add(eachTask);
 		// write to mainStorage
 		mainStorage.write(handlerMemory, doneStorage);
-		return Constants.MESSAGE_ADD_PASS;
+		return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();

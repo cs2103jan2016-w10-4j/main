@@ -28,7 +28,7 @@ public class Edit {
 		mainStorage.write(handlerMemory, doneStorage);
 		// remember previous state
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
-		return Constants.MESSAGE_EDIT_PASS;
+		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}
 
 	private Task cloneTask(Task task){

@@ -431,8 +431,8 @@ public class Handler {
 	}
 
 	private String displayFormat(ArrayList<Task> sortedList) {
-		String output = "";
 		int counter = 1;
+		String output = "<table><tr style=\"border-bottom:1px solid #B6B6B4\"><th></th><th align=\"left\"> Event </th><th align=\"left\"> Date </th><th align=\"left\"> Start Time </th><th align=\"left\"> End Time </th><th align=\"left\"> Details </th></tr>";
 		
 		/*
 		 * Red - Exceed the stipulated date and endtime
@@ -472,6 +472,28 @@ public class Handler {
 				} 
 			}
 			
+			output += "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\">" + color + counter + ")</font></td><td>" + color + t.getName() + "</font></td>";
+			if (t.getDate() != null){
+				output += "<td>" + color + t.getDate() + "</font></td>";
+			} else {
+				output += "<td></td>"; 
+			}
+			if (t.getStartTime() != null){
+				output += "<td>" + color + t.getStartTime() + "</font></td>";
+			} else {
+				output += "<td></td>"; 
+			}
+			if (t.getEndTime() != null){
+				output += "<td>" + color + t.getEndTime() + "</font></td>";
+			} else {
+				output += "<td></td>"; 
+			}
+			if (t.getDetails() != null){
+				output += "<td>" + color + t.getDetails() + "</font></td>";
+			} else {
+				output += "<td></td>"; 
+			}
+			/*
 			output += "<tr><td align=\"right\">" + counter + ")</td>" + "<td>" + color + "Event: </td><td>" + color + t.getName() + "</td></tr>";
 			if (t.getDate() != null) {
 				output += "<tr padding-top=0><td></td><td>" + color + "Date: </td><td>" + color + t.getDate() + "</td></tr>";
@@ -485,6 +507,7 @@ public class Handler {
 			if (t.getDetails() != null) {
 				output += "<tr><td></td><td>" + color + "Details: </td><td>" + color + t.getDetails() + "</td></tr>";
 			}
+			*/
 			counter++;
 		}
 

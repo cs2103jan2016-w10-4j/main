@@ -29,7 +29,7 @@ public class Done {
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput("done", eachTask));
-			return Constants.MESSAGE_DONE_PASS;
+			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		}
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
