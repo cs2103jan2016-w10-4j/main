@@ -20,7 +20,7 @@ public class Constants {
 	
 	public static final String[] addDefaultArgumentList = {"date","start","end","details","by","at"};
 	public static final String[] editDefaultArgumentList = {"rename","date","start","end","details","by","at"};
-	public static final String[] displayDefaultArgumentList = {"by","alphabetical order","name","starttime","endtime","date","tasks","done"};
+	public static final String[] displayDefaultArgumentList = {"alphabetical order","name","starttime","endtime","date","tasks","done"};
 	public static final String[] searchDefaultArgumentList = {"excl","exclude"};
 	public static final String[] helpDefaultArgumentList = {"add","new","+", "delete","del","remove","rm","bin","thrash","-", "edit","change","edittask","e",
 			"done","finish","complete", "display","ls","list","show","print", "search","find","contains", "setdir","cd","setdirectory","set directory",

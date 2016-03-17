@@ -248,10 +248,12 @@ public class Parser {
 	}
 
 	public boolean isDisplayValid(String[] arguments) {
-		if (arguments.length > 0 && !displayArgumentList.contains(arguments[0])) {
-			return false;
+		if(arguments.length == 0){
+			return true;
+		} else if(arguments.length ==2 ){
+			return arguments[0].equals("by") && displayArgumentList.contains(arguments[1]);
 		}
-		return true;
+		return false;
 	}
 
 	public boolean isHelpValid(String[] arguments) {
