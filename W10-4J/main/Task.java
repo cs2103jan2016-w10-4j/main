@@ -9,102 +9,165 @@ public class Task {
 	private String startTime_;
 	private String endTime_;
 	private String details_;
-	
+	private boolean day_, week_, month_, year_;
+
 	// use trim method to ensure all strings are compared properly
-	public static Comparator<Task> taskNameComparator = new Comparator<Task>(){
-		public int compare(Task task1, Task task2){
+	public static Comparator<Task> taskNameComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
 			return (task1.getName().toLowerCase().trim().compareTo(task2.getName().toLowerCase().trim()));
 		}
 	};
-	public static Comparator<Task> taskDetailsComparator = new Comparator<Task>(){
-		public int compare(Task task1, Task task2){
+	public static Comparator<Task> taskDetailsComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
 			return (task1.getDetails().toLowerCase().compareTo(task2.getDetails().toLowerCase()));
 		}
 	};
-	public static Comparator<Task> taskStarttimeComparator = new Comparator<Task>(){
-		public int compare(Task task1, Task task2){
+	public static Comparator<Task> taskStarttimeComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
 			String[] startTime1 = task1.getStartTime().split(":");
 			String[] startTime2 = task2.getStartTime().split(":");
 			int hour1 = Integer.parseInt(startTime1[0].trim());
 			int hour2 = Integer.parseInt(startTime2[0].trim());
 			int min1 = Integer.parseInt(startTime1[1].trim());
 			int min2 = Integer.parseInt(startTime2[1].trim());
-			if (hour1==hour2){
-				return min1-min2;
+			if (hour1 == hour2) {
+				return min1 - min2;
 			} else {
-				return hour1-hour2;
+				return hour1 - hour2;
 			}
 		}
 	};
-	public static Comparator<Task> taskEndtimeComparator = new Comparator<Task>(){
-		public int compare(Task task1, Task task2){
+	public static Comparator<Task> taskEndtimeComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
 			String[] endTime1 = task1.getEndTime().split(":");
 			String[] endTime2 = task2.getEndTime().split(":");
 			int hour1 = Integer.parseInt(endTime1[0].trim());
 			int hour2 = Integer.parseInt(endTime2[0].trim());
 			int min1 = Integer.parseInt(endTime1[1].trim());
 			int min2 = Integer.parseInt(endTime2[1].trim());
-			if (hour1==hour2){
-				return min1-min2;
+			if (hour1 == hour2) {
+				return min1 - min2;
 			} else {
-				return hour1-hour2;
+				return hour1 - hour2;
 			}
 		}
 	};
-	public static Comparator<Task> taskDateComparator = new Comparator<Task>(){
-		public int compare(Task task1, Task task2){
+	public static Comparator<Task> taskDateComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
 			return (splitDateObject(task1).compareTo(splitDateObject(task2)));
 		}
 	};
-	private static Calendar splitDateObject(Task task){
+
+	private static Calendar splitDateObject(Task task) {
 		// assumes that the date is in yyyy/mm/dd format
 		String[] date = task.getDate().split("/");
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Integer.parseInt(date[0].trim()), Integer.parseInt(date[1].trim()), Integer.parseInt(date[2].trim()));
+		calendar.set(Integer.parseInt(date[0].trim()), Integer.parseInt(date[1].trim()),
+				Integer.parseInt(date[2].trim()));
 		return calendar;
 	}
-	
-	public Task(String name){
+
+	public Task(String name) {
 		name_ = name;
 	}
-	
-	public void setName(String name){
+
+	public void setName(String name) {
 		name_ = name;
 	}
-	
-	public void setDate(String date){
+
+	public void setDate(String date) {
 		date_ = date;
 	}
-	
-	public void setStartTime(String startTime){
+
+	public void setStartTime(String startTime) {
 		startTime_ = startTime;
 	}
-	
-	public void setEndTime(String endTime){
+
+	public void setEndTime(String endTime) {
 		endTime_ = endTime;
 	}
-	
-	public void setDetails(String details){
+
+	public void setDetails(String details) {
 		details_ = details;
 	}
-	
-	public String getName(){
+
+	public void setDay(boolean day) {
+		if (day) {
+			day_ = day;
+			week_ = false;
+			month_ = false;
+			year_ = false;
+		} else {
+			day_ = day;
+		}
+	}
+
+	public void setWeek(boolean week) {
+		if (week) {
+			day_ = false;
+			week_ = week;
+			month_ = false;
+			year_ = false;
+		} else {
+			week_ = week;
+		}
+	}
+
+	public void setMonth(boolean month) {
+		if (month) {
+			day_ = false;
+			week_ = false;
+			month_ = month;
+			year_ = false;
+		} else {
+			month_ = month;
+		}
+	}
+
+	public void setYear(boolean year) {
+		if (year) {
+			day_ = false;
+			week_ = false;
+			month_ = false;
+			year_ = year;
+		} else {
+			year_ = year;
+		}
+	}
+
+	public String getName() {
 		return name_;
 	}
-	
-	public String getDate(){
+
+	public String getDate() {
 		return date_;
 	}
-	
-	public String getStartTime(){
+
+	public String getStartTime() {
 		return startTime_;
 	}
-	
-	public String getEndTime(){
+
+	public String getEndTime() {
 		return endTime_;
 	}
-	
-	public String getDetails(){
+
+	public String getDetails() {
 		return details_;
+	}
+
+	public boolean getDay() {
+		return day_;
+	}
+
+	public boolean getWeek() {
+		return week_;
+	}
+
+	public boolean getMonth() {
+		return month_;
+	}
+
+	public boolean getYear() {
+		return year_;
 	}
 }

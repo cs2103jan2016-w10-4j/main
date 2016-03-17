@@ -15,6 +15,7 @@ public class Parser {
 	ArrayList<String> searchCommandList = new ArrayList<>();
 	ArrayList<String> setdirCommandList = new ArrayList<>();
 	ArrayList<String> retrieveCommandList = new ArrayList<>();
+	ArrayList<String> recurrenceCommandList = new ArrayList<>();
 	ArrayList<String> undoCommandList = new ArrayList<>();
 	ArrayList<String> exitCommandList = new ArrayList<>();
 	ArrayList<String> helpCommandList = new ArrayList<>();
@@ -23,6 +24,7 @@ public class Parser {
 	ArrayList<String> editArgumentList = new ArrayList<>();
 	ArrayList<String> displayArgumentList = new ArrayList<>();
 	ArrayList<String> searchArgumentList = new ArrayList<>();
+	ArrayList<String> recurrenceArgumentList = new ArrayList<>();
 	ArrayList<String> helpArgumentList = new ArrayList<>();
 
 	Handler handler;
@@ -46,7 +48,8 @@ public class Parser {
 		if (!isValid(commandType, arguments)) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
-		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH || commandType == COMMAND_TYPE.HELP) {
+		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
+				|| commandType == COMMAND_TYPE.HELP) {
 			return "0" + handler.executeCommand(commandType, arguments);
 		} else {
 			return "1" + handler.executeCommand(commandType, arguments);
@@ -70,6 +73,8 @@ public class Parser {
 			return COMMAND_TYPE.SETDIR;
 		} else if (isCommandType(command, retrieveCommandList)) {
 			return COMMAND_TYPE.RETRIEVE;
+		} else if (isCommandType(command, recurrenceCommandList)) {
+			return COMMAND_TYPE.RECURRENCE;
 		} else if (isCommandType(command, undoCommandList)) {
 			return COMMAND_TYPE.UNDO;
 		} else if (isCommandType(command, exitCommandList)) {
@@ -163,6 +168,8 @@ public class Parser {
 			return isDoneValid(arguments);
 		case DISPLAY:
 			return isDisplayValid(arguments);
+		case RECURRENCE:
+			return isRecurrenceValid(arguments);
 		case HELP:
 			return isHelpValid(arguments);
 		default:
@@ -248,9 +255,9 @@ public class Parser {
 	}
 
 	public boolean isDisplayValid(String[] arguments) {
-		if(arguments.length == 0){
+		if (arguments.length == 0) {
 			return true;
-		} else if(arguments.length ==2 ){
+		} else if (arguments.length == 2) {
 			return arguments[0].equals("by") && displayArgumentList.contains(arguments[1]);
 		}
 		return false;
@@ -263,6 +270,16 @@ public class Parser {
 			return helpArgumentList.contains(arguments[0]);
 		} else {
 			return false;
+		}
+	}
+
+	public boolean isRecurrenceValid(String[] arguments) {
+		if (arguments.length != 2) {
+			return false;
+		} else if(!isInteger(arguments[0])){
+			return false;
+		} else {
+			return recurrenceArgumentList.contains(arguments[1]);
 		}
 	}
 
@@ -304,6 +321,9 @@ public class Parser {
 		for (int i = 0; i < Constants.retrieveDefaultCommandList.length; i++) {
 			retrieveCommandList.add(Constants.retrieveDefaultCommandList[i]);
 		}
+		for (int i = 0; i < Constants.recurrenceDefaultCommandList.length; i++) {
+			recurrenceCommandList.add(Constants.recurrenceDefaultCommandList[i]);
+		}
 		for (int i = 0; i < Constants.undoDefaultCommandList.length; i++) {
 			undoCommandList.add(Constants.undoDefaultCommandList[i]);
 		}
@@ -326,7 +346,10 @@ public class Parser {
 		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
 			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
 		}
-		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++){
+		for (int i = 0; i < Constants.recurrenceDefaultArgumentList.length; i++) {
+			recurrenceArgumentList.add(Constants.recurrenceDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++) {
 			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
 		}
 	}
