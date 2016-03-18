@@ -6,7 +6,7 @@ public class Constants {
 	};
 
 	public static final String fileName = "mytextfile.txt";
-	public static final String[] addDefaultCommandList = { "add", "new", "+" };
+	public static final String[] addDefaultCommandList = { "add", "new", "+", "a" };
 	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };
 	public static final String[] editDefaultCommandList = { "edit", "change", "edittask", "e" };
 	public static final String[] doneDefaultCommandList = { "done", "finish", "complete" };
@@ -16,7 +16,7 @@ public class Constants {
 	public static final String[] retrieveDefaultCommandList = { "storage", "get", "open", "grab", "grep", "retrieve" };
 	public static final String[] recurrenceDefaultCommandList = { "recurrence", "recur", "repeat", "r" };
 	public static final String[] undoDefaultCommandList = { "undo", "whoops", "mb" };
-	public static final String[] exitDefaultCommandList = { "exit", "quit" };
+	public static final String[] exitDefaultCommandList = { "exit", "quit", "q" };
 	public static final String[] helpDefaultCommandList = { "help", "h", "?" };
 
 	public static final String[] addDefaultArgumentList = { "date", "start", "end", "details", "by", "at" };
@@ -29,10 +29,12 @@ public class Constants {
 			"thrash", "-", "edit", "change", "edittask", "e", "done", "finish", "complete", "display", "ls", "list",
 			"show", "print", "search", "find", "contains", "setdir", "cd", "setdirectory", "set directory", "storage",
 			"get", "open", "grab", "grep", "retrieve", "undo", "whoops", "mb" };
-	
+
 	public static final String[] month = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
 			"oct", "nov", "dec", "january", "february", "march", "april", "may", "june", "july", "august", "september",
 			"october", "november", "december" };
+	public static final String[] day = new String[] { "mon", "tues", "wed", "thurs", "fri", "sat", "sun", "m", "t", "w",
+			"f", "s", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
 	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
 	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
