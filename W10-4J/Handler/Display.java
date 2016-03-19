@@ -112,7 +112,7 @@ public class Display {
 	}
 	private String displayFormat(ArrayList<Task> sortedList) {
 		int counter = 1;
-		String output = "<table><tr style=\"border-bottom:1px solid #B6B6B4\"><th></th><th align=\"left\"> Event </th><th align=\"left\"> Date </th><th align=\"left\"> Start Time </th><th align=\"left\"> End Time </th><th align=\"left\"> Details </th></tr>";
+		String output = "<table><tr style=\"border-bottom:1px solid #B6B6B4\"><th></th><th align=\"left\"> Event </th><th align=\"left\"> Date </th><th align=\"left\"> Start Time </th><th align=\"left\"> End Time </th><th align=\"left\"> Details </th><th align=\"left\"> Repeat </th></tr>";
 		
 		/*
 		 * Red - Exceed the stipulated date and endtime
@@ -151,6 +151,19 @@ public class Display {
 				} 
 			}
 			
+			String repeat;
+			if (t.getDay()){
+				repeat = "Every Day";
+			} else if (t.getMonth()){
+				repeat = "Every Month";
+			} else if (t.getWeek()){
+				repeat = "Every Week";
+			} else if (t.getYear()){
+				repeat = "Every Year";
+			} else {
+				repeat = null;
+			}
+			
 			output += "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\">" + color + counter + ")</font></td><td>" + color + t.getName() + "</font></td>";
 			if (t.getDate() != null){
 				output += "<td>" + color + t.getDate() + "</font></td>";
@@ -171,6 +184,9 @@ public class Display {
 				output += "<td>" + color + t.getDetails() + "</font></td>";
 			} else {
 				output += "<td></td>"; 
+			}
+			if (repeat != null){
+				output += "<td>" + color + repeat + "</font></td>";
 			}
 			counter++;
 		}

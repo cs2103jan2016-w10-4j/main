@@ -57,7 +57,7 @@ public class UserInterface{
 		
 		setWelcomeMessage(outputDisplay);
 		
-		uiControl.keyboardActions(outputDisplay, cmdEntry);
+		uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane2);
 		uiControl.commandAction(p, cmdEntry, cmdDisplay, outputDisplay);
 		
 		f.pack();

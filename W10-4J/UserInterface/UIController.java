@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -18,6 +19,7 @@ public class UIController {
 	
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int commandIndex = commands.size();
+	private static int scroll = 100;
     
     public void commandAction(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput){
     	cmdEntry.addActionListener(new ActionListener(){
@@ -25,6 +27,7 @@ public class UIController {
 				String s = cmdEntry.getText();
 				cmdEntry.setText("");
 				commands.add(s);
+		    	scroll = 0;
 				commandIndex = commands.size();
 				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
@@ -40,10 +43,10 @@ public class UIController {
 		});
     }
 	
-    public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry){
+    public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane){
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher(){
 			public boolean dispatchKeyEvent(KeyEvent e){
-				keyPressed(e, outputDisplay, cmdEntry);
+				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
 				return false;
 			}
 		});
@@ -61,7 +64,7 @@ public class UIController {
     	displayOutput.setText(s);
     }
     
-	private static void keyPressed(KeyEvent e, JTextPane outputDisplay, JTextField cmdEntry){
+	private static void keyPressed(KeyEvent e, JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane){
 		if (e.getID() == KeyEvent.KEY_PRESSED && e.isControlDown() && e.isShiftDown() && (e.getKeyCode() == KeyEvent.VK_EQUALS)){
 			int fontSize = outputDisplay.getFont().getSize();
 			String fontName = outputDisplay.getFont().getFontName();
@@ -88,6 +91,22 @@ public class UIController {
 			} else {
 				cmdEntry.setText(commands.get(commandIndex));
 			}
+		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_PAGE_UP){
+			int minScroll = outputScrollpane.getVerticalScrollBar().getMinimum();
+			if (scroll <= minScroll){
+				scroll = minScroll;
+			} else {
+				scroll -= 200;
+			}
+			outputScrollpane.getVerticalScrollBar().setValue(scroll);
+		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_PAGE_DOWN){
+			int maxScroll = outputScrollpane.getVerticalScrollBar().getMaximum();
+			if (scroll >= maxScroll){
+				scroll = maxScroll;
+			} else {
+				scroll += 200;
+			}
+			outputScrollpane.getVerticalScrollBar().setValue(scroll);
 		}
 	}
 
