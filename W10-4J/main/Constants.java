@@ -56,4 +56,11 @@ public class Constants {
 	public static final String MESSAGE_ADD_ACTION_END = ("end");
 	public static final String MESSAGE_ADD_ACTION_TIME = ("time");
 	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
+	
+	public static final String MESSAGE_DISPLAY_FIELD_NAME = ("alphabetical order");
+	public static final String MESSAGE_DISPLAY_FIELD_START = ("starttime");
+	public static final String MESSAGE_DISPLAY_FIELD_END = ("endtime");
+	public static final String MESSAGE_DISPLAY_FIELD_DATE = ("date");
+	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
+	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
 }
