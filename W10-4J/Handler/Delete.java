@@ -20,6 +20,7 @@ public class Delete {
 	}
 	public String delete(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
+		assert taskID != 0: "Delete taskID is un-defined";
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {

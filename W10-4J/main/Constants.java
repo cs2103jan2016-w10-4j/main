@@ -36,7 +36,7 @@ public class Constants {
 	public static final String[] day = new String[] { "mon", "tues", "wed", "thurs", "fri", "sat", "sun", "m", "t", "w",
 			"f", "s", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
-	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
+	public static final String MESSAGE_INVALID_FORMAT = ("invalid command format");
 	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
 	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");
 	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
@@ -50,4 +50,10 @@ public class Constants {
 	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
 	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
 	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
+	
+	public static final String MESSAGE_ADD_ACTION_DATE = ("date");
+	public static final String MESSAGE_ADD_ACTION_START = ("start");
+	public static final String MESSAGE_ADD_ACTION_END = ("end");
+	public static final String MESSAGE_ADD_ACTION_TIME = ("time");
+	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
 }
