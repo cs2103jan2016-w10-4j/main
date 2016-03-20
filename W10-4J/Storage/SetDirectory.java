@@ -2,12 +2,31 @@ package Storage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class SetDirectory {
+	private final Logger LOGGER = Logger.getLogger(SetDirectory.class.getName());
+	private static SetDirectory setDirectory;
+	
+	// Show Singleton
+	public static SetDirectory getInstance() {
+		if(setDirectory == null) {
+			setDirectory = new SetDirectory();
+		}
+		return setDirectory;
+	}
+
+	/*
+	 * Set the directory based on the absolute file path given by user
+	 * This function will check if its a directory, if the absolute file path is a 
+	 * directory but there is no such file, it will create the text file for user
+	 */
 	public boolean setDirectory(String filePathName) {
 		try {
 			File file = new File(filePathName);
@@ -18,16 +37,20 @@ public class SetDirectory {
 				Files.createDirectories(pathWithoutFileName);
 				Files.createFile(path);
 			} 
+			LOGGER.log(Level.INFO, "Set directory successfully");
 			return true;
 		} catch (IOException e) {
+			LOGGER.log(Level.WARNING, "Set directory unsuccessfully");
 			return false;
 		}
 	}
 
 	private boolean checkDirectory(File file) {
 		if (file.exists()) {
+			LOGGER.log(Level.INFO, "File exist");
 			return true;
 		} else {
+			LOGGER.log(Level.INFO, "File does not exist");
 			return false;
 		}
 	}
