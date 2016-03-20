@@ -63,4 +63,24 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY_FIELD_DATE = ("date");
 	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
 	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
+	
+
+	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
+	public static final String MESSAGE_EDIT_ACTION_START = ("start");
+	public static final String MESSAGE_EDIT_ACTION_END = ("end");
+	public static final String MESSAGE_EDIT_ACTION_DATE = ("date");
+	public static final String MESSAGE_EDIT_ACTION_DETAILS = ("details");
+	
+	public static final String MESSAGE_ACTION_ADD = ("add");
+	public static final String MESSAGE_ACTION_DELETE = ("delete");
+	public static final String MESSAGE_ACTION_EDIT = ("edit");
+	public static final String MESSAGE_ACTION_DONE = ("done");
+	public static final String MESSAGE_ACTION_UNDONE = ("undone");
+	
+	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
+	public static final String ASSERT_ACTION_EXISTENCE = ("Action does not exist");
+	public static final String ASSERT_TASKID_EXISTENCE = ("Task ID does not exist");
+	public static final String ASSERT_FIELD_EXISTENCE = ("Field does not exist");
+	public static final String ASSERT_TASKNAME_EXISTENCE = ("Field does not exist");
+	public static final String ASSERT_TASKDETAILS_EXISTENCE = ("Task details does not exist");
 }

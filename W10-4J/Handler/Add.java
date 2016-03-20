@@ -22,10 +22,11 @@ public class Add {
 	}
 	public String add(String[] task) {
 		Task eachTask = new Task(task[0].trim());
+		assert eachTask!= null: Constants.ASSERT_TASK_EXISTENCE;
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
 			action = task[i].trim();
-			assert action!= null: "Add action is null";
+			assert action!= null: Constants.ASSERT_ACTION_EXISTENCE;
 			switch (action) {
 			case Constants.MESSAGE_ADD_ACTION_DATE:
 				eachTask.setDate(task[i + 1].trim());
@@ -43,7 +44,7 @@ public class Add {
 			}
 		}
 		// remember previous state
-		clearAndAdd(previousInputStorage, new PreviousInput("add", eachTask));
+		clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
 		// add to arraylist storage
 		handlerMemory.add(eachTask);
 		// write to mainStorage

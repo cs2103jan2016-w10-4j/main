@@ -24,7 +24,7 @@ public class Display {
 			return displayFormat(handlerMemory);
 		}else{
 			String displayField = task[1].trim();
-			assert displayField != null: "display field is null";
+				assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
 			ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
 			ArrayList<Task> exclusiveHandlerMemory = null;
 			switch (displayField)
@@ -51,28 +51,28 @@ public class Display {
 	}
 	// modularise the display code
 	private void sortByName(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "name");
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_NAME);
 		Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		}
 	}
 	private void sortByStart(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "starttime");
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_START);
 		Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		}
 	}
 	private void sortByEnd(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "endtime");
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_END);
 		Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		}
 	}
 	private void sortByDate(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "date");
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_DATE);
 		Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
@@ -95,28 +95,28 @@ public class Display {
 	private ArrayList<Task> exclusiveSeparation (ArrayList<Task> taskArray, ArrayList<Task> result, String field){
 		switch (field)
 		{
-			case "name":
+			case Constants.MESSAGE_DISPLAY_FIELD_NAME:
 				 for (Task task: taskArray){
 						if (task.getName()==null){
 							result.add(task);
 						}
 					}
 				break;
-			case "starttime":
+			case Constants.MESSAGE_DISPLAY_FIELD_START:
 				 for (Task task: taskArray){
 						if (task.getStartTime()==null){
 							result.add(task);
 						}
 					}
 				break;
-			case "endtime":
+			case Constants.MESSAGE_DISPLAY_FIELD_END:
 				 for (Task task: taskArray){
 						if (task.getEndTime()==null){
 							result.add(task);
 						}
 					}
 				break;
-			case "date":
+			case Constants.MESSAGE_DISPLAY_FIELD_DATE:
 				 for (Task task: taskArray){
 						if (task.getDate()==null){
 							result.add(task);
