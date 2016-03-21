@@ -97,7 +97,7 @@ public class Read {
 	private int addTaskIntoArrayList (int count, String content, ArrayList<Task> taskList) {
 		String numberingCounter = count + ".";
 		String numberingOnTask = content.substring(0, content.indexOf(" "));
-		String taskName = content.substring(content.indexOf(": ") + 1);
+		String taskName = content.substring(content.indexOf(": ") + 1).trim();
 
 		// If the number of both the task and counter are equal,
 		// implies its the start of a new task
