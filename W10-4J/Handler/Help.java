@@ -1,4 +1,4 @@
-package main;
+package Handler;
 
 public class Help {
 	
