@@ -19,10 +19,10 @@ public class Edit {
 		this.mainStorage = mainStorage;
 	}
 	public String edit(String[] task) {
-		int taskID = Integer.parseInt(task[0].trim());
-			assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
+		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
+		int taskID = Integer.parseInt(task[0].trim());	
 		Task eachTask = handlerMemory.get(taskID - 1);
-			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
+		assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
 		Task oldTask = cloneTask(eachTask);
 		// edits the task
 		fieldEditor(eachTask, task);
@@ -33,7 +33,7 @@ public class Edit {
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}
 
-	private Task cloneTask(Task task){
+	public Task cloneTask(Task task){
 		Task result = new Task(task.getName());
 		result.setDate(task.getDate());
 		result.setStartTime(task.getStartTime());
