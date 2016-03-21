@@ -75,7 +75,10 @@ public class Constants {
 	public static final String MESSAGE_ACTION_DELETE = ("delete");
 	public static final String MESSAGE_ACTION_EDIT = ("edit");
 	public static final String MESSAGE_ACTION_DONE = ("done");
-	public static final String MESSAGE_ACTION_UNDONE = ("undone");
+	public static final String MESSAGE_ACTION_DISPLAY = ("display");
+	public static final String MESSAGE_ACTION_SEARCH = ("search");
+	public static final String MESSAGE_ACTION_STORAGE = ("storage");
+	public static final String MESSAGE_ACTION_UNDO = ("undo");
 	
 	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
 	public static final String ASSERT_ACTION_EXISTENCE = ("Action does not exist");

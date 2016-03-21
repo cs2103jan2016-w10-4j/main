@@ -17,6 +17,7 @@ public class Read {
 	private String noTaskDone = "No tasks are done!";
 	private String pathVariable = "PATH:";
 	private static Read read;
+	private Task task = null;
 	
 	// Show Singleton
 	public static Read getInstance() {
@@ -67,7 +68,6 @@ public class Read {
 
 			while ((content = read.readLine()) != null) {
 				String path = content.substring(0, content.indexOf(" "));
-
 				if(path.equals(pathVariable)) {
 					continue;
 				} else if(content.equals(noTaskDone) || content.equals(noTaskOnHand)) {
@@ -94,11 +94,10 @@ public class Read {
 		}
 	}
 	
-	private int addTaskIntoArrayList (int count, String content, ArrayList<Task> taskList) {		
-		Task task = null;
+	private int addTaskIntoArrayList (int count, String content, ArrayList<Task> taskList) {
 		String numberingCounter = count + ".";
 		String numberingOnTask = content.substring(0, content.indexOf(" "));
-		String taskName = content.substring(content.indexOf(": ") + 1);
+		String taskName = content.substring(content.indexOf(": ") + 1).trim();
 
 		// If the number of both the task and counter are equal,
 		// implies its the start of a new task
@@ -115,7 +114,7 @@ public class Read {
 	
 	private void readTaskDetails(ArrayList<Task> readTaskList, String taskContent, Task task) {
 		String taskHeader = taskContent.substring(0, taskContent.indexOf(": "));
-		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1);
+		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1).trim();
 		
 		if (taskHeader.equals("Date")) {
 			String taskDate = taskContent;

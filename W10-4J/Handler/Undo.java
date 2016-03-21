@@ -51,9 +51,9 @@ public class Undo {
 			doneStorage.remove(previousTask);
 			handlerMemory.add(previousTask);
 			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_UNDONE, previousTask));
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, previousTask));
 			break;
-		case Constants.MESSAGE_ACTION_UNDONE:
+		case Constants.MESSAGE_ACTION_UNDO:
 			// to restore to previous state, must undone the task
 			//eachTask = taskFinder(handlerMemory, previousTask);
 			handlerMemory.remove(previousTask);

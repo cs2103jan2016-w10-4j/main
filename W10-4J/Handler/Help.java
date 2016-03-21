@@ -1,5 +1,7 @@
 package Handler;
 
+import main.Constants;
+
 public class Help {
 	
 	private static String help;
@@ -87,34 +89,39 @@ public class Help {
 			+ "<li>storage: get, open, grab, grep</li>"
 			+ "<li>undo: whoops, mb</li>"
 			+ "<li>exit: quit</li>";
+	private static final String helpKeyboard = "<h2> Keyboard Shortcuts </h2> To help you use Docket more efficiently, some keyboard shortcuts have been implemented."
+			+ "<ol><li> Ctrl + Shift + \"=\" : Increases font size in the top white display</li>"
+			+ "<li> Ctrl + Shift + \"-\" : Decreases font size in the top white display</li>"
+			+ "<li>Arrow Up / Arrow Down : Returns the previous commands in the command field</li>"
+			+ "<li> PgUp / PgDn : Scrolls through the top white display</li>";
 	public Help(){
 	}
 	
 	public String helpSpecific(String task){
 		help = helpWelcome;
 		switch (task){
-		case "add":
+		case Constants.MESSAGE_ACTION_ADD:
 			help += helpAdd;
 			break;
-		case "delete":
+		case Constants.MESSAGE_ACTION_DELETE:
 			help += helpDelete;
 			break;
-		case "edit":
+		case Constants.MESSAGE_ACTION_EDIT:
 			help += helpEdit;
 			break;
-		case "done":
+		case Constants.MESSAGE_ACTION_DONE:
 			help += helpDone;
 			break;
-		case "display":
+		case Constants.MESSAGE_ACTION_DISPLAY:
 			help += helpDisplay;
 			break;
-		case "search":
+		case Constants.MESSAGE_ACTION_SEARCH:
 			help += helpSearch;
 			break;
-		case "storage":
+		case Constants.MESSAGE_ACTION_STORAGE:
 			help += helpStore;
 			break;
-		case "undo":
+		case Constants.MESSAGE_ACTION_UNDO:
 			help += helpUndo;
 			break;
 		}
@@ -132,6 +139,7 @@ public class Help {
 		help += helpStore;
 		help += helpUndo;
 		help += helpNatural;
+		help += helpKeyboard;
 		return help;
 	}
 }
