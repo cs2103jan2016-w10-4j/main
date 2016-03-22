@@ -1,2 +1,4 @@
-No tasks on hand!
+Tasks on hand:
+1. Event: CSC meeting
+Date: 2015/03/11
 No tasks are done!

@@ -81,9 +81,10 @@ public class Constants {
 	public static final String MESSAGE_ACTION_UNDO = ("undo");
 	
 	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
+	public static final String ASSERT_TASKLIST_EXISTENCE = ("Task List does not exist");
 	public static final String ASSERT_ACTION_EXISTENCE = ("Action does not exist");
 	public static final String ASSERT_TASKID_EXISTENCE = ("Task ID does not exist");
 	public static final String ASSERT_FIELD_EXISTENCE = ("Field does not exist");
-	public static final String ASSERT_TASKNAME_EXISTENCE = ("Field does not exist");
+	public static final String ASSERT_TASKNAME_EXISTENCE = ("Task name does not exist");
 	public static final String ASSERT_TASKDETAILS_EXISTENCE = ("Task details does not exist");
 }

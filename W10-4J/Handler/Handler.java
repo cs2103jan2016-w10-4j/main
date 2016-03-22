@@ -17,6 +17,7 @@ public class Handler {
 	Done taskDoner;
 	Display taskDisplayer;
 	Search taskSearcher;
+	Retrieve taskRetriever;
 	Undo taskUndoer;
 	Help help = new Help();
 
@@ -32,6 +33,7 @@ public class Handler {
 		taskDoner = new Done(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		taskDisplayer = new Display(handlerMemory, doneStorage, mainStorage);
 		taskSearcher = new Search(handlerMemory, mainStorage);
+		taskRetriever = new Retrieve(handlerMemory, doneStorage, mainStorage);
 		taskUndoer = new Undo(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 	}
 
@@ -51,7 +53,7 @@ public class Handler {
 		case SEARCH:
 			return taskSearcher.search(task);
 		case RETRIEVE:
-			return retrieve(task);
+			return taskRetriever.retrieve(task);
 		case RECURRENCE:
 			return recurrence(task);
 		case UNDO:
@@ -102,20 +104,6 @@ public class Handler {
 		result.setEndTime(task.getEndTime());
 		result.setDetails(task.getDetails());
 		return result;
-	}
-
-	// Retrieve method for setdir()
-	private String retrieve(String[] task) {
-		try {
-			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
-			handlerMemory = getFromStorage.get(0);
-			doneStorage = getFromStorage.get(1);
-			previousInputStorage = new ArrayList<PreviousInput>();
-			return Constants.MESSAGE_RETRIEVE_PASS;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return Constants.MESSAGE_RETRIEVE_FAIL;
 	}
 
 	private String help(String[] task) {
