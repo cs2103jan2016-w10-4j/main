@@ -88,23 +88,23 @@ public class Write {
 		for (int i = 0; i < taskList.size(); i++) {
 			int index = i + 1;
 			if (!(taskList.get(i).getName() == null)) {
-				print.println(index + ". Event: " + taskList.get(i).getName().trim());
+				print.println(index + ". Event: " + taskList.get(i).getName());
 			}
 
 			if (!(taskList.get(i).getDate() == null)) {
-				print.println("Date: " + taskList.get(i).getDate().trim());
+				print.println("Date: " + taskList.get(i).getDate());
 			}
 
 			if (!(taskList.get(i).getStartTime() == null)) {
-				print.println("Start Time: " + taskList.get(i).getStartTime().trim());
+				print.println("Start Time: " + taskList.get(i).getStartTime());
 			}
 
 			if (!(taskList.get(i).getEndTime() == null)) {
-				print.println("End Time: " + taskList.get(i).getEndTime().trim());
+				print.println("End Time: " + taskList.get(i).getEndTime());
 			}
 
 			if (!(taskList.get(i).getDetails() == null)) {
-				print.println("Details: " + taskList.get(i).getDetails().trim());
+				print.println("Details: " + taskList.get(i).getDetails());
 			}
 			
 			if (!(taskList.get(i).getDay() == false)) {

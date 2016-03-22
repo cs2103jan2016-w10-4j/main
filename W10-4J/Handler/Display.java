@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import Storage.Storage;
+import main.Constants;
 import main.Task;
 
 public class Display {
@@ -23,35 +24,58 @@ public class Display {
 			return displayFormat(handlerMemory);
 		}else{
 			String displayField = task[1].trim();
+				assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
 			ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
 			ArrayList<Task> exclusiveHandlerMemory = null;
 			switch (displayField)
 			{
-				case "alphabetical order":
-					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "name");
-					Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
+					sortByName(cloneHandlerMemory, exclusiveHandlerMemory);
 					break;
-				case "starttime":
-					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "starttime");
-					Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
+				case Constants.MESSAGE_DISPLAY_FIELD_START:
+					sortByStart(cloneHandlerMemory, exclusiveHandlerMemory);
 					break;
-				case "endtime":
-					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "endtime");
-					Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
+				case Constants.MESSAGE_DISPLAY_FIELD_END:
+					sortByEnd(cloneHandlerMemory, exclusiveHandlerMemory);
 					break;
-				case "date":
-					exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, "date");
-					Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
+				case Constants.MESSAGE_DISPLAY_FIELD_DATE:
+					sortByDate(cloneHandlerMemory, exclusiveHandlerMemory);
 					break;
-				case "tasks":
+				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
 					break;
-				case "done":
+				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
 					return displayFormat(doneStorage);
 			}
-			if (exclusiveHandlerMemory != null){
-				cloneHandlerMemory.addAll(exclusiveHandlerMemory);
-			}
 			return displayFormat(cloneHandlerMemory);
+		}
+	}
+	// modularise the display code
+	private void sortByName(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_NAME);
+		Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+		if (exclusiveHandlerMemory != null){
+			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+		}
+	}
+	private void sortByStart(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_START);
+		Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
+		if (exclusiveHandlerMemory != null){
+			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+		}
+	}
+	private void sortByEnd(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_END);
+		Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
+		if (exclusiveHandlerMemory != null){
+			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+		}
+	}
+	private void sortByDate(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
+		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_DATE);
+		Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
+		if (exclusiveHandlerMemory != null){
+			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		}
 	}
 	
@@ -71,28 +95,28 @@ public class Display {
 	private ArrayList<Task> exclusiveSeparation (ArrayList<Task> taskArray, ArrayList<Task> result, String field){
 		switch (field)
 		{
-			case "name":
+			case Constants.MESSAGE_DISPLAY_FIELD_NAME:
 				 for (Task task: taskArray){
 						if (task.getName()==null){
 							result.add(task);
 						}
 					}
 				break;
-			case "starttime":
+			case Constants.MESSAGE_DISPLAY_FIELD_START:
 				 for (Task task: taskArray){
 						if (task.getStartTime()==null){
 							result.add(task);
 						}
 					}
 				break;
-			case "endtime":
+			case Constants.MESSAGE_DISPLAY_FIELD_END:
 				 for (Task task: taskArray){
 						if (task.getEndTime()==null){
 							result.add(task);
 						}
 					}
 				break;
-			case "date":
+			case Constants.MESSAGE_DISPLAY_FIELD_DATE:
 				 for (Task task: taskArray){
 						if (task.getDate()==null){
 							result.add(task);
@@ -128,7 +152,7 @@ public class Display {
 			// Determine which color to display
 			if(t.getDate() != null && t.getEndTime() == null) {
 				Date date = new Date();
-			    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd");
+			    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy/mm/dd");
 			    
 			    if(t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
 					color = red;

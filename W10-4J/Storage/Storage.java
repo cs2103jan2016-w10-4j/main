@@ -93,8 +93,11 @@ public class Storage {
 	public boolean setDirectory(String filePathName){
 		SetDirectory setDirectory = SetDirectory.getInstance();
 		if(setDirectory.setDirectory(filePathName)){
+			// Copy the tasks from the previous file to the current directory
+			ArrayList<ArrayList<Task>> taskList = read();
 			filename = filePathName;
 			Write write = Write.getInstance();
+			write.writeToFile(filename, taskList);
 			write.updatePathSentence(filePathName);
 			return true;
 		} else{

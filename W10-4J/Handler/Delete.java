@@ -19,16 +19,18 @@ public class Delete {
 		this.mainStorage = mainStorage;
 	}
 	public String delete(String[] task) {
+		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		if (taskID <= 0 || taskID > handlerMemory.size()) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			Task eachTask = handlerMemory.get(taskID - 1);
+			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
 			handlerMemory.remove(eachTask);
 			// write to mainStorage
 			mainStorage.write(handlerMemory, doneStorage);
 			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput("delete", eachTask));
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
 			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
 	}

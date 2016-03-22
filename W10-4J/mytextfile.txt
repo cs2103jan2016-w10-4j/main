@@ -1,16 +1,9 @@
 Tasks on hand:
-1. Event:         meeting
-Date:         2016/03/16
-Start Time:         08:00
-End Time:         09:00
-Details:         meeting to complete v0.1
-2. Event:         v0.1
-Date:         2016/03/20
-End Time:         23:59
-Tasks that are done:
-1. Event:       v0.0
-Date:       2016/02/14
-Start Time:       12:00
-End Time:       01:00
-Details:       meeting to complete v0.0
-2. Event:         floating task
+1. Event: v0.2 demo
+Date: 2016/03/23
+Start Time: 10:00
+Week: true
+2. Event: v0.1 documentation
+Date: 2016/03/20
+Details: developer guide
+No tasks are done!

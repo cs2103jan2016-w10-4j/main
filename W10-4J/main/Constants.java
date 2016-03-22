@@ -36,7 +36,7 @@ public class Constants {
 	public static final String[] day = new String[] { "mon", "tues", "wed", "thurs", "fri", "sat", "sun", "m", "t", "w",
 			"f", "s", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
-	public static final String MESSAGE_INVALID_FORMAT = "invalid command format";
+	public static final String MESSAGE_INVALID_FORMAT = ("invalid command format");
 	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
 	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");
 	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
@@ -50,4 +50,40 @@ public class Constants {
 	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
 	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
 	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
+	
+	public static final String MESSAGE_ADD_ACTION_DATE = ("date");
+	public static final String MESSAGE_ADD_ACTION_START = ("start");
+	public static final String MESSAGE_ADD_ACTION_END = ("end");
+	public static final String MESSAGE_ADD_ACTION_TIME = ("time");
+	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
+	
+	public static final String MESSAGE_DISPLAY_FIELD_NAME = ("alphabetical order");
+	public static final String MESSAGE_DISPLAY_FIELD_START = ("starttime");
+	public static final String MESSAGE_DISPLAY_FIELD_END = ("endtime");
+	public static final String MESSAGE_DISPLAY_FIELD_DATE = ("date");
+	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
+	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
+	
+
+	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
+	public static final String MESSAGE_EDIT_ACTION_START = ("start");
+	public static final String MESSAGE_EDIT_ACTION_END = ("end");
+	public static final String MESSAGE_EDIT_ACTION_DATE = ("date");
+	public static final String MESSAGE_EDIT_ACTION_DETAILS = ("details");
+	
+	public static final String MESSAGE_ACTION_ADD = ("add");
+	public static final String MESSAGE_ACTION_DELETE = ("delete");
+	public static final String MESSAGE_ACTION_EDIT = ("edit");
+	public static final String MESSAGE_ACTION_DONE = ("done");
+	public static final String MESSAGE_ACTION_DISPLAY = ("display");
+	public static final String MESSAGE_ACTION_SEARCH = ("search");
+	public static final String MESSAGE_ACTION_STORAGE = ("storage");
+	public static final String MESSAGE_ACTION_UNDO = ("undo");
+	
+	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
+	public static final String ASSERT_ACTION_EXISTENCE = ("Action does not exist");
+	public static final String ASSERT_TASKID_EXISTENCE = ("Task ID does not exist");
+	public static final String ASSERT_FIELD_EXISTENCE = ("Field does not exist");
+	public static final String ASSERT_TASKNAME_EXISTENCE = ("Field does not exist");
+	public static final String ASSERT_TASKDETAILS_EXISTENCE = ("Task details does not exist");
 }
