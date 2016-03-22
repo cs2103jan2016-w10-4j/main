@@ -43,7 +43,7 @@ public class Read {
 
 	/*
 	 * Method overloading for read()
-	 * This method is called by Retrieve
+	 * This method is called by Handler Retrieve
 	 */
 	public ArrayList<ArrayList<Task>> readFromFile(BufferedReader reader) {
 		try {

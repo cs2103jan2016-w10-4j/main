@@ -12,3 +12,6 @@
 /Help.class
 /DisplayFormat.class
 /Retrieve.class
+/AddTest.class
+/DoneTest.class
+/UndoTest.class

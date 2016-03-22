@@ -2,7 +2,6 @@ package Storage;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,18 +75,6 @@ public class Storage {
 		updateFilenameIfPathExists();
 		ArrayList<ArrayList<Task>> readTaskList = read.readFromFile();
 		return readTaskList;
-	}
-
-	public ArrayList<ArrayList<Task>> retrieve(String fileName) throws FileNotFoundException {
-		Retrieve retrieve = Retrieve.getInstance();
-		updateFilenameIfPathExists();
-		try{
-			ArrayList<ArrayList<Task>> taskList = retrieve.retrieveTaskListFromFile(fileName);
-			return taskList;
-		} catch(FileNotFoundException e){
-			LOGGER.log(Level.WARNING, "Unable to find file");
-			throw new FileNotFoundException();
-		}
 	}
 
 	public boolean setDirectory(String filePathName){

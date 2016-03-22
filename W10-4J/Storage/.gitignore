@@ -3,3 +3,6 @@
 /SetDirectory.class
 /Storage.class
 /Write.class
+/ReadTest.class
+/SetDirectoryTest.class
+/WriteTest.class
