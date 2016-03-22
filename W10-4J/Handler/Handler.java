@@ -50,6 +50,8 @@ public class Handler {
 			return taskDisplayer.display(task);
 		case SEARCH:
 			return taskSearcher.search(task);
+		case SETDIR:
+			return setdir(task);
 		case RETRIEVE:
 			return retrieve(task);
 		case RECURRENCE:
@@ -66,7 +68,7 @@ public class Handler {
 			throw new Error("Unrecognized command type");
 		}
 	}
-
+	
 	public String recurrence(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = handlerMemory.get(taskID - 1);
@@ -103,8 +105,15 @@ public class Handler {
 		result.setDetails(task.getDetails());
 		return result;
 	}
+	
+	private String setdir(String[] task){
+  		if(mainStorage.setDirectory(task[0])){
+  			return Constants.MESSAGE_SETDIR_PASS;
+  		} else{
+  			return Constants.MESSAGE_SETDIR_FAIL;
+  		}
+  	}
 
-	// Retrieve method for setdir()
 	private String retrieve(String[] task) {
 		try {
 			ArrayList<ArrayList<Task>> getFromStorage = mainStorage.retrieve(task[0]);
