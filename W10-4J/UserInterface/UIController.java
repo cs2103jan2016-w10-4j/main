@@ -19,7 +19,8 @@ public class UIController {
 	
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int commandIndex = commands.size();
-	private static int scroll = 100;
+	private static int scroll = 0;
+	private static int minCommandIndex = 0;
     
     public void commandAction(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput){
     	cmdEntry.addActionListener(new ActionListener(){
@@ -27,11 +28,9 @@ public class UIController {
 				String s = cmdEntry.getText();
 				cmdEntry.setText("");
 				commands.add(s);
-		    	scroll = 0;
 				commandIndex = commands.size();
 				printInCommandDisplay(cmdDisplay, "> " + s);
 				String output = p.parse(s);
-
 				assert output != null;
 				if (isDisplay(output)){
 					printInDisplayOutput(displayOutput, output.substring(1));
@@ -52,7 +51,7 @@ public class UIController {
 		});
     }
     
-    private static boolean isDisplay(String s){
+    public static boolean isDisplay(String s){
     	return s.substring(0, 1).equals("0");
     }
     
@@ -66,48 +65,86 @@ public class UIController {
     
 	private static void keyPressed(KeyEvent e, JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane){
 		if (e.getID() == KeyEvent.KEY_PRESSED && e.isControlDown() && e.isShiftDown() && (e.getKeyCode() == KeyEvent.VK_EQUALS)){
-			int fontSize = outputDisplay.getFont().getSize();
-			String fontName = outputDisplay.getFont().getFontName();
-			int fontStyle = outputDisplay.getFont().getStyle();
-			Font font = new Font(fontName, fontStyle, fontSize + 1);
-			outputDisplay.setFont(font);
+			fontSizeChange(outputDisplay, "increase");
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.isControlDown() && e.isShiftDown() && (e.getKeyCode() == KeyEvent.VK_MINUS)){
-			int fontSize = outputDisplay.getFont().getSize();
-			String fontName = outputDisplay.getFont().getFontName();
-			int fontStyle = outputDisplay.getFont().getStyle();
-			Font font = new Font(fontName, fontStyle, fontSize - 1);
-			outputDisplay.setFont(font);
+			fontSizeChange(outputDisplay, "decrease");
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_DOWN){
-			if (commandIndex >= 0 && (commandIndex + 1) < commands.size()){
-				commandIndex += 1;
-				cmdEntry.setText(commands.get(commandIndex));
-			} else {
-				cmdEntry.setText("");
-			}
+			arrowDownPreviousInput(cmdEntry);
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_UP){
-			if ((commandIndex - 1) >= 0){
-				commandIndex -= 1;
-				cmdEntry.setText(commands.get(commandIndex));
-			} else {
-				cmdEntry.setText(commands.get(commandIndex));
-			}
+			arrowUpPreviousInput(cmdEntry);
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_PAGE_UP){
-			int minScroll = outputScrollpane.getVerticalScrollBar().getMinimum();
-			if (scroll <= minScroll){
-				scroll = minScroll;
-			} else {
-				scroll -= 200;
-			}
-			outputScrollpane.getVerticalScrollBar().setValue(scroll);
+			pageUpChange(outputScrollpane);
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_PAGE_DOWN){
-			int maxScroll = outputScrollpane.getVerticalScrollBar().getMaximum();
-			if (scroll >= maxScroll){
-				scroll = maxScroll;
-			} else {
-				scroll += 200;
-			}
-			outputScrollpane.getVerticalScrollBar().setValue(scroll);
+			pageDownChange(outputScrollpane);
 		}
 	}
 
+	/* These are the set of boolean methods for keyboard shortcuts*/
+	private static boolean arrowDownTrue() {
+		return commandIndex >= minCommandIndex && (commandIndex + 1) < commands.size();
+	}
+
+	private static boolean arrowUpTrue() {
+		return (commandIndex - 1) >= minCommandIndex;
+	}
+
+	public static boolean pageUpTrue(int minScroll) {
+		return scroll >= minScroll;
+	}
+
+	public static boolean pageDownTrue(int maxScroll) {
+		return scroll <= maxScroll;
+	}
+
+	/* These are the set of implementation methods for the keyboard shortcuts*/
+	private static void fontSizeChange(JTextPane outputDisplay, String change) {
+		int fontSize = outputDisplay.getFont().getSize();
+		String fontName = outputDisplay.getFont().getFontName();
+		int fontStyle = outputDisplay.getFont().getStyle();
+		Font font;
+		if (change.equals("increase")){
+			font = new Font(fontName, fontStyle, fontSize + 1);
+		} else {
+			font = new Font(fontName, fontStyle, fontSize - 1);
+		}
+		outputDisplay.setFont(font);
+	}
+	
+	private static void arrowDownPreviousInput(JTextField cmdEntry) {
+		if (arrowDownTrue()){
+			commandIndex += 1;
+			cmdEntry.setText(commands.get(commandIndex));
+		} else {
+			cmdEntry.setText("");
+		}
+	}
+
+	private static void arrowUpPreviousInput(JTextField cmdEntry) {
+		if (arrowUpTrue()){
+			commandIndex -= 1;
+			cmdEntry.setText(commands.get(commandIndex));
+		} else {
+			cmdEntry.setText(commands.get(commandIndex));
+		}
+	}
+
+	private static void pageUpChange(JScrollPane outputScrollpane) {
+		int minScroll = 0;
+		if (pageUpTrue(minScroll)){
+			scroll -= 200;
+		} else {
+			scroll = minScroll;
+		}
+		outputScrollpane.getVerticalScrollBar().setValue(scroll);
+	}
+
+	private static void pageDownChange(JScrollPane outputScrollpane) {
+		int maxScroll = outputScrollpane.getVerticalScrollBar().getMaximum();
+		if (pageDownTrue(maxScroll)){
+			scroll += 200;
+		} else {
+			scroll = maxScroll;
+		}
+		outputScrollpane.getVerticalScrollBar().setValue(scroll);
+	}
 }
