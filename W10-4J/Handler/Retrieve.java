@@ -1,12 +1,7 @@
 package Handler;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import Storage.Read;
 import Storage.Storage;
 import main.Constants;
 import main.Task;
@@ -47,16 +42,10 @@ public class Retrieve {
 		}
 		return Constants.MESSAGE_RETRIEVE_FAIL;
 	}
-	public ArrayList<ArrayList<Task>> readFromFile(String filename)throws IOException{
+	
+	public ArrayList<ArrayList<Task>> readFromFile(String filename){
 		ArrayList<ArrayList<Task>> taskList = null;
-		try{
-			BufferedReader reader = new BufferedReader(new FileReader(filename));
-			Read read = Read.getInstance();
-			taskList = read.readFromFile(reader);
-			reader.close();
-		} catch (FileNotFoundException e){
-			e.printStackTrace();
-		}
+		taskList = mainStorage.read("Retrieve", filename);
 		assert taskList!= null: Constants.ASSERT_TASKLIST_EXISTENCE;
 		return taskList;
 	}

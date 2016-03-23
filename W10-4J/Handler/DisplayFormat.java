@@ -14,25 +14,23 @@ public class DisplayFormat {
 		
 		/*
 		 * Red - Exceed the stipulated date and endtime
-		 * Green - Have yet to exceed the stipulated date and endtime
 		 * Black - Default color
 		 */
 		String red = "<font color=#ff0000>";
-		String green = "<font color=#00FF00>";
 		String black = "<font color=#000000>";
-		String color = black;
+		String color;
 		
 		for (Task t : sortedList) {
+			color = black;
+			
 			// Determine which color to display
 			if(t.getDate() != null && t.getEndTime() == null) {
 				Date date = new Date();
-			    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy/mm/dd");
+			    SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy/MM/dd");
 			    
 			    if(t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
 					color = red;
-				} else {
-					color = green;
-				}
+				} 
 			} else if(t.getEndTime() != null && t.getDate() != null) {
 				Date time = new Date();
 			    SimpleDateFormat timeFormat = new SimpleDateFormat ("HH:mm");
@@ -42,10 +40,8 @@ public class DisplayFormat {
 			    
 			    if(t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
 					color = red;
-				} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) > 0 && t.getDate().compareTo(dateFormat.format(date)) == 0 ) {
+				} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) < 0 && t.getDate().compareTo(dateFormat.format(date)) == 0 ) {
 					color = red;
-				} else {
-					color = green;
 				} 
 			}
 			

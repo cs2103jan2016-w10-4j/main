@@ -22,7 +22,7 @@ public class Handler {
 	Help help = new Help();
 
 	public Handler() {
-		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read();
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read("Read", Constants.fileName);
 		handlerMemory = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
@@ -110,11 +110,15 @@ public class Handler {
 	
 	private String setdir(String[] task){
   		if(mainStorage.setDirectory(task[0])){
+  			handlerMemory.clear();
+  			doneStorage.clear();
+  			previousInputStorage.clear();
   			return Constants.MESSAGE_SETDIR_PASS;
   		} else{
   			return Constants.MESSAGE_SETDIR_FAIL;
   		}
   	}
+	
 	private String help(String[] task) {
 		if (task.length == 0) {
 			return help.helpFullString();

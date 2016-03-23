@@ -23,10 +23,9 @@ public class Write {
 	private String taskDone = "Tasks that are done:";
 	private String noTaskOnHand = "No tasks on hand!";
 	private String noTaskDone = "No tasks are done!";
-	private String success = "Success";
 	private String pathVariable = "PATH:";
 	private static Write write;
-	
+
 	// Show Singleton
 	public static Write getInstance() {
 		if(write == null) {
@@ -36,29 +35,17 @@ public class Write {
 	}
 	
 	// Applicable if filename == Constants.fileName
-	public String writeToFile(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
-		String status = Storage.checkFileExists(Storage.filename);
-		getTask(status, toDoTaskList, doneTaskList);
-		return status;
+	public void writeToFile(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
+		getTask(toDoTaskList, doneTaskList);
 	}
 	
 	// Applicable if filename != Constants.fileName
-	public String writeToFile(String filePathName, ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
-		String status = Storage.checkFileExists(Storage.filename);
-		getTask(status, toDoTaskList, doneTaskList);
+	public void writeToFile(String filePathName, ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
+		getTask(toDoTaskList, doneTaskList);
 		updatePathSentence(filePathName);
-		return status;
 	}
 	
-	// Applicable for Retrieve without overwriting the Path found in the mytextfile.txt
-	public void writeToFile(String filePathName, ArrayList<ArrayList<Task>> taskList) {
-		String status = Storage.checkFileExists(Storage.filename);
-		ArrayList<Task> toDoTaskList = taskList.get(0);
-		ArrayList<Task> doneTaskList = taskList.get(1);
-		getTask(status, toDoTaskList, doneTaskList);
-	}
-	
-	private void getTask (String status, ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
+	private void getTask (ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
 		try {
 			print = new PrintWriter(new FileWriter(Storage.filename));
 		} catch (IOException e) {
@@ -66,19 +53,18 @@ public class Write {
 			e.printStackTrace();
 		}	
 		
-		if (status.equals(success)) {
-			if (toDoTaskList.isEmpty()) {
-				print.println(noTaskOnHand);
-			} else {
-				getTaskDetails(taskOnHand, toDoTaskList);
-			}
-
-			if (doneTaskList.isEmpty()) {
-				print.println(noTaskDone);
-			} else {
-				getTaskDetails(taskDone, doneTaskList);
-			}
+		if (toDoTaskList.isEmpty()) {
+			print.println(noTaskOnHand);
+		} else {
+			getTaskDetails(taskOnHand, toDoTaskList);
 		}
+		
+		if (doneTaskList.isEmpty()) {
+			print.println(noTaskDone);
+		} else {
+			getTaskDetails(taskDone, doneTaskList);
+		}
+		
 		LOGGER.log(Level.INFO, "Write to file successfully");
 		print.close();
 	}

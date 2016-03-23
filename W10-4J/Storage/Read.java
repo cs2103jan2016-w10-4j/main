@@ -41,10 +41,8 @@ public class Read {
 		}
 	}
 
-	/*
-	 * Method overloading for read()
-	 * This method is called by Handler Retrieve
-	 */
+	
+	 // This method is called by Handler Retrieve method
 	public ArrayList<ArrayList<Task>> readFromFile(BufferedReader reader) {
 		try {
 			ArrayList<ArrayList<Task>> readTaskList = readTask(reader);
@@ -84,6 +82,7 @@ public class Read {
 					count = addTaskIntoArrayList(count, content, readDoneTaskList);
 				}
 			}
+			
 			readTaskList.add(readToDoTaskList);
 			readTaskList.add(readDoneTaskList);
 			LOGGER.log(Level.INFO, "Read all tasks successfully");
