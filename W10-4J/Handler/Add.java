@@ -20,9 +20,11 @@ public class Add {
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String add(String[] task) {
+	public String add(String[] task, int taskID) {
+		assert task[0]!= null: Constants.ASSERT_FIELD_EXISTENCE;
 		Task eachTask = new Task(task[0].trim());
-		assert eachTask!= null: Constants.ASSERT_TASK_EXISTENCE;
+		assert taskID<1: Constants.ASSERT_TASKID_EXISTENCE;
+		eachTask.setTaskID(taskID);
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
 			action = task[i].trim();

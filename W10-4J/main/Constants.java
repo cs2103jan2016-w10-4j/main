@@ -41,6 +41,7 @@ public class Constants {
 	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");
 	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
 	public static final String MESSAGE_EDIT_PASS = ("%1$s has been edited.");
+	public static final String MESSAGE_EDIT_FAIL = ("Task to be edited does not exist.");
 	public static final String MESSAGE_DONE_PASS = ("%1$s has been set to done.");
 	public static final String MESSAGE_DONE_FAIL = ("%1$s cannot be set to done.");
 	public static final String MESSAGE_SEARCH_PASS = ("Search successful.");
@@ -57,7 +58,8 @@ public class Constants {
 	public static final String MESSAGE_ADD_ACTION_TIME = ("time");
 	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
 	
-	public static final String MESSAGE_DISPLAY_FIELD_NAME = ("alphabetical order");
+	public static final String MESSAGE_DISPLAY_FIELD_ID = ("id");
+	public static final String MESSAGE_DISPLAY_FIELD_NAME = ("name");
 	public static final String MESSAGE_DISPLAY_FIELD_START = ("starttime");
 	public static final String MESSAGE_DISPLAY_FIELD_END = ("endtime");
 	public static final String MESSAGE_DISPLAY_FIELD_DATE = ("date");

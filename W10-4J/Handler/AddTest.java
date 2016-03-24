@@ -27,8 +27,8 @@ public class AddTest {
 				Add add = new Add(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 				
 				// test the delete method
-				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test1"), add.add(task1));
-				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test2"), add.add(task2));
+				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test1"), add.add(task1,1));
+				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test2"), add.add(task2,2));
 				assertEquals("test2",handlerMemory.get(handlerMemory.size()-1).getName());
 				assertEquals("test1",handlerMemory.get(handlerMemory.size()-2).getName());
 	}

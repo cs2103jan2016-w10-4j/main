@@ -20,17 +20,23 @@ public class Edit {
 	}
 	public String edit(String[] task) {
 		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
-		int taskID = Integer.parseInt(task[0].trim());	
-		Task eachTask = handlerMemory.get(taskID - 1);
-		assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-		Task oldTask = cloneTask(eachTask);
-		// edits the task
-		fieldEditor(eachTask, task);
-		// write to mainStorage
-		mainStorage.write(handlerMemory, doneStorage);
-		// remember previous state
-		clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
-		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+		int taskID = Integer.parseInt(task[0].trim());
+		Task eachTask = findByTaskID(handlerMemory, taskID);
+		if (eachTask==null){
+			return Constants.MESSAGE_EDIT_FAIL;
+		} else if (taskID<=0 || taskID>handlerMemory.size()){
+			return Constants.MESSAGE_EDIT_FAIL;
+		} else {
+			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
+			Task oldTask = cloneTask(eachTask);
+			// edits the task
+			fieldEditor(eachTask, task);
+			// write to mainStorage
+			mainStorage.write(handlerMemory, doneStorage);
+			// remember previous state
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
+			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+		}
 	}
 
 	public Task cloneTask(Task task){
@@ -64,6 +70,14 @@ public class Edit {
 			}
 		}
 		return;
+	}
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
+		for (Task task: taskList){
+			if (task.getTaskID()==taskID){
+				return task;
+			}
+		}
+		return null;
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();

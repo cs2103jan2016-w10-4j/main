@@ -22,8 +22,8 @@ public class DoneTest {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
 		Add add = new Add(handlerMemory, doneStorage, previousInputStorage, mainStorage);
-		add.add(task1);
-		add.add(task2);
+		add.add(task1,1);
+		add.add(task2,2);
 		String doneTask1[]={"1","test1","2016/03/22","09:00","21:00","None"};
 		Done done=new Done(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		assertEquals(String.format(Constants.MESSAGE_DONE_PASS, "test1"),done.done(doneTask1));

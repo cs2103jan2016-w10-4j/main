@@ -10,6 +10,7 @@ public class Handler {
 	private static ArrayList<Task> handlerMemory;
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
+	private int taskID;
 	Storage mainStorage = new Storage();
 	Add taskAdder;
 	Edit taskEditor;
@@ -26,6 +27,7 @@ public class Handler {
 		handlerMemory = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
+		taskID = 1;
 
 		taskAdder = new Add(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		taskEditor = new Edit(handlerMemory, doneStorage, previousInputStorage, mainStorage);
@@ -41,7 +43,7 @@ public class Handler {
 
 		switch (command) {
 		case ADD:
-			return taskAdder.add(task);
+			return taskAdder.add(task, taskID++);
 		case EDIT:
 			return taskEditor.edit(task);
 		case DELETE:

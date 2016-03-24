@@ -19,58 +19,61 @@ public class Display {
 	}
 	public String display(String[] task) {
 		if(task.length==0){
-			return DisplayFormat.displayFormat(handlerMemory);
+			sortByID(handlerMemory);
+			mainStorage.write(handlerMemory, doneStorage);
 		}else{
 			String displayField = task[1].trim();
-				assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
-			ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
-			ArrayList<Task> exclusiveHandlerMemory = null;
+			assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
+			//ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
 			switch (displayField)
 			{
 				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-					sortByName(cloneHandlerMemory, exclusiveHandlerMemory);
+					sortByName(handlerMemory);
+					mainStorage.write(handlerMemory, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_START:
-					sortByStart(cloneHandlerMemory, exclusiveHandlerMemory);
+					sortByStart(handlerMemory);
+					mainStorage.write(handlerMemory, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_END:
-					sortByEnd(cloneHandlerMemory, exclusiveHandlerMemory);
+					sortByEnd(handlerMemory);
+					mainStorage.write(handlerMemory, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_DATE:
-					sortByDate(cloneHandlerMemory, exclusiveHandlerMemory);
+					sortByDate(handlerMemory);
+					mainStorage.write(handlerMemory, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
-					break;
+					return DisplayFormat.displayFormat(handlerMemory);
 				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
 					return DisplayFormat.displayFormat(doneStorage);
 			}
-			return DisplayFormat.displayFormat(cloneHandlerMemory);
 		}
+		return DisplayFormat.displayFormat(handlerMemory);
 	}
 	// modularise the display code
-	private void sortByName(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_NAME);
-		Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
-		if (exclusiveHandlerMemory != null){
-			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
-		}
+	private void sortByID(ArrayList<Task> cloneHandlerMemory){
+		Collections.sort(cloneHandlerMemory, Task.taskIDComparator);
 	}
-	private void sortByStart(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_START);
+	private void sortByName(ArrayList<Task> cloneHandlerMemory){
+		Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+	}
+	private void sortByStart(ArrayList<Task> cloneHandlerMemory){
+		ArrayList<Task> exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_START);
 		Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		}
 	}
-	private void sortByEnd(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_END);
+	private void sortByEnd(ArrayList<Task> cloneHandlerMemory){
+		ArrayList<Task> exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_END);
 		Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
 		}
 	}
-	private void sortByDate(ArrayList<Task> cloneHandlerMemory, ArrayList<Task> exclusiveHandlerMemory){
-		exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_DATE);
+	private void sortByDate(ArrayList<Task> cloneHandlerMemory){
+		ArrayList<Task> exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_DATE);
 		Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
 		if (exclusiveHandlerMemory != null){
 			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
@@ -79,8 +82,8 @@ public class Display {
 	
 	// separate those tasks with the specific parameters and those that dont have in null list called result
 	private ArrayList<Task> separateArrayList(ArrayList<Task> taskArray, String field){
-		ArrayList<Task> separateArray = new ArrayList<Task>();
-		ArrayList<Task> result = exclusiveSeparation(taskArray, separateArray, field);
+		//ArrayList<Task> separateArray = new ArrayList<Task>();
+		ArrayList<Task> result = exclusiveSeparation(taskArray, field);
 		// edit the clone to remove the excluded tasks
 		for (Task task: result){
 			if (taskArray.contains(task)){
@@ -90,16 +93,10 @@ public class Display {
 		return result;
 	}
 	
-	private ArrayList<Task> exclusiveSeparation (ArrayList<Task> taskArray, ArrayList<Task> result, String field){
+	private ArrayList<Task> exclusiveSeparation (ArrayList<Task> taskArray, String field){
+		ArrayList<Task> result = new ArrayList<Task>();
 		switch (field)
 		{
-			case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-				 for (Task task: taskArray){
-						if (task.getName()==null){
-							result.add(task);
-						}
-					}
-				break;
 			case Constants.MESSAGE_DISPLAY_FIELD_START:
 				 for (Task task: taskArray){
 						if (task.getStartTime()==null){
@@ -125,11 +122,11 @@ public class Display {
 		return result;
 	}
 	
-	private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
-		ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
-		for (Task task : taskArray) {
-			clone.add(task);
-		}
-		return clone;
-	}
+//	private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
+//		ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
+//		for (Task task : taskArray) {
+//			clone.add(task);
+//		}
+//		return clone;
+//	}
 }

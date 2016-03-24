@@ -9,9 +9,15 @@ public class Task {
 	private String startTime_;
 	private String endTime_;
 	private String details_;
+	private int taskID_;
 	private boolean day_, week_, month_, year_;
 
 	// use trim method to ensure all strings are compared properly
+	public static Comparator<Task> taskIDComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
+			return (task1.getTaskID()-task2.getTaskID());
+		}
+	};
 	public static Comparator<Task> taskNameComparator = new Comparator<Task>() {
 		public int compare(Task task1, Task task2) {
 			return (task1.getName().toLowerCase().trim().compareTo(task2.getName().toLowerCase().trim()));
@@ -90,6 +96,9 @@ public class Task {
 	public void setDetails(String details) {
 		details_ = details;
 	}
+	public void setTaskID(int taskID){
+		taskID_ = taskID;
+	}
 
 	public void setDay(boolean day) {
 		if (day) {
@@ -153,6 +162,10 @@ public class Task {
 
 	public String getDetails() {
 		return details_;
+	}
+	
+	public int getTaskID(){
+		return taskID_;
 	}
 
 	public boolean getDay() {

@@ -22,10 +22,10 @@ public class UndoTest {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
 		Add add = new Add(handlerMemory, doneStorage, previousInputStorage, mainStorage);
-		add.add(task1);
+		add.add(task1,1);
 		assertEquals("test1",previousInputStorage.get(0).getTask().getName());
 		assertEquals("add",previousInputStorage.get(0).getAction());
-		add.add(task2);
+		add.add(task2,2);
 		assertEquals("test2",previousInputStorage.get(0).getTask().getName());
 		assertEquals("add",previousInputStorage.get(0).getAction());
 		Undo undo=new Undo(handlerMemory, doneStorage, previousInputStorage, mainStorage);

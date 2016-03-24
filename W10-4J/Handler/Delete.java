@@ -21,10 +21,12 @@ public class Delete {
 	public String delete(String[] task) {
 		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		if (taskID <= 0 || taskID > handlerMemory.size()) {
+		Task eachTask = findByTaskID(handlerMemory, taskID);
+		if (eachTask==null){
+			return Constants.MESSAGE_DELETE_FAIL;
+		} else if (taskID <= 0 || taskID > handlerMemory.size()) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
-			Task eachTask = handlerMemory.get(taskID - 1);
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
 			handlerMemory.remove(eachTask);
 			// write to mainStorage
@@ -33,6 +35,14 @@ public class Delete {
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
 			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
+	}
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
+		for (Task task: taskList){
+			if (task.getTaskID()==taskID){
+				return task;
+			}
+		}
+		return null;
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
