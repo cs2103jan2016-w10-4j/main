@@ -37,10 +37,9 @@ public class ReadTest extends Read {
 		assertEquals(true, checkValue);
 	}
 	
-	
 	@Test
 	public void testReadFromGivenFile() throws FileNotFoundException {
-		write.writeToFile(Storage.filename, taskList);
+		write.writeToFile(taskList.get(0), taskList.get(1));
 		BufferedReader reader = new BufferedReader(new FileReader(Storage.filename));		
 		ArrayList<ArrayList<Task>> returnTaskList = readFromFile(reader);
 		boolean returnValue = checkIfEquals(returnTaskList);

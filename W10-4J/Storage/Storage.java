@@ -2,6 +2,7 @@ package Storage;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +24,15 @@ public class Storage {
 	private String pathVariable = "PATH:";
 	public static String filename = Constants.fileName;
 
+	Write taskWriter;
+	Read taskReader;
+	SetDirectory taskSetDirectory;
+	
 	public Storage() {
 		setEnvironment();
+		taskWriter = Write.getInstance();
+		taskReader = Read.getInstance();
+		taskSetDirectory = SetDirectory.getInstance();
 	}
 
 	/*
@@ -32,23 +40,13 @@ public class Storage {
 	 * the content in the file
 	 */
 	private void setEnvironment() {
-		try {
+		try{
 			String outcome = checkFileExists(filename);
 			if (outcome.equals(failure)) {
 				LOGGER.log(Level.INFO, "Creating file in progress");
-				
 				File file = new File(filename);
 				Path path = FileSystems.getDefault().getPath(filename);
-
-				if (file.isDirectory()) {
-					Files.createFile(path);
-				} else {
-					String excludeFileName = filename.substring(0, filename.lastIndexOf("/") + 1);
-					Path pathWithoutFileName = Paths.get(excludeFileName);
-					Files.createDirectories(pathWithoutFileName);
-					Files.createFile(path);
-				}
-				
+				createFile(file, path);
 				LOGGER.log(Level.INFO, "File is successfully created");
 			}
 		} catch (IOException e) {
@@ -57,32 +55,50 @@ public class Storage {
 		}
 	}
 	
-	public String write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
-		String status;
-		Write write = Write.getInstance();
-		
+	private void createFile(File file, Path path) throws IOException {
+		if (file.isDirectory()) {
+			Files.createFile(path);
+		} else {
+			String excludeFileName = filename.substring(0, filename.lastIndexOf("/") + 1);
+			Path pathWithoutFileName = Paths.get(excludeFileName);
+			Files.createDirectories(pathWithoutFileName);
+			Files.createFile(path);
+		}
+	}
+	
+	public void write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
 		if (filename.equals(Constants.fileName)) {
-			status = write.writeToFile(toDoTaskList, doneTaskList);
+			taskWriter.writeToFile(toDoTaskList, doneTaskList);
 		} else {
 			updateFilenameIfPathExists();
-			status = write.writeToFile(filename, toDoTaskList, doneTaskList);
+			taskWriter.writeToFile(filename, toDoTaskList, doneTaskList);
 		}
-		return status;
 	}
 
-	public ArrayList<ArrayList<Task>> read() {
-		Read read = Read.getInstance();
-		updateFilenameIfPathExists();
-		ArrayList<ArrayList<Task>> readTaskList = read.readFromFile();
+	public ArrayList<ArrayList<Task>> read(String method, String nameOfTheFile) {
+		ArrayList<ArrayList<Task>> readTaskList = new ArrayList<ArrayList<Task>> ();
+		
+		if(method.equals("Retrieve")) {
+			// Called by Handler Retrieve
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(nameOfTheFile));
+				readTaskList = taskReader.readFromFile(reader);
+			} catch (FileNotFoundException e){
+				LOGGER.log(Level.WARNING, "File does not exist");
+				e.printStackTrace();
+			}
+		} else {
+			// Normal reading from Storage.filename 
+			updateFilenameIfPathExists();
+			readTaskList = taskReader.readFromFile();
+		}
 		return readTaskList;
 	}
-
+	
 	public boolean setDirectory(String filePathName){
-		SetDirectory setDirectory = SetDirectory.getInstance();
-		if(setDirectory.setDirectory(filePathName)){
+		if(taskSetDirectory.setDirectory(filePathName)){
 			filename = filePathName;
-			Write write = Write.getInstance();
-			write.updatePathSentence(filePathName);
+			taskWriter.updatePathSentence(filePathName);
 			return true;
 		} else{
 			return false;
@@ -115,7 +131,6 @@ public class Storage {
 	}
 	
 	private void updateFilenameVariable (String absolutePath) {
-		assert absolutePath != null;
 		filename = absolutePath;
 	}
 	

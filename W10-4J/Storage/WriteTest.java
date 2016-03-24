@@ -105,22 +105,4 @@ public class WriteTest extends Write {
 		
 		assertEquals(true, returnValue);
 	}
-	
-	@Test
-	public void testWriteToOtherFileWithoutUpdatePath() throws NoSuchAlgorithmException, IOException {
-		writeToFile(Storage.filename, taskList);
-		
-		// Check the md5 checksum
-		String testFile = "testFile.txt";
-		MessageDigest messageDigestTest = MessageDigest.getInstance("MD5");
-		messageDigestTest.update(Files.readAllBytes(Paths.get(testFile)));
-		byte[] digestTest = messageDigestTest.digest();
-		
-		String returnFile = Storage.filename;
-		MessageDigest messageDigestReturn = MessageDigest.getInstance("MD5");
-		messageDigestReturn.update(Files.readAllBytes(Paths.get(returnFile)));
-		byte[] digestReturn = messageDigestReturn.digest();
-		
-		assertEquals(true, Arrays.equals(digestTest, digestReturn));
-	}
 }
