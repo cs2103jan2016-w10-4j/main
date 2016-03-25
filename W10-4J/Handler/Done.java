@@ -20,7 +20,22 @@ public class Done implements Command {
 		this.mainStorage = mainStorage;
 	}
 
-	public String done(String[] task) {
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
+		for (Task task : taskList) {
+			if (task.getTaskID() == taskID) {
+				return task;
+			}
+		}
+		return null;
+	}
+
+	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
+		taskArray.clear();
+		taskArray.add(task);
+	}
+
+	@Override
+	public String execute(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = findByTaskID(handlerMemory, taskID);
@@ -47,25 +62,5 @@ public class Done implements Command {
 				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 			}
 		}
-	}
-
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
-		for (Task task : taskList) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
-	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
-	}
-
-	@Override
-	public String execute(String[] task, int taskID) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
