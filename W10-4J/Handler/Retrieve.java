@@ -7,12 +7,12 @@ import main.Constants;
 import main.Task;
 
 public class Retrieve implements Command{
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	Storage mainStorage;
 	
-	public Retrieve(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage, Storage mainStorage){
-		this.handlerMemory = handlerMemory;
+	public Retrieve(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
+		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.mainStorage = mainStorage;
 	}
@@ -21,13 +21,13 @@ public class Retrieve implements Command{
 		try {
 			assert task[0]!= null: Constants.ASSERT_FIELD_EXISTENCE;
 			ArrayList<ArrayList<Task>> getFromStorage = readFromFile(task[0]);
-			ArrayList<Task> addtionalHandlerMemory = getFromStorage.get(0);
+			ArrayList<Task> addtionalnotDoneYetStorage = getFromStorage.get(0);
 			ArrayList<Task> additionalDoneStorage = getFromStorage.get(1);
 			
-			combineArray(handlerMemory, addtionalHandlerMemory);
+			combineArray(notDoneYetStorage, addtionalnotDoneYetStorage);
 			combineArray(doneStorage, additionalDoneStorage);
 			
-			mainStorage.write(handlerMemory, doneStorage);
+			mainStorage.write(notDoneYetStorage, doneStorage);
 			
 			return Constants.MESSAGE_RETRIEVE_PASS;
 		} catch (Exception e) {

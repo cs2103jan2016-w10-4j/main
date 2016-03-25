@@ -5,14 +5,14 @@ import Storage.Storage;
 import main.Task;
 import main.Constants;
 public class Done implements Command{
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Done(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage,
+	public Done(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
 				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.handlerMemory = handlerMemory;
+		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
@@ -20,17 +20,17 @@ public class Done implements Command{
 	public String execute(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(handlerMemory, taskID);
+		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
 		if (eachTask==null){
 			return Constants.MESSAGE_DONE_FAIL;
-		} else if (taskID <= 0 || taskID > handlerMemory.size()) {
+		} else if (taskID <= 0 || taskID > notDoneYetStorage.size()) {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-			handlerMemory.remove(eachTask);
+			notDoneYetStorage.remove(eachTask);
 			doneStorage.add(eachTask);
 			// write to mainStorage
-			mainStorage.write(handlerMemory, doneStorage);
+			mainStorage.write(notDoneYetStorage, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
 			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;

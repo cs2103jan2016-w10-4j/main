@@ -8,14 +8,14 @@ import main.Task;
 //@@author Berkin
 public class Add implements Command{
 	//@@author
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Add(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage,
+	public Add(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
 				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.handlerMemory = handlerMemory;
+		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
@@ -50,9 +50,9 @@ public class Add implements Command{
 		// remember previous state
 		clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
 		// add to arraylist storage
-		handlerMemory.add(eachTask);
+		notDoneYetStorage.add(eachTask);
 		// write to mainStorage
-		mainStorage.write(handlerMemory, doneStorage);
+		mainStorage.write(notDoneYetStorage, doneStorage);
 		return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {

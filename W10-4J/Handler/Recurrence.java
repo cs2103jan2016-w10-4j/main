@@ -7,14 +7,14 @@ import main.Task;
 
 public class Recurrence implements Command{
 
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Recurrence(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage,
+	public Recurrence(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
 			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-	this.handlerMemory = handlerMemory;
+	this.notDoneYetStorage = notDoneYetStorage;
 	this.doneStorage = doneStorage;
 	this.previousInputStorage = previousInputStorage;
 	this.mainStorage = mainStorage;
@@ -22,7 +22,7 @@ public class Recurrence implements Command{
 	
 	public String execute(String[] task, int notUsedInThisCommand) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.get(taskID - 1);
+		Task eachTask = notDoneYetStorage.get(taskID - 1);
 		Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
 		case "day":
@@ -38,7 +38,7 @@ public class Recurrence implements Command{
 			eachTask.setYear(true);
 			break;
 		}
-		mainStorage.write(handlerMemory, doneStorage);
+		mainStorage.write(notDoneYetStorage, doneStorage);
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}

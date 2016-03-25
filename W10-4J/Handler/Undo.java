@@ -6,14 +6,14 @@ import Storage.Storage;
 import main.Task;
 
 public class Undo implements Command{
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Undo(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage,
+	public Undo(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
 				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.handlerMemory = handlerMemory;
+		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
@@ -27,21 +27,21 @@ public class Undo implements Command{
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
 			// to restore to previous state, must unadd the task
-			handlerMemory.remove(previousTask);
+			notDoneYetStorage.remove(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, previousTask));
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
 			// to restore to previous state, must add the task
-			handlerMemory.add(previousTask);
+			notDoneYetStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, previousTask));
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
 			// to restore to previous state, must edit again to previous state
 			eachTask = previousInputStorage.get(0).getEditedTask();
-			handlerMemory.remove(eachTask);
-			handlerMemory.add(previousTask);
+			notDoneYetStorage.remove(eachTask);
+			notDoneYetStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, previousTask));
 			break;
@@ -49,21 +49,21 @@ public class Undo implements Command{
 			// to restore to previous state, must undone the task
 			//eachTask = taskFinder(doneStorage, previousTask);
 			doneStorage.remove(previousTask);
-			handlerMemory.add(previousTask);
+			notDoneYetStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, previousTask));
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
 			// to restore to previous state, must undone the task
-			//eachTask = taskFinder(handlerMemory, previousTask);
-			handlerMemory.remove(previousTask);
+			//eachTask = taskFinder(notDoneYetStorage, previousTask);
+			notDoneYetStorage.remove(previousTask);
 			doneStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, previousTask));
 			break;
 		}
 		// write to mainStorage
-		mainStorage.write(handlerMemory, doneStorage);
+		mainStorage.write(notDoneYetStorage, doneStorage);
 		return Constants.MESSAGE_UNDO_PASS;
 	}
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {

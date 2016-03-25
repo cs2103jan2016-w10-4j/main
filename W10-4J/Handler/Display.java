@@ -8,75 +8,75 @@ import main.Constants;
 import main.Task;
 
 public class Display implements Command{
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	Storage mainStorage;
 	
-	public Display(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage, Storage mainStorage){
-		this.handlerMemory = handlerMemory;
+	public Display(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
+		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.mainStorage = mainStorage;
 	}
 	public String execute(String[] task, int notUsedInThisCommand) {
 		if(task.length==0){
-			sortByID(handlerMemory);
-			mainStorage.write(handlerMemory, doneStorage);
+			sortByID(notDoneYetStorage);
+			mainStorage.write(notDoneYetStorage, doneStorage);
 		}else{
 			String displayField = task[1].trim();
 			assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
-			//ArrayList<Task> cloneHandlerMemory = cloneArray(handlerMemory);
+			//ArrayList<Task> clonenotDoneYetStorage = cloneArray(notDoneYetStorage);
 			switch (displayField)
 			{
 				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-					sortByName(handlerMemory);
-					mainStorage.write(handlerMemory, doneStorage);
+					sortByName(notDoneYetStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_START:
-					sortByStart(handlerMemory);
-					mainStorage.write(handlerMemory, doneStorage);
+					sortByStart(notDoneYetStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_END:
-					sortByEnd(handlerMemory);
-					mainStorage.write(handlerMemory, doneStorage);
+					sortByEnd(notDoneYetStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_DATE:
-					sortByDate(handlerMemory);
-					mainStorage.write(handlerMemory, doneStorage);
+					sortByDate(notDoneYetStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
-					return DisplayFormat.displayFormat(handlerMemory);
+					return DisplayFormat.displayFormat(notDoneYetStorage);
 				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
 					return DisplayFormat.displayFormat(doneStorage);
 			}
 		}
-		return DisplayFormat.displayFormat(handlerMemory);
+		return DisplayFormat.displayFormat(notDoneYetStorage);
 	}
 	// modularise the display code
-	private void sortByID(ArrayList<Task> cloneHandlerMemory){
-		Collections.sort(cloneHandlerMemory, Task.taskIDComparator);
+	private void sortByID(ArrayList<Task> clonenotDoneYetStorage){
+		Collections.sort(clonenotDoneYetStorage, Task.taskIDComparator);
 	}
-	private void sortByName(ArrayList<Task> cloneHandlerMemory){
-		Collections.sort(cloneHandlerMemory, Task.taskNameComparator);
+	private void sortByName(ArrayList<Task> clonenotDoneYetStorage){
+		Collections.sort(clonenotDoneYetStorage, Task.taskNameComparator);
 	}
-	private void sortByStart(ArrayList<Task> cloneHandlerMemory){
-		ArrayList<Task> exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_START);
-		Collections.sort(cloneHandlerMemory, Task.taskStarttimeComparator);
-		if (exclusiveHandlerMemory != null){
-			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+	private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_START);
+		Collections.sort(clonenotDoneYetStorage, Task.taskStarttimeComparator);
+		if (exclusivenotDoneYetStorage != null){
+			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	private void sortByEnd(ArrayList<Task> cloneHandlerMemory){
-		ArrayList<Task> exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_END);
-		Collections.sort(cloneHandlerMemory, Task.taskEndtimeComparator);
-		if (exclusiveHandlerMemory != null){
-			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+	private void sortByEnd(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_END);
+		Collections.sort(clonenotDoneYetStorage, Task.taskEndtimeComparator);
+		if (exclusivenotDoneYetStorage != null){
+			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	private void sortByDate(ArrayList<Task> cloneHandlerMemory){
-		ArrayList<Task> exclusiveHandlerMemory = separateArrayList(cloneHandlerMemory, Constants.MESSAGE_DISPLAY_FIELD_DATE);
-		Collections.sort(cloneHandlerMemory, Task.taskDateComparator);
-		if (exclusiveHandlerMemory != null){
-			cloneHandlerMemory.addAll(exclusiveHandlerMemory);
+	private void sortByDate(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_DATE);
+		Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
+		if (exclusivenotDoneYetStorage != null){
+			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
 	

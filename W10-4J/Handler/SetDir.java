@@ -8,14 +8,14 @@ import main.*;
 
 public class SetDir implements Command {
 
-	private ArrayList<Task> handlerMemory;
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public SetDir(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage,
+	public SetDir(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
 				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.handlerMemory = handlerMemory;
+		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
@@ -23,7 +23,7 @@ public class SetDir implements Command {
 	
 	public String execute(String[] task, int notUsedInThisCommand){
   		if(mainStorage.setDirectory(task[0])){
-  			handlerMemory.clear();
+  			notDoneYetStorage.clear();
   			doneStorage.clear();
   			previousInputStorage.clear();
   			return Constants.MESSAGE_SETDIR_PASS;

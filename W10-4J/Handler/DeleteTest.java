@@ -8,7 +8,7 @@ import Storage.Storage;
 
 public class DeleteTest {
 	
-	private ArrayList<Task> handlerMemory = new ArrayList<Task>();
+	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
 	private ArrayList<Task> doneStorage = new ArrayList<Task>();
 	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
 	Storage mainStorage = new Storage();
@@ -33,9 +33,9 @@ public class DeleteTest {
 		String[] input2 = {"1"};
 		String[] input3 = {"2"};
 		
-		handlerMemory.add(firstTask);
-		handlerMemory.add(secondTask);
-		Delete d = new Delete(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+		notDoneYetStorage.add(firstTask);
+		notDoneYetStorage.add(secondTask);
+		Delete d = new Delete(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		
 		// test the delete method
 		assertEquals("sampleTask1 has been deleted.", d.execute(input1,0));

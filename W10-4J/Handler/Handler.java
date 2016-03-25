@@ -6,7 +6,7 @@ import Storage.Storage;
 import main.Constants.COMMAND_TYPE;
 
 public class Handler {
-	private static ArrayList<Task> handlerMemory;
+	private static ArrayList<Task> notDoneYetStorage;
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
 	private int taskID;
@@ -14,7 +14,7 @@ public class Handler {
 
 	public Handler() {
 		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read("Read", Constants.fileName);
-		handlerMemory = getFromStorage.get(0);
+		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
 		taskID = getTaskId();
@@ -33,25 +33,25 @@ public class Handler {
 	private Command createCommand(COMMAND_TYPE command, String[] task) throws IllegalArgumentException, IllegalStateException {
 		switch (command) {
 		case ADD:
-			return new Add(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:
-			return new Edit(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case DELETE:
-			return new Delete(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+			return new Delete(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case DONE:
-			return new Done(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+			return new Done(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case DISPLAY:
-			return new Display(handlerMemory, doneStorage, mainStorage);
+			return new Display(notDoneYetStorage, doneStorage, mainStorage);
 		case SEARCH:
-			return new Search(handlerMemory, mainStorage);
+			return new Search(notDoneYetStorage, mainStorage);
 		case SETDIR:
-			return new SetDir(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+			return new SetDir(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case RETRIEVE:
-			return new Retrieve(handlerMemory, doneStorage, mainStorage);
+			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
 		case RECURRENCE:
-			return new Recurrence(handlerMemory,doneStorage,previousInputStorage,mainStorage);
+			return new Recurrence(notDoneYetStorage,doneStorage,previousInputStorage,mainStorage);
 		case UNDO:
-			return new Undo(handlerMemory, doneStorage, previousInputStorage, mainStorage);
+			return new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EXIT:
 			System.exit(0);
 		case HELP:
@@ -66,8 +66,8 @@ public class Handler {
 	
 	private int getTaskId(){
 		int id = 0;
-		for(int i = 0 ;i <handlerMemory.size();i++){
-			int currentId = handlerMemory.get(i).getTaskID();
+		for(int i = 0 ;i <notDoneYetStorage.size();i++){
+			int currentId = notDoneYetStorage.get(i).getTaskID();
 			if(currentId>id){
 				id = currentId;
 			}
