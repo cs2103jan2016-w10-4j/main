@@ -52,11 +52,11 @@ public class EditTest {
 		handlerMemory.add(firstTask);
 		handlerMemory.add(secondTask);
 		Edit e2 = new Edit(handlerMemory, doneStorage, previousInputStorage, mainStorage);
-		e2.edit(sampleCommand1);
-		e2.edit(sampleCommand2);
+		e2.execute(sampleCommand1,0);
+		e2.execute(sampleCommand2,0);
 		// for string output of both commands
-		assertEquals("testEdit1","SAMPLETASK1 has been edited.",e2.edit(sampleCommand1));
-		assertEquals("testEdit2","sampleTask2 has been edited.",e2.edit(sampleCommand2));
+		assertEquals("testEdit1","SAMPLETASK1 has been edited.",e2.execute(sampleCommand1,0));
+		assertEquals("testEdit2","sampleTask2 has been edited.",e2.execute(sampleCommand2,0));
 		// for comparing actual task objects of both commands
 		checkFields(editedFirstTask, handlerMemory.get(0));
 		checkFields(editedSecondTask, handlerMemory.get(1));

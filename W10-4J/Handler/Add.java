@@ -20,7 +20,9 @@ public class Add implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String add(String[] task, int taskID) {
+	
+	public String execute(String[] task, int taskID) {
+		taskID++;
 		assert task[0]!= null: Constants.ASSERT_FIELD_EXISTENCE;
 		Task eachTask = new Task(task[0].trim());
 		assert taskID>0: Constants.ASSERT_TASKID_EXISTENCE;

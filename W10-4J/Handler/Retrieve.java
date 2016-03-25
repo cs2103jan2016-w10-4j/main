@@ -17,7 +17,7 @@ public class Retrieve implements Command{
 		this.mainStorage = mainStorage;
 	}
 	
-	public String retrieve(String[] task){
+	public String execute(String[] task,int notUsedInThisCommand){
 		try {
 			assert task[0]!= null: Constants.ASSERT_FIELD_EXISTENCE;
 			ArrayList<ArrayList<Task>> getFromStorage = readFromFile(task[0]);

@@ -17,7 +17,7 @@ public class Display implements Command{
 		this.doneStorage = doneStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String display(String[] task) {
+	public String execute(String[] task, int notUsedInThisCommand) {
 		if(task.length==0){
 			sortByID(handlerMemory);
 			mainStorage.write(handlerMemory, doneStorage);
