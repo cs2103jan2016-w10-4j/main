@@ -17,7 +17,7 @@ public class DoneTest {
 	private ArrayList<Task> doneStorage = new ArrayList<Task>();
 	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
 	Storage mainStorage = new Storage();
-	
+
 	@Test
 	public void test() {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
@@ -33,4 +33,4 @@ public class DoneTest {
 	}
 
 }
-//@@author
+// @@author

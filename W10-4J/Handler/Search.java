@@ -1,10 +1,12 @@
 package Handler;
+
 import main.Constants;
 
 import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
+
 
 public class Search implements Command{
 	private ArrayList<Task> notDoneYetStorage;
@@ -14,6 +16,7 @@ public class Search implements Command{
 		this.notDoneYetStorage = notDoneYetStorage;
 		this.mainStorage = mainStorage;
 	}
+
 	public String execute(String[] task, int notUsedInThisCommand) {
 		ArrayList<Task> searchNotDoneYetStorage = new ArrayList<Task>();
 		// each task is certain to have a name
@@ -57,16 +60,17 @@ public class Search implements Command{
 			}
 		}
 	}
-	
+
 	// name field will always exist
 	// for each task
-	private boolean searchNameAndDetails(Task eachTask, String[] task, boolean excludeField){
+	private boolean searchNameAndDetails(Task eachTask, String[] task, boolean excludeField) {
 		// check whether exclude field exists
-		assert eachTask.getName()!=null: Constants.ASSERT_TASKNAME_EXISTENCE;
-		assert eachTask.getDetails()!=null: Constants.ASSERT_TASKDETAILS_EXISTENCE;
+		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
+		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;
 		if (excludeField) {
 			if ((eachTask.getName().contains(task[0].trim()) && !eachTask.getName().contains(task[2].trim()))
-					|| (eachTask.getDetails().contains(task[0].trim()) && !eachTask.getDetails().contains(task[2].trim()))) {
+					|| (eachTask.getDetails().contains(task[0].trim())
+							&& !eachTask.getDetails().contains(task[2].trim()))) {
 				return true;
 			}
 		} else {
@@ -76,10 +80,11 @@ public class Search implements Command{
 		}
 		return false;
 	}
+
 	// for each task
-	private boolean searchName(Task eachTask, String[] task, boolean excludeField){
+	private boolean searchName(Task eachTask, String[] task, boolean excludeField) {
 		// check whether exclude field exists
-		assert eachTask.getName()!=null: Constants.ASSERT_TASKNAME_EXISTENCE;
+		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 		if (excludeField) {
 			if ((eachTask.getName().contains(task[0].trim()) && !eachTask.getName().contains(task[2].trim()))) {
 				return true;

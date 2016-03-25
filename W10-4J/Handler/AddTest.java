@@ -17,7 +17,7 @@ public class AddTest {
 	private ArrayList<Task> doneStorage = new ArrayList<Task>();
 	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
 	Storage mainStorage = new Storage();
-	
+
 	@Test
 	public void test() {
 		
@@ -32,7 +32,8 @@ public class AddTest {
 				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test2"), add.execute(task2,2));
 				assertEquals("test2",notDoneYetStorage.get(notDoneYetStorage.size()-1).getName());
 				assertEquals("test1",notDoneYetStorage.get(notDoneYetStorage.size()-2).getName());
+
 	}
 
 }
-//@@author
+// @@author

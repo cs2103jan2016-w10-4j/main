@@ -17,6 +17,7 @@ public class Display implements Command{
 		this.doneStorage = doneStorage;
 		this.mainStorage = mainStorage;
 	}
+
 	public String execute(String[] task, int notUsedInThisCommand) {
 		if(task.length==0){
 			sortByID(notDoneYetStorage);
@@ -51,6 +52,7 @@ public class Display implements Command{
 		}
 		return DisplayFormat.displayFormat(notDoneYetStorage);
 	}
+
 	// modularise the display code
 	private void sortByID(ArrayList<Task> clonenotDoneYetStorage){
 		Collections.sort(clonenotDoneYetStorage, Task.taskIDComparator);
@@ -79,54 +81,54 @@ public class Display implements Command{
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	
-	// separate those tasks with the specific parameters and those that dont have in null list called result
-	private ArrayList<Task> separateArrayList(ArrayList<Task> taskArray, String field){
-		//ArrayList<Task> separateArray = new ArrayList<Task>();
+
+	// separate those tasks with the specific parameters and those that dont
+	// have in null list called result
+	private ArrayList<Task> separateArrayList(ArrayList<Task> taskArray, String field) {
+		// ArrayList<Task> separateArray = new ArrayList<Task>();
 		ArrayList<Task> result = exclusiveSeparation(taskArray, field);
 		// edit the clone to remove the excluded tasks
-		for (Task task: result){
-			if (taskArray.contains(task)){
+		for (Task task : result) {
+			if (taskArray.contains(task)) {
 				taskArray.remove(task);
 			}
 		}
 		return result;
 	}
-	
-	private ArrayList<Task> exclusiveSeparation (ArrayList<Task> taskArray, String field){
+
+	private ArrayList<Task> exclusiveSeparation(ArrayList<Task> taskArray, String field) {
 		ArrayList<Task> result = new ArrayList<Task>();
-		switch (field)
-		{
-			case Constants.MESSAGE_DISPLAY_FIELD_START:
-				 for (Task task: taskArray){
-						if (task.getStartTime()==null){
-							result.add(task);
-						}
-					}
-				break;
-			case Constants.MESSAGE_DISPLAY_FIELD_END:
-				 for (Task task: taskArray){
-						if (task.getEndTime()==null){
-							result.add(task);
-						}
-					}
-				break;
-			case Constants.MESSAGE_DISPLAY_FIELD_DATE:
-				 for (Task task: taskArray){
-						if (task.getDate()==null){
-							result.add(task);
-						}
-					}
-				break;
+		switch (field) {
+		case Constants.MESSAGE_DISPLAY_FIELD_START:
+			for (Task task : taskArray) {
+				if (task.getStartTime() == null) {
+					result.add(task);
+				}
+			}
+			break;
+		case Constants.MESSAGE_DISPLAY_FIELD_END:
+			for (Task task : taskArray) {
+				if (task.getEndTime() == null) {
+					result.add(task);
+				}
+			}
+			break;
+		case Constants.MESSAGE_DISPLAY_FIELD_DATE:
+			for (Task task : taskArray) {
+				if (task.getDate() == null) {
+					result.add(task);
+				}
+			}
+			break;
 		}
 		return result;
 	}
-	
-//	private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
-//		ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
-//		for (Task task : taskArray) {
-//			clone.add(task);
-//		}
-//		return clone;
-//	}
+
+	// private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
+	// ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
+	// for (Task task : taskArray) {
+	// clone.add(task);
+	// }
+	// return clone;
+	// }
 }

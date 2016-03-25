@@ -19,20 +19,24 @@ public class Handler {
 		previousInputStorage = new ArrayList<PreviousInput>();
 		taskID = getTaskId();
 	}
-//@@author Berkin
+
+	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
-		try{
-			Command cmd = createCommand(command,task);
-			return cmd.execute(task,taskID);
+		try {
+			Command cmd = createCommand(command, task);
+			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
 			return Constants.MESSAGE_UNRECOGNÝZED_COMMAND;
-			}
 		}
-	private Command createCommand(COMMAND_TYPE command, String[] task) throws IllegalArgumentException, IllegalStateException {
+	}
+
+	private Command createCommand(COMMAND_TYPE command, String[] task)
+			throws IllegalArgumentException, IllegalStateException {
 		switch (command) {
 		case ADD:
+			taskID++;
 			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:
 			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
@@ -62,22 +66,22 @@ public class Handler {
 			throw new IllegalStateException();
 		}
 	}
-//@@author
-	
-	private int getTaskId(){
+	// @@author
+
+	private int getTaskId() {
 		int id = 0;
 		for(int i = 0 ;i <notDoneYetStorage.size();i++){
 			int currentId = notDoneYetStorage.get(i).getTaskID();
 			if(currentId>id){
 				id = currentId;
 			}
-		}
-		for(int i = 0 ;i <doneStorage.size();i++){
-			int currentId = doneStorage.get(i).getTaskID();
-			if(currentId>id){
+			}
+		for (int i = 0; i < notDoneYetStorage.size(); i++) {
+			int currentId = notDoneYetStorage.get(i).getTaskID();
+			if (currentId > id) {
 				id = currentId;
 			}
 		}
-		return ++id;
+		return id;
 	}
 }

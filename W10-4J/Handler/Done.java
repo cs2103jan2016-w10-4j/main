@@ -1,9 +1,11 @@
 package Handler;
+
 import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
 import main.Constants;
+
 public class Done implements Command{
 	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
@@ -17,11 +19,28 @@ public class Done implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
+
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
+		for (Task task : taskList) {
+			if (task.getTaskID() == taskID) {
+				return task;
+			}
+		}
+		return null;
+	}
+
+	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
+		taskArray.clear();
+		taskArray.add(task);
+	}
+
 	public String execute(String[] task, int notUsedInThisCommand) {
-		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
+		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
+
 		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
 		if (eachTask==null){
+
 			return Constants.MESSAGE_DONE_FAIL;
 		} else if (taskID <= 0 || taskID > notDoneYetStorage.size()) {
 			return Constants.MESSAGE_DONE_FAIL;
@@ -36,17 +55,5 @@ public class Done implements Command{
 			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
 			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		}
-	}
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
-		for (Task task: taskList){
-			if (task.getTaskID()==taskID){
-				return task;
-			}
-		}
-		return null;
-	}
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
 	}
 }

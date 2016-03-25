@@ -5,7 +5,7 @@ import main.Constants;
 import Storage.Storage;
 import main.Task;
 
-public class Recurrence implements Command{
+public class Recurrence implements Command {
 
 	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
@@ -42,12 +42,21 @@ public class Recurrence implements Command{
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}
-	
+
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
+		for (Task task : taskList) {
+			if (task.getTaskID() == taskID) {
+				return task;
+			}
+		}
+		return null;
+	}
+
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);
 	}
-	
+
 	private Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
 		result.setDate(task.getDate());

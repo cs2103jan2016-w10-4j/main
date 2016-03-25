@@ -1,4 +1,5 @@
 package Handler;
+
 import main.Constants;
 import java.util.ArrayList;
 
@@ -18,8 +19,9 @@ public class Delete implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
+
 	public String execute(String[] task, int notUsedInThisCommand) {
-		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
+		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
 		if (eachTask==null){
@@ -36,14 +38,16 @@ public class Delete implements Command{
 			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
 	}
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
-		for (Task task: taskList){
-			if (task.getTaskID()==taskID){
+
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
+		for (Task task : taskList) {
+			if (task.getTaskID() == taskID) {
 				return task;
 			}
 		}
 		return null;
 	}
+
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);

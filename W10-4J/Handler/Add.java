@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
+
 //@@author Berkin
 public class Add implements Command{
 	//@@author
@@ -20,17 +21,16 @@ public class Add implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	
+
 	public String execute(String[] task, int taskID) {
-		taskID++;
-		assert task[0]!= null: Constants.ASSERT_FIELD_EXISTENCE;
+		assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
 		Task eachTask = new Task(task[0].trim());
-		assert taskID>0: Constants.ASSERT_TASKID_EXISTENCE;
+		assert taskID > 0 : Constants.ASSERT_TASKID_EXISTENCE;
 		eachTask.setTaskID(taskID);
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
 			action = task[i].trim();
-			assert action!= null: Constants.ASSERT_ACTION_EXISTENCE;
+			assert action != null : Constants.ASSERT_ACTION_EXISTENCE;
 			switch (action) {
 			case Constants.MESSAGE_ADD_ACTION_DATE:
 				eachTask.setDate(task[i + 1].trim());
@@ -55,6 +55,7 @@ public class Add implements Command{
 		mainStorage.write(notDoneYetStorage, doneStorage);
 		return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 	}
+
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);

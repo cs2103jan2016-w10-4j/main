@@ -18,8 +18,9 @@ public class Edit implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
+
 	public String execute(String[] task, int notUsedInThisCommand) {
-		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
+		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
 		if (eachTask==null){
@@ -27,7 +28,7 @@ public class Edit implements Command{
 		} else if (taskID<=0 || taskID>notDoneYetStorage.size()){
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
-			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
+			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
 			fieldEditor(eachTask, task);
@@ -39,7 +40,7 @@ public class Edit implements Command{
 		}
 	}
 
-	public Task cloneTask(Task task){
+	public Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
 		result.setDate(task.getDate());
 		result.setStartTime(task.getStartTime());
@@ -47,6 +48,7 @@ public class Edit implements Command{
 		result.setDetails(task.getDetails());
 		return result;
 	}
+
 	private void fieldEditor(Task eachTask, String[] task) {
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
@@ -71,14 +73,16 @@ public class Edit implements Command{
 		}
 		return;
 	}
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
-		for (Task task: taskList){
-			if (task.getTaskID()==taskID){
+
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
+		for (Task task : taskList) {
+			if (task.getTaskID() == taskID) {
 				return task;
 			}
 		}
 		return null;
 	}
+
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);
