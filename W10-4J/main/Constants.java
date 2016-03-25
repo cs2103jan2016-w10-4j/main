@@ -19,8 +19,8 @@ public class Constants {
 	public static final String[] exitDefaultCommandList = { "exit", "quit", "q" };
 	public static final String[] helpDefaultCommandList = { "help", "h", "?" };
 
-	public static final String[] addDefaultArgumentList = { "date", "start", "end", "details", "by", "at" };
-	public static final String[] editDefaultArgumentList = { "rename", "date", "start", "end", "details", "by", "at" };
+	public static final String[] addDefaultArgumentList = { "date", "start", "end", "details", "repeat" };
+	public static final String[] editDefaultArgumentList = { "rename", "date", "start", "end", "details", "repeat" };
 	public static final String[] displayDefaultArgumentList = { "alphabetical order", "name", "starttime", "endtime",
 			"date", "tasks", "done" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
@@ -30,6 +30,12 @@ public class Constants {
 			"show", "print", "search", "find", "contains", "setdir", "cd", "setdirectory", "set directory", "storage",
 			"get", "open", "grab", "grep", "retrieve", "undo", "whoops", "mb" };
 
+	public static final String[] dateDefaultArgumentList = {"date","d"};
+	public static final String[] startDefaultArgumentList = {"start","starttime","s","time"};
+	public static final String[] endDefaultArgumentList = {"end","endtime","e"};
+	public static final String[] detailsDefaultArgumentList = {"details","details","d"};
+	public static final String[] repeatDefaultArgumentList = {"repeat","recur","r","recurrence"};
+	
 	public static final String[] month = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
 			"oct", "nov", "dec", "january", "february", "march", "april", "may", "june", "july", "august", "september",
 			"october", "november", "december" };
@@ -57,6 +63,7 @@ public class Constants {
 	public static final String MESSAGE_ADD_ACTION_END = ("end");
 	public static final String MESSAGE_ADD_ACTION_TIME = ("time");
 	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
+	public static final String MESSAGE_ADD_ACTION_REPEAT = ("repeat");
 	
 	public static final String MESSAGE_DISPLAY_FIELD_ID = ("id");
 	public static final String MESSAGE_DISPLAY_FIELD_NAME = ("name");
