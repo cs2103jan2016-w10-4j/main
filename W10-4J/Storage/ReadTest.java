@@ -16,10 +16,10 @@ public class ReadTest extends Read {
 	static ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
 	static ArrayList<Task> doneTaskList = new ArrayList<Task> ();
 	static ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
-	Write write = new Write();
-
+	Write taskWriter = Write.getInstance();
+	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() {
 		// Set up write class
 		Task a = new Task("A");
 		Task b = new Task("B");
@@ -31,38 +31,40 @@ public class ReadTest extends Read {
 
 	@Test
 	public void testReadDefaultFile() {
-		write.writeToFile(toDoTaskList, doneTaskList);
+		taskWriter.writeToFile(toDoTaskList, doneTaskList);
 		ArrayList<ArrayList<Task>> returnTaskList = readFromFile();
-		boolean checkValue = checkIfEquals(returnTaskList);
+		boolean checkValue = checkTaskListEquals(returnTaskList);
 		assertEquals(true, checkValue);
 	}
 	
 	@Test
 	public void testReadFromGivenFile() throws FileNotFoundException {
-		write.writeToFile(taskList.get(0), taskList.get(1));
+		taskWriter.writeToFile(taskList.get(0), taskList.get(1));
 		BufferedReader reader = new BufferedReader(new FileReader(Storage.filename));		
 		ArrayList<ArrayList<Task>> returnTaskList = readFromFile(reader);
-		boolean returnValue = checkIfEquals(returnTaskList);
+		boolean returnValue = checkTaskListEquals(returnTaskList);
 		assertEquals(true, returnValue);
 	}
 
-	public boolean checkIfEquals (ArrayList<ArrayList<Task>> returnTaskList) {
+	public boolean checkTaskListEquals(ArrayList<ArrayList<Task>> returnTaskList) {
 		boolean returnValue = true;
-
-		if(returnTaskList.get(0).size() == toDoTaskList.size()) {
-			for(int i = 0; i < returnTaskList.get(0).size(); i++) {
-				Task returnTask = returnTaskList.get(0).get(i);
+		ArrayList<Task> returnToDoTaskList = returnTaskList.get(0);
+		ArrayList<Task> returnDoneTaskList = returnTaskList.get(1);
+		
+		if (returnToDoTaskList.size() == toDoTaskList.size()) {
+			for (int i = 0; i < returnToDoTaskList.size(); i++) {
+				Task returnTask = returnToDoTaskList.get(i);
 				Task task = toDoTaskList.get(i);
-				if(getTaskDetails(returnTask,task) == false) {
+				if (compareTaskDetails(returnTask,task) == false) {
 					returnValue = false;
 					break;
 				}
 			}
-		} else if (returnTaskList.get(1).size() == doneTaskList.size()) {
-			for(int i = 0; i < returnTaskList.get(0).size(); i++) {
-				Task returnTask = returnTaskList.get(0).get(i);
+		} else if (returnDoneTaskList.size() == doneTaskList.size()) {
+			for (int i = 0; i < returnDoneTaskList.size(); i++) {
+				Task returnTask = returnDoneTaskList.get(i);
 				Task task = doneTaskList.get(i);
-				if(getTaskDetails(returnTask,task) == false) {
+				if (compareTaskDetails(returnTask,task) == false) {
 					returnValue = false;
 					break;
 				}
@@ -70,88 +72,124 @@ public class ReadTest extends Read {
 		} else {
 			returnValue = false;
 		}
+		
 		return returnValue;
 	}
 
-	private boolean getTaskDetails(Task returnTask, Task task) {		
-		int counter = 0;
-
-		if (!(returnTask.getName() == null && task.getName() == null)) {
-			if(returnTask.getName().trim().equals(task.getName().trim())) {
-				counter++;
-			}
-		} else if (returnTask.getName() == null && task.getName() == null) {
-			counter++;
-		}
+	private boolean compareTaskDetails(Task returnTask, Task task) {		
+		boolean nameEqual = compareName(returnTask, task);
+		boolean dateEqual = compareDate(returnTask, task);
+		boolean startTimeEqual = compareStartTime(returnTask, task);
+		boolean endTimeEqual = compareEndTime(returnTask, task);
+		boolean detailsEqual = compareDetails(returnTask, task);
+		boolean dayEqual = compareDay(returnTask, task);
+		boolean weekEqual = compareWeek(returnTask, task);
+		boolean monthEqual = compareMonth(returnTask, task);
+		boolean yearEqual = compareYear(returnTask, task);
 		
-		if (!(returnTask.getDate() == null && task.getDate() == null)) {
-			if(returnTask.getDate().trim().equals(task.getDate().trim())) {
-				counter++;
-			}			
-		} else if (returnTask.getDate() == null && task.getDate() == null) {
-			counter++;
-		}
-
-		if (!(returnTask.getStartTime() == null && task.getStartTime() == null)) {
-			if(returnTask.getStartTime().trim().equals(task.getStartTime().trim())) {
-				counter++;
-			}				
-		} else if (returnTask.getStartTime() == null && task.getStartTime() == null) {
-			counter++;
-		}
-
-		if (!(returnTask.getEndTime() == null && task.getEndTime() == null)) {
-			if(returnTask.getEndTime().trim().equals(task.getEndTime().trim())) {
-				counter++;
-			}
-		} else if (returnTask.getEndTime() == null && task.getEndTime() == null) {
-			counter++;
-		}
-
-		if (!(returnTask.getDetails() == null && task.getDetails() == null)) {
-			if(returnTask.getDetails().trim().equals(task.getDetails().trim())) {
-				counter++;
-			}			
-		} else if (returnTask.getDetails() == null && task.getDetails() == null) {
-			counter++;
-		}
-
-		if (!(returnTask.getDay() == false && task.getDay() == false)) {
-			if(returnTask.getDay() == (task.getDay())) {
-				counter++;
-			}			
-		} else if (returnTask.getDay() == false && task.getDay() == false) {
-			counter++;
-		}
-
-		if (!(returnTask.getWeek() == false && task.getWeek() == false)) {
-			if(returnTask.getWeek() == (task.getWeek())) {
-				counter++;
-			}				
-		} else if (returnTask.getWeek() == false && task.getWeek() == false) {
-			counter++;
-		}
-
-		if (!(returnTask.getMonth() == false && task.getMonth() == false)) {
-			if(returnTask.getMonth() == (task.getMonth())) {
-				counter++;
-			}				
-		} else if (returnTask.getMonth() == false && task.getMonth() == false) {
-			counter++;
-		}
-
-		if (!(returnTask.getYear() == false && task.getYear() == false)) {
-			if(returnTask.getYear() == (task.getYear())) {
-				counter++;
-			}				
-		} else if (returnTask.getYear() == false && task.getYear() == false) {
-			counter++;
-		}
-
-		if(counter == 9) {
+		if(nameEqual && dateEqual && startTimeEqual && endTimeEqual && detailsEqual && dayEqual && weekEqual && monthEqual && yearEqual) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	private boolean compareName(Task returnTask, Task task) {
+		if (!(returnTask.getName() == null && task.getName() == null)) {
+			if (returnTask.getName().trim().equals(task.getName().trim())) {
+				return true;
+			}
+		} else if (returnTask.getName() == null && task.getName() == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareDate(Task returnTask, Task task) {
+		if (!(returnTask.getDate() == null && task.getDate() == null)) {
+			if (returnTask.getDate().trim().equals(task.getDate().trim())) {
+				return true;			
+			}			
+		} else if (returnTask.getDate() == null && task.getDate() == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareStartTime(Task returnTask, Task task) {
+		if (!(returnTask.getStartTime() == null && task.getStartTime() == null)) {
+			if (returnTask.getStartTime().trim().equals(task.getStartTime().trim())) {
+				return true;
+			}				
+		} else if (returnTask.getStartTime() == null && task.getStartTime() == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareEndTime(Task returnTask, Task task) {
+		if (!(returnTask.getEndTime() == null && task.getEndTime() == null)) {
+			if (returnTask.getEndTime().trim().equals(task.getEndTime().trim())) {
+				return true;
+			}
+		} else if (returnTask.getEndTime() == null && task.getEndTime() == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareDetails(Task returnTask, Task task) {
+		if (!(returnTask.getDetails() == null && task.getDetails() == null)) {
+			if (returnTask.getDetails().trim().equals(task.getDetails().trim())) {
+				return true;
+			}			
+		} else if (returnTask.getDetails() == null && task.getDetails() == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareDay(Task returnTask, Task task) {
+		if (!(returnTask.getDay() == false && task.getDay() == false)) {
+			if (returnTask.getDay() == (task.getDay())) {
+				return true;
+			}			
+		} else if (returnTask.getDay() == false && task.getDay() == false) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareWeek(Task returnTask, Task task) {
+		if (!(returnTask.getWeek() == false && task.getWeek() == false)) {
+			if (returnTask.getWeek() == (task.getWeek())) {
+				return true;
+			}				
+		} else if (returnTask.getWeek() == false && task.getWeek() == false) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareMonth(Task returnTask, Task task) {
+		if (!(returnTask.getMonth() == false && task.getMonth() == false)) {
+			if (returnTask.getMonth() == (task.getMonth())) {
+				return true;
+			}				
+		} else if (returnTask.getMonth() == false && task.getMonth() == false) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean compareYear(Task returnTask, Task task) {
+		if (!(returnTask.getYear() == false && task.getYear() == false)) {
+			if (returnTask.getYear() == (task.getYear())) {
+				return true;
+			}				
+		} else if (returnTask.getYear() == false && task.getYear() == false) {
+			return true;
+		}
+		return false;
 	}
 }

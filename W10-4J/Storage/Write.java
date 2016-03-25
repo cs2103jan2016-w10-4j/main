@@ -15,20 +15,15 @@ import main.Task;
 
 public class Write {
 	private final Logger LOGGER = Logger.getLogger(Write.class.getName());
+	private static Write write;
 	private PrintWriter print;
 	private PrintWriter printPath;
 	private BufferedReader reader;
 	private File tempFile;
-	private String taskOnHand = "Tasks on hand:";
-	private String taskDone = "Tasks that are done:";
-	private String noTaskOnHand = "No tasks on hand!";
-	private String noTaskDone = "No tasks are done!";
-	private String pathVariable = "PATH:";
-	private static Write write;
 
 	// Show Singleton
 	public static Write getInstance() {
-		if(write == null) {
+		if (write == null) {
 			write = new Write();
 		}
 		return write;
@@ -36,16 +31,16 @@ public class Write {
 	
 	// Applicable if filename == Constants.fileName
 	public void writeToFile(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
-		getTask(toDoTaskList, doneTaskList);
+		printTask(toDoTaskList, doneTaskList);
 	}
 	
 	// Applicable if filename != Constants.fileName
 	public void writeToFile(String filePathName, ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
-		getTask(toDoTaskList, doneTaskList);
+		printTask(toDoTaskList, doneTaskList);
 		updatePathSentence(filePathName);
 	}
 	
-	private void getTask (ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
+	private void printTask(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
 		try {
 			print = new PrintWriter(new FileWriter(Storage.filename));
 		} catch (IOException e) {
@@ -54,66 +49,67 @@ public class Write {
 		}	
 		
 		if (toDoTaskList.isEmpty()) {
-			print.println(noTaskOnHand);
+			print.println(Constants.MESSAGE_WRITE_READ_NOTASKONHAND);
 		} else {
-			getTaskDetails(taskOnHand, toDoTaskList);
+			printTaskDetails(Constants.MESSAGE_WRITE_READ_TASKONHAND, toDoTaskList);
 		}
 		
 		if (doneTaskList.isEmpty()) {
-			print.println(noTaskDone);
+			print.println(Constants.MESSAGE_WRITE_READ_NOTASKDONE);
 		} else {
-			getTaskDetails(taskDone, doneTaskList);
+			printTaskDetails(Constants.MESSAGE_WRITE_READ_TASKDONE, doneTaskList);
 		}
 		
 		LOGGER.log(Level.INFO, "Write to file successfully");
 		print.close();
 	}
 	
-	private void getTaskDetails(String taskCategory, ArrayList<Task> taskList) {		
+	private void printTaskDetails(String taskCategory, ArrayList<Task> taskList) {		
 		print.println(taskCategory);
 		for (int i = 0; i < taskList.size(); i++) {
-			int index = i + 1;
+			int taskID = taskList.get(i).getTaskID();
+			
 			if (!(taskList.get(i).getName() == null)) {
-				print.println(index + ". Event: " + taskList.get(i).getName());
+				print.println(String.format(Constants.MESSAGE_WRITE_EVENT, taskID, taskList.get(i).getName()));
 			}
 
 			if (!(taskList.get(i).getDate() == null)) {
-				print.println("Date: " + taskList.get(i).getDate());
+				print.println(String.format(Constants.MESSAGE_WRITE_DATE, taskList.get(i).getDate()));
 			}
 
 			if (!(taskList.get(i).getStartTime() == null)) {
-				print.println("Start Time: " + taskList.get(i).getStartTime());
+				print.println(String.format(Constants.MESSAGE_WRITE_STARTTIME, taskList.get(i).getStartTime()));
 			}
 
 			if (!(taskList.get(i).getEndTime() == null)) {
-				print.println("End Time: " + taskList.get(i).getEndTime());
+				print.println(String.format(Constants.MESSAGE_WRITE_ENDTIME, taskList.get(i).getEndTime()));
 			}
 
 			if (!(taskList.get(i).getDetails() == null)) {
-				print.println("Details: " + taskList.get(i).getDetails());
+				print.println(String.format(Constants.MESSAGE_WRITE_DETAILS, taskList.get(i).getDetails()));
 			}
 			
 			if (!(taskList.get(i).getDay() == false)) {
-				print.println("Day: " + taskList.get(i).getDay());
+				print.println(String.format(Constants.MESSAGE_WRITE_DAY, taskList.get(i).getDay()));
 			}
 			
 			if (!(taskList.get(i).getWeek() == false)) {
-				print.println("Week: " + taskList.get(i).getWeek());
+				print.println(String.format(Constants.MESSAGE_WRITE_WEEK, taskList.get(i).getWeek()));
 			}
 			
 			if (!(taskList.get(i).getMonth() == false)) {
-				print.println("Month: " + taskList.get(i).getMonth());
+				print.println(String.format(Constants.MESSAGE_WRITE_MONTH, taskList.get(i).getMonth()));
 			}
 			
 			if (!(taskList.get(i).getYear() == false)) {
-				print.println("Year: " + taskList.get(i).getYear());
+				print.println(String.format(Constants.MESSAGE_WRITE_YEAR, taskList.get(i).getYear()));
 			}
 		}
 		
 		LOGGER.log(Level.INFO, "Get all tasks successfully");
 	}
 	
-	public void updatePathSentence (String filePathName) {		
+	public void updatePathSentence(String filePathName) {		
 		try {
 			tempFile = new File("temp.txt");
 			printPath = new PrintWriter(new FileWriter("temp.txt"));
@@ -133,7 +129,7 @@ public class Write {
 	}
 	
 	// Add an additional "PATH: " sentence to the beginning of the file
-	private void addPathAndCopyFileContent (String filePathName, PrintWriter printPath, BufferedReader read) {
+	private void addPathAndCopyFileContent(String filePathName, PrintWriter printPath, BufferedReader read) {
 		try {
 			String content;
 			String firstSentence = "PATH: " + filePathName;
@@ -141,16 +137,16 @@ public class Write {
 
 			while ((content = read.readLine()) != null) {
 				String path = content.substring(0, content.indexOf(" "));
-				if(!(path.equals(pathVariable))) {
+				if(!(path.equals(Constants.MESSAGE_WRITE_READ_PATH))) {
 					printPath.println(content);
 				} 
 			}
 			
 			printPath.close();
 			read.close();
-			LOGGER.log(Level.INFO, "Add PATH: sentence to mytextfile.txt successfully");
+			LOGGER.log(Level.INFO, "Add PATH: sentence successfully");
 		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Unable to add PATH: sentence to mytextfile.txt");
+			LOGGER.log(Level.WARNING, "Unable to add PATH: sentence");
 			e.printStackTrace();
 		}
 	}

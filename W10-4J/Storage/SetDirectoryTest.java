@@ -17,5 +17,4 @@ public class SetDirectoryTest extends SetDirectory {
 		boolean returnValue = setDirectory("C:/Users/NoSuchFile/noSuchFile.txt");
 		assertEquals(false, returnValue);
 	}
-
 }

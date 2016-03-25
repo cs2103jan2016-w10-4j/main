@@ -16,7 +16,7 @@ public class SetDirectory {
 	
 	// Show Singleton
 	public static SetDirectory getInstance() {
-		if(setDirectory == null) {
+		if (setDirectory == null) {
 			setDirectory = new SetDirectory();
 		}
 		return setDirectory;
@@ -30,7 +30,7 @@ public class SetDirectory {
 	public boolean setDirectory(String filePathName) {
 		try {
 			File file = new File(filePathName);
-			if(!(checkDirectory(file))) {
+			if (!(isADirectory(file))) {
 				Path path = FileSystems.getDefault().getPath(filePathName);
 				createFile(file, path, filePathName);
 			} 
@@ -42,7 +42,7 @@ public class SetDirectory {
 		}
 	}
 
-	private boolean checkDirectory(File file) {
+	private boolean isADirectory(File file) {
 		if (file.exists()) {
 			LOGGER.log(Level.INFO, "File exist");
 			return true;
@@ -52,7 +52,7 @@ public class SetDirectory {
 		}
 	}
 	
-	private void createFile (File file, Path path, String filePathName) throws IOException {
+	private void createFile(File file, Path path, String filePathName) throws IOException {
 		String excludeFileName = filePathName.substring(0, filePathName.lastIndexOf("/") + 1);
 		Path pathWithoutFileName = Paths.get(excludeFileName);
 		Files.createDirectories(pathWithoutFileName);

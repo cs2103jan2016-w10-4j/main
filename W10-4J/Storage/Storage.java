@@ -19,9 +19,6 @@ import main.Task;
 
 public class Storage {
 	private final Logger LOGGER = Logger.getLogger(Storage.class.getName());
-	private static String success = "Success";
-	private static String failure = "Failure";
-	private String pathVariable = "PATH:";
 	public static String filename = Constants.fileName;
 
 	Write taskWriter;
@@ -40,9 +37,9 @@ public class Storage {
 	 * the content in the file
 	 */
 	private void setEnvironment() {
-		try{
+		try {
 			String outcome = checkFileExists(filename);
-			if (outcome.equals(failure)) {
+			if (outcome.equals(Constants.MESSAGE_STORAGE_FAILURE)) {
 				LOGGER.log(Level.INFO, "Creating file in progress");
 				File file = new File(filename);
 				Path path = FileSystems.getDefault().getPath(filename);
@@ -78,12 +75,12 @@ public class Storage {
 	public ArrayList<ArrayList<Task>> read(String method, String nameOfTheFile) {
 		ArrayList<ArrayList<Task>> readTaskList = new ArrayList<ArrayList<Task>> ();
 		
-		if(method.equals("Retrieve")) {
+		if (method.equals(Constants.MESSAGE_ACTION_RETRIEVE)) {
 			// Called by Handler Retrieve
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(nameOfTheFile));
 				readTaskList = taskReader.readFromFile(reader);
-			} catch (FileNotFoundException e){
+			} catch (FileNotFoundException e) {
 				LOGGER.log(Level.WARNING, "File does not exist");
 				e.printStackTrace();
 			}
@@ -95,12 +92,12 @@ public class Storage {
 		return readTaskList;
 	}
 	
-	public boolean setDirectory(String filePathName){
-		if(taskSetDirectory.setDirectory(filePathName)){
+	public boolean setDirectory(String filePathName) {
+		if (taskSetDirectory.setDirectory(filePathName)) {
 			filename = filePathName;
 			taskWriter.updatePathSentence(filePathName);
 			return true;
-		} else{
+		} else {
 			return false;
 		}
 	}
@@ -114,11 +111,11 @@ public class Storage {
 			BufferedReader read = new BufferedReader(new FileReader(Constants.fileName));
 			String content = read.readLine();
 			
-			if(content != null) {
+			if (content != null) {
 				String path = content.substring(0, content.indexOf(" "));
-				if(path.equals(pathVariable)) {
+				if (path.equals(Constants.MESSAGE_STORAGE_PATH)) {
 					String absolutePath = content.substring(content.indexOf(" ") + 1, content.length());
-					if(checkFileExists(absolutePath).equals(success)) {
+					if (checkFileExists(absolutePath).equals(Constants.MESSAGE_STORAGE_SUCCESS)) {
 						updateFilenameVariable(absolutePath);
 					}
 				} 
@@ -130,7 +127,7 @@ public class Storage {
 		}
 	}
 	
-	private void updateFilenameVariable (String absolutePath) {
+	private void updateFilenameVariable(String absolutePath) {
 		filename = absolutePath;
 	}
 	
@@ -139,9 +136,9 @@ public class Storage {
 		File file = new File(filename);
 
 		if (file.exists()) {
-			outcome = success;
+			outcome = Constants.MESSAGE_STORAGE_SUCCESS;
 		} else {
-			outcome = failure;
+			outcome = Constants.MESSAGE_STORAGE_FAILURE;
 		}
 		return outcome;
 	}

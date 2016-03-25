@@ -8,20 +8,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import main.Task;
+import main.Constants;
 
 public class Read {
 	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
-	private String taskOnHand = "Tasks on hand:";
-	private String taskDone = "Tasks that are done:";
-	private String noTaskOnHand = "No tasks on hand!";
-	private String noTaskDone = "No tasks are done!";
-	private String pathVariable = "PATH:";
 	private static Read read;
 	private Task task = null;
 	
 	// Show Singleton
 	public static Read getInstance() {
-		if(read == null) {
+		if (read == null) {
 			read = new Read();
 		}
 		return read;
@@ -41,7 +37,6 @@ public class Read {
 		}
 	}
 
-	
 	 // This method is called by Handler Retrieve method
 	public ArrayList<ArrayList<Task>> readFromFile(BufferedReader reader) {
 		try {
@@ -59,27 +54,24 @@ public class Read {
 		try {
 			String content;
 			String index = null;
-			int count = 0;
 			ArrayList<Task> readToDoTaskList = new ArrayList<Task>();
 			ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
 			ArrayList<ArrayList<Task>> readTaskList = new ArrayList<ArrayList<Task>>();
 
 			while ((content = read.readLine()) != null) {
 				String path = content.substring(0, content.indexOf(" "));
-				if(path.equals(pathVariable)) {
+				if (path.equals(Constants.MESSAGE_WRITE_READ_PATH)) {
 					continue;
-				} else if(content.equals(noTaskDone) || content.equals(noTaskOnHand)) {
+				} else if (content.equals(Constants.MESSAGE_WRITE_READ_NOTASKDONE) || content.equals(Constants.MESSAGE_WRITE_READ_NOTASKONHAND)) {
 					continue;
-				} else if (content.equals(taskOnHand)) {
-					count = 1;
-					index = taskOnHand;
-				} else if (content.equals(taskDone)) {
-					count = 1;
-					index = taskDone;
-				} else if (!content.equals(taskOnHand) && !content.equals(taskDone) && index.equals(taskOnHand)) {
-					count = addTaskIntoArrayList(count, content, readToDoTaskList);
+				} else if (content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
+					index = Constants.MESSAGE_WRITE_READ_TASKONHAND;
+				} else if (content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
+					index = Constants.MESSAGE_WRITE_READ_TASKDONE;
+				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) && !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) && index.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
+					addTaskIntoArrayList(content, readToDoTaskList);
 				} else {
-					count = addTaskIntoArrayList(count, content, readDoneTaskList);
+					addTaskIntoArrayList(content, readDoneTaskList);
 				}
 			}
 			
@@ -93,49 +85,49 @@ public class Read {
 		}
 	}
 	
-	private int addTaskIntoArrayList (int count, String content, ArrayList<Task> taskList) {
-		String numberingCounter = count + ".";
-		String numberingOnTask = content.substring(0, content.indexOf(" "));
-		String taskName = content.substring(content.indexOf(": ") + 1).trim();
-
-		// If the number of both the task and counter are equal,
-		// implies its the start of a new task
-		if (numberingCounter.equals(numberingOnTask)) {
-			task = new Task(taskName);
-			taskList.add(task);
-			count++;
-		} else {
-			readTaskDetails(taskList, content, task);
-		}
+	private void addTaskIntoArrayList(String content, ArrayList<Task> taskList) {
+		int colonIndex = content.indexOf(":");
+		String lastThreeCharInTaskCategory = content.substring(colonIndex - 3, colonIndex);
+		String lastThreeCharInEvent = "ent";
 		
-		return count;
+		if (lastThreeCharInTaskCategory.equals(lastThreeCharInEvent)) {
+			String numberingOnTask = content.substring(0, content.indexOf(".")).trim();
+			String taskName = content.substring(content.indexOf(": ") + 1).trim();
+			int taskID = Integer.parseInt(numberingOnTask);
+			
+			task = new Task(taskName);
+			task.setTaskID(taskID);
+			taskList.add(task);
+		} else {
+			setTaskDetails(taskList, content, task);
+		}
 	}
 	
-	private void readTaskDetails(ArrayList<Task> readTaskList, String taskContent, Task task) {
-		String taskHeader = taskContent.substring(0, taskContent.indexOf(": "));
+	private void setTaskDetails(ArrayList<Task> readTaskList, String taskContent, Task task) {
+		String taskHeader = taskContent.substring(0, taskContent.indexOf(": ")).trim();
 		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1).trim();
 		
-		if (taskHeader.equals("Date")) {
+		if (taskHeader.equals(Constants.MESSAGE_READ_DATE)) {
 			String taskDate = taskContent;
 			task.setDate(taskDate);
-		} else if (taskHeader.equals("Start Time")) {
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_STARTTIME)) {
 			String taskStartTime = taskContent;
 			task.setStartTime(taskStartTime);
-		} else if (taskHeader.equals("End Time")) {
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_ENDTIME)) {
 			String taskEndTime = taskContent;
 			task.setEndTime(taskEndTime);
-		} else if (taskHeader.equals("Details")){
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_DETAILS)) {
 			String taskDetails = taskContent;
 			task.setDetails(taskDetails);
-		} else if (taskHeader.equals("Day")){
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_DAY)) {
 			String taskDay = taskContent;
 			boolean dayValue = Boolean.parseBoolean(taskDay);
 			task.setDay(dayValue);
-		} else if (taskHeader.equals("Week")){
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_WEEK)) {
 			String taskWeek = taskContent;
 			boolean weekValue = Boolean.parseBoolean(taskWeek);
 			task.setWeek(weekValue);
-		} else if (taskHeader.equals("Month")){
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_MONTH)) {
 			String taskMonth = taskContent;
 			boolean monthValue = Boolean.parseBoolean(taskMonth);
 			task.setMonth(monthValue);

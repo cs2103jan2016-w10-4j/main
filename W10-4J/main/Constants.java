@@ -66,7 +66,6 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
 	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
 	
-
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
 	public static final String MESSAGE_EDIT_ACTION_START = ("start");
 	public static final String MESSAGE_EDIT_ACTION_END = ("end");
@@ -81,6 +80,38 @@ public class Constants {
 	public static final String MESSAGE_ACTION_SEARCH = ("search");
 	public static final String MESSAGE_ACTION_STORAGE = ("storage");
 	public static final String MESSAGE_ACTION_UNDO = ("undo");
+	public static final String MESSAGE_ACTION_READ = ("read");
+	public static final String MESSAGE_ACTION_RETRIEVE = ("retrieve");
+	
+	public static final String MESSAGE_STORAGE_SUCCESS = ("Success");
+	public static final String MESSAGE_STORAGE_FAILURE = ("Failure");
+	public static final String MESSAGE_STORAGE_PATH = ("PATH:");
+	
+	public static final String MESSAGE_READ_EVENT = ("Event");
+	public static final String MESSAGE_READ_DATE = ("Date");
+	public static final String MESSAGE_READ_STARTTIME = ("Start Time");
+	public static final String MESSAGE_READ_ENDTIME = ("End Time");
+	public static final String MESSAGE_READ_DETAILS = ("Details");
+	public static final String MESSAGE_READ_DAY = ("Day");
+	public static final String MESSAGE_READ_WEEK = ("Week");
+	public static final String MESSAGE_READ_MONTH = ("Month");
+	
+	public static final String MESSAGE_WRITE_EVENT = ("%d. Event: %s");
+	public static final String MESSAGE_WRITE_DATE = ("Date: %s");
+	public static final String MESSAGE_WRITE_STARTTIME = ("Start Time: %s");
+	public static final String MESSAGE_WRITE_ENDTIME = ("End Time: %s");
+	public static final String MESSAGE_WRITE_DETAILS = ("Details: %s");
+	public static final String MESSAGE_WRITE_DAY = ("Day: %s");
+	public static final String MESSAGE_WRITE_WEEK = ("Week: %s");
+	public static final String MESSAGE_WRITE_MONTH = ("Month: %s");
+	public static final String MESSAGE_WRITE_YEAR = ("Year: %s");
+	
+	// Use in both Write and Read class
+	public static final String MESSAGE_WRITE_READ_PATH = ("PATH:");
+	public static final String MESSAGE_WRITE_READ_TASKONHAND = ("Tasks on hand:");
+	public static final String MESSAGE_WRITE_READ_TASKDONE = ("Tasks that are done:");
+	public static final String MESSAGE_WRITE_READ_NOTASKONHAND = ("No tasks on hand!");
+	public static final String MESSAGE_WRITE_READ_NOTASKDONE = ("No tasks are done!");
 	
 	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
 	public static final String ASSERT_TASKLIST_EXISTENCE = ("Task List does not exist");

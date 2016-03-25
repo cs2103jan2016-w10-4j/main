@@ -21,8 +21,6 @@ import main.Constants;
 import main.Task;
 
 public class WriteTest extends Write {
-	static String success = "Success";
-	static String failure = "Failure";
 	static ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
 	static ArrayList<Task> doneTaskList = new ArrayList<Task> ();
 	static ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
@@ -32,6 +30,8 @@ public class WriteTest extends Write {
 		// Set up write class
 		Task a = new Task("A");
 		Task b = new Task("B");
+		a.setTaskID(1);
+		b.setTaskID(2);
 		toDoTaskList.add(a);
 		toDoTaskList.add(b);
 		taskList.add(toDoTaskList);
@@ -44,32 +44,18 @@ public class WriteTest extends Write {
 		print.println("2. Event: B");
 		print.println("No tasks are done!");
 		print.close();
-		
-		// Write to list.txt
-		PrintWriter printWriter = new PrintWriter(new FileWriter("list.txt"));
-		printWriter.println("Tasks on hand:");
-		printWriter.println("1. Event: A");
-		printWriter.println("2. Event: B");
-		printWriter.println("No tasks are done!");
-		printWriter.close();
 	}	
 	
 	@Test
 	public void testWriteToDefaultFile() throws NoSuchAlgorithmException, IOException {
 		writeToFile(toDoTaskList, doneTaskList);
 		
-		// Check the md5 checksum
 		String testFile = "testFile.txt";
-		MessageDigest messageDigestTest = MessageDigest.getInstance("MD5");
-		messageDigestTest.update(Files.readAllBytes(Paths.get(testFile)));
-		byte[] digestTest = messageDigestTest.digest();
-		
 		String returnFile = Constants.fileName;
-		MessageDigest messageDigestReturn = MessageDigest.getInstance("MD5");
-		messageDigestReturn.update(Files.readAllBytes(Paths.get(returnFile)));
-		byte[] digestReturn = messageDigestReturn.digest();
+		byte[] digestTest = computeCheckSum(testFile);
+		byte[] digestReturn = computeCheckSum(returnFile);
 		
-		assertEquals(true, Arrays.equals(digestTest, digestReturn));
+		assertEquals(true, checkSumEqual(digestTest, digestReturn));
 	}
 	
 	@Test
@@ -77,32 +63,44 @@ public class WriteTest extends Write {
 		boolean returnValue = false;
 		writeToFile("list.txt", toDoTaskList, doneTaskList);
 		
-		// Check the md5 checksum
 		String testFile = "testFile.txt";
-		MessageDigest messageDigestTest = MessageDigest.getInstance("MD5");
-		messageDigestTest.update(Files.readAllBytes(Paths.get(testFile)));
-		byte[] digestTest = messageDigestTest.digest();
-		
 		String returnFile = "list.txt";
-		MessageDigest messageDigestReturn = MessageDigest.getInstance("MD5");
-		messageDigestReturn.update(Files.readAllBytes(Paths.get(returnFile)));
-		byte[] digestReturn = messageDigestReturn.digest();
+		byte[] digestTest = computeCheckSum(testFile);
+		byte[] digestReturn = computeCheckSum(returnFile);
 		
+		String pathContent = getPathContentFromDefaultFile();
+
+		if (checkSumEqual(digestTest, digestReturn) && pathContent.equals("list.txt")) {
+			returnValue = true;
+		}
+		
+		assertEquals(true, returnValue);
+	}
+
+	byte[] computeCheckSum(String file) throws NoSuchAlgorithmException, IOException {
+		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+		messageDigest.update(Files.readAllBytes(Paths.get(file)));
+		byte[] digest = messageDigest.digest();
+		return digest;
+	}
+	
+	boolean checkSumEqual(byte[] digestTest, byte[] digestReturn) {
+		boolean returnValue = false;
+		returnValue = Arrays.equals(digestTest, digestReturn);
+		return returnValue;
+	}
+	
+	String getPathContentFromDefaultFile() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(Constants.fileName));
 		String content = reader.readLine();
 		String pathContent = null;
 		if (content != null) {
 			String path = content.substring(0, content.indexOf(" "));
-			if(path.equals("PATH:")) {
+			if (path.equals("PATH:")) {
 				pathContent = content.substring(content.indexOf(" ") + 1, content.length());
 			}
 		}
 		reader.close();
-		
-		if(Arrays.equals(digestTest, digestReturn) && pathContent.equals("list.txt")) {
-			returnValue = true;
-		}
-		
-		assertEquals(true, returnValue);
+		return pathContent;
 	}
 }
