@@ -22,7 +22,7 @@ public class Recurrence implements Command{
 	
 	public String execute(String[] task, int notUsedInThisCommand) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.get(taskID - 1);
+		Task eachTask = findByTaskID(handlerMemory, taskID);
 		Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
 		case "day":
@@ -41,6 +41,15 @@ public class Recurrence implements Command{
 		mainStorage.write(handlerMemory, doneStorage);
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+	}
+	
+	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
+		for (Task task: taskList){
+			if (task.getTaskID()==taskID){
+				return task;
+			}
+		}
+		return null;
 	}
 	
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {

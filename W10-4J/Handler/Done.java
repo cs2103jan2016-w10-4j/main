@@ -17,7 +17,7 @@ public class Done implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String done(String[] task) {
 		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = findByTaskID(handlerMemory, taskID);
@@ -27,14 +27,22 @@ public class Done implements Command{
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-			handlerMemory.remove(eachTask);
-			doneStorage.add(eachTask);
-			// write to mainStorage
-			mainStorage.write(handlerMemory, doneStorage);
-			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
-			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
-			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			if(eachTask.isRecurring()&& eachTask.getDate()!=null){
+				eachTask.done();
+				mainStorage.write(handlerMemory, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			} else{
+				handlerMemory.remove(eachTask);
+				doneStorage.add(eachTask);
+				// write to mainStorage
+				mainStorage.write(handlerMemory, doneStorage);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			}
 		}
 	}
 	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
@@ -48,5 +56,10 @@ public class Done implements Command{
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);
+	}
+	@Override
+	public String execute(String[] task, int taskID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
