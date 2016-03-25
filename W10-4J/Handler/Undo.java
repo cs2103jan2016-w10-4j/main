@@ -1,28 +1,30 @@
 package Handler;
+
 import main.Constants;
 import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
 
-public class Undo implements Command{
+public class Undo implements Command {
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
-	
+
 	public Undo(ArrayList<Task> handlerMemory, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
+			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage) {
 		this.handlerMemory = handlerMemory;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String execute(String [] notUsedInThisCommand, int notUsedInThisCommand2) {
+
+	public String execute(String[] notUsedInThisCommand, int notUsedInThisCommand2) {
 		String actionToBeUndone = previousInputStorage.get(0).getAction();
 		Task previousTask = previousInputStorage.get(0).getTask();
-			assert actionToBeUndone != null: Constants.ASSERT_ACTION_EXISTENCE;
-			assert previousTask != null: Constants.ASSERT_TASK_EXISTENCE;
+		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
+		assert previousTask != null : Constants.ASSERT_TASK_EXISTENCE;
 		Task eachTask;
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
@@ -47,7 +49,7 @@ public class Undo implements Command{
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
 			// to restore to previous state, must undone the task
-			//eachTask = taskFinder(doneStorage, previousTask);
+			// eachTask = taskFinder(doneStorage, previousTask);
 			doneStorage.remove(previousTask);
 			handlerMemory.add(previousTask);
 			// remember previous state
@@ -55,7 +57,7 @@ public class Undo implements Command{
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
 			// to restore to previous state, must undone the task
-			//eachTask = taskFinder(handlerMemory, previousTask);
+			// eachTask = taskFinder(handlerMemory, previousTask);
 			handlerMemory.remove(previousTask);
 			doneStorage.add(previousTask);
 			// remember previous state
@@ -66,6 +68,7 @@ public class Undo implements Command{
 		mainStorage.write(handlerMemory, doneStorage);
 		return Constants.MESSAGE_UNDO_PASS;
 	}
+
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);

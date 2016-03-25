@@ -19,20 +19,24 @@ public class Handler {
 		previousInputStorage = new ArrayList<PreviousInput>();
 		taskID = getTaskId();
 	}
-//@@author Berkin
+
+	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
-		try{
-			Command cmd = createCommand(command,task);
-			return cmd.execute(task,taskID);
+		try {
+			Command cmd = createCommand(command, task);
+			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
 			return Constants.MESSAGE_UNRECOGNÝZED_COMMAND;
-			}
 		}
-	private Command createCommand(COMMAND_TYPE command, String[] task) throws IllegalArgumentException, IllegalStateException {
+	}
+
+	private Command createCommand(COMMAND_TYPE command, String[] task)
+			throws IllegalArgumentException, IllegalStateException {
 		switch (command) {
 		case ADD:
+			taskID++;
 			return new Add(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:
 			return new Edit(handlerMemory, doneStorage, previousInputStorage, mainStorage);
@@ -49,7 +53,7 @@ public class Handler {
 		case RETRIEVE:
 			return new Retrieve(handlerMemory, doneStorage, mainStorage);
 		case RECURRENCE:
-			return new Recurrence(handlerMemory,doneStorage,previousInputStorage,mainStorage);
+			return new Recurrence(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		case UNDO:
 			return new Undo(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		case EXIT:
@@ -62,22 +66,22 @@ public class Handler {
 			throw new IllegalStateException();
 		}
 	}
-//@@author
-	
-	private int getTaskId(){
+	// @@author
+
+	private int getTaskId() {
 		int id = 0;
-		for(int i = 0 ;i <handlerMemory.size();i++){
+		for (int i = 0; i < handlerMemory.size(); i++) {
 			int currentId = handlerMemory.get(i).getTaskID();
-			if(currentId>id){
+			if (currentId > id) {
 				id = currentId;
 			}
 		}
-		for(int i = 0 ;i <doneStorage.size();i++){
+		for (int i = 0; i < doneStorage.size(); i++) {
 			int currentId = doneStorage.get(i).getTaskID();
-			if(currentId>id){
+			if (currentId > id) {
 				id = currentId;
 			}
 		}
-		return ++id;
+		return id;
 	}
 }
