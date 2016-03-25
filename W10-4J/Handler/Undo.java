@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Task;
 
-public class Undo {
+public class Undo implements Command{
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;

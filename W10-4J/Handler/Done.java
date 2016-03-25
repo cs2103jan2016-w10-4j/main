@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Task;
 import main.Constants;
-public class Done {
+public class Done implements Command{
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;

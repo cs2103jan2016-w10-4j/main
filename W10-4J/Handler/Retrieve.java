@@ -6,7 +6,7 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 
-public class Retrieve {
+public class Retrieve implements Command{
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	Storage mainStorage;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Task;
 
-public class Delete {
+public class Delete implements Command{
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;

@@ -7,7 +7,7 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 
-public class Display {
+public class Display implements Command{
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	Storage mainStorage;

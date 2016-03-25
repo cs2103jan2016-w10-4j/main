@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
-
-public class Add {
-	
+//@@author Berkin
+public class Add implements Command{
+	//@@author
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;

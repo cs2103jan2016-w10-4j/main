@@ -2,7 +2,7 @@ package Handler;
 
 import main.Constants;
 
-public class Help {
+public class Help implements Command{
 	
 	private static String help;
 	

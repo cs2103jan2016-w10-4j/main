@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Task;
 
-public class Search {
+public class Search implements Command{
 	private ArrayList<Task> handlerMemory;
 	Storage mainStorage;
 	

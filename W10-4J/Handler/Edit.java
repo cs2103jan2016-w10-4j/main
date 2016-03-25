@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Task;
 import main.Constants;
-public class Edit {
+public class Edit implements Command{
 	private ArrayList<Task> handlerMemory;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
