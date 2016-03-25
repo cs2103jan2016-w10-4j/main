@@ -26,6 +26,12 @@ public class Parser {
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 	ArrayList<String> recurrenceArgumentList = new ArrayList<>();
 	ArrayList<String> helpArgumentList = new ArrayList<>();
+	
+	ArrayList<String> dateArgumentList = new ArrayList<>();
+	ArrayList<String> startArgumentList = new ArrayList<>();
+	ArrayList<String> endArgumentList = new ArrayList<>();
+	ArrayList<String> detailsArgumentList = new ArrayList<>();
+	ArrayList<String> repeatArgumentList = new ArrayList<>();
 
 	Handler handler;
 	NaturalTime naturalTime;
@@ -121,8 +127,10 @@ public class Parser {
 		tokens.add(sb.toString());
 		tokens.remove(0);
 		if (commandType == COMMAND_TYPE.ADD) {
+			replaceModifiers(tokens);
 			return compactArguments(tokens, addArgumentList);
 		} else if (commandType == COMMAND_TYPE.EDIT) {
+			replaceModifiers(tokens);
 			return compactArguments(tokens, editArgumentList);
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
 			return compactArguments(tokens, displayArgumentList);
@@ -154,6 +162,26 @@ public class Parser {
 			arguments.add(temp);
 		}
 		return arguments.toArray(new String[0]);
+	}
+	
+	public void replaceModifiers(ArrayList<String> token){
+		for(int i =0;i<token.size();i++){
+			if(dateArgumentList.contains(token.get(i))){
+				token.set(i, Constants.MESSAGE_ADD_ACTION_DATE);
+			}
+			if(startArgumentList.contains(token.get(i))){
+				token.set(i, Constants.MESSAGE_ADD_ACTION_START);
+			}
+			if(endArgumentList.contains(token.get(i))){
+				token.set(i, Constants.MESSAGE_ADD_ACTION_END);
+			}
+			if(detailsArgumentList.contains(token.get(i))){
+				token.set(i, Constants.MESSAGE_ADD_ACTION_DETAILS);
+			}
+			if(repeatArgumentList.contains(token.get(i))){
+				token.set(i, Constants.MESSAGE_ADD_ACTION_REPEAT);
+			}
+		}
 	}
 
 	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
@@ -351,6 +379,22 @@ public class Parser {
 		}
 		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++) {
 			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
+		}
+		
+		for (int i = 0; i < Constants.dateDefaultArgumentList.length; i++) {
+			dateArgumentList.add(Constants.dateDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.startDefaultArgumentList.length; i++) {
+			startArgumentList.add(Constants.startDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.endDefaultArgumentList.length; i++) {
+			endArgumentList.add(Constants.endDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.detailsDefaultArgumentList.length; i++) {
+			detailsArgumentList.add(Constants.detailsDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.repeatDefaultArgumentList.length; i++) {
+			repeatArgumentList.add(Constants.repeatDefaultArgumentList[i]);
 		}
 	}
 }
