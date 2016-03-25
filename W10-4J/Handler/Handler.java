@@ -75,7 +75,7 @@ public class Handler {
 	
 	public String recurrence(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(handlerMemory, taskID);
+		Task eachTask = handlerMemory.get(taskID - 1);
 		Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
 		case "day":
@@ -94,15 +94,6 @@ public class Handler {
 		mainStorage.write(handlerMemory, doneStorage);
 		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
-	}
-	
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID){
-		for (Task task: taskList){
-			if (task.getTaskID()==taskID){
-				return task;
-			}
-		}
-		return null;
 	}
 
 	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {

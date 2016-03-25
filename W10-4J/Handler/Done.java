@@ -27,22 +27,14 @@ public class Done implements Command{
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-			if(eachTask.isRecurring()&& eachTask.getDate()!=null){
-				eachTask.done();
-				mainStorage.write(handlerMemory, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
-				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
-			} else{
-				handlerMemory.remove(eachTask);
-				doneStorage.add(eachTask);
-				// write to mainStorage
-				mainStorage.write(handlerMemory, doneStorage);
-				// remember previous state
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
-				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
-			}
+			handlerMemory.remove(eachTask);
+			doneStorage.add(eachTask);
+			// write to mainStorage
+			mainStorage.write(handlerMemory, doneStorage);
+			// remember previous state
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		}
 	}
 	public Task findByTaskID(ArrayList<Task> taskList, int taskID){

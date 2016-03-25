@@ -1,7 +1,7 @@
 package main;
 
-import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Calendar;
 
 public class Task {
 	private String name_;
@@ -10,12 +10,12 @@ public class Task {
 	private String endTime_;
 	private String details_;
 	private int taskID_;
-	private boolean recurring_, day_, week_, month_, year_;
+	private boolean day_, week_, month_, year_;
 
 	// use trim method to ensure all strings are compared properly
 	public static Comparator<Task> taskIDComparator = new Comparator<Task>() {
 		public int compare(Task task1, Task task2) {
-			return (task1.getTaskID() - task2.getTaskID());
+			return (task1.getTaskID()-task2.getTaskID());
 		}
 	};
 	public static Comparator<Task> taskNameComparator = new Comparator<Task>() {
@@ -73,20 +73,6 @@ public class Task {
 		return calendar;
 	}
 
-	public void done() {
-		if (day_) {
-			date_ = Date.addDay(date_);
-		} else if (week_) {
-			for (int i = 0; i < 7; i++) {
-				date_ = Date.addDay(date_);
-			}
-		} else if (month_) {
-			date_ = Date.addMonth(date_);
-		} else if (year_) {
-			date_ = Date.addYear(date_);
-		}
-	}
-
 	public Task(String name) {
 		name_ = name;
 	}
@@ -110,14 +96,12 @@ public class Task {
 	public void setDetails(String details) {
 		details_ = details;
 	}
-
-	public void setTaskID(int taskID) {
+	public void setTaskID(int taskID){
 		taskID_ = taskID;
 	}
 
 	public void setDay(boolean day) {
 		if (day) {
-			recurring_ = true;
 			day_ = day;
 			week_ = false;
 			month_ = false;
@@ -129,7 +113,6 @@ public class Task {
 
 	public void setWeek(boolean week) {
 		if (week) {
-			recurring_ = true;
 			day_ = false;
 			week_ = week;
 			month_ = false;
@@ -141,7 +124,6 @@ public class Task {
 
 	public void setMonth(boolean month) {
 		if (month) {
-			recurring_ = true;
 			day_ = false;
 			week_ = false;
 			month_ = month;
@@ -153,7 +135,6 @@ public class Task {
 
 	public void setYear(boolean year) {
 		if (year) {
-			recurring_ = true;
 			day_ = false;
 			week_ = false;
 			month_ = false;
@@ -182,8 +163,8 @@ public class Task {
 	public String getDetails() {
 		return details_;
 	}
-
-	public int getTaskID() {
+	
+	public int getTaskID(){
 		return taskID_;
 	}
 
@@ -201,9 +182,5 @@ public class Task {
 
 	public boolean getYear() {
 		return year_;
-	}
-
-	public boolean isRecurring() {
-		return recurring_;
 	}
 }
