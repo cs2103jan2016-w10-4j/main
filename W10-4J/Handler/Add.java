@@ -23,7 +23,8 @@ public class Add implements Command{
 	public String add(String[] task, int taskID) {
 		assert task[0]!= null: Constants.ASSERT_FIELD_EXISTENCE;
 		Task eachTask = new Task(task[0].trim());
-		assert taskID<1: Constants.ASSERT_TASKID_EXISTENCE;
+		System.out.println(taskID);
+		assert taskID>0: Constants.ASSERT_TASKID_EXISTENCE;
 		eachTask.setTaskID(taskID);
 		String action;
 		for (int i = 1; i < task.length; i += 2) {

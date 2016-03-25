@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public class NaturalTime {
 
 	public String getTime(String input) {
+		if(!isInteger(input)){
+			return null;
+		}
 		input = input.trim();
 		ArrayList<Integer> result = splitStringByInt(input);
 		int hour, minute;
@@ -73,5 +76,13 @@ public class NaturalTime {
 	private static boolean isMinute(int s) {
 		return (s >= 0 && s < 60);
 	}
-
+	
+	private static boolean isInteger(String s) {
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
 }
