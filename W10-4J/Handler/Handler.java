@@ -17,7 +17,7 @@ public class Handler {
 		handlerMemory = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		taskID = 1;
+		taskID = getTaskId();
 	}
 //@@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
@@ -63,4 +63,21 @@ public class Handler {
 		}
 	}
 //@@author
+	
+	private int getTaskId(){
+		int id = 0;
+		for(int i = 0 ;i <handlerMemory.size();i++){
+			int currentId = handlerMemory.get(i).getTaskID();
+			if(currentId>id){
+				id = currentId;
+			}
+		}
+		for(int i = 0 ;i <doneStorage.size();i++){
+			int currentId = doneStorage.get(i).getTaskID();
+			if(currentId>id){
+				id = currentId;
+			}
+		}
+		return ++id;
+	}
 }

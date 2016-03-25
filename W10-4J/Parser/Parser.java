@@ -26,7 +26,7 @@ public class Parser {
 	ArrayList<String> searchArgumentList = new ArrayList<>();
 	ArrayList<String> recurrenceArgumentList = new ArrayList<>();
 	ArrayList<String> helpArgumentList = new ArrayList<>();
-	
+
 	ArrayList<String> dateArgumentList = new ArrayList<>();
 	ArrayList<String> startArgumentList = new ArrayList<>();
 	ArrayList<String> endArgumentList = new ArrayList<>();
@@ -36,6 +36,7 @@ public class Parser {
 	Handler handler;
 	NaturalTime naturalTime;
 	NaturalDate naturalDate;
+	boolean invalidDate, invalidTime;
 
 	public Parser() {
 		generateCommandList();
@@ -45,6 +46,8 @@ public class Parser {
 	}
 
 	public String parse(String command) {
+		invalidDate = false;
+		invalidTime = false;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
@@ -52,7 +55,13 @@ public class Parser {
 		}
 		String[] arguments = getArguments(commandType, command);
 		if (!isValid(commandType, arguments)) {
-			return Constants.MESSAGE_INVALID_FORMAT;
+			if (invalidDate) {
+				return Constants.MESSAGE_INVALID_DATE;
+			} else if (invalidTime) {
+				return Constants.MESSAGE_INVALID_TIME;
+			} else {
+				return Constants.MESSAGE_INVALID_FORMAT;
+			}
 		}
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
@@ -163,22 +172,22 @@ public class Parser {
 		}
 		return arguments.toArray(new String[0]);
 	}
-	
-	public void replaceModifiers(ArrayList<String> token){
-		for(int i =0;i<token.size();i++){
-			if(dateArgumentList.contains(token.get(i))){
+
+	public void replaceModifiers(ArrayList<String> token) {
+		for (int i = 0; i < token.size(); i++) {
+			if (dateArgumentList.contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_DATE);
 			}
-			if(startArgumentList.contains(token.get(i))){
+			if (startArgumentList.contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_START);
 			}
-			if(endArgumentList.contains(token.get(i))){
+			if (endArgumentList.contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_END);
 			}
-			if(detailsArgumentList.contains(token.get(i))){
+			if (detailsArgumentList.contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_DETAILS);
 			}
-			if(repeatArgumentList.contains(token.get(i))){
+			if (repeatArgumentList.contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_REPEAT);
 			}
 		}
@@ -218,6 +227,7 @@ public class Parser {
 				} else if (arguments[i].equals("date")) {
 					String date = naturalDate.getDate(arguments[i + 1]);
 					if (date == null) {
+						invalidDate = true;
 						return false;
 					} else {
 						arguments[i + 1] = date;
@@ -225,6 +235,7 @@ public class Parser {
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
 					String time = naturalTime.getTime(arguments[i + 1]);
 					if (time == null) {
+						invalidTime = true;
 						return false;
 					} else {
 						arguments[i + 1] = time;
@@ -258,6 +269,7 @@ public class Parser {
 				} else if (arguments[i].equals("date")) {
 					String date = naturalDate.getDate(arguments[i + 1]);
 					if (date == null) {
+						invalidDate = true;
 						return false;
 					} else {
 						arguments[i + 1] = date;
@@ -265,6 +277,7 @@ public class Parser {
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
 					String time = naturalTime.getTime(arguments[i + 1]);
 					if (time == null) {
+						invalidTime = true;
 						return false;
 					} else {
 						arguments[i + 1] = time;
@@ -304,7 +317,7 @@ public class Parser {
 	public boolean isRecurrenceValid(String[] arguments) {
 		if (arguments.length != 2) {
 			return false;
-		} else if(!isInteger(arguments[0])){
+		} else if (!isInteger(arguments[0])) {
 			return false;
 		} else {
 			return recurrenceArgumentList.contains(arguments[1]);
@@ -380,7 +393,7 @@ public class Parser {
 		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++) {
 			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
 		}
-		
+
 		for (int i = 0; i < Constants.dateDefaultArgumentList.length; i++) {
 			dateArgumentList.add(Constants.dateDefaultArgumentList[i]);
 		}
