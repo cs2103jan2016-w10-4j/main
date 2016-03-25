@@ -11,7 +11,6 @@ public class ParserTest {
 	@Test
 	public void testGetArguments() {
 		Parser p = new Parser();
-		//assertArrayEquals(new String[]{"filetwo.txt", "some", "other", "things here"}, p.getArguments("\"file one.txt\" filetwo.txt some other \"things here\""));
 		String command, commandTypeString;
 		COMMAND_TYPE commandType;
 		
@@ -28,7 +27,7 @@ public class ParserTest {
 		command = "add this day by sun details anytime anywhere";
 		commandTypeString = p.getFirstWord(command);
 		commandType = p.getAction(commandTypeString);
-		assertArrayEquals(new String[]{"this day", "by", "sun","details","anytime anywhere"},p.getArguments(commandType, command));
+		assertArrayEquals(new String[]{"this day by sun","details","anytime anywhere"},p.getArguments(commandType, command));
 		
 		command = "delete";
 		commandTypeString = p.getFirstWord(command);
@@ -45,11 +44,6 @@ public class ParserTest {
 		commandType = p.getAction(commandTypeString);
 		assertArrayEquals(new String[]{},p.getArguments(commandType, command));
 		
-		command = "e this task by sun";
-		commandTypeString = p.getFirstWord(command);
-		commandType = p.getAction(commandTypeString);
-		assertArrayEquals(new String[]{"this task","by","sun"},p.getArguments(commandType, command));
-		
 		command = "done";
 		commandTypeString = p.getFirstWord(command);
 		commandType = p.getAction(commandTypeString);
@@ -65,15 +59,10 @@ public class ParserTest {
 		commandType = p.getAction(commandTypeString);
 		assertArrayEquals(new String[]{},p.getArguments(commandType, command));
 		
-		command = "display task by done";
+		command = "display by done";
 		commandTypeString = p.getFirstWord(command);
 		commandType = p.getAction(commandTypeString);
-		assertArrayEquals(new String[]{"task","by","done"},p.getArguments(commandType, command));
-		
-		command = "display by alpha or lexi";
-		commandTypeString = p.getFirstWord(command);
-		commandType = p.getAction(commandTypeString);
-		assertArrayEquals(new String[]{"by", "alpha or lexi"},p.getArguments(commandType, command));
+		assertArrayEquals(new String[]{"by","done"},p.getArguments(commandType, command));
 	}
 	
 	@Test

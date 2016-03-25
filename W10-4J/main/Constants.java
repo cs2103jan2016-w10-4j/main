@@ -21,7 +21,7 @@ public class Constants {
 
 	public static final String[] addDefaultArgumentList = { "date", "start", "end", "details", "repeat" };
 	public static final String[] editDefaultArgumentList = { "rename", "date", "start", "end", "details", "repeat" };
-	public static final String[] displayDefaultArgumentList = { "alphabetical order", "name", "starttime", "endtime",
+	public static final String[] displayDefaultArgumentList = { "id", "name", "starttime", "endtime",
 			"date", "tasks", "done" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
