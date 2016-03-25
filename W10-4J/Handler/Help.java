@@ -120,6 +120,13 @@ public class Help implements Command{
 	public Help(){
 	}
 	
+	public String execute(String[] task, int notUsedInThisCommand) {
+		if (task.length == 0) {
+			return helpFullString();
+		} else {
+			return helpSpecific(task[0]);
+		}
+	}
 	public String helpSpecific(String task){
 		help = helpWelcome;
 		switch (task){

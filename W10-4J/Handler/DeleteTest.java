@@ -38,8 +38,8 @@ public class DeleteTest {
 		Delete d = new Delete(handlerMemory, doneStorage, previousInputStorage, mainStorage);
 		
 		// test the delete method
-		assertEquals("sampleTask1 has been deleted.", d.delete(input1));
-		assertEquals("sampleTask2 has been deleted.", d.delete(input2));
-		assertEquals("Task cannot be deleted.", d.delete(input3));
+		assertEquals("sampleTask1 has been deleted.", d.execute(input1,0));
+		assertEquals("sampleTask2 has been deleted.", d.execute(input2,0));
+		assertEquals("Task cannot be deleted.", d.execute(input3,0));
 	}
 }

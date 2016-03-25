@@ -18,7 +18,7 @@ public class Undo implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String undo() {
+	public String execute(String [] notUsedInThisCommand, int notUsedInThisCommand2) {
 		String actionToBeUndone = previousInputStorage.get(0).getAction();
 		Task previousTask = previousInputStorage.get(0).getTask();
 			assert actionToBeUndone != null: Constants.ASSERT_ACTION_EXISTENCE;

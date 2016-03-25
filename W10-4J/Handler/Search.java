@@ -14,7 +14,7 @@ public class Search implements Command{
 		this.handlerMemory = handlerMemory;
 		this.mainStorage = mainStorage;
 	}
-	public String search(String[] task) {
+	public String execute(String[] task, int notUsedInThisCommand) {
 		ArrayList<Task> searchHandlerMemory = new ArrayList<Task>();
 		// each task is certain to have a name
 		// check whether exclude field exists

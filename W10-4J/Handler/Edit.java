@@ -18,7 +18,7 @@ public class Edit implements Command{
 		this.previousInputStorage = previousInputStorage;
 		this.mainStorage = mainStorage;
 	}
-	public String edit(String[] task) {
+	public String execute(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null: Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = findByTaskID(handlerMemory, taskID);
