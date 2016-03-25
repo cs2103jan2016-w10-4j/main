@@ -1,7 +1,9 @@
-package UserInterface;
+package test;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import UserInterface.UIController;
 
 public class UIControllerTest {
 	@Test

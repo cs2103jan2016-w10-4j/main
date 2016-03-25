@@ -1,4 +1,4 @@
-package Storage;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +17,7 @@ import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Storage.Write;
 import main.Constants;
 import main.Task;
 

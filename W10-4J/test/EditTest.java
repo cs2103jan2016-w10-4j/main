@@ -1,9 +1,12 @@
-package Handler;
+package test;
 
 import static org.junit.Assert.*;
 import main.Task;
 import java.util.ArrayList;
 import org.junit.Test;
+
+import Handler.Edit;
+import Handler.PreviousInput;
 import Storage.Storage;
 
 public class EditTest {

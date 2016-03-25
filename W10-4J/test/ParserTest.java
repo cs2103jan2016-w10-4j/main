@@ -1,9 +1,10 @@
-package Parser;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import Parser.Parser;
 import main.Constants.COMMAND_TYPE;
 
 public class ParserTest {

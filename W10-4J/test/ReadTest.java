@@ -1,4 +1,4 @@
-package Storage;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Storage.Read;
+import Storage.Storage;
+import Storage.Write;
 import main.Task;
 
 public class ReadTest extends Read {

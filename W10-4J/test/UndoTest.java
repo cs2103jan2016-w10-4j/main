@@ -1,5 +1,5 @@
 //@@author Berkin
-package Handler;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import Handler.Add;
+import Handler.PreviousInput;
+import Handler.Undo;
 import Storage.Storage;
 import main.Constants;
 import main.Task;

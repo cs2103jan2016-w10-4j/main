@@ -1,8 +1,10 @@
-package Storage;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import Storage.SetDirectory;
 
 public class SetDirectoryTest extends SetDirectory {
 
