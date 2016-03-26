@@ -6,6 +6,7 @@ public class Constants {
 	};
 
 	public static final String fileName = "mytextfile.txt";
+	public static final String taskFileName = "taskid.txt"; 
 	public static final String[] addDefaultCommandList = { "add", "new", "+", "a" };
 	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };
 	public static final String[] editDefaultCommandList = { "edit", "change", "edittask", "e" };
@@ -94,6 +95,7 @@ public class Constants {
 	public static final String MESSAGE_ACTION_UNDO = ("undo");
 	public static final String MESSAGE_ACTION_READ = ("read");
 	public static final String MESSAGE_ACTION_RETRIEVE = ("retrieve");
+	public static final String MESSAGE_ACTION_WRITE = ("write");
 	
 	public static final String MESSAGE_STORAGE_SUCCESS = ("Success");
 	public static final String MESSAGE_STORAGE_FAILURE = ("Failure");
