@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -186,9 +187,26 @@ public class UserInterface{
 	}
     
     private static void setWelcomeMessage(JTextPane displayOutput){
-    	displayOutput.setText("<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
+    	String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
     			+ "<center>Docket is a simple command line Windows application that allows you to manage your events and deadlines effectively. </center><br><br>"
     			+ "<center>To start, enter a task in the command field below.</center><br>"
-    			+ "<center>For help, enter <b>help</b> in the command field below.</center>");
+    			+ "<center>For help, enter <b>help</b> in the command field below.</center><br>";
+    	int tipsSize = tipMessage().size();
+    	Random rand = new Random();
+    	int randomNum = rand.nextInt(tipsSize);
+    	display += "<center style=\"font-size:18px\"><b>Tips</b></center><br><center>" + tipMessage().get(randomNum) + "</center>";
+    	displayOutput.setText(display);
+    }
+    
+    private static ArrayList<String> tipMessage(){
+    	ArrayList<String> tips = new ArrayList<String>();
+    	tips.add("Use Ctrl + Shift + \"+\" or Ctrl + Shift + \"-\" to increase or decrease font size");
+    	tips.add("Use Arrow Up or Arrow Down key to scroll through previous commands entered");
+    	tips.add("Use PgUp or PgDown key to scroll through this display output");
+    	tips.add("You can save your task file in any folder using <b> set directory</b> command");
+    	tips.add("You can get <b>help</b> for specific commands by entering <b>help</b> &#60command&#62");
+    	tips.add("Enter <b>display</b> to view your tasks");
+    	tips.add("Natural Language is supported in Docket. See Natural Commands section of help for more info");
+    	return tips;
     }
 }
