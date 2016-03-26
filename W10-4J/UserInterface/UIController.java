@@ -1,8 +1,12 @@
+/*
+ * This class is the controller for UserInterface class. Generally, it detects any action by the user and determines the jobs to be done.
+ * Jobs to be done could be to send commands to the Parser for further action, or to direct to SettingsUI for user to change colors.
+ * It can also be keyboard actions, i.e. keyboard shortcuts used by user. 
+ * 
+ * @@author A0113761M
+ */
 package UserInterface;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -11,19 +15,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.LayoutStyle;
-import javax.swing.WindowConstants;
 
 import Parser.Parser;
 
@@ -35,7 +31,20 @@ public class UIController {
 	private static int minCommandIndex = 0;
     
     public void commandAction(Parser p, JButton settings, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput){
-    	cmdEntry.addActionListener(new ActionListener(){
+    	cmdEntryListener(p, cmdEntry, cmdDisplay, displayOutput);
+    	settingsListener(settings, cmdDisplay, displayOutput);
+    }
+
+	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput) {
+		settings.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e){
+    			new SettingsUI(displayOutput, cmdDisplay);
+    		}
+    	});
+	}
+
+	private void cmdEntryListener(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput) {
+		cmdEntry.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String s = cmdEntry.getText();
 				cmdEntry.setText("");
@@ -52,12 +61,7 @@ public class UIController {
 				displayOutput.setCaretPosition(0);
 			}
 		});
-    	settings.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-    			SettingsUI settings = new SettingsUI(displayOutput, cmdDisplay);
-    		}
-    	});
-    }
+	}
     
     public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane){
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher(){

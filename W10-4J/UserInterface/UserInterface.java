@@ -1,13 +1,13 @@
+/*
+ * This is the class for the overall UI for Docket.
+ * 
+ * @@author A011371M
+ */
 package UserInterface;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.GroupLayout;
@@ -28,14 +28,14 @@ import Parser.Parser;
 
 
 public class UserInterface{
-	private static int colorOptionIndex = 0;
 	private static int topFontColorIndex = 1;
-	private static int topBgIndex = 2;
 	private static int bottomBgIndex = 3;
 	private static int bottomFontColorIndex = 4;
+	
 	public static void main(String[] args){
 		initComponents();
 	}
+	
     private static void initComponents() {
     	Parser p = new Parser();
     	UIController uiControl = new UIController();
@@ -43,21 +43,19 @@ public class UserInterface{
 		JTextField cmdEntry = new JTextField();
 		JTextPane outputDisplay = new JTextPane();
 		JTextArea cmdDisplay = new JTextArea();
+		JScrollPane jScrollPane1 = new JScrollPane(cmdDisplay);
+		JScrollPane jScrollPane2 = new JScrollPane(outputDisplay);
 		JLabel status = new JLabel();
 		JLabel jLabel1 = new JLabel();
 		JButton settings = new JButton("GUI Preferences");
 		
 		settings.setFocusable(false);
+		jLabel1.setText("command: ");
 		setIcon(f);
-
 		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		textAreaSettings(cmdDisplay);
 		textPaneSettings(outputDisplay);
-		
-		JScrollPane jScrollPane1 = new JScrollPane(cmdDisplay);
-		JScrollPane jScrollPane2 = new JScrollPane(outputDisplay);
-		jLabel1.setText("command: ");
 
 		GroupLayout layout = new GroupLayout(f.getContentPane());
 		f.getContentPane().setLayout(layout);
@@ -70,13 +68,7 @@ public class UserInterface{
 		
 		uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane2);
 		uiControl.commandAction(p, settings, cmdEntry, cmdDisplay, outputDisplay);
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		lookAndFeel();
 		
 		f.pack();
 		f.setVisible(true);
@@ -98,8 +90,14 @@ public class UserInterface{
     	cmdDisplay.setWrapStyleWord(true);
     	cmdDisplay.setEditable(false);
     	cmdDisplay.setFocusable(false);
-    	cmdDisplay.setBackground(prop.rgbColor(bottomBg));
-    	cmdDisplay.setForeground(prop.rgbColor(properties.get(bottomFontColorIndex)));
+		// If the background color obtained from the xml file is null, then default colors are used.
+    	if (bottomBg == null){
+    		cmdDisplay.setBackground(Color.BLACK);
+    		cmdDisplay.setForeground(Color.WHITE);
+    	} else {
+    		cmdDisplay.setBackground(prop.rgbColor(bottomBg));
+    		cmdDisplay.setForeground(prop.rgbColor(properties.get(bottomFontColorIndex)));
+    	}
     	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     }
     
@@ -109,8 +107,14 @@ public class UserInterface{
 		String topBg = properties.get(2);
     	outputDisplay.setEditable(false);
     	outputDisplay.setFocusable(false);
-    	outputDisplay.setBackground(prop.rgbColor(topBg));
-    	outputDisplay.setForeground(prop.rgbColor(properties.get(topFontColorIndex)));
+		// If the background color obtained from the xml file is null, then default colors are used.
+    	if (topBg == null){
+    		outputDisplay.setBackground(Color.WHITE);
+    		outputDisplay.setForeground(Color.BLACK);
+    	} else {
+    		outputDisplay.setBackground(prop.rgbColor(topBg));
+    		outputDisplay.setForeground(prop.rgbColor(properties.get(topFontColorIndex)));
+    	}
     	outputDisplay.setContentType("text/html");
 		outputDisplay.putClientProperty(JTextPane.HONOR_DISPLAY_PROPERTIES, true);
     }
@@ -209,4 +213,13 @@ public class UserInterface{
     	tips.add("Natural Language is supported in Docket. See Natural Commands section of help for more info");
     	return tips;
     }
+	private static void lookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

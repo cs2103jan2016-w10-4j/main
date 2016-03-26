@@ -1,3 +1,10 @@
+/*
+ * This class is used to read and write xml files. 
+ * This class is currently used in SettingsUI.java to store properties of display output and command output in the GUI. Generally, it is used to store the background and font colors of both displays.
+ * It is also used in UserInterface.java to get the properties of display output and command output so set the GUI.
+ * 
+ * @@author A0113761M
+ */
 package UserInterface;
 
 import java.awt.Color;
@@ -24,10 +31,14 @@ public class ReadProperties {
 			prop.loadFromXML(fileInput);
 			fileInput.close();
 			String details = prop.getProperty(action);
-			return details;
-		}catch (FileNotFoundException e){
+			if (details.equals("")){
+				return null;
+			} else {
+				return details; 
+			}
+		} catch (FileNotFoundException e){
 			return null;
-		}catch(IOException e){
+		} catch(IOException e){
 			e.printStackTrace();
 			return null;
 		}
@@ -62,7 +73,6 @@ public class ReadProperties {
 			FileOutputStream fileOut = new FileOutputStream(file);
 			properties.storeToXML(fileOut, "colors");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -80,6 +90,9 @@ public class ReadProperties {
 	}
 	
 	public Color rgbColor(String color){
-		return new Color(Integer.valueOf(getRed(color)), Integer.valueOf(getGreen(color)), Integer.valueOf(getBlue(color)));
+		int red = Integer.valueOf(getRed(color));
+		int green = Integer.valueOf(getGreen(color));
+		int blue = Integer.valueOf(getBlue(color));
+		return new Color(red, green, blue);
 	}
 }
