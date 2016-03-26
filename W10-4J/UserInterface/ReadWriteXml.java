@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class ReadProperties {
+public class ReadWriteXml {
 	private int colorOptionIndex = 0;
 	private int topFontColorIndex = 1;
 	private int topBgIndex = 2;
@@ -77,22 +77,22 @@ public class ReadProperties {
 		}
 	}
 	
-	public static String getRed(String color){
-		return color.substring(color.indexOf("r:") + 2, color.indexOf(",")).trim();
+	public static int getRed(String color){
+		return Integer.valueOf(color.substring(color.indexOf("r:") + 2, color.indexOf(",")).trim());
 	}
 	
-	public static String getGreen(String color){
-		return color.substring(color.indexOf("g:") + 2, color.indexOf(",", color.indexOf("g:"))).trim();
+	public static int getGreen(String color){
+		return Integer.valueOf(color.substring(color.indexOf("g:") + 2, color.indexOf(",", color.indexOf("g:"))).trim());
 	}
 	
-	public static String getBlue(String color){
-		return color.substring(color.indexOf("b:") + 2).trim();
+	public static int getBlue(String color){
+		return Integer.valueOf(color.substring(color.indexOf("b:") + 2).trim());
 	}
 	
 	public Color rgbColor(String color){
-		int red = Integer.valueOf(getRed(color));
-		int green = Integer.valueOf(getGreen(color));
-		int blue = Integer.valueOf(getBlue(color));
+		int red = getRed(color);
+		int green = getGreen(color);
+		int blue = getBlue(color);
 		return new Color(red, green, blue);
 	}
 }

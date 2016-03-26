@@ -50,7 +50,7 @@ public class SettingsUI {
         JScrollPane jScrollPane2 = new JScrollPane();
         Button cancelButton = new Button();
         Button saveButton = new Button();
-        ReadProperties prop = new ReadProperties();
+        ReadWriteXml prop = new ReadWriteXml();
         
         JTextPane textPane1 = new JTextPane();
         jScrollPane1.setViewportView(textPane1);
@@ -235,7 +235,7 @@ public class SettingsUI {
 		save.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
     			String colorOption, topBg, bottomBg;
-    			ReadProperties prop = new ReadProperties();
+    			ReadWriteXml prop = new ReadWriteXml();
     			if (defaultRadioButton.isSelected()){
     				colorOption = "default";
     				topBg = "#ffffff r:255, g:255, b:255";

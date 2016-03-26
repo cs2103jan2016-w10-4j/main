@@ -1,3 +1,8 @@
+/*
+ * JUnit test for UIController class.
+ * 
+ * @@author A0113761M
+ */
 package test;
 
 import static org.junit.Assert.*;

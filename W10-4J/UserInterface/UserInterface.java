@@ -81,7 +81,7 @@ public class UserInterface{
 	}
     
     private static void textAreaSettings(JTextArea cmdDisplay){
-		ReadProperties prop = new ReadProperties();
+		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
 		String bottomBg = properties.get(bottomBgIndex);
     	cmdDisplay.setColumns(20);
@@ -102,7 +102,7 @@ public class UserInterface{
     }
     
     private static void textPaneSettings(JTextPane outputDisplay){
-		ReadProperties prop = new ReadProperties();
+		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
 		String topBg = properties.get(2);
     	outputDisplay.setEditable(false);
