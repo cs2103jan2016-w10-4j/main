@@ -13,17 +13,20 @@ public class Handler {
 	Storage mainStorage = new Storage();
 
 	public Handler() {
-		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read("Read", Constants.fileName);
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.fileName);
 		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		taskID = getTaskId();
+		//taskID = getTaskId();
+		taskID = mainStorage.getTaskID();
 	}
 
 	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
+			taskID = mainStorage.getTaskID();
+			//taskID = getTaskId() + 1;
 			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
@@ -37,6 +40,7 @@ public class Handler {
 		switch (command) {
 		case ADD:
 			taskID++;
+			mainStorage.writeTaskID(taskID);
 			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:
 			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
@@ -49,6 +53,8 @@ public class Handler {
 		case SEARCH:
 			return new Search(notDoneYetStorage, mainStorage);
 		case SETDIR:
+			taskID = 0;
+			mainStorage.writeTaskID(taskID);
 			return new SetDir(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case RETRIEVE:
 			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
@@ -66,8 +72,11 @@ public class Handler {
 			throw new IllegalStateException();
 		}
 	}
-	// @@author
-
+	
+	/*
+	 *  What if I delete the last element (taskID = 3) and insert a new element,
+	 *  should new element be taskID 3 or 4? Since taskID is unique, i think it should be 4 instead. 
+	 */
 	private int getTaskId() {
 		int id = 0;
 		for(int i = 0 ;i <notDoneYetStorage.size();i++){
@@ -75,7 +84,7 @@ public class Handler {
 			if(currentId>id){
 				id = currentId;
 			}
-			}
+		}
 		for (int i = 0; i < notDoneYetStorage.size(); i++) {
 			int currentId = notDoneYetStorage.get(i).getTaskID();
 			if (currentId > id) {

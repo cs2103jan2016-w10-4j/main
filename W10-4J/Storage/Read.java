@@ -23,6 +23,23 @@ public class Read {
 		return read;
 	}
 	
+	public int readTaskIDFromFile() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(Constants.taskFileName));
+			String content;
+			int taskID = 0;
+			
+			if ((content = reader.readLine()) != null) {
+				taskID = Integer.valueOf(content);
+			} 
+			reader.close();
+			return taskID;
+		} catch (IOException e) {
+			LOGGER.log(Level.WARNING, "Unable to read taskID in the file");
+			return -1;
+		}
+	}
+	
 	// This method is called by Handler
 	public ArrayList<ArrayList<Task>> readFromFile() {
 		try {

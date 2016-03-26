@@ -42,7 +42,8 @@ public class Done implements Command{
 		if (eachTask==null){
 
 			return Constants.MESSAGE_DONE_FAIL;
-		} else if (taskID <= 0 || taskID > notDoneYetStorage.size()) {
+		} else if (taskID <= 0 || taskID > mainStorage.getTaskID()) {
+		//} else if (taskID <= 0 || taskID > notDoneYetStorage.size()) {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;

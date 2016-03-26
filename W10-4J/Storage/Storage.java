@@ -26,10 +26,10 @@ public class Storage {
 	SetDirectory taskSetDirectory;
 	
 	public Storage() {
-		setEnvironment();
 		taskWriter = Write.getInstance();
 		taskReader = Read.getInstance();
 		taskSetDirectory = SetDirectory.getInstance();
+		setEnvironment();
 	}
 
 	/*
@@ -37,13 +37,17 @@ public class Storage {
 	 * the content in the file
 	 */
 	private void setEnvironment() {
+			createDefaultFile();
+			createTaskIDFile();
+	}
+	
+	private void createDefaultFile() {
 		try {
 			String outcome = checkFileExists(filename);
 			if (outcome.equals(Constants.MESSAGE_STORAGE_FAILURE)) {
 				LOGGER.log(Level.INFO, "Creating file in progress");
-				File file = new File(filename);
-				Path path = FileSystems.getDefault().getPath(filename);
-				createFile(file, path);
+				creatingFile(filename);
+				writeTaskID(0);
 				LOGGER.log(Level.INFO, "File is successfully created");
 			}
 		} catch (IOException e) {
@@ -52,11 +56,28 @@ public class Storage {
 		}
 	}
 	
-	private void createFile(File file, Path path) throws IOException {
+	private void createTaskIDFile() {
+		try {
+			String outcomeTaskIDFile = checkFileExists(Constants.taskFileName);
+			if (outcomeTaskIDFile.equals(Constants.MESSAGE_STORAGE_FAILURE)) {
+				LOGGER.log(Level.INFO, "Creating taskID file in progress");
+				creatingFile(Constants.taskFileName);
+				LOGGER.log(Level.INFO, "TaskID File is successfully created");
+			}
+		} catch (IOException e) {
+			LOGGER.log(Level.WARNING, "Unable to create file");
+			e.printStackTrace();
+		}
+	}
+	
+	private void creatingFile(String fileName) throws IOException {
+		File file = new File(fileName);
+		Path path = FileSystems.getDefault().getPath(fileName);
+		
 		if (file.isDirectory()) {
 			Files.createFile(path);
 		} else {
-			String excludeFileName = filename.substring(0, filename.lastIndexOf("/") + 1);
+			String excludeFileName = fileName.substring(0, fileName.lastIndexOf("/") + 1);
 			Path pathWithoutFileName = Paths.get(excludeFileName);
 			Files.createDirectories(pathWithoutFileName);
 			Files.createFile(path);
@@ -100,6 +121,15 @@ public class Storage {
 		} else {
 			return false;
 		}
+	}
+	
+	public int getTaskID() {
+		int taskID = taskReader.readTaskIDFromFile();
+		return taskID;
+	}
+	
+	public void writeTaskID(int taskID) {
+		taskWriter.writeTaskIDToFile(taskID);
 	}
 	
 	/*

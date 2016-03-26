@@ -24,9 +24,10 @@ public class Retrieve implements Command{
 			ArrayList<Task> addtionalnotDoneYetStorage = getFromStorage.get(0);
 			ArrayList<Task> additionalDoneStorage = getFromStorage.get(1);
 			
-			combineArray(notDoneYetStorage, addtionalnotDoneYetStorage);
-			combineArray(doneStorage, additionalDoneStorage);
-			
+			ArrayList<Task> combineHandlerMemory = combineArray(notDoneYetStorage, addtionalnotDoneYetStorage);
+			ArrayList<Task> combineDoneStorage = combineArray(doneStorage, additionalDoneStorage);
+			notDoneYetStorage = combineHandlerMemory;
+			doneStorage = combineDoneStorage;
 			mainStorage.write(notDoneYetStorage, doneStorage);
 
 			return Constants.MESSAGE_RETRIEVE_PASS;
@@ -81,7 +82,7 @@ public class Retrieve implements Command{
 		}
 	}
 
-	public void combineArray(ArrayList<Task> originalArray, ArrayList<Task> additionalArray) {
+	public ArrayList<Task> combineArray(ArrayList<Task> originalArray, ArrayList<Task> additionalArray) {
 		boolean isSame = false;
 		for (Task task1 : additionalArray) {
 			for (Task task2 : originalArray) {
@@ -89,17 +90,21 @@ public class Retrieve implements Command{
 					isSame = true;
 				}
 			}
-			System.out.println(isSame);
+			
 			if (isSame == false) {
+				int currentSize = mainStorage.getTaskID();
+				task1.setTaskID(currentSize + 1);
+				mainStorage.writeTaskID(currentSize + 1);
 				originalArray.add(task1);
 			}
 			isSame = false;
 		}
+		return originalArray;
 	}
 
 	public ArrayList<ArrayList<Task>> readFromFile(String filename) {
 		ArrayList<ArrayList<Task>> taskList = null;
-		taskList = mainStorage.read("Retrieve", filename);
+		taskList = mainStorage.read(Constants.MESSAGE_ACTION_RETRIEVE, filename);
 		assert taskList != null : Constants.ASSERT_TASKLIST_EXISTENCE;
 		return taskList;
 	}

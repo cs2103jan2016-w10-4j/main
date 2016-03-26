@@ -29,6 +29,17 @@ public class Write {
 		return write;
 	}
 	
+	public void writeTaskIDToFile(int taskID) {
+		try {
+			PrintWriter printer = new PrintWriter(new FileWriter(Constants.taskFileName));
+			printer.println(taskID);
+			printer.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.WARNING, "Unable to write taskID to file");
+			e.printStackTrace();
+		}
+	}
+	
 	// Applicable if filename == Constants.fileName
 	public void writeToFile(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {
 		printTask(toDoTaskList, doneTaskList);
