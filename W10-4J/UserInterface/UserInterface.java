@@ -27,6 +27,11 @@ import Parser.Parser;
 
 
 public class UserInterface{
+	private static int colorOptionIndex = 0;
+	private static int topFontColorIndex = 1;
+	private static int topBgIndex = 2;
+	private static int bottomBgIndex = 3;
+	private static int bottomFontColorIndex = 4;
 	public static void main(String[] args){
 		initComponents();
 	}
@@ -39,7 +44,7 @@ public class UserInterface{
 		JTextArea cmdDisplay = new JTextArea();
 		JLabel status = new JLabel();
 		JLabel jLabel1 = new JLabel();
-		JButton settings = new JButton("Settings");
+		JButton settings = new JButton("GUI Preferences");
 		
 		settings.setFocusable(false);
 		setIcon(f);
@@ -84,8 +89,8 @@ public class UserInterface{
     
     private static void textAreaSettings(JTextArea cmdDisplay){
 		ReadProperties prop = new ReadProperties();
-		ArrayList<String> properties = prop.read();
-		String bottomBg = properties.get(3);
+		ArrayList<String> properties = prop.readToArrayList();
+		String bottomBg = properties.get(bottomBgIndex);
     	cmdDisplay.setColumns(20);
     	cmdDisplay.setLineWrap(true);
     	cmdDisplay.setRows(5);
@@ -93,17 +98,18 @@ public class UserInterface{
     	cmdDisplay.setEditable(false);
     	cmdDisplay.setFocusable(false);
     	cmdDisplay.setBackground(prop.rgbColor(bottomBg));
-    	cmdDisplay.setForeground(Color.WHITE);
+    	cmdDisplay.setForeground(prop.rgbColor(properties.get(bottomFontColorIndex)));
     	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     }
     
     private static void textPaneSettings(JTextPane outputDisplay){
 		ReadProperties prop = new ReadProperties();
-		ArrayList<String> properties = prop.read();
+		ArrayList<String> properties = prop.readToArrayList();
 		String topBg = properties.get(2);
     	outputDisplay.setEditable(false);
     	outputDisplay.setFocusable(false);
     	outputDisplay.setBackground(prop.rgbColor(topBg));
+    	outputDisplay.setForeground(prop.rgbColor(properties.get(topFontColorIndex)));
     	outputDisplay.setContentType("text/html");
 		outputDisplay.putClientProperty(JTextPane.HONOR_DISPLAY_PROPERTIES, true);
     }

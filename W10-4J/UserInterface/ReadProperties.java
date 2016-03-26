@@ -10,37 +10,54 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class ReadProperties {
-	public ArrayList<String> read(){
+	private int colorOptionIndex = 0;
+	private int topFontColorIndex = 1;
+	private int topBgIndex = 2;
+	private int bottomBgIndex = 3;
+	private int bottomFontColorIndex = 4;
+	
+	public static String read(String action, String fileName){
 		try{
-			File file = new File("properties.xml");
+			File file = new File(fileName);
 			FileInputStream fileInput = new FileInputStream(file);
 			Properties prop = new Properties();
 			prop.loadFromXML(fileInput);
 			fileInput.close();
-			String colorOption = prop.getProperty("colorOption");
-			String fontColor = prop.getProperty("fontColor");
-			String topBg = prop.getProperty("topBg");
-			String bottomBg = prop.getProperty("bottomBg");
-			ArrayList<String> properties = new ArrayList<String>();
-			properties.add(colorOption);
-			properties.add(fontColor);
-			properties.add(topBg);
-			properties.add(bottomBg);
-			return properties;
+			String details = prop.getProperty(action);
+			return details;
 		}catch (FileNotFoundException e){
 			return null;
 		}catch(IOException e){
+			e.printStackTrace();
 			return null;
 		}
 	}
 	
+	public ArrayList<String> readToArrayList(){
+		String fileName = ".\\UserInterface\\properties.xml";
+		ArrayList<String> properties = new ArrayList<String>();
+		String colorOption = read("colorOption", fileName);
+		String topFontColor = read("topFontColor", fileName);
+		String bottomFontColor = read("bottomFontColor", fileName);
+		String topBg = read("topBg", fileName);
+		String bottomBg = read("bottomBg", fileName);
+		properties.add(colorOptionIndex, colorOption);
+		properties.add(topFontColorIndex, topFontColor);
+		properties.add(topBgIndex, topBg);
+		properties.add(bottomBgIndex, bottomBg);
+		properties.add(bottomFontColorIndex, bottomFontColor);
+		return properties;
+	}
+	
 	public void setProperties(ArrayList<String> prop){
 		Properties properties = new Properties();
-		properties.setProperty("colorOption", prop.get(0));
-		properties.setProperty("topBg", prop.get(2));
-		properties.setProperty("bottomBg", prop.get(3));
+		properties.setProperty("colorOption", prop.get(colorOptionIndex));
+		properties.setProperty("topBg", prop.get(topBgIndex));
+		properties.setProperty("bottomBg", prop.get(bottomBgIndex));
+		properties.setProperty("topFontColor", prop.get(topFontColorIndex));
+		properties.setProperty("bottomFontColor", prop.get(bottomFontColorIndex));
 		
-		File file = new File("properties.xml");
+		File file = new File(".\\UserInterface\\properties.xml");
 		try {
 			FileOutputStream fileOut = new FileOutputStream(file);
 			properties.storeToXML(fileOut, "colors");

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<comment>colors</comment>
-<entry key="colorOption">option1</entry>
-<entry key="bottomBg">#8ED2C9 r:142, g:210, b:201</entry>
-<entry key="topBg">#FCF4D9 r:252, g:244, b: 217</entry>
-</properties>
