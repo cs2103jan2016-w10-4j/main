@@ -7,57 +7,52 @@ import main.Constants;
 import main.Constants.COMMAND_TYPE;
 
 public class Parser {
-	ArrayList<String> addCommandList = new ArrayList<>();
-	ArrayList<String> deleteCommandList = new ArrayList<>();
-	ArrayList<String> editCommandList = new ArrayList<>();
-	ArrayList<String> doneCommandList = new ArrayList<>();
-	ArrayList<String> displayCommandList = new ArrayList<>();
-	ArrayList<String> searchCommandList = new ArrayList<>();
-	ArrayList<String> setdirCommandList = new ArrayList<>();
-	ArrayList<String> retrieveCommandList = new ArrayList<>();
-	ArrayList<String> recurrenceCommandList = new ArrayList<>();
-	ArrayList<String> undoCommandList = new ArrayList<>();
-	ArrayList<String> exitCommandList = new ArrayList<>();
-	ArrayList<String> helpCommandList = new ArrayList<>();
+	private ArrayList<String> addCommandList = new ArrayList<>();
+	private ArrayList<String> deleteCommandList = new ArrayList<>();
+	private ArrayList<String> editCommandList = new ArrayList<>();
+	private ArrayList<String> doneCommandList = new ArrayList<>();
+	private ArrayList<String> displayCommandList = new ArrayList<>();
+	private ArrayList<String> searchCommandList = new ArrayList<>();
+	private ArrayList<String> setdirCommandList = new ArrayList<>();
+	private ArrayList<String> retrieveCommandList = new ArrayList<>();
+	private ArrayList<String> recurrenceCommandList = new ArrayList<>();
+	private ArrayList<String> undoCommandList = new ArrayList<>();
+	private ArrayList<String> exitCommandList = new ArrayList<>();
+	private ArrayList<String> helpCommandList = new ArrayList<>();
 
-	ArrayList<String> addArgumentList = new ArrayList<>();
-	ArrayList<String> editArgumentList = new ArrayList<>();
-	ArrayList<String> displayArgumentList = new ArrayList<>();
-	ArrayList<String> searchArgumentList = new ArrayList<>();
-	ArrayList<String> recurrenceArgumentList = new ArrayList<>();
-	ArrayList<String> helpArgumentList = new ArrayList<>();
+	private ArrayList<String> addArgumentList = new ArrayList<>();
+	private ArrayList<String> editArgumentList = new ArrayList<>();
+	private ArrayList<String> displayArgumentList = new ArrayList<>();
+	private ArrayList<String> searchArgumentList = new ArrayList<>();
+	private ArrayList<String> recurrenceArgumentList = new ArrayList<>();
+	private ArrayList<String> helpArgumentList = new ArrayList<>();
 
-	ArrayList<String> dateArgumentList = new ArrayList<>();
-	ArrayList<String> startArgumentList = new ArrayList<>();
-	ArrayList<String> endArgumentList = new ArrayList<>();
-	ArrayList<String> detailsArgumentList = new ArrayList<>();
-	ArrayList<String> repeatArgumentList = new ArrayList<>();
+	private ArrayList<String> dateArgumentList = new ArrayList<>();
+	private ArrayList<String> startArgumentList = new ArrayList<>();
+	private ArrayList<String> endArgumentList = new ArrayList<>();
+	private ArrayList<String> detailsArgumentList = new ArrayList<>();
+	private ArrayList<String> repeatArgumentList = new ArrayList<>();
 
-	Handler handler;
-	NaturalTime naturalTime;
-	NaturalDate naturalDate;
-	boolean invalidDate, invalidTime;
+	private Handler handler;
+	private Valid valid;
 
 	public Parser() {
 		generateCommandList();
 		handler = new Handler();
-		naturalTime = new NaturalTime();
-		naturalDate = new NaturalDate();
+		valid = new Valid();
 	}
 
 	public String parse(String command) {
-		invalidDate = false;
-		invalidTime = false;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
 		String[] arguments = getArguments(commandType, command);
-		if (!isValid(commandType, arguments)) {
-			if (invalidDate) {
+		if (!valid.isValid(commandType, arguments)) {
+			if (valid.getInvalidDate()) {
 				return Constants.MESSAGE_INVALID_DATE;
-			} else if (invalidTime) {
+			} else if (valid.getInvalidTime()) {
 				return Constants.MESSAGE_INVALID_TIME;
 			} else {
 				return Constants.MESSAGE_INVALID_FORMAT;
@@ -193,145 +188,9 @@ public class Parser {
 		}
 	}
 
-	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
-		switch (commandType) {
-		case ADD:
-			return isAddValid(arguments);
-		case DELETE:
-			return isDeleteValid(arguments);
-		case EDIT:
-			return isEditValid(arguments);
-		case DONE:
-			return isDoneValid(arguments);
-		case DISPLAY:
-			return isDisplayValid(arguments);
-		case RECURRENCE:
-			return isRecurrenceValid(arguments);
-		case HELP:
-			return isHelpValid(arguments);
-		default:
-			return true;
-		}
-	}
+	
 
-	public boolean isAddValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return false;
-		}
-		for (int i = 1; i < arguments.length; i += 2) {
-			if (!addArgumentList.contains(arguments[i])) {
-				return false;
-			} else {
-				if (i + 1 == arguments.length) {
-					return false;
-				} else if (arguments[i].equals("date")) {
-					String date = naturalDate.getDate(arguments[i + 1]);
-					if (date == null) {
-						invalidDate = true;
-						return false;
-					} else {
-						arguments[i + 1] = date;
-					}
-				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
-					String time = naturalTime.getTime(arguments[i + 1]);
-					if (time == null) {
-						invalidTime = true;
-						return false;
-					} else {
-						arguments[i + 1] = time;
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean isDeleteValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return false;
-		}
-		return isInteger(arguments[0]);
-	}
-
-	public boolean isEditValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return false;
-		}
-		if (!isInteger(arguments[0])) {
-			return false;
-		}
-		for (int i = 1; i < arguments.length; i += 2) {
-			if (!editArgumentList.contains(arguments[i])) {
-				return false;
-			} else {
-				if (i + 1 == arguments.length) {
-					return false;
-				} else if (arguments[i].equals("date")) {
-					String date = naturalDate.getDate(arguments[i + 1]);
-					if (date == null) {
-						invalidDate = true;
-						return false;
-					} else {
-						arguments[i + 1] = date;
-					}
-				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
-					String time = naturalTime.getTime(arguments[i + 1]);
-					if (time == null) {
-						invalidTime = true;
-						return false;
-					} else {
-						arguments[i + 1] = time;
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean isDoneValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return false;
-		}
-		return isInteger(arguments[0]);
-	}
-
-	public boolean isDisplayValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return true;
-		} else if (arguments.length == 2) {
-			return arguments[0].equals("by") && displayArgumentList.contains(arguments[1]);
-		}
-		return false;
-	}
-
-	public boolean isHelpValid(String[] arguments) {
-		if (arguments.length == 0) {
-			return true;
-		} else if (arguments.length == 1) {
-			return helpArgumentList.contains(arguments[0]);
-		} else {
-			return false;
-		}
-	}
-
-	public boolean isRecurrenceValid(String[] arguments) {
-		if (arguments.length != 2) {
-			return false;
-		} else if (!isInteger(arguments[0])) {
-			return false;
-		} else {
-			return recurrenceArgumentList.contains(arguments[1]);
-		}
-	}
-
-	public static boolean isInteger(String s) {
-		try {
-			Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return true;
-	}
+	
 
 	public String getFirstWord(String command) {
 		return command.split(" ")[0];

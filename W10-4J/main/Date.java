@@ -8,7 +8,6 @@ public class Date {
 		int day = Integer.parseInt(s.split("/")[2]);
 		day++;
 		s = makeDate(year, month, day);
-		System.out.println(s);
 		if (isLegalDate(s)) {
 			return s;
 		}
@@ -32,14 +31,12 @@ public class Date {
 		month++;
 		s = makeDate(year, month, day);
 		if (isLegalDate(s)) {
-			System.out.println(s);
 			return s;
 		}
 		day = 1;
 		month = 1;
 		year++;
 		s = makeDate(year, month, day);
-		System.out.println(s);
 		return s;
 	}
 
@@ -81,7 +78,6 @@ public class Date {
 	            }
 	            break;
 	        default:
-	            // returns 30 even for nonexistant months 
 	            daysInMonth = 30;
 	    }
 	    return daysInMonth;
