@@ -70,6 +70,24 @@ public class Edit implements Command{
 			case Constants.MESSAGE_EDIT_ACTION_DETAILS:
 				eachTask.setDetails(task[i + 1].trim());
 				break;
+			case Constants.MESSAGE_EDIT_ACTION_REPEAT:
+				switch (task[i + 1].trim()) {
+				case Constants.MESSAGE_REPEAT_DAY:
+					eachTask.setDay(true);
+					break;
+				case Constants.MESSAGE_REPEAT_WEEK:
+					eachTask.setWeek(true);
+					break;
+				case Constants.MESSAGE_REPEAT_MONTH:
+					eachTask.setMonth(true);
+					break;
+				case Constants.MESSAGE_REPEAT_YEAR:
+					eachTask.setYear(true);
+					break;
+				default:
+					assert false;
+				}
+				break;
 			}
 		}
 		return;

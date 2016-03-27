@@ -3,19 +3,21 @@ package Handler;
 import main.Constants;
 import java.util.ArrayList;
 
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
+
 import Storage.Storage;
 import main.Task;
 
 //@@author Berkin
-public class Add implements Command{
-	//@@author
+public class Add implements Command {
+	// @@author
 	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
-	
+
 	public Add(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
+			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage) {
 		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
@@ -39,12 +41,31 @@ public class Add implements Command{
 				eachTask.setStartTime(task[i + 1].trim());
 				break;
 			case Constants.MESSAGE_ADD_ACTION_END:
-			case Constants.MESSAGE_ADD_ACTION_TIME:
 				eachTask.setEndTime(task[i + 1].trim());
 				break;
 			case Constants.MESSAGE_ADD_ACTION_DETAILS:
 				eachTask.setDetails(task[i + 1].trim());
 				break;
+			case Constants.MESSAGE_ADD_ACTION_REPEAT:
+				switch (task[i + 1].trim()) {
+				case Constants.MESSAGE_REPEAT_DAY:
+					eachTask.setDay(true);
+					break;
+				case Constants.MESSAGE_REPEAT_WEEK:
+					eachTask.setWeek(true);
+					break;
+				case Constants.MESSAGE_REPEAT_MONTH:
+					eachTask.setMonth(true);
+					break;
+				case Constants.MESSAGE_REPEAT_YEAR:
+					eachTask.setYear(true);
+					break;
+				default:
+					assert false;
+				}
+				break;
+			default:
+				assert false;
 			}
 		}
 		// remember previous state

@@ -67,7 +67,6 @@ public class Constants {
 	public static final String MESSAGE_ADD_ACTION_DATE = ("date");
 	public static final String MESSAGE_ADD_ACTION_START = ("start");
 	public static final String MESSAGE_ADD_ACTION_END = ("end");
-	public static final String MESSAGE_ADD_ACTION_TIME = ("time");
 	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
 	public static final String MESSAGE_ADD_ACTION_REPEAT = ("repeat");
 	
@@ -84,6 +83,7 @@ public class Constants {
 	public static final String MESSAGE_EDIT_ACTION_END = ("end");
 	public static final String MESSAGE_EDIT_ACTION_DATE = ("date");
 	public static final String MESSAGE_EDIT_ACTION_DETAILS = ("details");
+	public static final String MESSAGE_EDIT_ACTION_REPEAT = ("repeat");
 	
 	public static final String MESSAGE_ACTION_ADD = ("add");
 	public static final String MESSAGE_ACTION_DELETE = ("delete");
@@ -119,6 +119,11 @@ public class Constants {
 	public static final String MESSAGE_WRITE_WEEK = ("Week: %s");
 	public static final String MESSAGE_WRITE_MONTH = ("Month: %s");
 	public static final String MESSAGE_WRITE_YEAR = ("Year: %s");
+	
+	public static final String MESSAGE_REPEAT_DAY = ("day");
+	public static final String MESSAGE_REPEAT_WEEK = ("week");
+	public static final String MESSAGE_REPEAT_MONTH = ("month");
+	public static final String MESSAGE_REPEAT_YEAR = ("year");
 	
 	// Use in both Write and Read class
 	public static final String MESSAGE_WRITE_READ_PATH = ("PATH:");
