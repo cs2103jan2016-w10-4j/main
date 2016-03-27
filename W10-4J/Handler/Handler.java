@@ -17,16 +17,13 @@ public class Handler {
 		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		// taskID = getTaskId();
-		taskID = getTaskID();
+		taskID = this.getTaskID();
 	}
 
 	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
-			taskID = mainStorage.getTaskID();
-			// taskID = getTaskId() + 1;
 			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
@@ -80,8 +77,8 @@ public class Handler {
 	 */
 	private int getTaskID() {
 		int id = 0;
-		for (int i = 0; i < notDoneYetStorage.size(); i++) {
-			int currentId = notDoneYetStorage.get(i).getTaskID();
+		for (int i = 0; i < doneStorage.size(); i++) {
+			int currentId = doneStorage.get(i).getTaskID();
 			if (currentId > id) {
 				id = currentId;
 			}
