@@ -8,7 +8,7 @@ public class NaturalDate {
 	public String getDate(String input) {
 		input = input.trim();
 		String[] result = splitStringByCharType(input);
-		if (result.length > 3) {
+		if (result.length > 3 || result.length < 2) {
 			return null;
 		}
 
