@@ -17,8 +17,8 @@ public class Handler {
 		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		//taskID = getTaskId();
-		taskID = mainStorage.getTaskID();
+		// taskID = getTaskId();
+		taskID = getTaskID();
 	}
 
 	// @@author Berkin
@@ -26,7 +26,7 @@ public class Handler {
 		try {
 			Command cmd = createCommand(command, task);
 			taskID = mainStorage.getTaskID();
-			//taskID = getTaskId() + 1;
+			// taskID = getTaskId() + 1;
 			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
@@ -59,7 +59,7 @@ public class Handler {
 		case RETRIEVE:
 			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
 		case RECURRENCE:
-			return new Recurrence(notDoneYetStorage,doneStorage,previousInputStorage,mainStorage);
+			return new Recurrence(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case UNDO:
 			return new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EXIT:
@@ -72,16 +72,17 @@ public class Handler {
 			throw new IllegalStateException();
 		}
 	}
-	
+
 	/*
-	 *  What if I delete the last element (taskID = 3) and insert a new element,
-	 *  should new element be taskID 3 or 4? Since taskID is unique, i think it should be 4 instead. 
+	 * What if I delete the last element (taskID = 3) and insert a new element,
+	 * should new element be taskID 3 or 4? Since taskID is unique, i think it
+	 * should be 4 instead.
 	 */
-	private int getTaskId() {
+	private int getTaskID() {
 		int id = 0;
-		for(int i = 0 ;i <notDoneYetStorage.size();i++){
+		for (int i = 0; i < notDoneYetStorage.size(); i++) {
 			int currentId = notDoneYetStorage.get(i).getTaskID();
-			if(currentId>id){
+			if (currentId > id) {
 				id = currentId;
 			}
 		}
