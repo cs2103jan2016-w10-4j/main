@@ -75,13 +75,4 @@ public class NaturalTime {
 	private static boolean isMinute(int s) {
 		return (s >= 0 && s < 60);
 	}
-	
-	private static boolean isInteger(String s) {
-		try {
-			Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return true;
-	}
 }
