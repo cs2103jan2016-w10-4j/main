@@ -92,10 +92,10 @@ public class Retrieve implements Command{
 			}
 			
 			if (isSame == false) {
-				int currentSize = mainStorage.getTaskID();
+				int currentSize = Handler.getTaskID();
 				task1.setTaskID(currentSize + 1);
-				mainStorage.writeTaskID(currentSize + 1);
 				originalArray.add(task1);
+				Handler.setTaskID(currentSize + 1);
 			}
 			isSame = false;
 		}

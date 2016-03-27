@@ -9,7 +9,7 @@ public class Handler {
 	private static ArrayList<Task> notDoneYetStorage;
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
-	private int taskID;
+	private static int taskID;
 	Storage mainStorage = new Storage();
 
 	public Handler() {
@@ -34,10 +34,10 @@ public class Handler {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
+		taskID = getTaskID();
 		switch (command) {
 		case ADD:
 			taskID++;
-			mainStorage.writeTaskID(taskID);
 			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:
 			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
@@ -51,7 +51,6 @@ public class Handler {
 			return new Search(notDoneYetStorage, mainStorage);
 		case SETDIR:
 			taskID = 0;
-			mainStorage.writeTaskID(taskID);
 			return new SetDir(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case RETRIEVE:
 			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
@@ -70,12 +69,7 @@ public class Handler {
 		}
 	}
 
-	/*
-	 * What if I delete the last element (taskID = 3) and insert a new element,
-	 * should new element be taskID 3 or 4? Since taskID is unique, i think it
-	 * should be 4 instead.
-	 */
-	private int getTaskID() {
+	public static int getTaskID() {
 		int id = 0;
 		for (int i = 0; i < doneStorage.size(); i++) {
 			int currentId = doneStorage.get(i).getTaskID();
@@ -90,5 +84,9 @@ public class Handler {
 			}
 		}
 		return id;
+	}
+	
+	public static void setTaskID(int id) {
+		taskID = id;
 	}
 }

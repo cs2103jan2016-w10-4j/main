@@ -38,7 +38,6 @@ public class Storage {
 	 */
 	private void setEnvironment() {
 			createDefaultFile();
-			createTaskIDFile();
 	}
 	
 	private void createDefaultFile() {
@@ -47,22 +46,7 @@ public class Storage {
 			if (outcome.equals(Constants.MESSAGE_STORAGE_FAILURE)) {
 				LOGGER.log(Level.INFO, "Creating file in progress");
 				creatingFile(filename);
-				writeTaskID(0);
 				LOGGER.log(Level.INFO, "File is successfully created");
-			}
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Unable to create file");
-			e.printStackTrace();
-		}
-	}
-	
-	private void createTaskIDFile() {
-		try {
-			String outcomeTaskIDFile = checkFileExists(Constants.taskFileName);
-			if (outcomeTaskIDFile.equals(Constants.MESSAGE_STORAGE_FAILURE)) {
-				LOGGER.log(Level.INFO, "Creating taskID file in progress");
-				creatingFile(Constants.taskFileName);
-				LOGGER.log(Level.INFO, "TaskID File is successfully created");
 			}
 		} catch (IOException e) {
 			LOGGER.log(Level.WARNING, "Unable to create file");
@@ -121,15 +105,6 @@ public class Storage {
 		} else {
 			return false;
 		}
-	}
-	
-	public int getTaskID() {
-		int taskID = taskReader.readTaskIDFromFile();
-		return taskID;
-	}
-	
-	public void writeTaskID(int taskID) {
-		taskWriter.writeTaskIDToFile(taskID);
 	}
 	
 	/*

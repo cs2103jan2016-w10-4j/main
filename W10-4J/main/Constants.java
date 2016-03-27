@@ -6,7 +6,6 @@ public class Constants {
 	};
 
 	public static final String fileName = "mytextfile.txt";
-	public static final String taskFileName = "taskid.txt"; 
 	public static final String[] addDefaultCommandList = { "add", "new", "+", "a" };
 	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };
 	public static final String[] editDefaultCommandList = { "edit", "change", "edittask", "e" };

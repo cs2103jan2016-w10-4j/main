@@ -24,7 +24,6 @@ public class Delete implements Command {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
-		
 		if (eachTask == null) {
 			eachTask = findByTaskID(doneStorage, taskID);
 			if(eachTask == null){
@@ -34,9 +33,8 @@ public class Delete implements Command {
 				mainStorage.write(notDoneYetStorage, doneStorage);
 				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
 				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
-			}
-		} else if (taskID <= 0 || taskID > mainStorage.getTaskID()) {
-			// } else if (taskID <= 0 || taskID > notDoneYetStorage.size()) {
+			} 
+		} else if (taskID <= 0 || taskID > Handler.getTaskID()) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
