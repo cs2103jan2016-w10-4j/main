@@ -188,10 +188,6 @@ public class Parser {
 		}
 	}
 
-	
-
-	
-
 	public String getFirstWord(String command) {
 		return command.split(" ")[0];
 	}

@@ -5,9 +5,6 @@ import java.util.ArrayList;
 public class NaturalTime {
 
 	public String getTime(String input) {
-		if(!isInteger(input)){
-			return null;
-		}
 		input = input.trim();
 		ArrayList<Integer> result = splitStringByInt(input);
 		int hour, minute;
@@ -42,7 +39,9 @@ public class NaturalTime {
 		String hold = "";
 		int holdType = -1;
 		int type;
-		for (char c : str) {
+		
+		for(int i=0;i<str.length;i++){
+			char c = str[i];
 			if (Character.isDigit(c)) {
 				type = 1;
 			} else {

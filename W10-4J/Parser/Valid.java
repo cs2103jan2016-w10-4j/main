@@ -79,10 +79,20 @@ public class Valid {
 	}
 
 	public boolean isDeleteValid(String[] arguments) {
-		if (arguments.length == 0) {
+//		if (arguments.length == 0) {
+//			return false;
+//		}
+//		for(int i=0;i<arguments.length;i++){
+//			if(!isInteger(arguments[i])){
+//				return false;
+//			}
+//		}
+//		return true;
+		if (arguments.length != 1) {
 			return false;
+		} else{
+			return isInteger(arguments[0]);
 		}
-		return isInteger(arguments[0]);
 	}
 
 	public boolean isEditValid(String[] arguments) {

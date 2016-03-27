@@ -17,7 +17,8 @@ public class NaturalDate {
 		int year = -1;
 		boolean confirmMonth = false, confirmYear = false;
 
-		for (String s : result) {
+		for(int i=0;i<result.length;i++){
+			String s = result[i];
 			if (isInteger(s)) {
 				int temp = Integer.parseInt(s);
 				if (isMonth(temp) && !confirmMonth) {
@@ -65,7 +66,8 @@ public class NaturalDate {
 		String hold = "";
 		int holdType = -1;
 
-		for (char c : str) {
+		for(int i=0;i<str.length;i++){
+			char c = str[i];
 			int type = getCharType(c);
 			if (type != holdType) {
 				if (!hold.equals("")) {
@@ -93,7 +95,9 @@ public class NaturalDate {
 		String hold = "";
 		int holdType = -1;
 		int type;
-		for (char c : str) {
+		
+		for(int i=0;i<str.length;i++){
+			char c = str[i];
 			if (Character.isDigit(c)) {
 				type = 1;
 			} else {
