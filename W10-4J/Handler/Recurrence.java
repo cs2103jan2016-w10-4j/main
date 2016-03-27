@@ -24,7 +24,7 @@ public class Recurrence implements Command {
 	
 	public String execute(String[] task, int notUsedInThisCommand) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = notDoneYetStorage.get(taskID - 1);
+		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
 		Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
 		case "day":

@@ -40,21 +40,25 @@ public class Done implements Command{
 
 		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
 		if (eachTask==null){
-
-			return Constants.MESSAGE_DONE_FAIL;
-		} else if (taskID <= 0 || taskID > mainStorage.getTaskID()) {
-		//} else if (taskID <= 0 || taskID > notDoneYetStorage.size()) {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
-			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-			notDoneYetStorage.remove(eachTask);
-			doneStorage.add(eachTask);
-			// write to mainStorage
-			mainStorage.write(notDoneYetStorage, doneStorage);
-			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
-			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
-			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			if(eachTask.isRecurring()&& eachTask.getDate()!=null){
+				eachTask.done();
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			} else{
+				assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
+				notDoneYetStorage.remove(eachTask);
+				doneStorage.add(eachTask);
+				// write to mainStorage
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			}
 		}
 	}
 }

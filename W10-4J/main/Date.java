@@ -1,8 +1,5 @@
 package main;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-
 public class Date {
 
 	public static String addDay(String s) {
