@@ -59,12 +59,17 @@ public class Recurrence implements Command {
 		taskArray.add(task);
 	}
 
-	private Task cloneTask(Task task) {
+	public Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
 		result.setDate(task.getDate());
 		result.setStartTime(task.getStartTime());
 		result.setEndTime(task.getEndTime());
 		result.setDetails(task.getDetails());
+		result.setTaskID(task.getTaskID());
+		result.setYear(task.getYear());
+		result.setMonth(task.getMonth());
+		result.setWeek(task.getWeek());
+		result.setDay(task.getDay());
 		return result;
 	}
 }
