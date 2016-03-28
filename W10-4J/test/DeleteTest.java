@@ -6,15 +6,13 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Handler.Delete;
+import Handler.HandlerMemory;
 import Handler.PreviousInput;
 import Storage.Storage;
 
 public class DeleteTest {
 	
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private HandlerMemory handlerMemory;
 
 	@Test
 	public void test() {
@@ -36,9 +34,9 @@ public class DeleteTest {
 		String[] input2 = {"1"};
 		String[] input3 = {"2"};
 		
-		notDoneYetStorage.add(firstTask);
-		notDoneYetStorage.add(secondTask);
-		Delete d = new Delete(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		handlerMemory.getNotDoneYetStorage().add(firstTask);
+		handlerMemory.getNotDoneYetStorage().add(secondTask);
+		Delete d = new Delete(handlerMemory);
 
 		// test the delete method
 		assertEquals("sampleTask1 has been deleted.", d.execute(input1, 0));

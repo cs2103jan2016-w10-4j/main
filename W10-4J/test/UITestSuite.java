@@ -1,4 +1,3 @@
-//@@author Berkin
 package test;
 
 import org.junit.runner.RunWith;
@@ -10,4 +9,3 @@ import org.junit.runners.Suite.SuiteClasses;
 public class UITestSuite {
 
 }
-//@@author 

@@ -6,22 +6,24 @@ import java.util.Collections;
 import Storage.Storage;
 import main.Constants;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 
 public class Display implements Command{
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	Storage mainStorage;
 	
-	public Display(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.mainStorage = mainStorage;
+	private HandlerMemory handlerMemory;
+	private Task forEachTask;
+	private Task forOldTask;
+	private COMMAND_STATE commandState;
+
+	
+	public Display(HandlerMemory handlerMemory){
+		this.handlerMemory=handlerMemory;
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
 		if(task.length==0){
-			sortByID(notDoneYetStorage);
-			mainStorage.write(notDoneYetStorage, doneStorage);
+			sortByID(HandlerMemory.getNotDoneYetStorage());
+			handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
 		}else{
 			String displayField = task[1].trim();
 			assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
@@ -29,28 +31,28 @@ public class Display implements Command{
 			switch (displayField)
 			{
 				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-					sortByName(notDoneYetStorage);
-					mainStorage.write(notDoneYetStorage, doneStorage);
+					sortByName(HandlerMemory.getNotDoneYetStorage());
+					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_START:
-					sortByStart(notDoneYetStorage);
-					mainStorage.write(notDoneYetStorage, doneStorage);
+					sortByStart(HandlerMemory.getNotDoneYetStorage());
+					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_END:
-					sortByEnd(notDoneYetStorage);
-					mainStorage.write(notDoneYetStorage, doneStorage);
+					sortByEnd(HandlerMemory.getNotDoneYetStorage());
+					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_DATE:
-					sortByDate(notDoneYetStorage);
-					mainStorage.write(notDoneYetStorage, doneStorage);
+					sortByDate(HandlerMemory.getNotDoneYetStorage());
+					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
-					return DisplayFormat.displayFormat(notDoneYetStorage);
+					return DisplayFormat.displayFormat(HandlerMemory.getNotDoneYetStorage());
 				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
-					return DisplayFormat.displayFormat(doneStorage);
+					return DisplayFormat.displayFormat(HandlerMemory.getDoneStorage());
 			}
 		}
-		return DisplayFormat.displayFormat(notDoneYetStorage);
+		return DisplayFormat.displayFormat(HandlerMemory.getNotDoneYetStorage());
 	}
 
 	// modularise the display code
@@ -123,7 +125,17 @@ public class Display implements Command{
 		}
 		return result;
 	}
-
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
 	// private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
 	// ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
 	// for (Task task : taskArray) {

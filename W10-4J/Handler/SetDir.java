@@ -1,35 +1,42 @@
-//@@author Berkin
 package Handler;
 
 import java.util.ArrayList;
 
 import Storage.Storage;
 import main.*;
+import main.Constants.COMMAND_STATE;
+import main.Constants.COMMAND_TYPE;
 
 public class SetDir implements Command {
 
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
 	
-	public SetDir(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
-	}
-	//@@author 
+	private  COMMAND_STATE commandState;
+	private  Task forEachTask;
+	private  Task forOldTask;
+	private  HandlerMemory handlerMemory;
+	
+	public SetDir(HandlerMemory handlerMemory){
+		
+		this.handlerMemory=handlerMemory;
+		}
 	
 	public String execute(String[] task, int notUsedInThisCommand){
-  		if(mainStorage.setDirectory(task[0])){
-  			notDoneYetStorage.clear();
-  			doneStorage.clear();
-  			previousInputStorage.clear();
+  		if(handlerMemory.getMainStorage().setDirectory(task[0])){
   			return Constants.MESSAGE_SETDIR_PASS;
   		} else{
+  			commandState=COMMAND_STATE.FAILED;
   			return Constants.MESSAGE_SETDIR_FAIL;
   		}
   	}
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
+	}
 }

@@ -1,28 +1,22 @@
 # Berkin
-###### W10-4J\Handler\Add.java
-``` java
-public class Add implements Command{
-```
 ###### W10-4J\Handler\Command.java
 ``` java
-package Handler;
-
 public interface Command {
-
+	
 	String execute(String[] task, int taskID);
-
+	COMMAND_STATE returnCommandState();
+	Task returnEachTask();
+	Task returnOldTask();
 }
-```
-###### W10-4J\Handler\Command.java
-``` java
-
 ```
 ###### W10-4J\Handler\Handler.java
 ``` java
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
-			return cmd.execute(task, taskID);
+			String toBeReturned= cmd.execute(task, HandlerMemory.getTaskID());
+			HandlerMemory.updateMemory(cmd,command);
+			return toBeReturned;
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
@@ -32,28 +26,30 @@ public interface Command {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
+		int taskID=HandlerMemory.getTaskID();
 		switch (command) {
 		case ADD:
-			taskID++;
-			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			HandlerMemory.setTaskID(taskID++);
+			return new Add(handlerMemory);
 		case EDIT:
-			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return new Edit(handlerMemory);
 		case DELETE:
-			return new Delete(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return new Delete(handlerMemory);
 		case DONE:
-			return new Done(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return new Done(handlerMemory);
 		case DISPLAY:
-			return new Display(notDoneYetStorage, doneStorage, mainStorage);
+			return new Display(handlerMemory);
 		case SEARCH:
-			return new Search(notDoneYetStorage, mainStorage);
+			return new Search(handlerMemory);
 		case SETDIR:
-			return new SetDir(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			taskID = 0;
+			return new SetDir(handlerMemory);
 		case RETRIEVE:
-			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
+			return new Retrieve(handlerMemory);
 		case RECURRENCE:
-			return new Recurrence(notDoneYetStorage,doneStorage,previousInputStorage,mainStorage);
+			return new Recurrence(handlerMemory);
 		case UNDO:
-			return new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return new Undo(handlerMemory);
 		case EXIT:
 			System.exit(0);
 		case HELP:
@@ -62,6 +58,112 @@ public interface Command {
 			throw new IllegalArgumentException();
 		default:
 			throw new IllegalStateException();
+		}
+	}
+}
+```
+###### W10-4J\Handler\HandlerMemory.java
+``` java
+public class HandlerMemory {
+
+	private static ArrayList<Task> notDoneYetStorage;
+	private static ArrayList<Task> doneStorage;
+	private static ArrayList<PreviousInput> previousInputStorage;
+	private static int taskID;
+	static Storage mainStorage = new Storage();
+	
+	public HandlerMemory() {
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.fileName);
+		notDoneYetStorage = getFromStorage.get(0);
+		doneStorage = getFromStorage.get(1);
+		previousInputStorage = new ArrayList<PreviousInput>();
+		taskID = HandlerMemory.getTaskID();
+	}
+	
+	public static void updateMemory(Command cmd, COMMAND_TYPE command) {
+		if(cmd.returnCommandState()!=COMMAND_STATE.FAILED) {
+		switch (command) {
+		case ADD:
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
+			notDoneYetStorage.add(cmd.returnEachTask());
+			mainStorage.write(notDoneYetStorage, doneStorage);  
+		case EDIT:
+			mainStorage.write(notDoneYetStorage, doneStorage);
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
+		case DELETE:
+			if(cmd.returnCommandState()==COMMAND_STATE.DELETEDONETASK) {
+				doneStorage.remove(cmd.returnEachTask());
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+			}
+			else {
+				assert cmd.returnCommandState()==COMMAND_STATE.DELETEUNDONETASK;
+				notDoneYetStorage.remove(cmd.returnEachTask());
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+			}
+		case DONE:
+			if(cmd.returnCommandState()==COMMAND_STATE.RECURRINGDONE) {
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+			}
+			else {
+				assert cmd.returnCommandState()==COMMAND_STATE.NONRECURRINGDONE;
+				notDoneYetStorage.remove(cmd.returnEachTask());
+				doneStorage.add(cmd.returnEachTask());
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+			}
+		case DISPLAY:
+			//fallthrough //This part is done in display class
+		case SEARCH:
+			
+		case SETDIR:
+			notDoneYetStorage.clear();
+  			doneStorage.clear();
+  			previousInputStorage.clear();
+		case RETRIEVE:
+			//fallthrough //This part is done in retrieve class
+		case RECURRENCE:
+			mainStorage.write(notDoneYetStorage, doneStorage);
+			clearAndAdd(previousInputStorage, new PreviousInput("edit", cmd.returnOldTask(), cmd.returnEachTask()));
+		case UNDO:
+			switch(cmd.returnCommandState()) {
+			case UNDOADD:
+				// to restore to previous state, must unadd the task
+				notDoneYetStorage.remove(cmd.returnEachTask());
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+			case UNDODELETE:
+				notDoneYetStorage.add(cmd.returnEachTask());
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
+			case UNDOEDIT:
+				// to restore to previous state, must edit again to previous state
+				Task eachTask= previousInputStorage.get(0).getEditedTask();
+				notDoneYetStorage.remove(eachTask);
+				notDoneYetStorage.add(cmd.returnEachTask());
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnEachTask()));
+			case UNDODONE:
+				doneStorage.remove(cmd.returnEachTask());
+				notDoneYetStorage.add(cmd.returnEachTask());
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnEachTask()));
+			case UNDOUNDO:
+				notDoneYetStorage.remove(cmd.returnEachTask());
+				doneStorage.add(cmd.returnEachTask());
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+			default:
+				break;
+			}
+			mainStorage.write(notDoneYetStorage, doneStorage);
+		case EXIT:
+			assert false;
+		case HELP:
+		//Fallthrough	
+		case INVALID:
+			assert false;
+		default:
+			assert false;
+		}
 		}
 	}
 ```
@@ -73,46 +175,18 @@ import java.util.ArrayList;
 import main.Constants;
 import Storage.Storage;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 
 public class Recurrence implements Command {
 
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
+	private  COMMAND_STATE commandState;
+	private  Task forEachTask;
+	private  Task forOldTask;
+	private  HandlerMemory handlerMemory;
 	
-	public Recurrence(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-	this.notDoneYetStorage = notDoneYetStorage;
-	this.doneStorage = doneStorage;
-	this.previousInputStorage = previousInputStorage;
-	this.mainStorage = mainStorage;
+	public Recurrence(HandlerMemory handlerMemory){
+		this.handlerMemory=handlerMemory;
 }
-```
-###### W10-4J\Handler\SetDir.java
-``` java
-package Handler;
-
-import java.util.ArrayList;
-
-import Storage.Storage;
-import main.Task;
-import main.*;
-
-public class SetDir implements Command {
-
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
-	
-	public SetDir(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
-	}
 ```
 ###### W10-4J\test\AddTest.java
 ``` java
@@ -125,6 +199,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Handler.Add;
+import Handler.HandlerMemory;
 import Handler.PreviousInput;
 import Storage.Storage;
 import main.Constants;
@@ -132,10 +207,7 @@ import main.Task;
 
 public class AddTest {
 
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private HandlerMemory handlerMemory;
 
 	@Test
 	public void test() {
@@ -144,29 +216,15 @@ public class AddTest {
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
 				
 				
-				Add add = new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+				Add add = new Add(handlerMemory);
 				
 				// test the delete method
 				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test1"), add.execute(task1,1));
 				assertEquals(String.format(Constants.MESSAGE_ADD_PASS,"test2"), add.execute(task2,2));
-				assertEquals("test2",notDoneYetStorage.get(notDoneYetStorage.size()-1).getName());
-				assertEquals("test1",notDoneYetStorage.get(notDoneYetStorage.size()-2).getName());
+				assertEquals("test2",HandlerMemory.getNotDoneYetStorage().get(HandlerMemory.getNotDoneYetStorage().size()-1).getName());
+				assertEquals("test1",HandlerMemory.getNotDoneYetStorage().get(HandlerMemory.getNotDoneYetStorage().size()-2).getName());
 
 	}
-
-}
-```
-###### W10-4J\test\AllTests.java
-``` java
-package test;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(Suite.class)
-@SuiteClasses({ HandlerTestSuite.class, ParserTestSuite.class, StorageTestSuite.class, UITestSuite.class })
-public class AllTests {
 
 }
 ```
@@ -182,6 +240,7 @@ import org.junit.Test;
 
 import Handler.Add;
 import Handler.Done;
+import Handler.HandlerMemory;
 import Handler.PreviousInput;
 import Storage.Storage;
 import main.Constants;
@@ -189,80 +248,21 @@ import main.Task;
 
 public class DoneTest {
 
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private HandlerMemory handlerMemory;
 
 	@Test
 	public void test() {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
-		Add add = new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		Add add = new Add(handlerMemory);
 		add.execute(task1,1);
 		add.execute(task2,2);
 		String doneTask1[]={"1","test1","2016/03/22","09:00","21:00","None"};
-		Done done=new Done(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		Done done=new Done(handlerMemory);
 		assertEquals(String.format(Constants.MESSAGE_DONE_PASS, "test1"),done.execute(doneTask1,0));
-		assertTrue(doneStorage.get(0).getName()=="test1");
-		assertTrue(notDoneYetStorage.get(0).getName()=="test2");
+		assertTrue(handlerMemory.getDoneStorage().get(0).getName()=="test1");
+		assertTrue(handlerMemory.getNotDoneYetStorage().get(0).getName()=="test2");
 	}
-
-}
-```
-###### W10-4J\test\HandlerTestSuite.java
-``` java
-package test;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(Suite.class)
-@SuiteClasses({ AddTest.class, DeleteTest.class, DoneTest.class, EditTest.class, UndoTest.class })
-public class HandlerTestSuite {
-
-}
-```
-###### W10-4J\test\ParserTestSuite.java
-``` java
-package test;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(Suite.class)
-@SuiteClasses({ NaturalLanguageTest.class, ParserTest.class })
-public class ParserTestSuite {
-
-}
-```
-###### W10-4J\test\StorageTestSuite.java
-``` java
-package test;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(Suite.class)
-@SuiteClasses({ ReadTest.class, SetDirectoryTest.class, WriteTest.class })
-public class StorageTestSuite {
-
-}
-```
-###### W10-4J\test\UITestSuite.java
-``` java
-package test;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(Suite.class)
-@SuiteClasses({ UIControllerTest.class })
-public class UITestSuite {
 
 }
 ```
@@ -277,6 +277,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Handler.Add;
+import Handler.HandlerMemory;
 import Handler.PreviousInput;
 import Handler.Undo;
 import Storage.Storage;
@@ -285,26 +286,25 @@ import main.Task;
 
 public class UndoTest {
 
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private HandlerMemory handlerMemory;
+	
+	
 
 	@Test
 	public void test() {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
-		Add add = new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		Add add = new Add(handlerMemory);
 		add.execute(task1,1);
-		assertEquals("test1",previousInputStorage.get(0).getTask().getName());
-		assertEquals("add",previousInputStorage.get(0).getAction());
+		assertEquals("test1",handlerMemory.getPreviousInputStorage().get(0).getTask().getName());
+		assertEquals("add",handlerMemory.getPreviousInputStorage().get(0).getAction());
 		add.execute(task2,2);
-		assertEquals("test2",previousInputStorage.get(0).getTask().getName());
-		assertEquals("add",previousInputStorage.get(0).getAction());
-		Undo undo=new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		assertEquals("test2",handlerMemory.getPreviousInputStorage().get(0).getTask().getName());
+		assertEquals("add",handlerMemory.getPreviousInputStorage().get(0).getAction());
+		Undo undo=new Undo(handlerMemory);
 		assertEquals(Constants.MESSAGE_UNDO_PASS,undo.execute(null,0));
-		assertTrue(notDoneYetStorage.get(notDoneYetStorage.size()-1).getName()!="test2");
-		assertTrue(notDoneYetStorage.get(notDoneYetStorage.size()-1).getName()=="test1");
+		assertTrue(handlerMemory.getNotDoneYetStorage().get(handlerMemory.getNotDoneYetStorage().size()-1).getName()!="test2");
+		assertTrue(handlerMemory.getNotDoneYetStorage().get(handlerMemory.getNotDoneYetStorage().size()-1).getName()=="test1");
 	}
 
 }

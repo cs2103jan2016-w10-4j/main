@@ -6,15 +6,13 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Handler.Edit;
+import Handler.HandlerMemory;
 import Handler.PreviousInput;
 import Storage.Storage;
 
 public class EditTest {
 	
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private HandlerMemory handlerMemory;
 
 	@Test
 	public void test() {
@@ -47,21 +45,21 @@ public class EditTest {
 		String[] sampleCommand2 = { "2", "start", "03:00", "end", "06:00" };
 
 		// Test cloneTask method
-		Edit e1 = new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		Edit e1 = new Edit(handlerMemory);
 		checkFields(firstTask, e1.cloneTask(firstTask));
 		checkFields(secondTask, e1.cloneTask(secondTask));
 		// Test edit method
-		notDoneYetStorage.add(firstTask);
-		notDoneYetStorage.add(secondTask);
-		Edit e2 = new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		HandlerMemory.getNotDoneYetStorage().add(firstTask);
+		HandlerMemory.getNotDoneYetStorage().add(secondTask);
+		Edit e2 = new Edit(handlerMemory);
 		e2.execute(sampleCommand1,0);
 		e2.execute(sampleCommand2,0);
 		// for string output of both commands
 		assertEquals("testEdit1", "SAMPLETASK1 has been edited.", e2.execute(sampleCommand1, 0));
 		assertEquals("testEdit2", "sampleTask2 has been edited.", e2.execute(sampleCommand2, 0));
 		// for comparing actual task objects of both commands
-		checkFields(editedFirstTask, notDoneYetStorage.get(0));
-		checkFields(editedSecondTask, notDoneYetStorage.get(1));
+		checkFields(editedFirstTask, HandlerMemory.getNotDoneYetStorage().get(0));
+		checkFields(editedSecondTask, HandlerMemory.getNotDoneYetStorage().get(1));
 	}
 
 	public void checkFields(Task task1, Task task2) {

@@ -5,17 +5,20 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Constants;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 
 public class Retrieve implements Command{
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	Storage mainStorage;
 	
-	public Retrieve(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.mainStorage = mainStorage;
-	}
+	private  COMMAND_STATE commandState;
+	private  Task forEachTask;
+	private  Task forOldTask;
+	private  HandlerMemory handlerMemory;
+	
+
+	
+	public Retrieve(HandlerMemory handlerMemory){
+		this.handlerMemory=handlerMemory;
+		}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
 		try {
@@ -24,11 +27,11 @@ public class Retrieve implements Command{
 			ArrayList<Task> addtionalnotDoneYetStorage = getFromStorage.get(0);
 			ArrayList<Task> additionalDoneStorage = getFromStorage.get(1);
 			
-			ArrayList<Task> combineHandlerMemory = combineArray(notDoneYetStorage, addtionalnotDoneYetStorage);
-			ArrayList<Task> combineDoneStorage = combineArray(doneStorage, additionalDoneStorage);
-			notDoneYetStorage = combineHandlerMemory;
-			doneStorage = combineDoneStorage;
-			mainStorage.write(notDoneYetStorage, doneStorage);
+			ArrayList<Task> combineHandlerMemory = combineArray(HandlerMemory.getNotDoneYetStorage(), addtionalnotDoneYetStorage);
+			ArrayList<Task> combineDoneStorage = combineArray(HandlerMemory.getDoneStorage(), additionalDoneStorage);
+			HandlerMemory.setNotDoneYetStorage( combineHandlerMemory);
+			HandlerMemory.setDoneStorage(combineDoneStorage);
+			handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
 
 			return Constants.MESSAGE_RETRIEVE_PASS;
 		} catch (Exception e) {
@@ -92,10 +95,10 @@ public class Retrieve implements Command{
 			}
 			
 			if (isSame == false) {
-				int currentSize = Handler.getTaskID();
+				int currentSize = HandlerMemory.getTaskID();
 				task1.setTaskID(currentSize + 1);
 				originalArray.add(task1);
-				Handler.setTaskID(currentSize + 1);
+				HandlerMemory.setTaskID(currentSize + 1);
 			}
 			isSame = false;
 		}
@@ -104,8 +107,19 @@ public class Retrieve implements Command{
 
 	public ArrayList<ArrayList<Task>> readFromFile(String filename) {
 		ArrayList<ArrayList<Task>> taskList = null;
-		taskList = mainStorage.read(Constants.MESSAGE_ACTION_RETRIEVE, filename);
+		taskList = handlerMemory.getMainStorage().read(Constants.MESSAGE_ACTION_RETRIEVE, filename);
 		assert taskList != null : Constants.ASSERT_TASKLIST_EXISTENCE;
 		return taskList;
+	}
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
 	}
 }

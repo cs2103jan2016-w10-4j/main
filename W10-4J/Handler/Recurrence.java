@@ -5,26 +5,23 @@ import java.util.ArrayList;
 import main.Constants;
 import Storage.Storage;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 
 public class Recurrence implements Command {
 
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
+	private  COMMAND_STATE commandState;
+	private  Task forEachTask;
+	private  Task forOldTask;
+	private  HandlerMemory handlerMemory;
 	
-	public Recurrence(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-	this.notDoneYetStorage = notDoneYetStorage;
-	this.doneStorage = doneStorage;
-	this.previousInputStorage = previousInputStorage;
-	this.mainStorage = mainStorage;
+	public Recurrence(HandlerMemory handlerMemory){
+		this.handlerMemory=handlerMemory;
 }
 	//@@author 
 	
 	public String execute(String[] task, int notUsedInThisCommand) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
+		Task eachTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage(), taskID);
 		Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
 		case "day":
@@ -40,24 +37,12 @@ public class Recurrence implements Command {
 			eachTask.setYear(true);
 			break;
 		}
-		mainStorage.write(notDoneYetStorage, doneStorage);
-		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
+		forEachTask=eachTask;
+		forOldTask=oldTask;
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}
 
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
-		for (Task task : taskList) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
-	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
-	}
+	
 
 	public Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
@@ -71,5 +56,16 @@ public class Recurrence implements Command {
 		result.setWeek(task.getWeek());
 		result.setDay(task.getDay());
 		return result;
+	}
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
 	}
 }

@@ -4,7 +4,9 @@ public class Constants {
 	public enum COMMAND_TYPE {
 		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, SETDIR, RETRIEVE, RECURRENCE, UNDO, EXIT, INVALID, HELP
 	};
-
+	public enum COMMAND_STATE {
+		FAILED,PASS,DELETEDONETASK,DELETEUNDONETASK,RECURRINGDONE,NONRECURRINGDONE, UNDOADD, UNDODELETE, UNDOEDIT,UNDODONE,UNDOUNDO
+	};
 	public static final String fileName = "mytextfile.txt";
 	public static final String[] addDefaultCommandList = { "add", "new", "+", "a" };
 	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };

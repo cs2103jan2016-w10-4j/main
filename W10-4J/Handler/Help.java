@@ -7,8 +7,15 @@ import java.io.IOException;
 import java.util.Properties;
 
 import main.Constants;
+import main.Task;
+import main.Constants.COMMAND_STATE;
 
 public class Help implements Command {
+	
+	private Task forEachTask;
+	private Task forOldTask;
+	private COMMAND_STATE commandState;
+	
 	private static String fileName = ".\\Handler\\help.xml";
 	private static String help;
 	public Help() {
@@ -84,5 +91,16 @@ public class Help implements Command {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
 	}
 }

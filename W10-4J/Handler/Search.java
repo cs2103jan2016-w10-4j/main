@@ -6,15 +6,18 @@ import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 
 
 public class Search implements Command{
-	private ArrayList<Task> notDoneYetStorage;
-	Storage mainStorage;
 	
-	public Search(ArrayList<Task> notDoneYetStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.mainStorage = mainStorage;
+	private  COMMAND_STATE commandState;
+	private  Task forEachTask;
+	private  Task forOldTask;
+	private  HandlerMemory handlerMemory;
+	
+	public Search(HandlerMemory handlerMemory){
+		this.handlerMemory=handlerMemory;
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
@@ -22,12 +25,12 @@ public class Search implements Command{
 		// each task is certain to have a name
 		// check whether exclude field exists
 		if (task.length > 1) {
-			for (Task eachTask : notDoneYetStorage) {
+			for (Task eachTask : HandlerMemory.getNotDoneYetStorage()) {
 				assert eachTask!=null: Constants.ASSERT_TASK_EXISTENCE;
 				inclusiveSearch(eachTask, task, searchNotDoneYetStorage);
 			}
 		} else {
-			for (Task eachTask : notDoneYetStorage) {
+			for (Task eachTask : HandlerMemory.getNotDoneYetStorage()) {
 				assert eachTask!=null: Constants.ASSERT_TASK_EXISTENCE;
 				exclusiveSearch(eachTask, task, searchNotDoneYetStorage);
 			}
@@ -35,6 +38,7 @@ public class Search implements Command{
 		if (searchNotDoneYetStorage.size()!=0){
 			return DisplayFormat.displayFormat(searchNotDoneYetStorage);
 		}
+		commandState=COMMAND_STATE.FAILED;
 		return Constants.MESSAGE_SEARCH_FAIL;
 	}
 	
@@ -95,5 +99,16 @@ public class Search implements Command{
 			}
 		}
 		return false;
+	}
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
 	}
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import Handler.Add;
+import Handler.HandlerMemory;
 import Handler.PreviousInput;
 import Handler.Undo;
 import Storage.Storage;
@@ -16,26 +17,25 @@ import main.Task;
 
 public class UndoTest {
 
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private HandlerMemory handlerMemory;
+	
+	
 
 	@Test
 	public void test() {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
-		Add add = new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		Add add = new Add(handlerMemory);
 		add.execute(task1,1);
-		assertEquals("test1",previousInputStorage.get(0).getTask().getName());
-		assertEquals("add",previousInputStorage.get(0).getAction());
+		assertEquals("test1",handlerMemory.getPreviousInputStorage().get(0).getTask().getName());
+		assertEquals("add",handlerMemory.getPreviousInputStorage().get(0).getAction());
 		add.execute(task2,2);
-		assertEquals("test2",previousInputStorage.get(0).getTask().getName());
-		assertEquals("add",previousInputStorage.get(0).getAction());
-		Undo undo=new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		assertEquals("test2",handlerMemory.getPreviousInputStorage().get(0).getTask().getName());
+		assertEquals("add",handlerMemory.getPreviousInputStorage().get(0).getAction());
+		Undo undo=new Undo(handlerMemory);
 		assertEquals(Constants.MESSAGE_UNDO_PASS,undo.execute(null,0));
-		assertTrue(notDoneYetStorage.get(notDoneYetStorage.size()-1).getName()!="test2");
-		assertTrue(notDoneYetStorage.get(notDoneYetStorage.size()-1).getName()=="test1");
+		assertTrue(handlerMemory.getNotDoneYetStorage().get(handlerMemory.getNotDoneYetStorage().size()-1).getName()!="test2");
+		assertTrue(handlerMemory.getNotDoneYetStorage().get(handlerMemory.getNotDoneYetStorage().size()-1).getName()=="test1");
 	}
 
 }

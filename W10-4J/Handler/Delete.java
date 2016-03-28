@@ -5,59 +5,63 @@ import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 
 public class Delete implements Command {
+
+	private COMMAND_STATE commandState;
+	private Task forEachTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+	/*
 	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
+	Storage mainStorage;*/
 
-	public Delete(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage) {
+	public Delete(/*ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
+			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage,*/HandlerMemory handlerMemory) {
+		this.handlerMemory=handlerMemory;/*
 		this.notDoneYetStorage = notDoneYetStorage;
 		this.doneStorage = doneStorage;
 		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+		this.mainStorage = mainStorage;*/
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
+		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage(), taskID);
 		if (eachTask == null) {
-			eachTask = findByTaskID(doneStorage, taskID);
+			eachTask = handlerMemory.findByTaskID(HandlerMemory.getDoneStorage(), taskID);
 			if(eachTask == null){
+				commandState=Constants.COMMAND_STATE.FAILED;
 				return Constants.MESSAGE_DELETE_FAIL;
 			} else{
-				doneStorage.remove(eachTask);
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
+				forEachTask=eachTask;
+				commandState=Constants.COMMAND_STATE.DELETEDONETASK;
 				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 			} 
-		} else if (taskID <= 0 || taskID > Handler.getTaskID()) {
+		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
+			commandState=Constants.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-			notDoneYetStorage.remove(eachTask);
-			// write to mainStorage
-			mainStorage.write(notDoneYetStorage, doneStorage);
-			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
+			forEachTask=eachTask;
+			commandState=Constants.COMMAND_STATE.DELETEUNDONETASK;
 			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
 	}
 
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
-		for (Task task : taskList) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
+	public Task returnEachTask()
+	{
+		return forEachTask;
 	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
 	}
 }

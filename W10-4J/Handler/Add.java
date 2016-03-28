@@ -1,6 +1,8 @@
 package Handler;
 
 import main.Constants;
+import main.Constants.COMMAND_STATE;
+
 import java.util.ArrayList;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
@@ -8,20 +10,19 @@ import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 import Storage.Storage;
 import main.Task;
 
-//@@author Berkin
-public class Add implements Command {
-	// @@author
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
 
-	public Add(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage) {
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+public class Add implements Command {
+	
+	private  COMMAND_STATE commandState;
+	private  Task forEachTask;
+	private  Task forOldTask;
+	private  HandlerMemory handlerMemory;
+	
+
+	public Add(/*ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
+			/*ArrayList<PreviousInput> previousInputStorage, Storage mainStorage,*/HandlerMemory handlerMemory) {
+		
+		this.handlerMemory=handlerMemory;
 	}
 
 	public String execute(String[] task, int taskID) {
@@ -68,23 +69,16 @@ public class Add implements Command {
 				assert false;
 			}
 		}
-		System.out.println(eachTask);
+		//System.out.println(eachTask);
 		if (isTimeValid(eachTask)) {
-			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
-			// add to arraylist storage
-			notDoneYetStorage.add(eachTask);
-			// write to mainStorage
-			mainStorage.write(notDoneYetStorage, doneStorage);
+			
+			commandState=Constants.COMMAND_STATE.PASS;
+			forEachTask=eachTask;
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
+			commandState=Constants.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_TIME_FAIL;
 		}
-	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
 	}
 
 	private boolean isTimeValid(Task task) {
@@ -95,5 +89,16 @@ public class Add implements Command {
 		} else {
 			return true;
 		}
+	}
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
 	}
 }

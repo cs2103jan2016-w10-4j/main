@@ -4,28 +4,28 @@ import java.util.ArrayList;
 
 import Storage.Storage;
 import main.Task;
+import main.Constants.COMMAND_STATE;
 import main.Constants;
 public class Edit implements Command{
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
+	private HandlerMemory handlerMemory;
+	private Task forEachTask;
+	private Task forOldTask;
+	private COMMAND_STATE commandState;
 	
-	public Edit(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+	public Edit(HandlerMemory handlerMemory){
+		
+		this.handlerMemory=handlerMemory;
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
+		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage(), taskID);
 		if (eachTask==null){
+			commandState=COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_EDIT_FAIL;
-		} else if (taskID <= 0 || taskID > Handler.getTaskID()){
+		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()){
+			commandState=COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
@@ -34,14 +34,14 @@ public class Edit implements Command{
 			fieldEditor(eachTask, task);
 			
 			if(isTimeValid(eachTask)){
-				// write to mainStorage
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				// remember previous state
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
+				commandState=COMMAND_STATE.PASS;
+				forEachTask=eachTask;
+				forOldTask=oldTask;
 				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 			} else{
-				notDoneYetStorage.remove(eachTask);
-				notDoneYetStorage.add(oldTask);
+				/*notDoneYetStorage.remove(eachTask);
+				notDoneYetStorage.add(oldTask);*/ // No need, eachtask is not put into the storage yet.
+				commandState=COMMAND_STATE.FAILED;
 				return Constants.MESSAGE_TIME_FAIL;
 			}
 		}
@@ -102,20 +102,6 @@ public class Edit implements Command{
 			}
 		}
 	}
-
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
-		for (Task task : taskList) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
-	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
-	}
 	
 	private boolean isTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
@@ -128,4 +114,15 @@ public class Edit implements Command{
 		}
 	}
 	// add a start 1730 end 1930
+	public Task returnEachTask()
+	{
+		return forEachTask;
+	}
+	public Task returnOldTask()
+	{
+		return forOldTask;
+	}
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
 }
