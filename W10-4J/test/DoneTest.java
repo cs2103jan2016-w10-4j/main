@@ -17,7 +17,7 @@ import main.Task;
 
 public class DoneTest {
 
-	private HandlerMemory handlerMemory;
+	private HandlerMemory handlerMemory=new HandlerMemory();;
 
 	@Test
 	public void test() {
@@ -29,8 +29,8 @@ public class DoneTest {
 		String doneTask1[]={"1","test1","2016/03/22","09:00","21:00","None"};
 		Done done=new Done(handlerMemory);
 		assertEquals(String.format(Constants.MESSAGE_DONE_PASS, "test1"),done.execute(doneTask1,0));
-		assertTrue(handlerMemory.getDoneStorage().get(0).getName()=="test1");
-		assertTrue(handlerMemory.getNotDoneYetStorage().get(0).getName()=="test2");
+		assertTrue(HandlerMemory.getDoneStorage().get(0).getName()=="test1");
+		assertTrue(HandlerMemory.getNotDoneYetStorage().get(0).getName()=="test2");
 	}
 
 }

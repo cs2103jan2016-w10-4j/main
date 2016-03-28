@@ -12,7 +12,7 @@ import Storage.Storage;
 
 public class DeleteTest {
 	
-	private HandlerMemory handlerMemory;
+	private HandlerMemory handlerMemory=new HandlerMemory();;
 
 	@Test
 	public void test() {
@@ -34,8 +34,8 @@ public class DeleteTest {
 		String[] input2 = {"1"};
 		String[] input3 = {"2"};
 		
-		handlerMemory.getNotDoneYetStorage().add(firstTask);
-		handlerMemory.getNotDoneYetStorage().add(secondTask);
+		HandlerMemory.getNotDoneYetStorage().add(firstTask);
+		HandlerMemory.getNotDoneYetStorage().add(secondTask);
 		Delete d = new Delete(handlerMemory);
 
 		// test the delete method

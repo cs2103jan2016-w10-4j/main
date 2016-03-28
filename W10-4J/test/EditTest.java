@@ -12,7 +12,7 @@ import Storage.Storage;
 
 public class EditTest {
 	
-	private HandlerMemory handlerMemory;
+	private HandlerMemory handlerMemory=new HandlerMemory();;
 
 	@Test
 	public void test() {

@@ -17,7 +17,7 @@ import main.Task;
 
 public class UndoTest {
 
-	private HandlerMemory handlerMemory;
+	private HandlerMemory handlerMemory=new HandlerMemory();;
 	
 	
 
@@ -27,15 +27,15 @@ public class UndoTest {
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
 		Add add = new Add(handlerMemory);
 		add.execute(task1,1);
-		assertEquals("test1",handlerMemory.getPreviousInputStorage().get(0).getTask().getName());
-		assertEquals("add",handlerMemory.getPreviousInputStorage().get(0).getAction());
+		assertEquals("test1",HandlerMemory.getPreviousInputStorage().get(0).getTask().getName());
+		assertEquals("add",HandlerMemory.getPreviousInputStorage().get(0).getAction());
 		add.execute(task2,2);
-		assertEquals("test2",handlerMemory.getPreviousInputStorage().get(0).getTask().getName());
-		assertEquals("add",handlerMemory.getPreviousInputStorage().get(0).getAction());
+		assertEquals("test2",HandlerMemory.getPreviousInputStorage().get(0).getTask().getName());
+		assertEquals("add",HandlerMemory.getPreviousInputStorage().get(0).getAction());
 		Undo undo=new Undo(handlerMemory);
 		assertEquals(Constants.MESSAGE_UNDO_PASS,undo.execute(null,0));
-		assertTrue(handlerMemory.getNotDoneYetStorage().get(handlerMemory.getNotDoneYetStorage().size()-1).getName()!="test2");
-		assertTrue(handlerMemory.getNotDoneYetStorage().get(handlerMemory.getNotDoneYetStorage().size()-1).getName()=="test1");
+		assertTrue(HandlerMemory.getNotDoneYetStorage().get(HandlerMemory.getNotDoneYetStorage().size()-1).getName()!="test2");
+		assertTrue(HandlerMemory.getNotDoneYetStorage().get(HandlerMemory.getNotDoneYetStorage().size()-1).getName()=="test1");
 	}
 
 }
