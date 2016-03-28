@@ -62,6 +62,7 @@ public class Constants {
 	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
 	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
 	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
+	public static final String MESSAGE_TIME_FAIL = ("Start time must be before end time.");
 	
 	public static final String MESSAGE_ADD_ACTION_DATE = ("date");
 	public static final String MESSAGE_ADD_ACTION_START = ("start");

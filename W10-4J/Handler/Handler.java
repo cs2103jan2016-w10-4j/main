@@ -26,6 +26,7 @@ public class Handler {
 			Command cmd = createCommand(command, task);
 			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
+			System.out.println("Wtf");
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
 			return Constants.MESSAGE_UNRECOGNÝZED_COMMAND;
