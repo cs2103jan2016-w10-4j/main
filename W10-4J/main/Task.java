@@ -174,9 +174,27 @@ public class Task {
 	public String getStartTime() {
 		return startTime_;
 	}
+	
+	public int getStartTimeInt(){
+		try{
+			String output = startTime_.split(":")[0] + startTime_.split(":")[1];
+			return Integer.parseInt(output);
+		} catch(Exception e){
+			return -1;
+		}
+	}
 
 	public String getEndTime() {
 		return endTime_;
+	}
+	
+	public int getEndTimeInt(){
+		try{
+			String output = endTime_.split(":")[0] + endTime_.split(":")[1];
+			return Integer.parseInt(output);
+		} catch(Exception e){
+			return -1;
+		}
 	}
 
 	public String getDetails() {

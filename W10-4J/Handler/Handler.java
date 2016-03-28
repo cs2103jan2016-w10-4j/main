@@ -38,6 +38,7 @@ public class Handler {
 		taskID = getTaskID();
 		switch (command) {
 		case ADD:
+			System.out.println("inadd");
 			taskID++;
 			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:

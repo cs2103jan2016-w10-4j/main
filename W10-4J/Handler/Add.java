@@ -68,7 +68,8 @@ public class Add implements Command {
 				assert false;
 			}
 		}
-		if(isTimeValid(eachTask)){
+		System.out.println(eachTask);
+		if (isTimeValid(eachTask)) {
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
 			// add to arraylist storage
@@ -76,7 +77,7 @@ public class Add implements Command {
 			// write to mainStorage
 			mainStorage.write(notDoneYetStorage, doneStorage);
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
-		} else{
+		} else {
 			return Constants.MESSAGE_TIME_FAIL;
 		}
 	}
@@ -85,15 +86,13 @@ public class Add implements Command {
 		taskArray.clear();
 		taskArray.add(task);
 	}
-	
-	private boolean isTimeValid(Task task){
-		String starttime = task.getStartTime();
-		String endtime = task.getEndTime();
-		if(starttime!=null && endtime!=null){
-			int startTime = Integer.parseInt(starttime);
-			int endTime = Integer.parseInt(endtime);
-			return endTime>startTime;
-		} else{
+
+	private boolean isTimeValid(Task task) {
+		int starttime = task.getStartTimeInt();
+		int endtime = task.getEndTimeInt();
+		if (starttime != -1 && endtime != -1) {
+			return endtime > starttime;
+		} else {
 			return true;
 		}
 	}

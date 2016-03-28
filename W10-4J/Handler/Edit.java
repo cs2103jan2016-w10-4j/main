@@ -32,11 +32,18 @@ public class Edit implements Command{
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
 			fieldEditor(eachTask, task);
-			// write to mainStorage
-			mainStorage.write(notDoneYetStorage, doneStorage);
-			// remember previous state
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
-			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+			
+			if(isTimeValid(eachTask)){
+				// write to mainStorage
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				// remember previous state
+				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
+				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+			} else{
+				notDoneYetStorage.remove(eachTask);
+				notDoneYetStorage.add(oldTask);
+				return Constants.MESSAGE_TIME_FAIL;
+			}
 		}
 	}
 
@@ -46,6 +53,11 @@ public class Edit implements Command{
 		result.setStartTime(task.getStartTime());
 		result.setEndTime(task.getEndTime());
 		result.setDetails(task.getDetails());
+		result.setTaskID(task.getTaskID());
+		result.setYear(task.getYear());
+		result.setMonth(task.getMonth());
+		result.setWeek(task.getWeek());
+		result.setDay(task.getDay());
 		return result;
 	}
 
@@ -89,7 +101,6 @@ public class Edit implements Command{
 				break;
 			}
 		}
-		return;
 	}
 
 	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
@@ -105,4 +116,16 @@ public class Edit implements Command{
 		taskArray.clear();
 		taskArray.add(task);
 	}
+	
+	private boolean isTimeValid(Task task) {
+		int starttime = task.getStartTimeInt();
+		int endtime = task.getEndTimeInt();
+		System.out.println(starttime + endtime);
+		if (starttime != -1 && endtime != -1) {
+			return endtime > starttime;
+		} else {
+			return true;
+		}
+	}
+	// add a start 1730 end 1930
 }
