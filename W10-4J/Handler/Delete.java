@@ -40,6 +40,7 @@ public class Delete implements Command {
 			} else{
 				forEachTask=eachTask;
 				commandState=Constants.COMMAND_STATE.DELETEDONETASK;
+				HandlerMemory.setTaskID(HandlerMemory.getTaskID()-1);
 				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 			} 
 		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
@@ -49,6 +50,7 @@ public class Delete implements Command {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			forEachTask=eachTask;
 			commandState=Constants.COMMAND_STATE.DELETEUNDONETASK;
+			HandlerMemory.setTaskID(HandlerMemory.getTaskID()-1);
 			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
 	}

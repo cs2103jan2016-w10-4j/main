@@ -17,7 +17,9 @@ public class Handler {
 		try {
 			Command cmd = createCommand(command, task);
 			String toBeReturned= cmd.execute(task, HandlerMemory.getTaskID());
+			if(command!=COMMAND_TYPE.INVALID) {
 			HandlerMemory.updateMemory(cmd,command);
+			}
 			return toBeReturned;
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
@@ -28,10 +30,9 @@ public class Handler {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
-		int taskID=HandlerMemory.getTaskID();
+		//int taskID=HandlerMemory.getTaskID();
 		switch (command) {
 		case ADD:
-			HandlerMemory.setTaskID(++taskID);
 			return new Add(handlerMemory);
 		case EDIT:
 			return new Edit(handlerMemory);
@@ -44,7 +45,6 @@ public class Handler {
 		case SEARCH:
 			return new Search(handlerMemory);
 		case SETDIR:
-			taskID = 0;
 			return new SetDir(handlerMemory);
 		case RETRIEVE:
 			return new Retrieve(handlerMemory);

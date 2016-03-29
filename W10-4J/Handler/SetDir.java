@@ -22,6 +22,7 @@ public class SetDir implements Command {
 	
 	public String execute(String[] task, int notUsedInThisCommand){
   		if(handlerMemory.getMainStorage().setDirectory(task[0])){
+			HandlerMemory.setTaskID(0);
   			return Constants.MESSAGE_SETDIR_PASS;
   		} else{
   			commandState=COMMAND_STATE.FAILED;
