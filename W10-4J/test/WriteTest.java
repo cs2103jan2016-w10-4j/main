@@ -1,4 +1,4 @@
-package Storage;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -19,6 +19,8 @@ import org.junit.Test;
 
 import main.Constants;
 import main.Task;
+import Storage.Storage;
+import Storage.Write;
 
 public class WriteTest extends Write {
 	static ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
