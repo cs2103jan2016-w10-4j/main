@@ -106,7 +106,7 @@ public class UIController {
 	}
 
 	private static boolean arrowUpTrue() {
-		return (commandIndex - 1) >= minCommandIndex;
+		return (commandIndex) > minCommandIndex;
 	}
 
 	public static boolean pageUpTrue(int minScroll) {
@@ -141,7 +141,9 @@ public class UIController {
 	}
 
 	private static void arrowUpPreviousInput(JTextField cmdEntry) {
-		if (arrowUpTrue()){
+		if (commands.size() == 0){
+			cmdEntry.setText("");
+		} else if (arrowUpTrue()){
 			commandIndex -= 1;
 			cmdEntry.setText(commands.get(commandIndex));
 		} else {
