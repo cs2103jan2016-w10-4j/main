@@ -68,16 +68,16 @@ public class HandlerMemory {
 				}
 				break;
 			case DISPLAY:
-				// fallthrough //This part is done in display class
+				break;
 			case SEARCH:
-
+				break;
 			case SETDIR:
 				notDoneYetStorage.clear();
 				doneStorage.clear();
 				previousInputStorage.clear();
 				break;
 			case RETRIEVE:
-				// fallthrough //This part is done in retrieve class
+				break;
 			case RECURRENCE:
 				mainStorage.write(notDoneYetStorage, doneStorage);
 				clearAndAdd(previousInputStorage, new PreviousInput("edit", cmd.returnOldTask(), cmd.returnEachTask()));
@@ -90,10 +90,12 @@ public class HandlerMemory {
 					// remember previous state
 					clearAndAdd(previousInputStorage,
 							new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+					break;
 				case UNDODELETE:
 					notDoneYetStorage.add(cmd.returnEachTask());
 					clearAndAdd(previousInputStorage,
 							new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
+					break;
 				case UNDOEDIT:
 					// to restore to previous state, must edit again to previous
 					// state
@@ -102,11 +104,13 @@ public class HandlerMemory {
 					notDoneYetStorage.add(cmd.returnEachTask());
 					clearAndAdd(previousInputStorage,
 							new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnEachTask()));
+					break;
 				case UNDODONE:
 					doneStorage.remove(cmd.returnEachTask());
 					notDoneYetStorage.add(cmd.returnEachTask());
 					clearAndAdd(previousInputStorage,
 							new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnEachTask()));
+					break;
 				case UNDOUNDO:
 					notDoneYetStorage.remove(cmd.returnEachTask());
 					doneStorage.add(cmd.returnEachTask());
@@ -120,7 +124,7 @@ public class HandlerMemory {
 			case EXIT:
 				assert false;
 			case HELP:
-				// Fallthrough
+				break;
 			case INVALID:
 				assert false;
 			default:

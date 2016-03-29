@@ -1,5 +1,0 @@
-Tasks on hand:
-2. Event: b
-2. Event: b
-Tasks that are done:
-2. Event: b
