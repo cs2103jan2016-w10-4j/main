@@ -1,4 +1,4 @@
-package test;
+package Storage;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +17,6 @@ import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Storage.Write;
 import main.Constants;
 import main.Task;
 
@@ -46,6 +45,15 @@ public class WriteTest extends Write {
 		print.println("No tasks are done!");
 		print.close();
 	}	
+	
+	@Test
+	public void testWrite() throws NoSuchAlgorithmException, IOException {
+		if (Storage.filename.equals(Constants.fileName)) {
+			testWriteToDefaultFile();
+		} else {
+			testWriteToOtherFileWithUpdatePath();
+		}
+	}
 	
 	@Test
 	public void testWriteToDefaultFile() throws NoSuchAlgorithmException, IOException {
