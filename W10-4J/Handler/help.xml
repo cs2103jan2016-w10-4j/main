@@ -75,7 +75,7 @@ To specify a task is done, use this command:<br>
 To keep track of all the tasks you have on hand, and to list tasks that you have done, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>display by</b> &#60sorting term&#62</span>
 	<ul><li>To display tasks alphabetically based on the name of the task, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> alphabetical order</span></li>
+		<span style="background-color:#E5E4E2;"><b>display by</b> name</span></li>
 	<li>To display tasks based on the start time, task with unspecified start time will be placed at the bottom, use this command:<br>
 		<span style="background-color:#E5E4E2;"><b>display by</b> starttime</span></li>
 	<li>To display tasks based on the end time of the task, use this command:<br>
@@ -83,9 +83,9 @@ To keep track of all the tasks you have on hand, and to list tasks that you have
 	<li>To display tasks based on the date of the task, use this command:<br>
 		<span style="background-color:#E5E4E2;"><b>display by</b> date</span></li>
 	<li>To keep track of only the tasks that you have on hand, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> tasks</span></li>
+		<span style="background-color:#E5E4E2;"><b>display by</b> tasks</span></li>
 	<li>To keep track of tasks that you have done, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> done</span></li></ul>
+		<span style="background-color:#E5E4E2;"><b>display by</b> done</span></li></ul>
 ]]></entry>
 
 <entry key="search"><![CDATA[
@@ -112,7 +112,7 @@ To specify a particular folder to store the task list in, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>set directory</b> &#60datapath&#62</span><br>
 In using this command, future uses of Docket will be on this new datapath. If the file does not exist, a new empty text file will be created. To move the tasks from the default text file in Docket to the new path, use <b>retrieve</b>.
 	<ul><li>Examples:<br>
-	<span style="background-color:#E5E4E2;"><b>set directory</b> C:\Users\User\Desktop</span></li></ul>
+	<span style="background-color:#E5E4E2;"><b>setdir</b> C:\Users\User\Desktop</span></li></ul>
 ]]></entry>
 
 <entry key="natural"><![CDATA[
