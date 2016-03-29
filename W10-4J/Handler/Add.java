@@ -75,7 +75,6 @@ public class Add implements Command {
 
 			commandState = Constants.COMMAND_STATE.PASS;
 			forEachTask = eachTask;
-			HandlerMemory.setTaskID(HandlerMemory.getTaskID()+1);
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
 			commandState = Constants.COMMAND_STATE.FAILED;

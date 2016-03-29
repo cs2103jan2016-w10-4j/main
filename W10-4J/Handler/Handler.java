@@ -33,6 +33,7 @@ public class Handler {
 		//int taskID=HandlerMemory.getTaskID();
 		switch (command) {
 		case ADD:
+			HandlerMemory.setTaskID(HandlerMemory.getTaskID()+1);
 			return new Add(handlerMemory);
 		case EDIT:
 			return new Edit(handlerMemory);
