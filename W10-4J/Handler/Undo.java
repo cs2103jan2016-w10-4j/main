@@ -19,6 +19,10 @@ public class Undo implements Command {
 	}
 
 	public String execute(String[] notUsedInThisCommand, int notUsedInThisCommand2) {
+		if(HandlerMemory.getPreviousInputStorage().size()==0){
+			commandState = COMMAND_STATE.FAILED;
+			return Constants.MESSAGE_UNDO_FAIL;
+		}
 		String actionToBeUndone = HandlerMemory.getPreviousInputStorage().get(0).getAction();
 		Task previousTask = HandlerMemory.getPreviousInputStorage().get(0).getTask();
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;

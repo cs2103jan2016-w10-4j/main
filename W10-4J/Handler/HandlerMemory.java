@@ -117,6 +117,7 @@ public class HandlerMemory {
 					clearAndAdd(previousInputStorage,
 							new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
 				default:
+					System.out.println(cmd.returnCommandState());
 					break;
 				}
 				mainStorage.write(notDoneYetStorage, doneStorage);

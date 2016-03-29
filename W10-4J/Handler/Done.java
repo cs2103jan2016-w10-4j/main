@@ -1,8 +1,5 @@
 package Handler;
 
-import java.util.ArrayList;
-
-import Storage.Storage;
 import main.Task;
 import main.Constants.COMMAND_STATE;
 import main.Constants;
@@ -44,15 +41,13 @@ public class Done implements Command{
 			}
 		}
 	}
-	public Task returnEachTask()
-	{
+	public Task returnEachTask(){
 		return forEachTask;
 	}
 	public COMMAND_STATE returnCommandState() {
 		return commandState;
 	}
-	public Task returnOldTask()
-	{
+	public Task returnOldTask(){
 		return forOldTask;
 	}
 }

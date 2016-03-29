@@ -1,8 +1,5 @@
 package Handler;
 
-import java.util.ArrayList;
-
-import Storage.Storage;
 import main.Task;
 import main.Constants.COMMAND_STATE;
 import main.Constants;
@@ -39,10 +36,6 @@ public class Edit implements Command {
 				forOldTask = oldTask;
 				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 			} else {
-				/*
-				 * notDoneYetStorage.remove(eachTask);
-				 * notDoneYetStorage.add(oldTask);
-				 */ // No need, eachtask is not put into the storage yet.
 				commandState = COMMAND_STATE.FAILED;
 				return Constants.MESSAGE_TIME_FAIL;
 			}
