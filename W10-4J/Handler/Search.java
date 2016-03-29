@@ -1,23 +1,20 @@
 package Handler;
 
-import main.Constants;
-
 import java.util.ArrayList;
 
-import Storage.Storage;
+import main.Constants;
 import main.Task;
 import main.Constants.COMMAND_STATE;
 
+public class Search implements Command {
 
-public class Search implements Command{
-	
-	private  COMMAND_STATE commandState;
-	private  Task forEachTask;
-	private  Task forOldTask;
-	private  HandlerMemory handlerMemory;
-	
-	public Search(HandlerMemory handlerMemory){
-		this.handlerMemory=handlerMemory;
+	private COMMAND_STATE commandState;
+	private Task forEachTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+
+	public Search(HandlerMemory handlerMemory) {
+		this.handlerMemory = handlerMemory;
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
@@ -26,40 +23,41 @@ public class Search implements Command{
 		// check whether exclude field exists
 		if (task.length > 1) {
 			for (Task eachTask : HandlerMemory.getNotDoneYetStorage()) {
-				assert eachTask!=null: Constants.ASSERT_TASK_EXISTENCE;
+				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 				inclusiveSearch(eachTask, task, searchNotDoneYetStorage);
 			}
 		} else {
 			for (Task eachTask : HandlerMemory.getNotDoneYetStorage()) {
-				assert eachTask!=null: Constants.ASSERT_TASK_EXISTENCE;
+				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 				exclusiveSearch(eachTask, task, searchNotDoneYetStorage);
 			}
 		}
-		if (searchNotDoneYetStorage.size()!=0){
+		if (searchNotDoneYetStorage.size() != 0) {
 			return DisplayFormat.displayFormat(searchNotDoneYetStorage);
 		}
-		commandState=COMMAND_STATE.FAILED;
+		commandState = COMMAND_STATE.FAILED;
 		return Constants.MESSAGE_SEARCH_FAIL;
 	}
-	
-	private void inclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage){
-		if (eachTask.getDetails()==null){
-			if (searchName(eachTask, task, true)){
+
+	private void inclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage) {
+		if (eachTask.getDetails() == null) {
+			if (searchName(eachTask, task, true)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		} else {
-			if (searchNameAndDetails(eachTask, task, true)){
+			if (searchNameAndDetails(eachTask, task, true)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		}
 	}
-	private void exclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage){
-		if (eachTask.getDetails()==null){
-			if (searchName(eachTask, task, false)){
+
+	private void exclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage) {
+		if (eachTask.getDetails() == null) {
+			if (searchName(eachTask, task, false)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		} else {
-			if (searchNameAndDetails(eachTask, task, false)){
+			if (searchNameAndDetails(eachTask, task, false)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		}
@@ -100,15 +98,16 @@ public class Search implements Command{
 		}
 		return false;
 	}
-	public Task returnEachTask()
-	{
+
+	public Task returnEachTask() {
 		return forEachTask;
 	}
+
 	public COMMAND_STATE returnCommandState() {
 		return commandState;
 	}
-	public Task returnOldTask()
-	{
+
+	public Task returnOldTask() {
 		return forOldTask;
 	}
 }

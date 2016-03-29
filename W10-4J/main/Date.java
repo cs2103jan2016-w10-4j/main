@@ -51,35 +51,35 @@ public class Date {
 		int year = Integer.parseInt(dateString.split("/")[0]);
 		int month = Integer.parseInt(dateString.split("/")[1]);
 		int day = Integer.parseInt(dateString.split("/")[2]);
-	    boolean yearOk = (year >= 1581) && (year <= 2500);
-	    boolean monthOk = (month >= 1) && (month <= 12);
-	    boolean dayOk = (day >= 1) && (day <= daysInMonth(year, month));
-	    return (yearOk && monthOk && dayOk);
+		boolean yearOk = (year >= 1581) && (year <= 2500);
+		boolean monthOk = (month >= 1) && (month <= 12);
+		boolean dayOk = (day >= 1) && (day <= daysInMonth(year, month));
+		return (yearOk && monthOk && dayOk);
 	}
-	
+
 	private static int daysInMonth(int year, int month) {
-	    int daysInMonth;
-	    switch (month) {
-	        case 1: 
-	        case 3:
-	        case 5: 
-	        case 7: 
-	        case 8: 
-	        case 10:
-	        case 12:
-	            daysInMonth = 31;
-	            break;
-	        case 2:
-	            if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
-	                daysInMonth = 29;
-	            } else {
-	                daysInMonth = 28;
-	            }
-	            break;
-	        default:
-	            daysInMonth = 30;
-	    }
-	    return daysInMonth;
+		int daysInMonth;
+		switch (month) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			daysInMonth = 31;
+			break;
+		case 2:
+			if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
+				daysInMonth = 29;
+			} else {
+				daysInMonth = 28;
+			}
+			break;
+		default:
+			daysInMonth = 30;
+		}
+		return daysInMonth;
 	}
 
 	private static String makeDate(int year, int month, int day) {

@@ -11,13 +11,14 @@ import main.Task;
 import main.Constants.COMMAND_STATE;
 
 public class Help implements Command {
-	
+
 	private Task forEachTask;
 	private Task forOldTask;
 	private COMMAND_STATE commandState;
-	
+
 	private static String fileName = ".\\Handler\\help.xml";
 	private static String help;
+
 	public Help() {
 	}
 
@@ -31,7 +32,7 @@ public class Help implements Command {
 
 	public String helpSpecific(String task) {
 		help = read("welcome", fileName);
-		switch (task){
+		switch (task) {
 		case Constants.MESSAGE_ACTION_ADD:
 			help += read("add", fileName);
 			break;
@@ -75,9 +76,9 @@ public class Help implements Command {
 		help += read("keyboard", fileName);
 		return help;
 	}
-	
-	public static String read(String action, String fileName){
-		try{
+
+	public static String read(String action, String fileName) {
+		try {
 			File file = new File(fileName);
 			FileInputStream fileInput = new FileInputStream(file);
 			Properties prop = new Properties();
@@ -85,22 +86,23 @@ public class Help implements Command {
 			fileInput.close();
 			String details = prop.getProperty(action);
 			return details;
-		}catch (FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			return null;
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	public Task returnEachTask()
-	{
+
+	public Task returnEachTask() {
 		return forEachTask;
 	}
+
 	public COMMAND_STATE returnCommandState() {
 		return commandState;
 	}
-	public Task returnOldTask()
-	{
+
+	public Task returnOldTask() {
 		return forOldTask;
 	}
 }

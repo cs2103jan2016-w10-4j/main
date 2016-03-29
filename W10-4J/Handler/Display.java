@@ -3,83 +3,92 @@ package Handler;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Storage.Storage;
 import main.Constants;
 import main.Task;
 import main.Constants.COMMAND_STATE;
 
-public class Display implements Command{
-	
+public class Display implements Command {
+
 	private HandlerMemory handlerMemory;
 	private Task forEachTask;
 	private Task forOldTask;
 	private COMMAND_STATE commandState;
 
-	
-	public Display(HandlerMemory handlerMemory){
-		this.handlerMemory=handlerMemory;
+	public Display(HandlerMemory handlerMemory) {
+		this.handlerMemory = handlerMemory;
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
-		if(task.length==0){
+		if (task.length == 0) {
 			sortByID(HandlerMemory.getNotDoneYetStorage());
 			handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
-		}else{
+		} else {
 			String displayField = task[1].trim();
-			assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
-			//ArrayList<Task> clonenotDoneYetStorage = cloneArray(notDoneYetStorage);
-			switch (displayField)
-			{
-				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-					sortByName(HandlerMemory.getNotDoneYetStorage());
-					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
-					break;
-				case Constants.MESSAGE_DISPLAY_FIELD_START:
-					sortByStart(HandlerMemory.getNotDoneYetStorage());
-					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
-					break;
-				case Constants.MESSAGE_DISPLAY_FIELD_END:
-					sortByEnd(HandlerMemory.getNotDoneYetStorage());
-					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
-					break;
-				case Constants.MESSAGE_DISPLAY_FIELD_DATE:
-					sortByDate(HandlerMemory.getNotDoneYetStorage());
-					handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(), HandlerMemory.getDoneStorage());
-					break;
-				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
-					return DisplayFormat.displayFormat(HandlerMemory.getNotDoneYetStorage());
-				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
-					return DisplayFormat.displayFormat(HandlerMemory.getDoneStorage());
+			assert displayField != null : Constants.ASSERT_FIELD_EXISTENCE;
+			// ArrayList<Task> clonenotDoneYetStorage =
+			// cloneArray(notDoneYetStorage);
+			switch (displayField) {
+			case Constants.MESSAGE_DISPLAY_FIELD_NAME:
+				sortByName(HandlerMemory.getNotDoneYetStorage());
+				handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(),
+						HandlerMemory.getDoneStorage());
+				break;
+			case Constants.MESSAGE_DISPLAY_FIELD_START:
+				sortByStart(HandlerMemory.getNotDoneYetStorage());
+				handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(),
+						HandlerMemory.getDoneStorage());
+				break;
+			case Constants.MESSAGE_DISPLAY_FIELD_END:
+				sortByEnd(HandlerMemory.getNotDoneYetStorage());
+				handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(),
+						HandlerMemory.getDoneStorage());
+				break;
+			case Constants.MESSAGE_DISPLAY_FIELD_DATE:
+				sortByDate(HandlerMemory.getNotDoneYetStorage());
+				handlerMemory.getMainStorage().write(HandlerMemory.getNotDoneYetStorage(),
+						HandlerMemory.getDoneStorage());
+				break;
+			case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
+				return DisplayFormat.displayFormat(HandlerMemory.getNotDoneYetStorage());
+			case Constants.MESSAGE_DISPLAY_FIELD_DONE:
+				return DisplayFormat.displayFormat(HandlerMemory.getDoneStorage());
 			}
 		}
 		return DisplayFormat.displayFormat(HandlerMemory.getNotDoneYetStorage());
 	}
 
 	// modularise the display code
-	private void sortByID(ArrayList<Task> clonenotDoneYetStorage){
+	private void sortByID(ArrayList<Task> clonenotDoneYetStorage) {
 		Collections.sort(clonenotDoneYetStorage, Task.taskIDComparator);
 	}
-	private void sortByName(ArrayList<Task> clonenotDoneYetStorage){
+
+	private void sortByName(ArrayList<Task> clonenotDoneYetStorage) {
 		Collections.sort(clonenotDoneYetStorage, Task.taskNameComparator);
 	}
-	private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
-		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_START);
+
+	private void sortByStart(ArrayList<Task> clonenotDoneYetStorage) {
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage,
+				Constants.MESSAGE_DISPLAY_FIELD_START);
 		Collections.sort(clonenotDoneYetStorage, Task.taskStarttimeComparator);
-		if (exclusivenotDoneYetStorage != null){
+		if (exclusivenotDoneYetStorage != null) {
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	private void sortByEnd(ArrayList<Task> clonenotDoneYetStorage){
-		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_END);
+
+	private void sortByEnd(ArrayList<Task> clonenotDoneYetStorage) {
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage,
+				Constants.MESSAGE_DISPLAY_FIELD_END);
 		Collections.sort(clonenotDoneYetStorage, Task.taskEndtimeComparator);
-		if (exclusivenotDoneYetStorage != null){
+		if (exclusivenotDoneYetStorage != null) {
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	private void sortByDate(ArrayList<Task> clonenotDoneYetStorage){
-		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_DATE);
+
+	private void sortByDate(ArrayList<Task> clonenotDoneYetStorage) {
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage,
+				Constants.MESSAGE_DISPLAY_FIELD_DATE);
 		Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
-		if (exclusivenotDoneYetStorage != null){
+		if (exclusivenotDoneYetStorage != null) {
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
@@ -125,14 +134,15 @@ public class Display implements Command{
 		}
 		return result;
 	}
-	public Task returnEachTask()
-	{
+
+	public Task returnEachTask() {
 		return forEachTask;
 	}
-	public Task returnOldTask()
-	{
+
+	public Task returnOldTask() {
 		return forOldTask;
 	}
+
 	public COMMAND_STATE returnCommandState() {
 		return commandState;
 	}

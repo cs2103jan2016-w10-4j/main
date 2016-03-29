@@ -1,11 +1,7 @@
 package Handler;
 
-import java.util.ArrayList;
-
-import Storage.Storage;
 import main.*;
 import main.Constants.COMMAND_STATE;
-import main.Constants.COMMAND_TYPE;
 
 public class SetDir implements Command {
 

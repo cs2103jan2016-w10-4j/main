@@ -1,9 +1,6 @@
 package Handler;
 
 import main.Constants;
-import java.util.ArrayList;
-
-import Storage.Storage;
 import main.Task;
 import main.Constants.COMMAND_STATE;
 
@@ -19,7 +16,7 @@ public class Undo implements Command {
 	}
 
 	public String execute(String[] notUsedInThisCommand, int notUsedInThisCommand2) {
-		if(HandlerMemory.getPreviousInputStorage().size()==0){
+		if (HandlerMemory.getPreviousInputStorage().size() == 0) {
 			commandState = COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_UNDO_FAIL;
 		}

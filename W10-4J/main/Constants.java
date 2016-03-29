@@ -64,6 +64,8 @@ public class Constants {
 	public static final String MESSAGE_UNDO_FAIL = ("Nothing to undo");
 	public static final String MESSAGE_RETRIEVE_PASS = ("Retrieve successful.");
 	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
+	public static final String MESSAGE_RECURRENCE_PASS = ("Recurrence set successfully");
+	public static final String MESSAGE_RECURRENCE_FAIL = ("Task does not exist");
 	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
 	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
 	public static final String MESSAGE_TIME_FAIL = ("Start time must be before end time.");
