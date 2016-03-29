@@ -7,16 +7,15 @@ import Storage.Storage;
 import main.Task;
 import main.Constants.COMMAND_STATE;
 
-public class Undo implements Command{
-	
-	private  COMMAND_STATE commandState;
-	private  Task forEachTask;
-	private  Task forOldTask;
-	private  HandlerMemory handlerMemory;
-	
-	
-	public Undo(HandlerMemory handlerMemory){
-		this.handlerMemory=handlerMemory;
+public class Undo implements Command {
+
+	private COMMAND_STATE commandState;
+	private Task forEachTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+
+	public Undo(HandlerMemory handlerMemory) {
+		this.handlerMemory = handlerMemory;
 	}
 
 	public String execute(String[] notUsedInThisCommand, int notUsedInThisCommand2) {
@@ -27,40 +26,39 @@ public class Undo implements Command{
 		Task eachTask = null;
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
-			commandState=COMMAND_STATE.UNDOADD;
-			forEachTask=previousTask;
+			commandState = COMMAND_STATE.UNDOADD;
+			forEachTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
-			commandState=COMMAND_STATE.UNDODELETE;
-			forEachTask=previousTask;
+			commandState = COMMAND_STATE.UNDODELETE;
+			forEachTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
-			commandState=COMMAND_STATE.UNDOEDIT;
-			forEachTask=previousTask;
-			forOldTask=eachTask;
+			commandState = COMMAND_STATE.UNDOEDIT;
+			forEachTask = previousTask;
+			forOldTask = eachTask;
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
-			commandState=COMMAND_STATE.UNDODONE;
-			forEachTask=previousTask;
+			commandState = COMMAND_STATE.UNDODONE;
+			forEachTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
-			commandState=COMMAND_STATE.UNDOUNDO;
-			forEachTask=previousTask;
+			commandState = COMMAND_STATE.UNDOUNDO;
+			forEachTask = previousTask;
 			break;
 		}
-		
 		return Constants.MESSAGE_UNDO_PASS;
 	}
 
-	public Task returnEachTask()
-	{
+	public Task returnEachTask() {
 		return forEachTask;
 	}
+
 	public COMMAND_STATE returnCommandState() {
 		return commandState;
 	}
-	public Task returnOldTask()
-	{
+
+	public Task returnOldTask() {
 		return forOldTask;
 	}
 }

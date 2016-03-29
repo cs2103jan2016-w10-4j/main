@@ -7,6 +7,7 @@ import main.Constants;
 import main.Constants.COMMAND_STATE;
 import main.Constants.COMMAND_TYPE;
 import main.Task;
+
 //@@author Berkin
 public class HandlerMemory {
 
@@ -15,103 +16,120 @@ public class HandlerMemory {
 	private static ArrayList<PreviousInput> previousInputStorage;
 	private static int taskID;
 	static Storage mainStorage = new Storage();
-	
+
 	public HandlerMemory() {
 		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.fileName);
 		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		taskID = HandlerMemory.getTaskID();
+		taskID = HandlerMemory.determineTaskID();
 	}
-	
+
 	public static void updateMemory(Command cmd, COMMAND_TYPE command) {
-		if(cmd.returnCommandState()!=COMMAND_STATE.FAILED) {
-		switch (command) {
-		case ADD:
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
-			notDoneYetStorage.add(cmd.returnEachTask());
-			mainStorage.write(notDoneYetStorage, doneStorage);  
-		case EDIT:
-			mainStorage.write(notDoneYetStorage, doneStorage);
-			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
-		case DELETE:
-			if(cmd.returnCommandState()==COMMAND_STATE.DELETEDONETASK) {
-				doneStorage.remove(cmd.returnEachTask());
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
-			}
-			else {
-				assert cmd.returnCommandState()==COMMAND_STATE.DELETEUNDONETASK;
-				notDoneYetStorage.remove(cmd.returnEachTask());
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
-			}
-		case DONE:
-			if(cmd.returnCommandState()==COMMAND_STATE.RECURRINGDONE) {
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
-			}
-			else {
-				assert cmd.returnCommandState()==COMMAND_STATE.NONRECURRINGDONE;
-				notDoneYetStorage.remove(cmd.returnEachTask());
-				doneStorage.add(cmd.returnEachTask());
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
-			}
-		case DISPLAY:
-			//fallthrough //This part is done in display class
-		case SEARCH:
-			
-		case SETDIR:
-			notDoneYetStorage.clear();
-  			doneStorage.clear();
-  			previousInputStorage.clear();
-		case RETRIEVE:
-			//fallthrough //This part is done in retrieve class
-		case RECURRENCE:
-			mainStorage.write(notDoneYetStorage, doneStorage);
-			clearAndAdd(previousInputStorage, new PreviousInput("edit", cmd.returnOldTask(), cmd.returnEachTask()));
-		case UNDO:
-			switch(cmd.returnCommandState()) {
-			case UNDOADD:
-				// to restore to previous state, must unadd the task
-				notDoneYetStorage.remove(cmd.returnEachTask());
-				// remember previous state
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
-			case UNDODELETE:
+		if (cmd.returnCommandState() != COMMAND_STATE.FAILED) {
+			switch (command) {
+			case ADD:
+				clearAndAdd(previousInputStorage,
+						new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
 				notDoneYetStorage.add(cmd.returnEachTask());
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
-			case UNDOEDIT:
-				// to restore to previous state, must edit again to previous state
-				Task eachTask= previousInputStorage.get(0).getEditedTask();
-				notDoneYetStorage.remove(eachTask);
-				notDoneYetStorage.add(cmd.returnEachTask());
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnEachTask()));
-			case UNDODONE:
-				doneStorage.remove(cmd.returnEachTask());
-				notDoneYetStorage.add(cmd.returnEachTask());
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnEachTask()));
-			case UNDOUNDO:
-				notDoneYetStorage.remove(cmd.returnEachTask());
-				doneStorage.add(cmd.returnEachTask());
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
-			default:
+				mainStorage.write(notDoneYetStorage, doneStorage);
 				break;
+			case EDIT:
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage,
+						new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
+				break;
+			case DELETE:
+				if (cmd.returnCommandState() == COMMAND_STATE.DELETEDONETASK) {
+					doneStorage.remove(cmd.returnEachTask());
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+				} else {
+					assert cmd.returnCommandState() == COMMAND_STATE.DELETEUNDONETASK;
+					notDoneYetStorage.remove(cmd.returnEachTask());
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+				}
+				break;
+			case DONE:
+				if (cmd.returnCommandState() == COMMAND_STATE.RECURRINGDONE) {
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+				} else {
+					assert cmd.returnCommandState() == COMMAND_STATE.NONRECURRINGDONE;
+					notDoneYetStorage.remove(cmd.returnEachTask());
+					doneStorage.add(cmd.returnEachTask());
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+				}
+				break;
+			case DISPLAY:
+				// fallthrough //This part is done in display class
+			case SEARCH:
+
+			case SETDIR:
+				notDoneYetStorage.clear();
+				doneStorage.clear();
+				previousInputStorage.clear();
+				break;
+			case RETRIEVE:
+				// fallthrough //This part is done in retrieve class
+			case RECURRENCE:
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				clearAndAdd(previousInputStorage, new PreviousInput("edit", cmd.returnOldTask(), cmd.returnEachTask()));
+				break;
+			case UNDO:
+				switch (cmd.returnCommandState()) {
+				case UNDOADD:
+					// to restore to previous state, must unadd the task
+					notDoneYetStorage.remove(cmd.returnEachTask());
+					// remember previous state
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+				case UNDODELETE:
+					notDoneYetStorage.add(cmd.returnEachTask());
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
+				case UNDOEDIT:
+					// to restore to previous state, must edit again to previous
+					// state
+					Task eachTask = previousInputStorage.get(0).getEditedTask();
+					notDoneYetStorage.remove(eachTask);
+					notDoneYetStorage.add(cmd.returnEachTask());
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnEachTask()));
+				case UNDODONE:
+					doneStorage.remove(cmd.returnEachTask());
+					notDoneYetStorage.add(cmd.returnEachTask());
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnEachTask()));
+				case UNDOUNDO:
+					notDoneYetStorage.remove(cmd.returnEachTask());
+					doneStorage.add(cmd.returnEachTask());
+					clearAndAdd(previousInputStorage,
+							new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+				default:
+					break;
+				}
+				mainStorage.write(notDoneYetStorage, doneStorage);
+				break;
+			case EXIT:
+				assert false;
+			case HELP:
+				// Fallthrough
+			case INVALID:
+				assert false;
+			default:
+				assert false;
 			}
-			mainStorage.write(notDoneYetStorage, doneStorage);
-		case EXIT:
-			assert false;
-		case HELP:
-		//Fallthrough	
-		case INVALID:
-			assert false;
-		default:
-			assert false;
-		}
 		}
 	}
-	//@@author
-	
+	// @@author
+
 	public static ArrayList<Task> getNotDoneYetStorage() {
 		return notDoneYetStorage;
 	}
@@ -144,7 +162,7 @@ public class HandlerMemory {
 		this.mainStorage = mainStorage;
 	}
 
-	public static int getTaskID() {
+	public static int determineTaskID() {
 		int id = 0;
 		for (int i = 0; i < doneStorage.size(); i++) {
 			int currentId = doneStorage.get(i).getTaskID();
@@ -160,14 +178,16 @@ public class HandlerMemory {
 		}
 		return id;
 	}
-	
+
 	public static void setTaskID(int id) {
 		taskID = id;
 	}
+
 	private static void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
 		taskArray.add(task);
 	}
+
 	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
 		for (Task task : taskList) {
 			if (task.getTaskID() == taskID) {
@@ -176,6 +196,8 @@ public class HandlerMemory {
 		}
 		return null;
 	}
+	
+	public static int getTaskID(){
+		return taskID;
+	}
 }
-
-

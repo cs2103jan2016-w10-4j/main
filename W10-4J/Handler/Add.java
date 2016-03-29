@@ -10,19 +10,20 @@ import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 import Storage.Storage;
 import main.Task;
 
-
 public class Add implements Command {
-	
-	private  COMMAND_STATE commandState;
-	private  Task forEachTask;
-	private  Task forOldTask;
-	private  HandlerMemory handlerMemory;
-	
 
-	public Add(/*ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-			/*ArrayList<PreviousInput> previousInputStorage, Storage mainStorage,*/HandlerMemory handlerMemory) {
-		
-		this.handlerMemory=handlerMemory;
+	private COMMAND_STATE commandState;
+	private Task forEachTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+
+	public Add(/*
+				 * ArrayList<Task> notDoneYetStorage, ArrayList<Task>
+				 * doneStorage, /*ArrayList<PreviousInput> previousInputStorage,
+				 * Storage mainStorage,
+				 */HandlerMemory handlerMemory) {
+
+		this.handlerMemory = handlerMemory;
 	}
 
 	public String execute(String[] task, int taskID) {
@@ -69,14 +70,14 @@ public class Add implements Command {
 				assert false;
 			}
 		}
-		//System.out.println(eachTask);
+		// System.out.println(eachTask);
 		if (isTimeValid(eachTask)) {
-			
-			commandState=Constants.COMMAND_STATE.PASS;
-			forEachTask=eachTask;
+
+			commandState = Constants.COMMAND_STATE.PASS;
+			forEachTask = eachTask;
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
-			commandState=Constants.COMMAND_STATE.FAILED;
+			commandState = Constants.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_TIME_FAIL;
 		}
 	}
@@ -90,15 +91,16 @@ public class Add implements Command {
 			return true;
 		}
 	}
-	public Task returnEachTask()
-	{
+
+	public Task returnEachTask() {
 		return forEachTask;
 	}
+
 	public COMMAND_STATE returnCommandState() {
 		return commandState;
 	}
-	public Task returnOldTask()
-	{
+
+	public Task returnOldTask() {
 		return forOldTask;
 	}
 }

@@ -1,20 +1,5 @@
 Tasks on hand:
-1. Event: a
-Start Time: 17:30
-End Time: 19:30
-2. Event: a
-Start Time: 17:30
-End Time: 19:30
-3. Event: a
-Start Time: 17:30
-End Time: 19:30
-4. Event: a
-Start Time: 17:30
-End Time: 19:30
-5. Event: a
-Start Time: 17:30
-End Time: 19:30
-6. Event: a
-Start Time: 17:30
-End Time: 19:30
-No tasks are done!
+2. Event: b
+2. Event: b
+Tasks that are done:
+2. Event: b
