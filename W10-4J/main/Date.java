@@ -33,7 +33,6 @@ public class Date {
 		if (isLegalDate(s)) {
 			return s;
 		}
-		day = 1;
 		month = 1;
 		year++;
 		s = makeDate(year, month, day);

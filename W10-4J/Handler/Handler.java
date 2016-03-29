@@ -9,16 +9,16 @@ public class Handler {
 	private static HandlerMemory handlerMemory;
 
 	public Handler() {
-		handlerMemory=new HandlerMemory();
+		handlerMemory = new HandlerMemory();
 	}
 
 	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
-			String toBeReturned= cmd.execute(task, HandlerMemory.getTaskID());
-			if(command!=COMMAND_TYPE.INVALID) {
-			HandlerMemory.updateMemory(cmd,command);
+			String toBeReturned = cmd.execute(task, HandlerMemory.getTaskID());
+			if (command != COMMAND_TYPE.INVALID) {
+				HandlerMemory.updateMemory(cmd, command);
 			}
 			return toBeReturned;
 		} catch (IllegalArgumentException invalidCommandFormat) {
@@ -30,10 +30,10 @@ public class Handler {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
-		//int taskID=HandlerMemory.getTaskID();
+		// int taskID=HandlerMemory.getTaskID();
 		switch (command) {
 		case ADD:
-			HandlerMemory.setTaskID(HandlerMemory.getTaskID()+1);
+			HandlerMemory.setTaskID(HandlerMemory.getTaskID() + 1);
 			return new Add(handlerMemory);
 		case EDIT:
 			return new Edit(handlerMemory);
