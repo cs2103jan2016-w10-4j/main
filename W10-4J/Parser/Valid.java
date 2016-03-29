@@ -38,6 +38,10 @@ public class Valid {
 			return isDoneValid(arguments);
 		case DISPLAY:
 			return isDisplayValid(arguments);
+		case SETDIR:
+			return isSetdirValid(arguments);
+		case RETRIEVE:
+			return isRetrieveValid(arguments);
 		case RECURRENCE:
 			return isRecurrenceValid(arguments);
 		case HELP:
@@ -153,6 +157,22 @@ public class Valid {
 		} else if (arguments.length == 1) {
 			return helpArgumentList.contains(arguments[0]);
 		} else {
+			return false;
+		}
+	}
+	
+	public boolean isSetdirValid(String[] arguments) {
+		if (arguments.length == 1) {
+			return true;
+		} else{
+			return false;
+		}
+	}
+	
+	public boolean isRetrieveValid(String[] arguments) {
+		if (arguments.length == 1) {
+			return true;
+		} else{
 			return false;
 		}
 	}
