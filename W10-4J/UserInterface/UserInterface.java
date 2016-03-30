@@ -37,37 +37,77 @@ public class UserInterface{
 	}
 	
     private static void initComponents() {
-    	Parser p = new Parser();
-    	UIController uiControl = new UIController();
+		Parser p = new Parser();
+		UIController uiControl = new UIController();
 		JFrame f = new JFrame("Docket");
-		JTextField cmdEntry = new JTextField();
+		JScrollPane jScrollPane1 = new JScrollPane();
 		JTextPane outputDisplay = new JTextPane();
+		JButton homeButton = new JButton();
+		JButton overdueButton = new JButton();
+		JButton doneButton = new JButton();
+		JButton allButton = new JButton();
+		JButton helpButton = new JButton();
+		JButton settingsButton = new JButton();
+		JScrollPane jScrollPane2 = new JScrollPane();
 		JTextArea cmdDisplay = new JTextArea();
-		JScrollPane jScrollPane1 = new JScrollPane(cmdDisplay);
-		JScrollPane jScrollPane2 = new JScrollPane(outputDisplay);
-		JLabel status = new JLabel();
-		JLabel jLabel1 = new JLabel();
-		JButton settings = new JButton("GUI Preferences");
-		
-		settings.setFocusable(false);
-		jLabel1.setText("command: ");
+		JTextField cmdEntry = new JTextField();
+		JLabel commandText = new JLabel();
+		commandText.setText("command: ");
+
 		setIcon(f);
-		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
 		textAreaSettings(cmdDisplay);
 		textPaneSettings(outputDisplay);
-
-		GroupLayout layout = new GroupLayout(f.getContentPane());
-		f.getContentPane().setLayout(layout);
-
-		setHoriGroup(layout, settings, jLabel1, cmdEntry, jScrollPane1, jScrollPane2, status);
-
-		setVertGroup(layout, settings, jScrollPane1, jScrollPane2, jLabel1, status, cmdEntry);
-		
+		buttonSettings(homeButton, overdueButton, doneButton, allButton, helpButton, settingsButton);
 		setWelcomeMessage(outputDisplay);
+
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setViewportView(outputDisplay);
+        jScrollPane2.setViewportView(cmdDisplay);
+
+        GroupLayout layout = new GroupLayout(f.getContentPane());
+        f.getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup().addContainerGap()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(homeButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(overdueButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(doneButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(allButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(helpButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(settingsButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
+                
+                .addComponent(jScrollPane1))
+            .addGroup(layout.createSequentialGroup().addContainerGap()
+            		.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup().addContainerGap()
+            		.addComponent(commandText)
+            		.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(homeButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(doneButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(overdueButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(allButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(helpButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(settingsButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup()
+                		.addComponent(commandText)
+                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        );
 		
-		uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane2);
-		uiControl.commandAction(p, settings, cmdEntry, cmdDisplay, outputDisplay);
+		uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
+		uiControl.commandAction(p, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, welcomeMessage(), cmdEntry, cmdDisplay, outputDisplay);
 		lookAndFeel();
 		
 		f.pack();
@@ -119,79 +159,60 @@ public class UserInterface{
 		outputDisplay.putClientProperty(JTextPane.HONOR_DISPLAY_PROPERTIES, true);
     }
     
-    private static void horiGroup3(GroupLayout.SequentialGroup h3, GroupLayout layout, JLabel jLabel1, JTextField cmdEntry){
-		// Create a sequential group h3
-		h3.addComponent(jLabel1);
-		h3.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-		h3.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE);
+    private static void buttonSettings(JButton homeButton, JButton overdueButton, JButton doneButton, JButton allButton, JButton helpButton, JButton settingsButton){
+    	setToolTipForButtons(homeButton, overdueButton, doneButton, allButton,
+				helpButton, settingsButton);
+		setIconsForButtons(homeButton, overdueButton, doneButton, allButton,
+				helpButton, settingsButton);
+		homeButton.setFocusable(false);
+		overdueButton.setFocusable(false);
+		doneButton.setFocusable(false);
+		allButton.setFocusable(false);
+		helpButton.setFocusable(false);
+		settingsButton.setFocusable(false);
     }
-    
-    private static void horiGroupHp(GroupLayout.ParallelGroup hp, JButton settings, JScrollPane jScrollPane2, JScrollPane jScrollPane1, JLabel status){
-		// Add a scroll pane and a label to the parallel group hp
-    	hp.addComponent(settings, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);
-		hp.addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);
-		hp.addComponent(status, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);
-		hp.addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE);    	
-    }
-    
-    private static void setHoriGroup(GroupLayout layout, JButton settings, JLabel jLabel1, JTextField cmdEntry, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JLabel status){
-		// Create a parallel group for the horizontal axis
-		GroupLayout.ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-		
-    	// Create a sequential and a parallel groups
-		GroupLayout.SequentialGroup hs = layout.createSequentialGroup();
-		GroupLayout.ParallelGroup hp = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
 
-		hs.addContainerGap();
+	private static void setIconsForButtons(JButton homeButton,
+			JButton overdueButton, JButton doneButton, JButton allButton,
+			JButton helpButton, JButton settingsButton) {
+		String home = ".\\main\\icon\\home.png";
+		ImageIcon homeImg = new ImageIcon(home);
+		homeButton.setIcon(homeImg);
+		String overdue = ".\\main\\icon\\overdue.png";
+		ImageIcon overdueImg = new ImageIcon(overdue);
+    	overdueButton.setIcon(overdueImg);
+		String done = ".\\main\\icon\\done.png";
+		ImageIcon doneImg = new ImageIcon(done);
+    	doneButton.setIcon(doneImg);
+		String all = ".\\main\\icon\\all.png";
+		ImageIcon allImg = new ImageIcon(all);
+    	allButton.setIcon(allImg);
+		String help = ".\\main\\icon\\help.png";
+		ImageIcon helpImg = new ImageIcon(help);
+    	helpButton.setIcon(helpImg);
+		String settings = ".\\main\\icon\\settings.png";
+		ImageIcon settingsImg = new ImageIcon(settings);
+    	settingsButton.setIcon(settingsImg);
+	}
 
-		GroupLayout.SequentialGroup h3 = layout.createSequentialGroup();
-		horiGroup3(h3, layout, jLabel1, cmdEntry);
-
-		hp.addGroup(h3);
-		
-		horiGroupHp(hp, settings, jScrollPane2, jScrollPane1, status);
-		
-		hs.addGroup(hp);
-
-		hs.addContainerGap();
-
-		hGroup.addGroup(GroupLayout.Alignment.TRAILING, hs);
-		layout.setHorizontalGroup(hGroup);
-    }
-    
-    private static GroupLayout.SequentialGroup vertGroup1(GroupLayout layout, JButton settings, JScrollPane jScrollPane2, JScrollPane jScrollPane1, JLabel status, JLabel jLabel1, JTextField cmdEntry){
-		GroupLayout.SequentialGroup v1 = layout.createSequentialGroup();
-		v1.addContainerGap();
-		
-		GroupLayout.ParallelGroup v2 = vertGroup2(layout, jLabel1, cmdEntry);
-		v1.addComponent(settings);
-		v1.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE);
-		v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
-		v1.addComponent(status);
-		v1.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE);
-		v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
-		v1.addGroup(v2);
-		v1.addContainerGap();
-		
-		return v1;
-    }
-    
-    private static GroupLayout.ParallelGroup vertGroup2(GroupLayout layout, JLabel jLabel1, JTextField cmdEntry){
-		GroupLayout.ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-		v2.addComponent(jLabel1);
-		v2.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		return v2;
-    }
-    
-    private static void setVertGroup(GroupLayout layout, JButton settings, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JLabel jLabel1, JLabel status, JTextField cmdEntry){
-		GroupLayout.ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-		GroupLayout.SequentialGroup v1 = vertGroup1(layout, settings, jScrollPane2, jScrollPane1, status, jLabel1, cmdEntry);
-		vGroup.addGroup(v1);
-		layout.setVerticalGroup(vGroup);
+	private static void setToolTipForButtons(JButton homeButton,
+			JButton overdueButton, JButton doneButton, JButton allButton,
+			JButton helpButton, JButton settingsButton) {
+		homeButton.setToolTipText("Home");
+    	overdueButton.setToolTipText("Overdue Tasks");
+    	doneButton.setToolTipText("Done Tasks");
+    	allButton.setToolTipText("All Tasks");
+    	helpButton.setToolTipText("Help");
+    	settingsButton.setToolTipText("Gui Preferences");
 	}
     
-    private static void setWelcomeMessage(JTextPane displayOutput){
-    	String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
+    private static void setWelcomeMessage(JTextPane outputDisplay){
+    	String display = welcomeMessage();
+    	outputDisplay.setText(display);
+    }
+
+	private static String welcomeMessage() {
+		String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
     			+ "<center>Docket is a simple command line Windows application that allows you to manage your events and deadlines effectively. </center><br><br>"
     			+ "<center>To start, enter a task in the command field below.</center><br>"
     			+ "<center>For help, enter <b>help</b> in the command field below.</center><br>";
@@ -199,8 +220,8 @@ public class UserInterface{
     	Random rand = new Random();
     	int randomNum = rand.nextInt(tipsSize);
     	display += "<center style=\"font-size:18px\"><b>Tips</b></center><br><center>" + tipMessage().get(randomNum) + "</center>";
-    	displayOutput.setText(display);
-    }
+		return display;
+	}
     
     private static ArrayList<String> tipMessage(){
     	ArrayList<String> tips = new ArrayList<String>();
@@ -218,7 +239,6 @@ public class UserInterface{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
