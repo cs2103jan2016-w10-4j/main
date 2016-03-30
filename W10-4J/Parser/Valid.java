@@ -8,21 +8,22 @@ import main.Constants.COMMAND_TYPE;
 public class Valid {
 	private NaturalTime naturalTime;
 	private NaturalDate naturalDate;
-	
+
 	private ArrayList<String> addArgumentList = new ArrayList<>();
 	private ArrayList<String> editArgumentList = new ArrayList<>();
 	private ArrayList<String> displayArgumentList = new ArrayList<>();
 	private ArrayList<String> searchArgumentList = new ArrayList<>();
 	private ArrayList<String> recurrenceArgumentList = new ArrayList<>();
 	private ArrayList<String> helpArgumentList = new ArrayList<>();
-	
+
 	private boolean invalidDate, invalidTime;
-	
-	public Valid(){
+
+	public Valid() {
 		naturalTime = new NaturalTime();
 		naturalDate = new NaturalDate();
 		generateCommandList();
 	}
+
 	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
 		invalidDate = false;
 		invalidTime = false;
@@ -37,6 +38,10 @@ public class Valid {
 			return isDoneValid(arguments);
 		case DISPLAY:
 			return isDisplayValid(arguments);
+		case SETDIR:
+			return isSetdirValid(arguments);
+		case RETRIEVE:
+			return isRetrieveValid(arguments);
 		case RECURRENCE:
 			return isRecurrenceValid(arguments);
 		case HELP:
@@ -79,18 +84,18 @@ public class Valid {
 	}
 
 	public boolean isDeleteValid(String[] arguments) {
-//		if (arguments.length == 0) {
-//			return false;
-//		}
-//		for(int i=0;i<arguments.length;i++){
-//			if(!isInteger(arguments[i])){
-//				return false;
-//			}
-//		}
-//		return true;
+		// if (arguments.length == 0) {
+		// return false;
+		// }
+		// for(int i=0;i<arguments.length;i++){
+		// if(!isInteger(arguments[i])){
+		// return false;
+		// }
+		// }
+		// return true;
 		if (arguments.length != 1) {
 			return false;
-		} else{
+		} else {
 			return isInteger(arguments[0]);
 		}
 	}
@@ -156,6 +161,22 @@ public class Valid {
 		}
 	}
 
+	public boolean isSetdirValid(String[] arguments) {
+		if (arguments.length == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isRetrieveValid(String[] arguments) {
+		if (arguments.length == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public boolean isRecurrenceValid(String[] arguments) {
 		if (arguments.length != 2) {
 			return false;
@@ -165,7 +186,7 @@ public class Valid {
 			return recurrenceArgumentList.contains(arguments[1]);
 		}
 	}
-	
+
 	public static boolean isInteger(String s) {
 		try {
 			Integer.parseInt(s);
@@ -174,7 +195,7 @@ public class Valid {
 		}
 		return true;
 	}
-	
+
 	public void generateCommandList() {
 		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
 			addArgumentList.add(Constants.addDefaultArgumentList[i]);
@@ -195,12 +216,12 @@ public class Valid {
 			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
 		}
 	}
-	
-	public boolean getInvalidDate(){
+
+	public boolean getInvalidDate() {
 		return invalidDate;
 	}
-	
-	public boolean getInvalidTime(){
+
+	public boolean getInvalidTime() {
 		return invalidTime;
 	}
 }

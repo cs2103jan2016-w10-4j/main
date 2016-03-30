@@ -17,9 +17,10 @@ import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Storage.Write;
 import main.Constants;
 import main.Task;
+import Storage.Storage;
+import Storage.Write;
 
 public class WriteTest extends Write {
 	static ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
@@ -46,6 +47,15 @@ public class WriteTest extends Write {
 		print.println("No tasks are done!");
 		print.close();
 	}	
+	
+	@Test
+	public void testWrite() throws NoSuchAlgorithmException, IOException {
+		if (Storage.filename.equals(Constants.fileName)) {
+			testWriteToDefaultFile();
+		} else {
+			testWriteToOtherFileWithUpdatePath();
+		}
+	}
 	
 	@Test
 	public void testWriteToDefaultFile() throws NoSuchAlgorithmException, IOException {
