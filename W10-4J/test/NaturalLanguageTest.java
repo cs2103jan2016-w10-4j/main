@@ -50,6 +50,9 @@ public class NaturalLanguageTest {
 		input = "12 mar";
 		assertEquals(input, "2016/03/12", n.getDate(input));
 
+		input = "12 mar b";
+		assertEquals(input, null, n.getDate(input));
+
 		for (int i = 1; i <= 28; i++) {
 			for (int j = 1; j <= 12; j++) {
 				input = String.format("%02d/%02d/%04d", i, j, 2016);

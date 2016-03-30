@@ -23,7 +23,7 @@ public class ParserTest {
 		command = "add new task date 17 jan";
 		commandTypeString = p.getFirstWord(command);
 		commandType = p.getAction(commandTypeString);
-		assertArrayEquals(new String[]{"new task","date","17 jan"},p.getArguments(commandType, command));
+		assertArrayEquals(new String[]{"new task","startdate","17 jan"},p.getArguments(commandType, command));
 		
 		command = "add this day by sun details anytime anywhere";
 		commandTypeString = p.getFirstWord(command);
