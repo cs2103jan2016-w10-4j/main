@@ -107,9 +107,12 @@ public class Read {
 		String taskHeader = taskContent.substring(0, taskContent.indexOf(": ")).trim();
 		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1).trim();
 		
-		if (taskHeader.equals(Constants.MESSAGE_READ_DATE)) {
+		if (taskHeader.equals(Constants.MESSAGE_READ_STARTDATE)) {
 			String taskDate = taskContent;
-			task.setDate(taskDate);
+			task.setStartDate(taskDate);
+		} else if (taskHeader.equals(Constants.MESSAGE_READ_ENDDATE)) {
+			String taskEndTime = taskContent;
+			task.setEndDate(taskEndTime);
 		} else if (taskHeader.equals(Constants.MESSAGE_READ_STARTTIME)) {
 			String taskStartTime = taskContent;
 			task.setStartTime(taskStartTime);

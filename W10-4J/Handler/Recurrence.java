@@ -61,7 +61,8 @@ public class Recurrence implements Command {
 
 	public Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
-		result.setDate(task.getDate());
+		result.setStartDate(task.getStartDate());
+		result.setEndDate(task.getEndDate());
 		result.setStartTime(task.getStartTime());
 		result.setEndTime(task.getEndTime());
 		result.setDetails(task.getDetails());

@@ -23,24 +23,24 @@ public class DisplayFormat {
 			color = black;
 
 			// Determine which color to display
-			if (t.getDate() != null && t.getEndTime() == null) {
+			if (t.getStartDate() != null && t.getEndTime() == null) {
 				Date date = new Date();
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-				if (t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
+				if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
 					color = red;
 				}
-			} else if (t.getEndTime() != null && t.getDate() != null) {
+			} else if (t.getEndTime() != null && t.getStartDate() != null) {
 				Date time = new Date();
 				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
 				Date date = new Date();
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-				if (t.getDate().trim().compareTo(dateFormat.format(date)) < 0) {
+				if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
 					color = red;
 				} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) < 0
-						&& t.getDate().compareTo(dateFormat.format(date)) == 0) {
+						&& t.getStartDate().compareTo(dateFormat.format(date)) == 0) {
 					color = red;
 				}
 			}
@@ -60,8 +60,8 @@ public class DisplayFormat {
 
 			output += "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\">" + color + t.getTaskID()
 					+ ")</font></td><td>" + color + t.getName() + "</font></td>";
-			if (t.getDate() != null) {
-				output += "<td>" + color + t.getDate() + "</font></td>";
+			if (t.getStartDate() != null) {
+				output += "<td>" + color + t.getStartDate() + "</font></td>";
 			} else {
 				output += "<td></td>";
 			}

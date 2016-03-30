@@ -109,11 +109,11 @@ public class ReadTest extends Read {
 	}
 	
 	private boolean compareDate(Task returnTask, Task task) {
-		if (!(returnTask.getDate() == null && task.getDate() == null)) {
-			if (returnTask.getDate().trim().equals(task.getDate().trim())) {
+		if (!(returnTask.getStartDate() == null && task.getStartDate() == null)) {
+			if (returnTask.getStartDate().trim().equals(task.getStartDate().trim())) {
 				return true;			
 			}			
-		} else if (returnTask.getDate() == null && task.getDate() == null) {
+		} else if (returnTask.getStartDate() == null && task.getStartDate() == null) {
 			return true;
 		}
 		return false;

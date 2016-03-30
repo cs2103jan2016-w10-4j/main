@@ -43,12 +43,12 @@ public class Retrieve implements Command{
 	}
 
 	public boolean compareDate(Task task1, Task task2) {
-		if (task1.getDate() == null && task2.getDate() == null) {
+		if (task1.getStartDate() == null && task2.getStartDate() == null) {
 			return true;
-		} else if (task1.getDate() == null || task2.getDate() == null) {
+		} else if (task1.getStartDate() == null || task2.getStartDate() == null) {
 			return false;
 		} else {
-			return task1.getDate().equals(task2.getDate());
+			return task1.getStartDate().equals(task2.getStartDate());
 		}
 	}
 

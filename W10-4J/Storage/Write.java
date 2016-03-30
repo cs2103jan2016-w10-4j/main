@@ -73,8 +73,12 @@ public class Write {
 				print.println(String.format(Constants.MESSAGE_WRITE_EVENT, taskID, taskList.get(i).getName()));
 			}
 
-			if (!(taskList.get(i).getDate() == null)) {
-				print.println(String.format(Constants.MESSAGE_WRITE_DATE, taskList.get(i).getDate()));
+			if (!(taskList.get(i).getStartDate() == null)) {
+				print.println(String.format(Constants.MESSAGE_WRITE_STARTDATE, taskList.get(i).getStartDate()));
+			}
+			
+			if (!(taskList.get(i).getEndDate() == null)) {
+				print.println(String.format(Constants.MESSAGE_WRITE_ENDDATE, taskList.get(i).getEndDate()));
 			}
 
 			if (!(taskList.get(i).getStartTime() == null)) {

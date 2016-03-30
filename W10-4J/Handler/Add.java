@@ -34,8 +34,11 @@ public class Add implements Command {
 			action = task[i].trim();
 			assert action != null : Constants.ASSERT_ACTION_EXISTENCE;
 			switch (action) {
-			case Constants.MESSAGE_ADD_ACTION_DATE:
-				eachTask.setDate(task[i + 1].trim());
+			case Constants.MESSAGE_ADD_ACTION_STARTDATE:
+				eachTask.setStartDate(task[i + 1].trim());
+				break;
+			case Constants.MESSAGE_ADD_ACTION_ENDDATE:
+				eachTask.setEndDate(task[i + 1].trim());
 				break;
 			case Constants.MESSAGE_ADD_ACTION_START:
 				eachTask.setStartTime(task[i + 1].trim());

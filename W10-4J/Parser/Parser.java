@@ -21,8 +21,8 @@ public class Parser {
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
-			return Constants.MESSAGE_INVALID_FORMAT;
-		}
+			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
+		} 
 		String[] arguments = getArguments(commandType, command);
 		if (!valid_.isValid(commandType, arguments)) {
 			if (valid_.getInvalidDate()) {
@@ -33,12 +33,20 @@ public class Parser {
 				return Constants.MESSAGE_INVALID_FORMAT;
 			}
 		}
+		if(commandType == COMMAND_TYPE.ALIAS){
+			setAlias();
+			return Constants.MESSAGE_ALIAS_PASS;
+		}
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
 			return "0" + handler_.executeCommand(commandType, arguments);
 		} else {
 			return "1" + handler_.executeCommand(commandType, arguments);
 		}
+	}
+
+	private void setAlias() {
+		System.out.println("in alias");
 	}
 
 	public COMMAND_TYPE getAction(String command) {
@@ -66,6 +74,8 @@ public class Parser {
 			return COMMAND_TYPE.EXIT;
 		} else if (isCommandType(command, commandList_.getHelpCommandList())) {
 			return COMMAND_TYPE.HELP;
+		} else if (isCommandType(command, commandList_.getAliasCommandList())) {
+			return COMMAND_TYPE.ALIAS;
 		} else {
 			return COMMAND_TYPE.INVALID;
 		}
@@ -145,8 +155,11 @@ public class Parser {
 
 	public void replaceModifiers(ArrayList<String> token) {
 		for (int i = 0; i < token.size(); i++) {
-			if (commandList_.getDateArgumentList().contains(token.get(i))) {
-				token.set(i, Constants.MESSAGE_ADD_ACTION_DATE);
+			if (commandList_.getStartDateArgumentList().contains(token.get(i))) {
+				token.set(i, Constants.MESSAGE_ADD_ACTION_STARTDATE);
+			}
+			if (commandList_.getEndDateArgumentList().contains(token.get(i))) {
+				token.set(i, Constants.MESSAGE_ADD_ACTION_ENDDATE);
 			}
 			if (commandList_.getStartArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_START);

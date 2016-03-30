@@ -1,5 +1,7 @@
 package Parser;
 
+import java.util.ArrayList;
+
 import main.Constants.COMMAND_TYPE;
 
 public class Valid {
@@ -36,6 +38,8 @@ public class Valid {
 			return isRecurrenceValid(arguments);
 		case HELP:
 			return isHelpValid(arguments);
+		case ALIAS:
+			return isAliasValid(arguments);
 		default:
 			return true;
 		}
@@ -174,6 +178,58 @@ public class Valid {
 			return false;
 		} else {
 			return !commandList_.getRecurrenceArgumentList().contains(arguments[1]);
+		}
+	}
+	
+	public boolean isAliasValid(String[] arguments) {
+		if (arguments.length != 2) {
+			return false;
+		}
+		COMMAND_TYPE command = getAction(arguments[0]);
+		if(command != COMMAND_TYPE.INVALID){
+			return true;
+		} else{
+			return false;
+		}
+	}
+	
+	public COMMAND_TYPE getAction(String command) {
+		if (isCommandType(command, commandList_.getAddCommandList())) {
+			return COMMAND_TYPE.ADD;
+		} else if (isCommandType(command, commandList_.getDeleteCommandList())) {
+			return COMMAND_TYPE.DELETE;
+		} else if (isCommandType(command, commandList_.getEditCommandList())) {
+			return COMMAND_TYPE.EDIT;
+		} else if (isCommandType(command, commandList_.getDoneCommandList())) {
+			return COMMAND_TYPE.DONE;
+		} else if (isCommandType(command, commandList_.getDisplayCommandList())) {
+			return COMMAND_TYPE.DISPLAY;
+		} else if (isCommandType(command, commandList_.getSearchCommandList())) {
+			return COMMAND_TYPE.SEARCH;
+		} else if (isCommandType(command, commandList_.getSetdirCommandList())) {
+			return COMMAND_TYPE.SETDIR;
+		} else if (isCommandType(command, commandList_.getRetrieveCommandList())) {
+			return COMMAND_TYPE.RETRIEVE;
+		} else if (isCommandType(command, commandList_.getRecurrenceCommandList())) {
+			return COMMAND_TYPE.RECURRENCE;
+		} else if (isCommandType(command, commandList_.getUndoCommandList())) {
+			return COMMAND_TYPE.UNDO;
+		} else if (isCommandType(command, commandList_.getExitCommandList())) {
+			return COMMAND_TYPE.EXIT;
+		} else if (isCommandType(command, commandList_.getHelpCommandList())) {
+			return COMMAND_TYPE.HELP;
+		} else if (isCommandType(command, commandList_.getAliasCommandList())) {
+			return COMMAND_TYPE.ALIAS;
+		} else {
+			return COMMAND_TYPE.INVALID;
+		}
+	}
+	
+	public boolean isCommandType(String command, ArrayList<String> commandList) {
+		if (commandList.contains(command)) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

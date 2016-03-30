@@ -49,7 +49,8 @@ public class Edit implements Command{
 
 	public Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
-		result.setDate(task.getDate());
+		result.setStartDate(task.getStartDate());
+		result.setEndDate(task.getEndDate());
 		result.setStartTime(task.getStartTime());
 		result.setEndTime(task.getEndTime());
 		result.setDetails(task.getDetails());
@@ -69,8 +70,11 @@ public class Edit implements Command{
 			case Constants.MESSAGE_EDIT_ACTION_RENAME:
 				eachTask.setName(task[i + 1].trim());
 				break;
-			case Constants.MESSAGE_EDIT_ACTION_DATE:
-				eachTask.setDate(task[i + 1].trim());
+			case Constants.MESSAGE_EDIT_ACTION_STARTDATE:
+				eachTask.setStartDate(task[i + 1].trim());
+				break;
+			case Constants.MESSAGE_EDIT_ACTION_ENDDATE:
+				eachTask.setEndDate(task[i + 1].trim());
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_START:
 				eachTask.setStartTime(task[i + 1].trim());

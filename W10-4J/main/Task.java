@@ -5,7 +5,8 @@ import java.util.Comparator;
 
 public class Task {
 	private String name_;
-	private String date_;
+	private String startdate_;
+	private String enddate_;
 	private String startTime_;
 	private String endTime_;
 	private String details_;
@@ -66,26 +67,26 @@ public class Task {
 
 	private static Calendar splitDateObject(Task task) {
 		// assumes that the date is in yyyy/mm/dd format
-		String[] date = task.getDate().split("/");
+		String[] date = task.getStartDate().split("/");
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Integer.parseInt(date[0].trim()), Integer.parseInt(date[1].trim()),
 				Integer.parseInt(date[2].trim()));
 		return calendar;
 	}
 
-	public void done() {
-		if (day_) {
-			date_ = Date.addDay(date_);
-		} else if (week_) {
-			for (int i = 0; i < 7; i++) {
-				date_ = Date.addDay(date_);
-			}
-		} else if (month_) {
-			date_ = Date.addMonth(date_);
-		} else if (year_) {
-			date_ = Date.addYear(date_);
-		}
-	}
+//	public void done() {
+//		if (day_) {
+//			date_ = Date.addDay(date_);
+//		} else if (week_) {
+//			for (int i = 0; i < 7; i++) {
+//				date_ = Date.addDay(date_);
+//			}
+//		} else if (month_) {
+//			date_ = Date.addMonth(date_);
+//		} else if (year_) {
+//			date_ = Date.addYear(date_);
+//		}
+//	}
 
 	public Task(String name) {
 		name_ = name;
@@ -95,8 +96,12 @@ public class Task {
 		name_ = name;
 	}
 
-	public void setDate(String date) {
-		date_ = date;
+	public void setStartDate(String startdate) {
+		startdate_ = startdate;
+	}
+	
+	public void setEndDate(String enddate) {
+		enddate_ = enddate;
 	}
 
 	public void setStartTime(String startTime) {
@@ -167,8 +172,12 @@ public class Task {
 		return name_;
 	}
 
-	public String getDate() {
-		return date_;
+	public String getStartDate() {
+		return startdate_;
+	}
+	
+	public String getEndDate() {
+		return enddate_;
 	}
 
 	public String getStartTime() {

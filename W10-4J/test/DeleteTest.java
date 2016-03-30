@@ -20,13 +20,13 @@ public class DeleteTest {
 	public void test() {
 		// create sample task
 		Task firstTask = new Task("sampleTask1");
-		firstTask.setDate("2016/03/04");
+		firstTask.setStartDate("2016/03/04");
 		firstTask.setStartTime("12:00");
 		firstTask.setEndTime("16:00");
 		firstTask.setDetails("None");
 
 		Task secondTask = new Task("sampleTask2");
-		secondTask.setDate("2014/01/05");
+		secondTask.setStartDate("2014/01/05");
 		secondTask.setStartTime("10:00");
 		secondTask.setEndTime("14:00");
 		secondTask.setDetails("Nil");

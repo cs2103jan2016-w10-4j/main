@@ -1,7 +1,6 @@
 package Parser;
 
 import java.util.ArrayList;
-
 import main.Constants;
 
 public class CommandList {
@@ -17,6 +16,7 @@ public class CommandList {
 	private ArrayList<String> undoCommandList = new ArrayList<>();
 	private ArrayList<String> exitCommandList = new ArrayList<>();
 	private ArrayList<String> helpCommandList = new ArrayList<>();
+	private ArrayList<String> aliasCommandList = new ArrayList<>();
 
 	private ArrayList<String> addArgumentList = new ArrayList<>();
 	private ArrayList<String> editArgumentList = new ArrayList<>();
@@ -25,9 +25,10 @@ public class CommandList {
 	private ArrayList<String> recurrenceArgumentList = new ArrayList<>();
 	private ArrayList<String> helpArgumentList = new ArrayList<>();
 
-	private ArrayList<String> dateArgumentList = new ArrayList<>();
-	private ArrayList<String> startArgumentList = new ArrayList<>();
-	private ArrayList<String> endArgumentList = new ArrayList<>();
+	private ArrayList<String> startDateArgumentList = new ArrayList<>();
+	private ArrayList<String> endDateArgumentList = new ArrayList<>();
+	private ArrayList<String> startTimeArgumentList = new ArrayList<>();
+	private ArrayList<String> endTimeArgumentList = new ArrayList<>();
 	private ArrayList<String> detailsArgumentList = new ArrayList<>();
 	private ArrayList<String> repeatArgumentList = new ArrayList<>();
 
@@ -42,6 +43,10 @@ public class CommandList {
 
 	private CommandList() {
 		generateCommandList();
+	}
+	
+	public void setAlias(Constants.COMMAND_TYPE commandType, String argument){
+		
 	}
 
 	private void generateCommandList() {
@@ -81,6 +86,9 @@ public class CommandList {
 		for (int i = 0; i < Constants.helpDefaultCommandList.length; i++) {
 			helpCommandList.add(Constants.helpDefaultCommandList[i]);
 		}
+		for (int i = 0; i < Constants.aliasDefaultCommandList.length; i++) {
+			aliasCommandList.add(Constants.aliasDefaultCommandList[i]);
+		}
 
 		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
 			addArgumentList.add(Constants.addDefaultArgumentList[i]);
@@ -101,14 +109,17 @@ public class CommandList {
 			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
 		}
 
-		for (int i = 0; i < Constants.dateDefaultArgumentList.length; i++) {
-			dateArgumentList.add(Constants.dateDefaultArgumentList[i]);
+		for (int i = 0; i < Constants.startDateDefaultArgumentList.length; i++) {
+			startDateArgumentList.add(Constants.startDateDefaultArgumentList[i]);
 		}
-		for (int i = 0; i < Constants.startDefaultArgumentList.length; i++) {
-			startArgumentList.add(Constants.startDefaultArgumentList[i]);
+		for (int i = 0; i < Constants.endDateDefaultArgumentList.length; i++) {
+			endDateArgumentList.add(Constants.endDateDefaultArgumentList[i]);
 		}
-		for (int i = 0; i < Constants.endDefaultArgumentList.length; i++) {
-			endArgumentList.add(Constants.endDefaultArgumentList[i]);
+		for (int i = 0; i < Constants.startTimeDefaultArgumentList.length; i++) {
+			startTimeArgumentList.add(Constants.startTimeDefaultArgumentList[i]);
+		}
+		for (int i = 0; i < Constants.endTimeDefaultArgumentList.length; i++) {
+			endTimeArgumentList.add(Constants.endTimeDefaultArgumentList[i]);
 		}
 		for (int i = 0; i < Constants.detailsDefaultArgumentList.length; i++) {
 			detailsArgumentList.add(Constants.detailsDefaultArgumentList[i]);
@@ -158,12 +169,16 @@ public class CommandList {
 		return undoCommandList;
 	}
 
-	public ArrayList<String> getExitCommandList() {
-		return exitCommandList;
-	}
-
 	public ArrayList<String> getHelpCommandList() {
 		return helpCommandList;
+	}
+
+	public ArrayList<String> getAliasCommandList() {
+		return aliasCommandList;
+	}
+
+	public ArrayList<String> getExitCommandList() {
+		return exitCommandList;
 	}
 
 	public ArrayList<String> getAddArgumentList() {
@@ -190,16 +205,20 @@ public class CommandList {
 		return helpArgumentList;
 	}
 
-	public ArrayList<String> getDateArgumentList() {
-		return dateArgumentList;
+	public ArrayList<String> getStartDateArgumentList() {
+		return startDateArgumentList;
+	}
+	
+	public ArrayList<String> getEndDateArgumentList() {
+		return endDateArgumentList;
 	}
 
 	public ArrayList<String> getStartArgumentList() {
-		return startArgumentList;
+		return startTimeArgumentList;
 	}
 
 	public ArrayList<String> getEndArgumentList() {
-		return endArgumentList;
+		return endTimeArgumentList;
 	}
 
 	public ArrayList<String> getDetailsArgumentList() {

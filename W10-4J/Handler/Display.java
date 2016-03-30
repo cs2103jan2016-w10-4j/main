@@ -115,7 +115,7 @@ public class Display implements Command{
 			break;
 		case Constants.MESSAGE_DISPLAY_FIELD_DATE:
 			for (Task task : taskArray) {
-				if (task.getDate() == null) {
+				if (task.getStartDate() == null) {
 					result.add(task);
 				}
 			}

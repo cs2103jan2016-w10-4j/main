@@ -28,7 +28,7 @@ public class Handler {
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
-			return Constants.MESSAGE_UNRECOGNÝZED_COMMAND;
+			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 	}
 
