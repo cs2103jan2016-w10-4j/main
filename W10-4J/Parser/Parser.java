@@ -7,39 +7,14 @@ import main.Constants;
 import main.Constants.COMMAND_TYPE;
 
 public class Parser {
-	private ArrayList<String> addCommandList = new ArrayList<>();
-	private ArrayList<String> deleteCommandList = new ArrayList<>();
-	private ArrayList<String> editCommandList = new ArrayList<>();
-	private ArrayList<String> doneCommandList = new ArrayList<>();
-	private ArrayList<String> displayCommandList = new ArrayList<>();
-	private ArrayList<String> searchCommandList = new ArrayList<>();
-	private ArrayList<String> setdirCommandList = new ArrayList<>();
-	private ArrayList<String> retrieveCommandList = new ArrayList<>();
-	private ArrayList<String> recurrenceCommandList = new ArrayList<>();
-	private ArrayList<String> undoCommandList = new ArrayList<>();
-	private ArrayList<String> exitCommandList = new ArrayList<>();
-	private ArrayList<String> helpCommandList = new ArrayList<>();
-
-	private ArrayList<String> addArgumentList = new ArrayList<>();
-	private ArrayList<String> editArgumentList = new ArrayList<>();
-	private ArrayList<String> displayArgumentList = new ArrayList<>();
-	private ArrayList<String> searchArgumentList = new ArrayList<>();
-	private ArrayList<String> recurrenceArgumentList = new ArrayList<>();
-	private ArrayList<String> helpArgumentList = new ArrayList<>();
-
-	private ArrayList<String> dateArgumentList = new ArrayList<>();
-	private ArrayList<String> startArgumentList = new ArrayList<>();
-	private ArrayList<String> endArgumentList = new ArrayList<>();
-	private ArrayList<String> detailsArgumentList = new ArrayList<>();
-	private ArrayList<String> repeatArgumentList = new ArrayList<>();
-
-	private Handler handler;
-	private Valid valid;
+	private Handler handler_;
+	private Valid valid_;
+	private CommandList commandList_;
 
 	public Parser() {
-		generateCommandList();
-		handler = new Handler();
-		valid = new Valid();
+		commandList_ = CommandList.getInstance();
+		handler_ = new Handler();
+		valid_ = new Valid(commandList_);
 	}
 
 	public String parse(String command) {
@@ -49,10 +24,10 @@ public class Parser {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		}
 		String[] arguments = getArguments(commandType, command);
-		if (!valid.isValid(commandType, arguments)) {
-			if (valid.getInvalidDate()) {
+		if (!valid_.isValid(commandType, arguments)) {
+			if (valid_.getInvalidDate()) {
 				return Constants.MESSAGE_INVALID_DATE;
-			} else if (valid.getInvalidTime()) {
+			} else if (valid_.getInvalidTime()) {
 				return Constants.MESSAGE_INVALID_TIME;
 			} else {
 				return Constants.MESSAGE_INVALID_FORMAT;
@@ -60,36 +35,36 @@ public class Parser {
 		}
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
-			return "0" + handler.executeCommand(commandType, arguments);
+			return "0" + handler_.executeCommand(commandType, arguments);
 		} else {
-			return "1" + handler.executeCommand(commandType, arguments);
+			return "1" + handler_.executeCommand(commandType, arguments);
 		}
 	}
 
 	public COMMAND_TYPE getAction(String command) {
-		if (isCommandType(command, addCommandList)) {
+		if (isCommandType(command, commandList_.getAddCommandList())) {
 			return COMMAND_TYPE.ADD;
-		} else if (isCommandType(command, deleteCommandList)) {
+		} else if (isCommandType(command, commandList_.getDeleteCommandList())) {
 			return COMMAND_TYPE.DELETE;
-		} else if (isCommandType(command, editCommandList)) {
+		} else if (isCommandType(command, commandList_.getEditCommandList())) {
 			return COMMAND_TYPE.EDIT;
-		} else if (isCommandType(command, doneCommandList)) {
+		} else if (isCommandType(command, commandList_.getDoneCommandList())) {
 			return COMMAND_TYPE.DONE;
-		} else if (isCommandType(command, displayCommandList)) {
+		} else if (isCommandType(command, commandList_.getDisplayCommandList())) {
 			return COMMAND_TYPE.DISPLAY;
-		} else if (isCommandType(command, searchCommandList)) {
+		} else if (isCommandType(command, commandList_.getSearchCommandList())) {
 			return COMMAND_TYPE.SEARCH;
-		} else if (isCommandType(command, setdirCommandList)) {
+		} else if (isCommandType(command, commandList_.getSetdirCommandList())) {
 			return COMMAND_TYPE.SETDIR;
-		} else if (isCommandType(command, retrieveCommandList)) {
+		} else if (isCommandType(command, commandList_.getRetrieveCommandList())) {
 			return COMMAND_TYPE.RETRIEVE;
-		} else if (isCommandType(command, recurrenceCommandList)) {
+		} else if (isCommandType(command, commandList_.getRecurrenceCommandList())) {
 			return COMMAND_TYPE.RECURRENCE;
-		} else if (isCommandType(command, undoCommandList)) {
+		} else if (isCommandType(command, commandList_.getUndoCommandList())) {
 			return COMMAND_TYPE.UNDO;
-		} else if (isCommandType(command, exitCommandList)) {
+		} else if (isCommandType(command, commandList_.getExitCommandList())) {
 			return COMMAND_TYPE.EXIT;
-		} else if (isCommandType(command, helpCommandList)) {
+		} else if (isCommandType(command, commandList_.getHelpCommandList())) {
 			return COMMAND_TYPE.HELP;
 		} else {
 			return COMMAND_TYPE.INVALID;
@@ -132,14 +107,14 @@ public class Parser {
 		tokens.remove(0);
 		if (commandType == COMMAND_TYPE.ADD) {
 			replaceModifiers(tokens);
-			return compactArguments(tokens, addArgumentList);
+			return compactArguments(tokens, commandList_.getAddArgumentList());
 		} else if (commandType == COMMAND_TYPE.EDIT) {
 			replaceModifiers(tokens);
-			return compactArguments(tokens, editArgumentList);
+			return compactArguments(tokens, commandList_.getEditArgumentList());
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
-			return compactArguments(tokens, displayArgumentList);
+			return compactArguments(tokens, commandList_.getDisplayArgumentList());
 		} else if (commandType == COMMAND_TYPE.SEARCH) {
-			return compactArguments(tokens, searchArgumentList);
+			return compactArguments(tokens, commandList_.getSearchArgumentList());
 		} else {
 			return tokens.toArray(new String[0]);
 		}
@@ -170,19 +145,19 @@ public class Parser {
 
 	public void replaceModifiers(ArrayList<String> token) {
 		for (int i = 0; i < token.size(); i++) {
-			if (dateArgumentList.contains(token.get(i))) {
+			if (commandList_.getDateArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_DATE);
 			}
-			if (startArgumentList.contains(token.get(i))) {
+			if (commandList_.getStartArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_START);
 			}
-			if (endArgumentList.contains(token.get(i))) {
+			if (commandList_.getEndArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_END);
 			}
-			if (detailsArgumentList.contains(token.get(i))) {
+			if (commandList_.getDetailsArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_DETAILS);
 			}
-			if (repeatArgumentList.contains(token.get(i))) {
+			if (commandList_.getRepeatArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_REPEAT);
 			}
 		}
@@ -192,77 +167,19 @@ public class Parser {
 		return command.split(" ")[0];
 	}
 
-	public void generateCommandList() {
-		for (int i = 0; i < Constants.addDefaultCommandList.length; i++) {
-			addCommandList.add(Constants.addDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.deleteDefaultCommandList.length; i++) {
-			deleteCommandList.add(Constants.deleteDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.editDefaultCommandList.length; i++) {
-			editCommandList.add(Constants.editDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.doneDefaultCommandList.length; i++) {
-			doneCommandList.add(Constants.doneDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.displayDefaultCommandList.length; i++) {
-			displayCommandList.add(Constants.displayDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.searchDefaultCommandList.length; i++) {
-			searchCommandList.add(Constants.searchDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.setdirDefaultCommandList.length; i++) {
-			setdirCommandList.add(Constants.setdirDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.retrieveDefaultCommandList.length; i++) {
-			retrieveCommandList.add(Constants.retrieveDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.recurrenceDefaultCommandList.length; i++) {
-			recurrenceCommandList.add(Constants.recurrenceDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.undoDefaultCommandList.length; i++) {
-			undoCommandList.add(Constants.undoDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.exitDefaultCommandList.length; i++) {
-			exitCommandList.add(Constants.exitDefaultCommandList[i]);
-		}
-		for (int i = 0; i < Constants.helpDefaultCommandList.length; i++) {
-			helpCommandList.add(Constants.helpDefaultCommandList[i]);
-		}
+	public int getNumberOfTaskTotal() {
+		return handler_.getNumberOfTaskTotal();
+	}
 
-		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
-			addArgumentList.add(Constants.addDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.editDefaultArgumentList.length; i++) {
-			editArgumentList.add(Constants.editDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.displayDefaultArgumentList.length; i++) {
-			displayArgumentList.add(Constants.displayDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
-			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.recurrenceDefaultArgumentList.length; i++) {
-			recurrenceArgumentList.add(Constants.recurrenceDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++) {
-			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
-		}
-
-		for (int i = 0; i < Constants.dateDefaultArgumentList.length; i++) {
-			dateArgumentList.add(Constants.dateDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.startDefaultArgumentList.length; i++) {
-			startArgumentList.add(Constants.startDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.endDefaultArgumentList.length; i++) {
-			endArgumentList.add(Constants.endDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.detailsDefaultArgumentList.length; i++) {
-			detailsArgumentList.add(Constants.detailsDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.repeatDefaultArgumentList.length; i++) {
-			repeatArgumentList.add(Constants.repeatDefaultArgumentList[i]);
-		}
+	public int getNumberOfTaskToday() {
+		return handler_.getNumberOfTaskToday();
+	}
+	
+	public int getNumberOfTaskOverdue() {
+		return handler_.getNumberOfTaskOverdue();
+	}
+	
+	public int getNumberOfTaskDone() {
+		return handler_.getNumberOfTaskDone();
 	}
 }

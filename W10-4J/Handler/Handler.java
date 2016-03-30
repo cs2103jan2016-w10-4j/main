@@ -84,8 +84,26 @@ public class Handler {
 		}
 		return id;
 	}
-	
+
 	public static void setTaskID(int id) {
 		taskID = id;
+	}
+
+	public int getNumberOfTaskTotal() {
+		return notDoneYetStorage.size();
+	}
+
+	//Not implemented yet, waiting for handlerMemory to finish
+	public int getNumberOfTaskToday() {
+		return -1;
+	}
+	
+	//Not implemented yet, waiting for handlerMemory to finish
+	public int getNumberOfTaskOverdue() {
+		return -1;
+	}
+	
+	public int getNumberOfTaskDone() {
+		return doneStorage.size();
 	}
 }

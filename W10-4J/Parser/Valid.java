@@ -1,27 +1,17 @@
 package Parser;
 
-import java.util.ArrayList;
-
-import main.Constants;
 import main.Constants.COMMAND_TYPE;
 
 public class Valid {
-	private NaturalTime naturalTime;
-	private NaturalDate naturalDate;
-
-	private ArrayList<String> addArgumentList = new ArrayList<>();
-	private ArrayList<String> editArgumentList = new ArrayList<>();
-	private ArrayList<String> displayArgumentList = new ArrayList<>();
-	private ArrayList<String> searchArgumentList = new ArrayList<>();
-	private ArrayList<String> recurrenceArgumentList = new ArrayList<>();
-	private ArrayList<String> helpArgumentList = new ArrayList<>();
-
+	private NaturalTime naturalTime_;
+	private NaturalDate naturalDate_;
+	private CommandList commandList_;
 	private boolean invalidDate, invalidTime;
 
-	public Valid() {
-		naturalTime = new NaturalTime();
-		naturalDate = new NaturalDate();
-		generateCommandList();
+	public Valid(CommandList commandList) {
+		naturalTime_ = new NaturalTime();
+		naturalDate_ = new NaturalDate();
+		commandList_ = commandList;
 	}
 
 	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
@@ -56,13 +46,13 @@ public class Valid {
 			return false;
 		}
 		for (int i = 1; i < arguments.length; i += 2) {
-			if (!addArgumentList.contains(arguments[i])) {
+			if (!commandList_.getAddArgumentList().contains(arguments[i])) {
 				return false;
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
 				} else if (arguments[i].equals("date")) {
-					String date = naturalDate.getDate(arguments[i + 1]);
+					String date = naturalDate_.getDate(arguments[i + 1]);
 					if (date == null) {
 						invalidDate = true;
 						return false;
@@ -70,7 +60,7 @@ public class Valid {
 						arguments[i + 1] = date;
 					}
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
-					String time = naturalTime.getTime(arguments[i + 1]);
+					String time = naturalTime_.getTime(arguments[i + 1]);
 					if (time == null) {
 						invalidTime = true;
 						return false;
@@ -108,13 +98,13 @@ public class Valid {
 			return false;
 		}
 		for (int i = 1; i < arguments.length; i += 2) {
-			if (!editArgumentList.contains(arguments[i])) {
+			if (!!commandList_.getEditArgumentList().contains(arguments[i])) {
 				return false;
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
 				} else if (arguments[i].equals("date")) {
-					String date = naturalDate.getDate(arguments[i + 1]);
+					String date = naturalDate_.getDate(arguments[i + 1]);
 					if (date == null) {
 						invalidDate = true;
 						return false;
@@ -122,7 +112,7 @@ public class Valid {
 						arguments[i + 1] = date;
 					}
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
-					String time = naturalTime.getTime(arguments[i + 1]);
+					String time = naturalTime_.getTime(arguments[i + 1]);
 					if (time == null) {
 						invalidTime = true;
 						return false;
@@ -146,7 +136,7 @@ public class Valid {
 		if (arguments.length == 0) {
 			return true;
 		} else if (arguments.length == 2) {
-			return arguments[0].equals("by") && displayArgumentList.contains(arguments[1]);
+			return arguments[0].equals("by") && !commandList_.getDisplayArgumentList().contains(arguments[1]);
 		}
 		return false;
 	}
@@ -155,7 +145,7 @@ public class Valid {
 		if (arguments.length == 0) {
 			return true;
 		} else if (arguments.length == 1) {
-			return helpArgumentList.contains(arguments[0]);
+			return !commandList_.getHelpArgumentList().contains(arguments[0]);
 		} else {
 			return false;
 		}
@@ -183,7 +173,7 @@ public class Valid {
 		} else if (!isInteger(arguments[0])) {
 			return false;
 		} else {
-			return recurrenceArgumentList.contains(arguments[1]);
+			return !commandList_.getRecurrenceArgumentList().contains(arguments[1]);
 		}
 	}
 
@@ -194,27 +184,6 @@ public class Valid {
 			return false;
 		}
 		return true;
-	}
-
-	public void generateCommandList() {
-		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
-			addArgumentList.add(Constants.addDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.editDefaultArgumentList.length; i++) {
-			editArgumentList.add(Constants.editDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.displayDefaultArgumentList.length; i++) {
-			displayArgumentList.add(Constants.displayDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
-			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.recurrenceDefaultArgumentList.length; i++) {
-			recurrenceArgumentList.add(Constants.recurrenceDefaultArgumentList[i]);
-		}
-		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++) {
-			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
-		}
 	}
 
 	public boolean getInvalidDate() {

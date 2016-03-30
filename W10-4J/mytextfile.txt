@@ -1,9 +1,0 @@
-Tasks on hand:
-1. Event: a
-Date: 2016/11/12
-3. Event: c
-4. Event: date
-Date: 2016/03/12
-Start Time: 17:00
-5. Event: b
-No tasks are done!
