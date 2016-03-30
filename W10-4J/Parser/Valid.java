@@ -102,7 +102,7 @@ public class Valid {
 			return false;
 		}
 		for (int i = 1; i < arguments.length; i += 2) {
-			if (!!commandList_.getEditArgumentList().contains(arguments[i])) {
+			if (!commandList_.getEditArgumentList().contains(arguments[i])) {
 				return false;
 			} else {
 				if (i + 1 == arguments.length) {
@@ -140,7 +140,7 @@ public class Valid {
 		if (arguments.length == 0) {
 			return true;
 		} else if (arguments.length == 2) {
-			return arguments[0].equals("by") && !commandList_.getDisplayArgumentList().contains(arguments[1]);
+			return arguments[0].equals("by") && commandList_.getDisplayArgumentList().contains(arguments[1]);
 		}
 		return false;
 	}
@@ -149,7 +149,7 @@ public class Valid {
 		if (arguments.length == 0) {
 			return true;
 		} else if (arguments.length == 1) {
-			return !commandList_.getHelpArgumentList().contains(arguments[0]);
+			return commandList_.getHelpArgumentList().contains(arguments[0]);
 		} else {
 			return false;
 		}
@@ -177,7 +177,7 @@ public class Valid {
 		} else if (!isInteger(arguments[0])) {
 			return false;
 		} else {
-			return !commandList_.getRecurrenceArgumentList().contains(arguments[1]);
+			return commandList_.getRecurrenceArgumentList().contains(arguments[1]);
 		}
 	}
 	

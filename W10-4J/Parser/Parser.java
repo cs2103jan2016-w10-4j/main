@@ -46,7 +46,6 @@ public class Parser {
 	}
 
 	private void setAlias(String[] arguments) {
-		System.out.println("in alias");
 		COMMAND_TYPE commandType = getAction(arguments[0]);
 		String alias = arguments[1];
 		commandList_.setAlias(commandType, alias);
