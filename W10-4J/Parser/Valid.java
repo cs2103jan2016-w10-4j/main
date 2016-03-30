@@ -55,7 +55,7 @@ public class Valid {
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
-				} else if (arguments[i].equals("date")) {
+				} else if (arguments[i].equals("startdate") || arguments[i].equals("enddate")) {
 					String date = naturalDate_.getDate(arguments[i + 1]);
 					if (date == null) {
 						invalidDate = true;
