@@ -44,9 +44,48 @@ public class CommandList {
 	private CommandList() {
 		generateCommandList();
 	}
-	
-	public void setAlias(Constants.COMMAND_TYPE commandType, String argument){
-		
+
+	public void setAlias(Constants.COMMAND_TYPE commandType, String argument) {
+		switch (commandType) {
+		case ADD:
+			addCommandList.add(argument);
+			break;
+		case EDIT:
+			editCommandList.add(argument);
+			break;
+		case DELETE:
+			deleteCommandList.add(argument);
+			break;
+		case DONE:
+			doneCommandList.add(argument);
+			break;
+		case DISPLAY:
+			displayCommandList.add(argument);
+			break;
+		case SEARCH:
+			searchCommandList.add(argument);
+			break;
+		case SETDIR:
+			setdirCommandList.add(argument);
+			break;
+		case RETRIEVE:
+			retrieveCommandList.add(argument);
+			break;
+		case RECURRENCE:
+			recurrenceCommandList.add(argument);
+			break;
+		case UNDO:
+			undoCommandList.add(argument);
+			break;
+		case EXIT:
+			exitCommandList.add(argument);
+			break;
+		case HELP:
+			helpCommandList.add(argument);
+			break;
+		default:
+			throw new IllegalStateException();
+		}
 	}
 
 	private void generateCommandList() {
@@ -208,7 +247,7 @@ public class CommandList {
 	public ArrayList<String> getStartDateArgumentList() {
 		return startDateArgumentList;
 	}
-	
+
 	public ArrayList<String> getEndDateArgumentList() {
 		return endDateArgumentList;
 	}

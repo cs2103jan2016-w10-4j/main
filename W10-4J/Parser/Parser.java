@@ -22,7 +22,7 @@ public class Parser {
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
-		} 
+		}
 		String[] arguments = getArguments(commandType, command);
 		if (!valid_.isValid(commandType, arguments)) {
 			if (valid_.getInvalidDate()) {
@@ -33,9 +33,9 @@ public class Parser {
 				return Constants.MESSAGE_INVALID_FORMAT;
 			}
 		}
-		if(commandType == COMMAND_TYPE.ALIAS){
-			setAlias();
-			return Constants.MESSAGE_ALIAS_PASS;
+		if (commandType == COMMAND_TYPE.ALIAS) {
+			setAlias(arguments);
+			return "1" + Constants.MESSAGE_ALIAS_PASS;
 		}
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
@@ -45,8 +45,11 @@ public class Parser {
 		}
 	}
 
-	private void setAlias() {
+	private void setAlias(String[] arguments) {
 		System.out.println("in alias");
+		COMMAND_TYPE commandType = getAction(arguments[0]);
+		String alias = arguments[1];
+		commandList_.setAlias(commandType, alias);
 	}
 
 	public COMMAND_TYPE getAction(String command) {
@@ -187,11 +190,11 @@ public class Parser {
 	public int getNumberOfTaskToday() {
 		return handler_.getNumberOfTaskToday();
 	}
-	
+
 	public int getNumberOfTaskOverdue() {
 		return handler_.getNumberOfTaskOverdue();
 	}
-	
+
 	public int getNumberOfTaskDone() {
 		return handler_.getNumberOfTaskDone();
 	}
