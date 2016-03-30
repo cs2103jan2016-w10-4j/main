@@ -98,6 +98,16 @@ public class Storage {
 	}
 	
 	public boolean setDirectory(String filePathName) {
+		/*
+		 * Check if user has input the filename,
+		 * If it does not, a default file will be created
+		 */
+		int pathLength = filePathName.length();
+		String lastFourChar = filePathName.substring(pathLength - 4, pathLength);
+		if (!(lastFourChar.equalsIgnoreCase(Constants.MESSAGE_SETDIR_TEXTFILEEXT))){
+			filePathName = filePathName.concat("/" + Constants.setDirFileName);
+		}
+		
 		if (taskSetDirectory.setDirectory(filePathName)) {
 			filename = filePathName;
 			taskWriter.updatePathSentence(filePathName);

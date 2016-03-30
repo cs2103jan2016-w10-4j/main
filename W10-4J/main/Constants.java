@@ -6,6 +6,7 @@ public class Constants {
 	};
 
 	public static final String fileName = "mytextfile.txt";
+	public static final String setDirFileName = "dirdefaultfile.txt";
 	public static final String[] addDefaultCommandList = { "add", "new", "+", "a" };
 	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };
 	public static final String[] editDefaultCommandList = { "edit", "change", "edittask", "e" };
@@ -136,6 +137,8 @@ public class Constants {
 	public static final String MESSAGE_WRITE_READ_TASKDONE = ("Tasks that are done:");
 	public static final String MESSAGE_WRITE_READ_NOTASKONHAND = ("No tasks on hand!");
 	public static final String MESSAGE_WRITE_READ_NOTASKDONE = ("No tasks are done!");
+
+	public static final String MESSAGE_SETDIR_TEXTFILEEXT = (".txt");
 
 	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
 	public static final String ASSERT_TASKLIST_EXISTENCE = ("Task List does not exist");
