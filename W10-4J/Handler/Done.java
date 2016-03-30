@@ -42,23 +42,23 @@ public class Done implements Command{
 		if (eachTask==null){
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
-			if(eachTask.isRecurring()&& eachTask.getStartDate()!=null){
+//			if(eachTask.isRecurring()&& eachTask.getStartDate()!=null){
 //				eachTask.done();
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
-				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
-			} else{
-				assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-				notDoneYetStorage.remove(eachTask);
-				doneStorage.add(eachTask);
-				// write to mainStorage
-				mainStorage.write(notDoneYetStorage, doneStorage);
-				// remember previous state
-				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
-				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
-			}
+//				mainStorage.write(notDoneYetStorage, doneStorage);
+//				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+//				assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+//				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+//			} else{
+//			}
+			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
+			notDoneYetStorage.remove(eachTask);
+			doneStorage.add(eachTask);
+			// write to mainStorage
+			mainStorage.write(notDoneYetStorage, doneStorage);
+			// remember previous state
+			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
+			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		}
 	}
 }
