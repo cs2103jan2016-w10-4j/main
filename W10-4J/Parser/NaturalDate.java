@@ -3,9 +3,81 @@ package Parser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import main.Constants;
+import main.Date;
 
 public class NaturalDate {
 	public String getDate(String input) {
+		input = input.trim();
+		String[] result = splitStringByCharType(input);
+		if (result.length > 3 || result.length < 2) {
+			return null;
+		}
+		boolean confirmMonth = false;
+		boolean confirmYear = false;
+		int month = -1;
+		int day = -1;
+		int year = -1;
+		for (int i = 0; i < result.length; i++) {
+			String s = result[i];
+			if (!isInteger(s)) {
+				if (!confirmMonth) {
+					int monthValue = monthValue(s);
+					if (monthValue == -1) {
+						return null;
+					} else {
+						confirmMonth = true;
+						month = monthValue;
+					}
+				} else {
+					return null;
+				}
+			} else {
+				int temp = Integer.parseInt(s);
+				switch (i) {
+				case 0:
+					if (isDay(temp)) {
+						day = temp;
+					} else if (!confirmYear) {
+						confirmYear = true;
+						year = temp;
+					} else {
+						return null;
+					}
+					break;
+				default:
+					if (isMonth(temp) && !confirmMonth) {
+						month = temp;
+						confirmMonth = true;
+					} else if (isDay(temp) && !confirmMonth && isMonth(day)) {
+						month = day;
+						day = temp;
+					} else if (isDay(temp) && day == -1) {
+						day = temp;
+					} else if (!confirmYear) {
+						confirmYear = true;
+						year = temp;
+					} else {
+						return null;
+					}
+					break;
+				}
+			}
+		}
+		if (year == -1) {
+			year = Calendar.getInstance().get(Calendar.YEAR);
+		}
+		if (year < 1000) {
+			year += 2000;
+		}
+		String output = String.format("%04d/%02d/%02d", year, month, day);
+		if (Date.isLegalDate(output)) {
+			return output;
+		} else {
+			return null;
+		}
+	}
+
+	public String getDateX(String input) {
 		input = input.trim();
 		String[] result = splitStringByCharType(input);
 		if (result.length > 3 || result.length < 2) {
@@ -17,7 +89,7 @@ public class NaturalDate {
 		int year = -1;
 		boolean confirmMonth = false, confirmYear = false;
 
-		for(int i=0;i<result.length;i++){
+		for (int i = 0; i < result.length; i++) {
 			String s = result[i];
 			if (isInteger(s)) {
 				int temp = Integer.parseInt(s);
@@ -66,7 +138,7 @@ public class NaturalDate {
 		String hold = "";
 		int holdType = -1;
 
-		for(int i=0;i<str.length;i++){
+		for (int i = 0; i < str.length; i++) {
 			char c = str[i];
 			int type = getCharType(c);
 			if (type != holdType) {
@@ -95,8 +167,8 @@ public class NaturalDate {
 		String hold = "";
 		int holdType = -1;
 		int type;
-		
-		for(int i=0;i<str.length;i++){
+
+		for (int i = 0; i < str.length; i++) {
 			char c = str[i];
 			if (Character.isDigit(c)) {
 				type = 1;
@@ -134,8 +206,8 @@ public class NaturalDate {
 		} else {
 			month.addAll(day);
 			month.add(year);
-			finalMonth = month.get(0);
-			finalDay = month.get(1);
+			finalMonth = month.get(1);
+			finalDay = month.get(0);
 			finalYear = month.get(2);
 		}
 		if (finalYear == -1) {

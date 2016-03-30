@@ -3,8 +3,8 @@
 <properties>
 <entry key="welcome"><![CDATA[
 <style>
-	table{border: 1px solid black; background-color: black;}
-	td, th{background-color:white;}
+	#helpTable{border: 1px solid black; background-color: black;}
+	#helpTableThTd{background-color:white;}
 </style>
 <h1> Welcome to the Docket Help Manual </h1>
 ]]></entry>
@@ -29,7 +29,6 @@ To add events with date, start time and end time into Task Manager, use this com
 <ul><li>
 	<p>Example:</p>
 	<span style="background-color:#E5E4E2;"><b>add</b> Meeting <b>date</b> 12/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0</span></li></ul>
-
 <p>To add deadlines with date and time into Task Manager, use this command:</p>
 <span style="background-color:#E5E4E2"><b>add</b> &#60deadline&#62 <b>date</b> &#60date&#62 <b>time</b> &#60time&#62<b>details</b> &#60task details&#62</span><br>
 <ul><li>
@@ -75,7 +74,7 @@ To specify a task is done, use this command:<br>
 To keep track of all the tasks you have on hand, and to list tasks that you have done, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>display by</b> &#60sorting term&#62</span>
 	<ul><li>To display tasks alphabetically based on the name of the task, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> alphabetical order</span></li>
+		<span style="background-color:#E5E4E2;"><b>display by</b> name</span></li>
 	<li>To display tasks based on the start time, task with unspecified start time will be placed at the bottom, use this command:<br>
 		<span style="background-color:#E5E4E2;"><b>display by</b> starttime</span></li>
 	<li>To display tasks based on the end time of the task, use this command:<br>
@@ -83,9 +82,9 @@ To keep track of all the tasks you have on hand, and to list tasks that you have
 	<li>To display tasks based on the date of the task, use this command:<br>
 		<span style="background-color:#E5E4E2;"><b>display by</b> date</span></li>
 	<li>To keep track of only the tasks that you have on hand, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> tasks</span></li>
+		<span style="background-color:#E5E4E2;"><b>display by</b> tasks</span></li>
 	<li>To keep track of tasks that you have done, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> done</span></li></ul>
+		<span style="background-color:#E5E4E2;"><b>display by</b> done</span></li></ul>
 ]]></entry>
 
 <entry key="search"><![CDATA[
@@ -107,58 +106,58 @@ To specify a particular path to the text file to retrieve the task list from, us
 <span style="background-color:#E5E4E2;"><b>retrieve</b> &#60datapath&#62 </span><br>
 This will add the tasks in the text file specified to the default file in Docket.
 	<ul><li>Examples:<br>
-		<span style="background-color:#E5E4E2;"><b>retrieve</b> C:\\Users\\User\\Desktop\\mytextfile.txt </span></li></ul>
+		<span style="background-color:#E5E4E2;"><b>retrieve</b> C:\Users\User\Desktop\mytextfile.txt </span></li></ul>
 To specify a particular folder to store the task list in, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>set directory</b> &#60datapath&#62</span><br>
 In using this command, future uses of Docket will be on this new datapath. If the file does not exist, a new empty text file will be created. To move the tasks from the default text file in Docket to the new path, use <b>retrieve</b>.
 	<ul><li>Examples:<br>
-	<span style="background-color:#E5E4E2;"><b>set directory</b> C:\\Users\\User\\Desktop</span></li></ul>
+	<span style="background-color:#E5E4E2;"><b>setdir</b> C:\Users\User\Desktop</span></li></ul>
 ]]></entry>
 
 <entry key="natural"><![CDATA[
 <h2> Natural Commands </h2>
 Users can enter commands that sounds like something you would naturally say, in your own language, rather than some thing you would say only because you're talking to a computer. <br>
 Valid Natural Commands:<br>
-<table>
+<table id="helpTable">
 	<tr>
-		<th align="left">Function</th>
-		<th align="left">Natural Commands</th>
+		<th id="helpTableThTd" align="left">Function</th>
+		<th id="helpTableThTd" align="left">Natural Commands</th>
 	</tr>
 	<tr>
-		<td>add</td>
-		<td>new, + </td>
+		<td id="helpTableThTd">add</td>
+		<td id="helpTableThTd">new, + </td>
 	</tr>
 	<tr>
-		<td>delete</td>
-		<td>del, remove, rm, bin, trash, -</td>
+		<td id="helpTableThTd">delete</td>
+		<td id="helpTableThTd">del, remove, rm, bin, trash, -</td>
 	</tr>
 	<tr>
-		<td>edit</td>
-		<td>change, edittask</td>
+		<td id="helpTableThTd">edit</td>
+		<td id="helpTableThTd">change, edittask</td>
 	</tr>
 	<tr>
-		<td>done</td>
-		<td>finish, complete</td>
+		<td id="helpTableThTd">done</td>
+		<td id="helpTableThTd">finish, complete</td>
 	</tr>
 	<tr>
-		<td>display</td>
-		<td>ls, list, show, print</td>
+		<td id="helpTableThTd">display</td>
+		<td id="helpTableThTd">ls, list, show, print</td>
 	</tr>
 	<tr>
-		<td>search</td>
-		<td>find, contains</td>
+		<td id="helpTableThTd">search</td>
+		<td id="helpTableThTd">find, contains</td>
 	</tr>
 	<tr>
-		<td>storage</td>
-		<td>get, open, grab, grep</td>
+		<td id="helpTableThTd">storage</td>
+		<td id="helpTableThTd">get, open, grab, grep</td>
 	</tr>
 	<tr>
-		<td>undo</td>
-		<td>whoops, mb</td>
+		<td id="helpTableThTd">undo</td>
+		<td id="helpTableThTd">whoops, mb</td>
 	</tr>
 	<tr>
-		<td>exit</td>
-		<td>quit</td>
+		<td id="helpTableThTd">exit</td>
+		<td id="helpTableThTd">quit</td>
 	</tr>
 </table>
 ]]></entry>
@@ -171,26 +170,26 @@ User can enter the <span style="background-color:#E5E4E2;"><b>undo</b></span> co
 <entry key="keyboard"><![CDATA[
 <h2> Keyboard Shortcuts </h2>
 To help you use Docket more efficiently, some keyboard shortcuts have been implemented.
-<table>
+<table id="helpTable">
 	<tr>
-		<th align="left">Keyboard Shortcut</th>
-		<th align="left">Description</th>
+		<th id="helpTableThTd" align="left">Keyboard Shortcut</th>
+		<th id="helpTableThTd" align="left">Description</th>
 	</tr>
 	<tr>
-		<td>Ctrl + Shift + "="</td>
-		<td>Increases font size in the top white display</td>
+		<td id="helpTableThTd">Ctrl + Shift + "="</td>
+		<td id="helpTableThTd">Increases font size in the top white display</td>
 	</tr>
 	<tr>
-		<td>Ctrl + Shift + "-"</td>
-		<td>Decreases font size in the top white display</td>
+		<td id="helpTableThTd">Ctrl + Shift + "-"</td>
+		<td id="helpTableThTd">Decreases font size in the top white display</td>
 	</tr>
 	<tr>
-		<td>Arrow Up / Arrow Down</td>
-		<td>Returns the previous commands in the command field</td>
+		<td id="helpTableThTd">Arrow Up / Arrow Down</td>
+		<td id="helpTableThTd">Returns the previous commands in the command field</td>
 	</tr>
 	<tr>
-		<td>PgUp / PgDn</td>
-		<td>Scrolls through the top white display</td>
+		<td id="helpTableThTd">PgUp / PgDn</td>
+		<td id="helpTableThTd">Scrolls through the top white display</td>
 	</tr>
 </table>
 ]]></entry>

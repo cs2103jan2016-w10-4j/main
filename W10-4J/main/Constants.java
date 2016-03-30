@@ -25,10 +25,7 @@ public class Constants {
 			"date", "tasks", "done" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
-	public static final String[] helpDefaultArgumentList = { "add", "new", "+", "delete", "del", "remove", "rm", "bin",
-			"thrash", "-", "edit", "change", "edittask", "e", "done", "finish", "complete", "display", "ls", "list",
-			"show", "print", "search", "find", "contains", "setdir", "cd", "setdirectory", "set directory", "storage",
-			"get", "open", "grab", "grep", "retrieve", "undo", "whoops", "mb" };
+	public static final String[] helpDefaultArgumentList = { "add", "delete", "edit", "done", "display", "search", "storage", "undo"};
 
 	public static final String[] dateDefaultArgumentList = {"date","d"};
 	public static final String[] startDefaultArgumentList = {"start","starttime","s","time"};

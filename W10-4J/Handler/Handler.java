@@ -17,7 +17,7 @@ public class Handler {
 		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		taskID = this.getTaskID();
+		taskID = getTaskID();
 	}
 
 	// @@author Berkin
@@ -26,7 +26,6 @@ public class Handler {
 			Command cmd = createCommand(command, task);
 			return cmd.execute(task, taskID);
 		} catch (IllegalArgumentException invalidCommandFormat) {
-			System.out.println("Wtf");
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
 			return Constants.MESSAGE_UNRECOGNÝZED_COMMAND;
@@ -35,10 +34,8 @@ public class Handler {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
-		taskID = getTaskID();
 		switch (command) {
 		case ADD:
-			System.out.println("inadd");
 			taskID++;
 			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:

@@ -68,7 +68,6 @@ public class Add implements Command {
 				assert false;
 			}
 		}
-		System.out.println(eachTask);
 		if (isTimeValid(eachTask)) {
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
