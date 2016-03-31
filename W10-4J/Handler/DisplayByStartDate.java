@@ -20,7 +20,8 @@ public class DisplayByStartDate {
 	static ArrayList<Task> multiDayTaskList;
 	static ArrayList<Integer> taskToBeRemoved;
 	static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
+	static int counter = 0; //-1: overdue, 1: today
+	
 	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList) {
 		output = "";
 		noStartDateList = new ArrayList<Task>();
@@ -73,6 +74,13 @@ public class DisplayByStartDate {
 		
 		multiDayTaskList.clear();
 		output += "</table>";
+		
+		if(counter == 1) {
+			String test = output.substring(output.indexOf("Today, "), output.length());
+			DisplayToday.getTodayTasks(test);
+		} else if (counter == -1) {
+			DisplayOverdue.getOverdueTasks(output);
+		}
 	}
 	
 	private static void displayingNoStartDateTasks() {
@@ -83,23 +91,31 @@ public class DisplayByStartDate {
 	}
 	
 	private static void getHeader(ArrayList<Task> taskList) {
+		counter = 0;
 		output += "<font face = \"Helvetica\" size = \"6\"><b>";
 		if(taskList.size() != 0) {
 			currentDate = taskList.get(0).getStartDate();
 			if(currentDate != null) {
 				if(currentDate.equals(getYesterdayDate())) {
 					output += Constants.MESSAGE_DISPLAYFORMAT_YESTERDAY + ", ";
+					counter = -1;
 				} else if(currentDate.equals(getTodayDate())) {
 					DisplayOverdue.getOverdueTasks(output);
 					output += Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
+					counter = 1;
 				} else if(currentDate.equals(getTomorrowDate())) {
-					DisplayToday.getTodayTasks(output);
+					String test = output.substring(output.indexOf("Today, "), output.length());
+					DisplayToday.getTodayTasks(test);
 					output += Constants.MESSAGE_DISPLAYFORMAT_TOMORROW + ", ";
 				} else {
 					try {
 						output += getCurrentDay(currentDate) + ", ";
 					} catch (ParseException e) {
 						e.printStackTrace();
+					}
+					
+					if(currentDate.compareTo(getYesterdayDate()) < 0) {
+						counter = -1;
 					}
 				}			
 				output += currentDate + "</b></font>";

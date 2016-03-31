@@ -7,8 +7,8 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayToday {
-	static String header = "<font face = \"Helvetica\" size = \"10\"><b>Today's Task<b>";
-	static String beforeHeader = "<font face = \"Helvetica\" size = \"6\"><b>" + Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
+	static String header = "<font face = \"Helvetica\" size = \"10\"><b>Today's Task<b></font>";
+	static String beforeHeader = Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
 	static String subHeaderFont = "<font face = \"Helvetica\" size = \"6\"><b>";
 	static String collated;
 	static String output;
@@ -23,7 +23,6 @@ public class DisplayToday {
 			collated = collated.substring(beforeHeader.length(), collated.length());
 			output += collated;
 		}
-		
 		return output;
 	}
 	

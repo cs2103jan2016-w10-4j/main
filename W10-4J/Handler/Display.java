@@ -6,24 +6,23 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 
-public class Display implements Command{
-	private ArrayList<Task> notDoneStorage;
+public class Display implements Command {
+	private ArrayList<Task> notDoneYetStorage;
 	private ArrayList<Task> doneStorage;
 	Storage mainStorage;
 	String outputDisplay;
 	Sorting sort = new Sorting();
 	
-	public Display(ArraylistStorage arraylistStorage) {
-		notDoneStorage = arraylistStorage.getNotDoneStorage();
-		doneStorage = arraylistStorage.getDoneStorage();
-		mainStorage = arraylistStorage.getMainStorage();
+	public Display(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
+		this.notDoneYetStorage = notDoneYetStorage;
+		this.doneStorage = doneStorage;
+		this.mainStorage = mainStorage;
 	}
 
-	public String execute(String[] task) {
-		if(task.length==0){
-			sort.sortByID(notDoneStorage);
-			mainStorage.write(notDoneStorage, doneStorage);
-			outputDisplay = DisplayByStartDate.displayFormat(sort, notDoneStorage);
+	public String execute(String[] task, int notUsedInThisCommand) {
+		if(task.length==0){ 
+			mainStorage.write(notDoneYetStorage, doneStorage);
+			outputDisplay = DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
 		}else{
 			String displayField = task[0].trim();
 			assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
@@ -31,25 +30,25 @@ public class Display implements Command{
 			switch (displayField)
 			{
 				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-					sort.sortByName(notDoneStorage);
-					mainStorage.write(notDoneStorage, doneStorage);
-					outputDisplay = DisplayDefault.displayDefaultFormat(notDoneStorage);
+					sort.sortByName(notDoneYetStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					outputDisplay = DisplayDefault.displayDefaultFormat(notDoneYetStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_ID:
-					sort.sortByID(notDoneStorage);
-					mainStorage.write(notDoneStorage, doneStorage);
-					outputDisplay = DisplayDefault.displayDefaultFormat(notDoneStorage);
+					sort.sortByID(notDoneYetStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					outputDisplay = DisplayDefault.displayDefaultFormat(notDoneYetStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_OVERDUE:
-					mainStorage.write(notDoneStorage, doneStorage);
-					outputDisplay = DisplayOverdue.displayOverdue(sort, notDoneStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					outputDisplay = DisplayOverdue.displayOverdue(sort, notDoneYetStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TODAY:
-					mainStorage.write(notDoneStorage, doneStorage);
-					outputDisplay = DisplayToday.displayToday(sort, notDoneStorage);
+					mainStorage.write(notDoneYetStorage, doneStorage);
+					outputDisplay = DisplayToday.displayToday(sort, notDoneYetStorage);
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
-					return DisplayByStartDate.displayFormat(sort, notDoneStorage);
+					return DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
 				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
 					return DisplayDefault.displayDefaultFormat(doneStorage);
 			}
