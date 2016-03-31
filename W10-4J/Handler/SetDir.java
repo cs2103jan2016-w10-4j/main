@@ -16,7 +16,7 @@ public class SetDir implements Command {
 	public SetDir(ArraylistStorage arraylistStorage) {
 		notDoneStorage = arraylistStorage.getNotDoneStorage();
 		doneStorage = arraylistStorage.getDoneStorage();
-		previousInputStorage = arraylistStorage.getPreInputStorage();
+		previousInputStorage = arraylistStorage.getPreviousInputStorage();
 		mainStorage = arraylistStorage.getMainStorage();
 	}
 	

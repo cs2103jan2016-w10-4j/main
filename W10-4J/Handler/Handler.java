@@ -22,7 +22,6 @@ public class Handler {
 	private Help helpTask;
 
 	public Handler() {
-		
 		arraylistStorage = new ArraylistStorage();
 		initialiseAllArrays(arraylistStorage);
 	}
@@ -84,23 +83,6 @@ public class Handler {
 		default:
 			throw new IllegalStateException();
 		}
-	}
-
-	public int getTaskID() {
-		ArrayList<Integer> usedID = new ArrayList<>();
-		for (int i = 0; i < arraylistStorage.getDoneStorage().size(); i++) {
-			usedID.add(arraylistStorage.getDoneStorage().get(i).getTaskID());
-		}
-		for (int i = 0; i < arraylistStorage.getNotDoneStorage().size(); i++) {
-			usedID.add(arraylistStorage.getNotDoneStorage().get(i).getTaskID());
-		}
-		Collections.sort(usedID);
-		for (int i = 0; i < usedID.size(); i++) {
-			if (usedID.get(i) != i + 1) {
-				return i + 1;
-			}
-		}
-		return usedID.size() + 1;
 	}
 
 	public int getNumberOfTaskTotal() {

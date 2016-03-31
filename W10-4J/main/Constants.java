@@ -23,7 +23,8 @@ public class Constants {
 
 	public static final String[] addDefaultArgumentList = { "startdate", "enddate", "start", "end", "details",
 			"repeat" };
-	public static final String[] editDefaultArgumentList = { "rename", "date", "start", "end", "details", "repeat" };
+	public static final String[] editDefaultArgumentList = { "rename", "startdate", "enddate", "starttime", "endtime",
+			"details" };
 	public static final String[] displayDefaultArgumentList = { "overdue", "name", "done", "id", "today" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
@@ -77,22 +78,22 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY_FIELD_OVERDUE = ("overdue");
 	public static final String MESSAGE_DISPLAY_FIELD_TODAY = ("today");
 	public static final String MESSAGE_DISPLAY_FIELD_STARTDATE = ("startdate");
-	//public static final String MESSAGE_DISPLAY_FIELD_ENDDATE = ("enddate");
+	// public static final String MESSAGE_DISPLAY_FIELD_ENDDATE = ("enddate");
 	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
 	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
-	
+
 	/*
 	 * Red - Exceed the stipulated date and endtime Black - Default color
 	 */
 	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#ff0000>");
 	public static final String MESSAGE_DISPLAY_COLOR_BLACK = ("<font color=#000000>");
-	
+
 	public static final String MESSAGE_DISPLAYFORMAT_TODAY = ("Today");
 	public static final String MESSAGE_DISPLAYFORMAT_YESTERDAY = ("Yesterday");
 	public static final String MESSAGE_DISPLAYFORMAT_TOMORROW = ("Tomorrow");
 	public static final String MESSAGE_DISPLAYFORMAT_NOSTARTDATE = ("No Start Date");
 	public static final String MESSAGE_DISPLAYFORMAT_MULTIDAYTASK = ("Multi-Day");
-	
+
 	public static final String MESSAGE_DISPLAYTODAY = ("There is no task today.");
 	public static final String MESSAGE_DISPLAYOVERDUE = ("There is no overdue task.");
 

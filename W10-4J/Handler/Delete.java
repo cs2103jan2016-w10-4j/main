@@ -15,7 +15,7 @@ public class Delete implements Command {
 	public Delete(ArraylistStorage arraylistStorage) {
 		notDoneStorage = arraylistStorage.getNotDoneStorage();
 		doneStorage = arraylistStorage.getDoneStorage();
-		previousInputStorage = arraylistStorage.getPreInputStorage();
+		previousInputStorage = arraylistStorage.getPreviousInputStorage();
 		mainStorage = arraylistStorage.getMainStorage();
 	}
 

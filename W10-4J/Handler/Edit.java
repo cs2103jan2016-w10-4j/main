@@ -14,7 +14,7 @@ public class Edit implements Command{
 	public Edit(ArraylistStorage arraylistStorage) {
 		notDoneStorage = arraylistStorage.getNotDoneStorage();
 		doneStorage = arraylistStorage.getDoneStorage();
-		previousInputStorage = arraylistStorage.getPreInputStorage();
+		previousInputStorage = arraylistStorage.getPreviousInputStorage();
 		mainStorage = arraylistStorage.getMainStorage();
 	}
 

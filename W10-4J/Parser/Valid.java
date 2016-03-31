@@ -66,7 +66,7 @@ public class Valid {
 						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
 						arguments[i + 1] = date;
 					}
-				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
+				} else if (arguments[i].equals("starttime") || arguments[i].equals("endtime")) {
 					String time = naturalTime_.getTime(arguments[i + 1]);
 					if (time == null) {
 						invalidTime = true;
@@ -110,7 +110,7 @@ public class Valid {
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
-				} else if (arguments[i].equals("date")) {
+				} else if (arguments[i].equals("startdate") || arguments[i].equals("enddate")) {
 					String date = naturalDate_.getDate(arguments[i + 1]);
 					if (date == null) {
 						invalidDate = true;
@@ -119,7 +119,7 @@ public class Valid {
 						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
 						arguments[i + 1] = date;
 					}
-				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
+				} else if (arguments[i].equals("starttime") || arguments[i].equals("endtime")) {
 					String time = naturalTime_.getTime(arguments[i + 1]);
 					if (time == null) {
 						invalidTime = true;
@@ -143,8 +143,8 @@ public class Valid {
 	public boolean isDisplayValid(String[] arguments) {
 		if (arguments.length == 0) {
 			return true;
-		} else if (arguments.length == 2) {
-			return arguments[0].equals("by") && commandList_.getDisplayArgumentList().contains(arguments[1]);
+		} else if (arguments.length == 1) {
+			return commandList_.getDisplayArgumentList().contains(arguments[0]);
 		}
 		return false;
 	}

@@ -15,7 +15,7 @@ public class Done implements Command{
 	public Done(ArraylistStorage arraylistStorage) {
 		notDoneStorage = arraylistStorage.getNotDoneStorage();
 		doneStorage = arraylistStorage.getDoneStorage();
-		previousInputStorage = arraylistStorage.getPreInputStorage();
+		previousInputStorage = arraylistStorage.getPreviousInputStorage();
 		mainStorage = arraylistStorage.getMainStorage();
 	}
 

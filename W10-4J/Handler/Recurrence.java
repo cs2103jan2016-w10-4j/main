@@ -16,7 +16,7 @@ public class Recurrence implements Command {
 	public Recurrence(ArraylistStorage arraylistStorage) {
 		notDoneStorage = arraylistStorage.getNotDoneStorage();
 		doneStorage = arraylistStorage.getDoneStorage();
-		previousInputStorage = arraylistStorage.getPreInputStorage();
+		previousInputStorage = arraylistStorage.getPreviousInputStorage();
 		mainStorage = arraylistStorage.getMainStorage();
 	}
 	

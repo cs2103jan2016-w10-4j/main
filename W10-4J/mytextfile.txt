@@ -1,8 +1,0 @@
-Tasks on hand:
-1. Event: a
-Start Time: 17:00
-2. Event: b
-3. Event: ls
-4. Event: c
-5. Event: task5
-No tasks are done!
