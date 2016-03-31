@@ -13,13 +13,13 @@ public class Display implements Command {
 	String outputDisplay;
 	Sorting sort = new Sorting();
 	
-	public Display(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.mainStorage = mainStorage;
+	public Display(ArraylistStorage storage){
+		this.notDoneYetStorage = storage.getNotDoneStorage();
+		this.doneStorage = storage.getDoneStorage();
+		this.mainStorage = storage.getMainStorage();
 	}
 
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String execute(String[] task) {
 		if(task.length==0){ 
 			mainStorage.write(notDoneYetStorage, doneStorage);
 			outputDisplay = DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
@@ -62,4 +62,5 @@ public class Display implements Command {
 	// }
 	// return clone;
 	// }
+
 }

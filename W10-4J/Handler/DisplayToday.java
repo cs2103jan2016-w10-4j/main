@@ -7,7 +7,7 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayToday {
-	static String header = "<font face = \"Helvetica\" size = \"10\"><b>Today's Task<b></font>";
+	static String header = "<font face = \"Helvetica\" size = \"10\"><b>Today's Task</b></font>";
 	static String beforeHeader = Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
 	static String subHeaderFont = "<font face = \"Helvetica\" size = \"6\"><b>";
 	static String collated;
@@ -18,7 +18,7 @@ public class DisplayToday {
 		output = header + "<p>" + subHeaderFont;
 		
 		if(collated == null || collated.equals(beforeHeader)) {
-			output += Constants.MESSAGE_DISPLAYTODAY;
+			output += Constants.MESSAGE_DISPLAYTODAY + "</b></font></p>";
 		} else {
 			collated = collated.substring(beforeHeader.length(), collated.length());
 			output += collated;
