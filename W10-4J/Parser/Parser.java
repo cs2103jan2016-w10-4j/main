@@ -26,11 +26,11 @@ public class Parser {
 		String[] arguments = getArguments(commandType, command);
 		if (!valid_.isValid(commandType, arguments)) {
 			if (valid_.getInvalidDate()) {
-				return Constants.MESSAGE_INVALID_DATE;
+				return "1" + Constants.MESSAGE_INVALID_DATE;
 			} else if (valid_.getInvalidTime()) {
-				return Constants.MESSAGE_INVALID_TIME;
+				return "1" + Constants.MESSAGE_INVALID_TIME;
 			} else {
-				return Constants.MESSAGE_INVALID_FORMAT;
+				return "1" + Constants.MESSAGE_INVALID_FORMAT;
 			}
 		}
 		if (commandType == COMMAND_TYPE.ALIAS) {

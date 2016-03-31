@@ -185,8 +185,9 @@ public class Valid {
 		if (arguments.length != 2) {
 			return false;
 		}
-		COMMAND_TYPE command = getAction(arguments[0]);
-		if(command != COMMAND_TYPE.INVALID){
+		COMMAND_TYPE command1 = getAction(arguments[0]);
+		COMMAND_TYPE command2 = getAction(arguments[1]);
+		if(command1 != COMMAND_TYPE.INVALID && command2 == COMMAND_TYPE.INVALID){
 			return true;
 		} else{
 			return false;
