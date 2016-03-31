@@ -69,7 +69,7 @@ public class Task {
 		public int compare(Task task1, Task task2) {
 			int startDateValue = taskDateComparator.compare(task1,task2);
 			int nameValue = taskNameComparator.compare(task1,task2);
-			if(startDateValue >= 0 ) {
+			if(startDateValue == 0 ) {
 				return nameValue;
 			} else {
 				return startDateValue;
