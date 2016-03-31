@@ -22,8 +22,10 @@ public class ReadWriteXml {
 	private int topBgIndex = 2;
 	private int bottomBgIndex = 3;
 	private int bottomFontColorIndex = 4;
+	private int fontSizeIndex = 5;
+	private int fontFamilyIndex = 6;
 	
-	public static String read(String action, String fileName){
+	public String read(String action, String fileName){
 		try{
 			File file = new File(fileName);
 			FileInputStream fileInput = new FileInputStream(file);
@@ -52,11 +54,15 @@ public class ReadWriteXml {
 		String bottomFontColor = read("bottomFontColor", fileName);
 		String topBg = read("topBg", fileName);
 		String bottomBg = read("bottomBg", fileName);
+		String fontSize = read("fontSize", fileName);
+		String fontFamily = read("fontFamily", fileName);
 		properties.add(colorOptionIndex, colorOption);
 		properties.add(topFontColorIndex, topFontColor);
 		properties.add(topBgIndex, topBg);
 		properties.add(bottomBgIndex, bottomBg);
 		properties.add(bottomFontColorIndex, bottomFontColor);
+		properties.add(fontSizeIndex, fontSize);
+		properties.add(fontFamilyIndex, fontFamily);
 		return properties;
 	}
 	
@@ -67,6 +73,8 @@ public class ReadWriteXml {
 		properties.setProperty("bottomBg", prop.get(bottomBgIndex));
 		properties.setProperty("topFontColor", prop.get(topFontColorIndex));
 		properties.setProperty("bottomFontColor", prop.get(bottomFontColorIndex));
+		properties.setProperty("fontSize", prop.get(fontSizeIndex));
+		properties.setProperty("fontFamily", prop.get(fontFamilyIndex));
 		
 		File file = new File(".\\UserInterface\\properties.xml");
 		try {

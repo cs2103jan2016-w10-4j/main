@@ -31,12 +31,14 @@ public class UserInterface{
 	private static int topFontColorIndex = 1;
 	private static int bottomBgIndex = 3;
 	private static int bottomFontColorIndex = 4;
+	private static int fontFamilyIndex = 6;
+	private static int fontSizeIndex = 5;
 	
 	public static void main(String[] args){
 		initComponents();
 	}
 	
-    private static void initComponents() {
+    public static void initComponents() {
 		Parser p = new Parser();
 		UIController uiControl = new UIController();
 		JFrame f = new JFrame("Docket");
@@ -52,20 +54,38 @@ public class UserInterface{
 		JTextArea cmdDisplay = new JTextArea();
 		JTextField cmdEntry = new JTextField();
 		JLabel commandText = new JLabel();
-		commandText.setText("command: ");
 
 		setIcon(f);
+		commandTextSettings(commandText);
+		cmdEntrySettings(cmdEntry);
 		textAreaSettings(cmdDisplay);
 		textPaneSettings(outputDisplay);
 		buttonSettings(homeButton, overdueButton, doneButton, allButton, helpButton, settingsButton);
-		setWelcomeMessage(outputDisplay);
+		setWelcomeMessage(p, outputDisplay);
 
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane1.setViewportView(outputDisplay);
         jScrollPane2.setViewportView(cmdDisplay);
 
-        GroupLayout layout = new GroupLayout(f.getContentPane());
+        setLayoutForUI(f, jScrollPane1, homeButton, overdueButton, doneButton,
+				allButton, helpButton, settingsButton, jScrollPane2, cmdEntry,
+				commandText);
+        
+		lookAndFeel();
+		f.pack();
+		f.setVisible(true);
+		
+    	uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
+
+        uiControl.commandAction(p, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, welcomeMessage(p), cmdEntry, cmdDisplay, outputDisplay, commandText);
+    }
+
+	private static void setLayoutForUI(JFrame f, JScrollPane jScrollPane1,
+			JButton homeButton, JButton overdueButton, JButton doneButton,
+			JButton allButton, JButton helpButton, JButton settingsButton,
+			JScrollPane jScrollPane2, JTextField cmdEntry, JLabel commandText) {
+		GroupLayout layout = new GroupLayout(f.getContentPane());
         f.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -105,19 +125,34 @@ public class UserInterface{
                 		.addComponent(commandText)
                 		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         );
-		
-		uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
-		uiControl.commandAction(p, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, welcomeMessage(), cmdEntry, cmdDisplay, outputDisplay);
-		lookAndFeel();
-		
-		f.pack();
-		f.setVisible(true);
-    }
+	}
     
 	private static void setIcon(JFrame f) {
 				String icon = ".\\main\\icon\\d.png";
 				ImageIcon img = new ImageIcon(icon);
 				f.setIconImage(img.getImage());
+	}
+	
+	private static void commandTextSettings(JLabel commandText){
+		ReadWriteXml prop = new ReadWriteXml();
+		ArrayList<String> properties = prop.readToArrayList();
+		commandText.setText("command: ");
+		String fontFamily = properties.get(fontFamilyIndex);
+		int fontStyle = commandText.getFont().getStyle();
+		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
+		Font font = new Font(fontFamily, fontStyle, fontSize);
+		commandText.setFont(font);
+		
+	}
+	
+	private static void cmdEntrySettings(JTextField cmdEntry){
+		ReadWriteXml prop = new ReadWriteXml();
+		ArrayList<String> properties = prop.readToArrayList();
+		String fontFamily = properties.get(fontFamilyIndex);
+		int fontStyle = cmdEntry.getFont().getStyle();
+		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
+		Font font = new Font(fontFamily, fontStyle, fontSize);
+		cmdEntry.setFont(font);
 	}
     
     private static void textAreaSettings(JTextArea cmdDisplay){
@@ -134,11 +169,16 @@ public class UserInterface{
     	if (bottomBg == null){
     		cmdDisplay.setBackground(Color.BLACK);
     		cmdDisplay.setForeground(Color.WHITE);
+        	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     	} else {
     		cmdDisplay.setBackground(prop.rgbColor(bottomBg));
     		cmdDisplay.setForeground(prop.rgbColor(properties.get(bottomFontColorIndex)));
+    		String fontFamily = cmdDisplay.getFont().getName();
+    		int fontStyle = cmdDisplay.getFont().getStyle();
+    		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
+    		Font font = new Font(fontFamily, fontStyle, fontSize);
+    		cmdDisplay.setFont(font);
     	}
-    	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     }
     
     private static void textPaneSettings(JTextPane outputDisplay){
@@ -154,6 +194,11 @@ public class UserInterface{
     	} else {
     		outputDisplay.setBackground(prop.rgbColor(topBg));
     		outputDisplay.setForeground(prop.rgbColor(properties.get(topFontColorIndex)));
+    		String fontFamily = properties.get(fontFamilyIndex);
+    		int fontStyle = outputDisplay.getFont().getStyle();
+    		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
+    		Font font = new Font(fontFamily, fontStyle, fontSize);
+    		outputDisplay.setFont(font);
     	}
     	outputDisplay.setContentType("text/html");
 		outputDisplay.putClientProperty(JTextPane.HONOR_DISPLAY_PROPERTIES, true);
@@ -206,14 +251,15 @@ public class UserInterface{
     	settingsButton.setToolTipText("Gui Preferences");
 	}
     
-    private static void setWelcomeMessage(JTextPane outputDisplay){
-    	String display = welcomeMessage();
+    private static void setWelcomeMessage(Parser p, JTextPane outputDisplay){
+    	String display = welcomeMessage(p);
     	outputDisplay.setText(display);
     }
 
-	private static String welcomeMessage() {
+	private static String welcomeMessage(Parser p) {
+		String output = p.parse("display by today").substring(1);
 		String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
-    			+ "<center>Docket is a simple command line Windows application that allows you to manage your events and deadlines effectively. </center><br><br>"
+				+ output + "<br>"
     			+ "<center>To start, enter a task in the command field below.</center><br>"
     			+ "<center>For help, enter <b>help</b> in the command field below.</center><br>";
     	int tipsSize = tipMessage().size();

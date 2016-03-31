@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -30,20 +31,25 @@ public class UIController {
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
     
-    public void commandAction(Parser p, JButton overdue, JButton all, JButton done, JButton help, JButton settings, JButton home, String welcome, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput){
-    	cmdEntryListener(p, cmdEntry, cmdDisplay, displayOutput);
-    	settingsListener(settings, cmdDisplay, displayOutput);
-    	allListener(all, p, displayOutput);
-    	doneListener(done, p, displayOutput);
-    	helpListener(help, p, displayOutput);
-    	homeListener(home, displayOutput, welcome);
-    	overdueListener(overdue, p, displayOutput);
+	public String commandAction(Parser p, JButton overdue, JButton all,
+			JButton done, JButton help, JButton settings, JButton home,
+			String welcome, JTextField cmdEntry, JTextArea cmdDisplay,
+			JTextPane displayOutput, JLabel commandText) {
+		cmdEntryListener(p, cmdEntry, cmdDisplay, displayOutput);
+		settingsListener(settings, cmdDisplay, displayOutput, commandText,
+				cmdEntry);
+		allListener(all, p, displayOutput);
+		doneListener(done, p, displayOutput);
+		helpListener(help, p, displayOutput);
+		homeListener(home, p, displayOutput, welcome);
+		overdueListener(overdue, p, displayOutput);
+		return null;
     }
 
-	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput) {
+	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText, JTextField cmdEntry) {
 		settings.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			new SettingsUI(displayOutput, cmdDisplay);
+    			new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry);
     		}
     	});
 	}
@@ -68,10 +74,11 @@ public class UIController {
     	});
 	}
 
-	private void homeListener(JButton home, JTextPane displayOutput, String welcome) {
+	private void homeListener(JButton home, Parser p, JTextPane displayOutput, String welcome) {
 		home.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			printInDisplayOutput(displayOutput, welcome);
+    			String output = p.parse("display by today");
+    			printInDisplayOutput(displayOutput, welcome + p);
 				displayOutput.setCaretPosition(0);
     		}
     	});
@@ -98,12 +105,7 @@ public class UIController {
 	}
 
 	private void cmdEntryListener(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput) {
-		cmdEntry.addActionListener(listenAction(p, cmdEntry, cmdDisplay, displayOutput));
-	}
-
-	private ActionListener listenAction(Parser p, JTextField cmdEntry,
-			JTextArea cmdDisplay, JTextPane displayOutput) {
-		return new ActionListener(){
+		cmdEntry.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String s = cmdEntry.getText();
 				cmdEntry.setText("");
@@ -119,7 +121,7 @@ public class UIController {
 				}
 				displayOutput.setCaretPosition(0);
 			}
-		};
+		});
 	}
     
     public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane){

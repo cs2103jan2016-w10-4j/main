@@ -8,37 +8,34 @@ package UserInterface;
 
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextPane;
+import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class SettingsUI {
-	private static int colorOptionIndex = 0;
-	private static int topFontColorIndex = 1;
-	private static int topBgIndex = 2;
-	private static int bottomBgIndex = 3;
-	private static int bottomFontColorIndex = 4;
+	private static String fileName = ".\\UserInterface\\properties.xml";
 	
-	private static String black = "#000000 r:0, g:0, b:0";
-	private static String white = "#ffffff r:255, g:255, b:255";
-	
-    public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay) {
-        initComponents(outputDisplay, cmdDisplay);
+    public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry) {
+        initComponents(outputDisplay, cmdDisplay, commandText, cmdEntry);
     }
     
-    private void initComponents(JTextPane outputDisplay, JTextArea cmdDisplay) {
+    private void initComponents(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry) {
     	JFrame f = new JFrame("Settings");
         JPanel jPanel3 = new JPanel();
         JRadioButton defaultRadioButton = new JRadioButton();
@@ -49,37 +46,66 @@ public class SettingsUI {
         JScrollPane jScrollPane1 = new JScrollPane();
         JScrollPane jScrollPane2 = new JScrollPane();
         Button cancelButton = new Button();
+        JComboBox<String> fontSizeBox = new JComboBox<String>();
+        JComboBox<String> fontFamilyBox = new JComboBox<String>();
+        JLabel jLabel1 = new JLabel();
+        JLabel jLabel2 = new JLabel();
         Button saveButton = new Button();
         ReadWriteXml prop = new ReadWriteXml();
+        
+        ArrayList<String> properties = prop.readToArrayList();
         
         JTextPane textPane1 = new JTextPane();
         jScrollPane1.setViewportView(textPane1);
         JTextPane textPane2 = new JTextPane();
         jScrollPane2.setViewportView(textPane2);
 
-        ArrayList<String> properties = prop.readToArrayList();
-        String colorOption = properties.get(0);
-        
+        setIcon(f);
+        fontSizeBoxSettings(fontSizeBox, prop);
+        fontFamilyBoxSettings(fontFamilyBox, prop);
+        jLabelSettings(jLabel1, jLabel2);
+        cancelAndSaveButtonSettings(cancelButton, saveButton);
         ButtonGroup button = radioButtonsSettings(defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton,
 				natureRadioButton);
         
         radioButtonSelectionAndDisplayExample(defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				textPane1, textPane2, colorOption, button);
-
-        setIcon(f);
-        cancelButton.setLabel("Cancel");
-        saveButton.setLabel("Save");
+				textPane1, textPane2, properties, button);
         
         setLayoutForSettingsUI(f, jPanel3, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				jScrollPane1, jScrollPane2, cancelButton, saveButton);
+				jScrollPane1, jScrollPane2, cancelButton, saveButton, fontSizeBox, fontFamilyBox, jLabel1, jLabel2);
 
-        action(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton, textPane1, textPane2, saveButton, cancelButton, properties, outputDisplay, cmdDisplay);
+        SettingsUIController controller = new SettingsUIController();
+        controller.action(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton, textPane1, textPane2, saveButton, cancelButton, properties, outputDisplay, cmdDisplay, fontSizeBox, fontFamilyBox, commandText, cmdEntry);
 
 		lookAndFeel();
 		
         f.pack();
         f.setVisible(true);
     }
+
+	private void cancelAndSaveButtonSettings(Button cancelButton,
+			Button saveButton) {
+		cancelButton.setLabel("Cancel");
+        saveButton.setLabel("Save");
+	}
+
+	private void jLabelSettings(JLabel jLabel1, JLabel jLabel2) {
+		jLabel1.setText("Font Size");
+        jLabel2.setText("Font");
+	}
+
+	private void fontFamilyBoxSettings(JComboBox<String> fontFamilyBox,
+			ReadWriteXml prop) {
+		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getAvailableFontFamilyNames();
+		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
+        fontFamilyBox.setSelectedItem(prop.read("fontFamily", fileName));
+	}
+
+	private void fontSizeBoxSettings(JComboBox<String> fontSizeBox, ReadWriteXml prop) {
+		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
+        fontSizeBox.setSelectedItem(prop.read("fontSize", fileName));
+	}
 
 	private void lookAndFeel() {
 		try {
@@ -93,68 +119,120 @@ public class SettingsUI {
 	private void setLayoutForSettingsUI(JFrame f, JPanel jPanel3, JRadioButton defaultRadioButton,
 			JRadioButton seaRadioButton, JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton,
 			JRadioButton natureRadioButton, JScrollPane jScrollPane1, JScrollPane jScrollPane2, Button cancelButton,
-			Button saveButton) {
+			Button saveButton, JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox, JLabel jLabel1, JLabel jLabel2) {
 		GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
+		jPanel3.setLayout(jPanel3Layout);
+		panelHorizontalLayout(defaultRadioButton, seaRadioButton,
+				sunsetRadioButton, dawnRadioButton, natureRadioButton,
+				fontSizeBox, fontFamilyBox, jLabel1, jLabel2, jPanel3Layout);
+        panelVerticalLayout(defaultRadioButton, seaRadioButton,
+				sunsetRadioButton, dawnRadioButton, natureRadioButton,
+				fontSizeBox, fontFamilyBox, jLabel1, jLabel2, jPanel3Layout);
+
+        GroupLayout layout = new GroupLayout(f.getContentPane());
+        f.getContentPane().setLayout(layout);
+        horizontalLayout(jPanel3, jScrollPane1, jScrollPane2, cancelButton,
+				saveButton, layout);
+        verticalLayout(jPanel3, jScrollPane1, jScrollPane2, cancelButton,
+				saveButton, layout);
+	}
+
+	private void verticalLayout(JPanel jPanel3, JScrollPane jScrollPane1,
+			JScrollPane jScrollPane2, Button cancelButton, Button saveButton,
+			GroupLayout layout) {
+		layout.setVerticalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(saveButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        );
+	}
+
+	private void horizontalLayout(JPanel jPanel3, JScrollPane jScrollPane1,
+			JScrollPane jScrollPane2, Button cancelButton, Button saveButton,
+			GroupLayout layout) {
+		layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2)))
+        );
+	}
+
+	private void panelVerticalLayout(JRadioButton defaultRadioButton,
+			JRadioButton seaRadioButton, JRadioButton sunsetRadioButton,
+			JRadioButton dawnRadioButton, JRadioButton natureRadioButton,
+			JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox,
+			JLabel jLabel1, JLabel jLabel2, GroupLayout jPanel3Layout) {
+		jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(defaultRadioButton)
-                    .addComponent(seaRadioButton)
-                    .addComponent(sunsetRadioButton)
-                    .addComponent(dawnRadioButton)
-                    .addComponent(natureRadioButton))
-                .addContainerGap(103, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(defaultRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(seaRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sunsetRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dawnRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(natureRadioButton)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(fontSizeBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(fontFamilyBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
+	}
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(f.getContentPane());
-        f.getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jScrollPane2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+	private void panelHorizontalLayout(JRadioButton defaultRadioButton,
+			JRadioButton seaRadioButton, JRadioButton sunsetRadioButton,
+			JRadioButton dawnRadioButton, JRadioButton natureRadioButton,
+			JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox,
+			JLabel jLabel1, JLabel jLabel2, GroupLayout jPanel3Layout) {
+		jPanel3Layout.setHorizontalGroup(
+				jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(jPanel3Layout.createSequentialGroup()
+			                    .addContainerGap()
+								.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(defaultRadioButton)
+										.addComponent(seaRadioButton)
+										.addComponent(sunsetRadioButton)
+										.addComponent(dawnRadioButton)
+										.addComponent(natureRadioButton))
+	                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(jPanel3Layout.createSequentialGroup()
+	                    .addContainerGap()
+						.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+								.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addComponent(fontSizeBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(fontFamilyBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 	}
 
 	private void radioButtonSelectionAndDisplayExample(JRadioButton defaultRadioButton, JRadioButton seaRadioButton,
 			JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, JTextPane textPane1,
-			JTextPane textPane2, String colorOption, ButtonGroup button) {
+			JTextPane textPane2, ArrayList<String> properties, ButtonGroup button) {
+        String colorOption = properties.get(0);
 		if (colorOption == null){
         	button.setSelected(defaultRadioButton.getModel(), true);
         	defaultColor(textPane1, textPane2);
@@ -218,136 +296,9 @@ public class SettingsUI {
 		return button;
 	}
     
-    private static void action(JFrame f, JRadioButton defaultRadioButton, JRadioButton seaRadioButton, JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2, Button save, Button cancel, ArrayList<String> properties, JTextPane outputDisplay, JTextArea cmdDisplay){
-    	defaultRadioListener(defaultRadioButton, textPane1, textPane2);
-    	seaRadioListener(seaRadioButton, textPane1, textPane2);
-    	sunsetRadioListener(sunsetRadioButton, textPane1, textPane2);
-    	dawnRadioListener(dawnRadioButton, textPane1, textPane2);
-    	natureRadioListener(natureRadioButton, textPane1, textPane2);
-    	saveButtonListener(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				save, properties, outputDisplay, cmdDisplay);
-    	cancelButtonListener(f, cancel);
-    }
-
-	private static void saveButtonListener(JFrame f, JRadioButton defaultRadioButton, JRadioButton seaRadioButton,
-			JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, Button save,
-			ArrayList<String> properties, JTextPane outputDisplay, JTextArea cmdDisplay) {
-		save.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-    			String colorOption, topBg, bottomBg;
-    			ReadWriteXml prop = new ReadWriteXml();
-    			if (defaultRadioButton.isSelected()){
-    				colorOption = "default";
-    				topBg = "#ffffff r:255, g:255, b:255";
-    				bottomBg = "#000000 r:0, g:0, b:0";
-    				setProperties(properties, colorOption, black, white, topBg, bottomBg);
-    				prop.setProperties(properties);
-    				outputDisplay.setBackground(new Color(255, 255, 255));
-    				cmdDisplay.setBackground(new Color(0, 0, 0));
-    				cmdDisplay.setForeground(Color.WHITE);
-    			} else if (seaRadioButton.isSelected()){
-    				colorOption = "option1";
-    				topBg = "#B4D8E7 r:180, g:216, b: 231";
-    				bottomBg = "#56BAEC r:86, g:186, b:236";
-    				setProperties(properties, colorOption, black, white, topBg, bottomBg);
-    				prop.setProperties(properties);
-    				outputDisplay.setBackground(new Color(180, 216, 231));
-    				cmdDisplay.setBackground(new Color(86, 186, 236));
-    				cmdDisplay.setForeground(Color.BLACK);
-    			} else if (sunsetRadioButton.isSelected()){
-    				colorOption = "option2";
-    				topBg = "#C3C3E5 r:195, g:195, b: 229";
-    				bottomBg = "#443266 r:68, g:50, b:102";
-    				setProperties(properties, colorOption, black, white, topBg, bottomBg);
-    				prop.setProperties(properties);
-    				outputDisplay.setBackground(new Color(195, 195, 229));
-    				cmdDisplay.setBackground(new Color(68, 50, 102));
-    				cmdDisplay.setForeground(Color.WHITE);
-    			} else if (dawnRadioButton.isSelected()){
-    				colorOption = "option3";
-    				topBg = "#EECD86 r:238, g:205, b: 134";
-    				bottomBg = "#E18942 r:225, g:137, b:66";
-    				setProperties(properties, colorOption, black, black, topBg, bottomBg);
-    				prop.setProperties(properties);
-    				outputDisplay.setBackground(new Color(238, 205, 134));
-    				cmdDisplay.setBackground(new Color(225, 137, 66));
-    				cmdDisplay.setForeground(Color.BLACK);
-    			} else if (natureRadioButton.isSelected()){
-    				colorOption = "option4";
-    				topBg = "#C7E1BA r:199, g:225, b: 186";
-    				bottomBg = "#397249 r:57, g:114, b:73";
-    				setProperties(properties, colorOption, black, white, topBg, bottomBg);
-    				prop.setProperties(properties);
-    				outputDisplay.setBackground(new Color(199, 225, 196));
-    				cmdDisplay.setBackground(new Color(57, 114, 73));
-    				cmdDisplay.setForeground(Color.WHITE);
-    			}
-    			f.dispose();
-    		}
-    	});
-	}
-
-	private static void cancelButtonListener(JFrame f, Button cancel) {
-		cancel.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-    			f.dispose();
-    		}
-    	});
-	}
-
-	private static void natureRadioListener(JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2) {
-		natureRadioButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-				natureColor(textPane1, textPane2);
-    		}
-    	});
-	}
-
-	private static void dawnRadioListener(JRadioButton dawnRadioButton, JTextPane textPane1, JTextPane textPane2) {
-		dawnRadioButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-    			dawnColor(textPane1, textPane2);
-    		}
-    	});
-	}
-
-	private static void sunsetRadioListener(JRadioButton sunsetRadioButton, JTextPane textPane1, JTextPane textPane2) {
-		sunsetRadioButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-				sunsetColor(textPane1, textPane2);
-    		}
-    	});
-	}
-
-	private static void seaRadioListener(JRadioButton seaRadioButton, JTextPane textPane1, JTextPane textPane2) {
-		seaRadioButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-				seaColor(textPane1, textPane2);
-    		}
-    	});
-	}
-
-	private static void defaultRadioListener(JRadioButton defaultRadioButton, JTextPane textPane1,
-			JTextPane textPane2) {
-		defaultRadioButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e){
-    			defaultColor(textPane1, textPane2);
-    		}
-    	});
-	}
-    
 	private void setIcon(JFrame f) {
 				String icon = ".\\main\\icon\\d.png";
 				ImageIcon img = new ImageIcon(icon);
 				f.setIconImage(img.getImage());
-	}
-	
-	private static void setProperties(ArrayList<String> properties, String colorOption, String topFont, String bottomFont, String topBg, String bottomBg){
-		properties.set(colorOptionIndex, colorOption);
-		properties.set(topFontColorIndex, topFont);
-		properties.set(bottomFontColorIndex, bottomFont);
-		properties.set(topBgIndex, topBg);
-		properties.set(bottomBgIndex, bottomBg);
-		
 	}
 }
