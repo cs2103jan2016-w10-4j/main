@@ -29,7 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class SettingsUI {
-	private static String fileName = ".\\UserInterface\\properties.xml";
+	private static String fileName = ".\\properties.xml";
 	
     public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry) {
         initComponents(outputDisplay, cmdDisplay, commandText, cmdEntry);

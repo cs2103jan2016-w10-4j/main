@@ -47,7 +47,7 @@ public class ReadWriteXml {
 	}
 	
 	public ArrayList<String> readToArrayList(){
-		String fileName = ".\\UserInterface\\properties.xml";
+		String fileName = ".\\properties.xml";
 		ArrayList<String> properties = new ArrayList<String>();
 		String colorOption = read("colorOption", fileName);
 		String topFontColor = read("topFontColor", fileName);
@@ -76,7 +76,7 @@ public class ReadWriteXml {
 		properties.setProperty("fontSize", prop.get(fontSizeIndex));
 		properties.setProperty("fontFamily", prop.get(fontFamilyIndex));
 		
-		File file = new File(".\\UserInterface\\properties.xml");
+		File file = new File(".\\properties.xml");
 		try {
 			FileOutputStream fileOut = new FileOutputStream(file);
 			properties.storeToXML(fileOut, "colors");
