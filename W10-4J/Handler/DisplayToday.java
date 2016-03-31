@@ -17,7 +17,7 @@ public class DisplayToday {
 		DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
 		output = header + "<p>" + subHeaderFont;
 		
-		if(collated.equals(subHeaderFont)) {
+		if(collated == null || collated.equals(beforeHeader)) {
 			output += Constants.MESSAGE_DISPLAYTODAY;
 		} else {
 			collated = collated.substring(beforeHeader.length(), collated.length());

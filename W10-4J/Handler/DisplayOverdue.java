@@ -16,7 +16,7 @@ public class DisplayOverdue {
 		DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
 		output = header + "<p>" + subHeaderFont;
 		
-		if(collated.equals(subHeaderFont)) {
+		if(collated == null || collated.equals(subHeaderFont)) {
 			output += Constants.MESSAGE_DISPLAYOVERDUE;
 		} else {
 			output += collated;
