@@ -31,20 +31,41 @@ public class UIController {
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
     
-	public String commandAction(Parser p, JButton overdue, JButton all,
+	public void commandAction(String s, JButton overdue, JButton all,
 			JButton done, JButton help, JButton settings, JButton home,
 			String welcome, JTextField cmdEntry, JTextArea cmdDisplay,
 			JTextPane displayOutput, JLabel commandText) {
-		cmdEntryListener(p, cmdEntry, cmdDisplay, displayOutput);
-		settingsListener(settings, cmdDisplay, displayOutput, commandText,
-				cmdEntry);
-		allListener(all, p, displayOutput);
-		doneListener(done, p, displayOutput);
-		helpListener(help, p, displayOutput);
-		homeListener(home, p, displayOutput, welcome);
-		overdueListener(overdue, p, displayOutput);
-		return null;
+		Parser p = new Parser();
+		if (s != null){
+			commandEnteredAction(s, cmdEntry, cmdDisplay, displayOutput, p);
+		} else {
+			cmdEntryListener(p, cmdEntry, cmdDisplay, displayOutput);
+			settingsListener(settings, cmdDisplay, displayOutput, commandText,
+					cmdEntry);
+			allListener(all, p, displayOutput);
+			doneListener(done, p, displayOutput);
+			helpListener(help, p, displayOutput);
+			homeListener(home, p, displayOutput, welcome);
+			overdueListener(overdue, p, displayOutput);
+		}
     }
+
+	private void commandEnteredAction(String s, JTextField cmdEntry,
+			JTextArea cmdDisplay, JTextPane displayOutput, Parser p) {
+		cmdEntry.setText("");
+		commands.add(s);
+		commandIndex = commands.size();
+		printInCommandDisplay(cmdDisplay, "> " + s);
+		String output = p.parse(s);
+		assert output != null;
+		if (isDisplay(output)){
+			printInDisplayOutput(displayOutput, output.substring(1));
+		} else {
+			printInCommandDisplay(cmdDisplay, output.substring(1));
+			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
+		}
+		displayOutput.setCaretPosition(0);
+	}
 
 	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText, JTextField cmdEntry) {
 		settings.addActionListener(new ActionListener(){
@@ -67,7 +88,7 @@ public class UIController {
 	private void doneListener(JButton done, Parser p, JTextPane displayOutput) {
 		done.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			String output = p.parse("display by done");
+    			String output = p.parse("display done");
     			printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
     		}
@@ -77,8 +98,7 @@ public class UIController {
 	private void homeListener(JButton home, Parser p, JTextPane displayOutput, String welcome) {
 		home.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			String output = p.parse("display by today");
-    			printInDisplayOutput(displayOutput, welcome + p);
+    			printInDisplayOutput(displayOutput, welcome);
 				displayOutput.setCaretPosition(0);
     		}
     	});
@@ -97,7 +117,7 @@ public class UIController {
 	private void overdueListener(JButton overdue, Parser p, JTextPane displayOutput) {
 		overdue.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			String output = p.parse("display by overdue");
+    			String output = p.parse("display overdue");
     			printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
     		}
@@ -108,18 +128,7 @@ public class UIController {
 		cmdEntry.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String s = cmdEntry.getText();
-				cmdEntry.setText("");
-				commands.add(s);
-				commandIndex = commands.size();
-				printInCommandDisplay(cmdDisplay, "> " + s);
-				String output = p.parse(s);
-				assert output != null;
-				if (isDisplay(output)){
-					printInDisplayOutput(displayOutput, output.substring(1));
-				} else {
-					printInCommandDisplay(cmdDisplay, output.substring(1));
-				}
-				displayOutput.setCaretPosition(0);
+				commandEnteredAction(s, cmdEntry, cmdDisplay, displayOutput, p);
 			}
 		});
 	}

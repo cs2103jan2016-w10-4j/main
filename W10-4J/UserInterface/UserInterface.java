@@ -1,7 +1,7 @@
 /*
  * This is the class for the overall UI for Docket.
  * 
- * @@author A011371M
+ * @@author A0113761M
  */
 package UserInterface;
 
@@ -34,26 +34,28 @@ public class UserInterface{
 	private static int fontFamilyIndex = 6;
 	private static int fontSizeIndex = 5;
 	
+	static JFrame f = new JFrame("Docket");
+	static JScrollPane jScrollPane1 = new JScrollPane();
+	static JTextPane outputDisplay = new JTextPane();
+	static JButton homeButton = new JButton();
+	static JButton overdueButton = new JButton();
+	static JButton doneButton = new JButton();
+	static JButton allButton = new JButton();
+	static JButton helpButton = new JButton();
+	static JButton settingsButton = new JButton();
+	static JScrollPane jScrollPane2 = new JScrollPane();
+	static JTextArea cmdDisplay = new JTextArea();
+	static JTextField cmdEntry = new JTextField();
+	static JLabel commandText = new JLabel();
+	
 	public static void main(String[] args){
-		initComponents();
+		initComponents(null);
 	}
 	
-    public static void initComponents() {
-		Parser p = new Parser();
+	/* initComponents method is set to return a string array for JUnit testing purposes.*/
+    public static String[] initComponents(String s) {
+    	Parser p = new Parser();
 		UIController uiControl = new UIController();
-		JFrame f = new JFrame("Docket");
-		JScrollPane jScrollPane1 = new JScrollPane();
-		JTextPane outputDisplay = new JTextPane();
-		JButton homeButton = new JButton();
-		JButton overdueButton = new JButton();
-		JButton doneButton = new JButton();
-		JButton allButton = new JButton();
-		JButton helpButton = new JButton();
-		JButton settingsButton = new JButton();
-		JScrollPane jScrollPane2 = new JScrollPane();
-		JTextArea cmdDisplay = new JTextArea();
-		JTextField cmdEntry = new JTextField();
-		JLabel commandText = new JLabel();
 
 		setIcon(f);
 		commandTextSettings(commandText);
@@ -78,9 +80,17 @@ public class UserInterface{
 		
     	uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
 
-        uiControl.commandAction(p, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, welcomeMessage(p), cmdEntry, cmdDisplay, outputDisplay, commandText);
+        uiControl.commandAction(s, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, welcomeMessage(p), cmdEntry, cmdDisplay, outputDisplay, commandText);
+        return returnOutput();
     }
-
+    
+    private static String[] returnOutput(){
+    	String[] output = new String[2];
+    	output[0] = outputDisplay.getText();
+    	output[1] = cmdDisplay.getText();
+    	return output;
+    }
+    
 	private static void setLayoutForUI(JFrame f, JScrollPane jScrollPane1,
 			JButton homeButton, JButton overdueButton, JButton doneButton,
 			JButton allButton, JButton helpButton, JButton settingsButton,
@@ -98,13 +108,16 @@ public class UserInterface{
                         .addComponent(allButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(helpButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(settingsButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
-                
-                .addComponent(jScrollPane1))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup().addContainerGap()
-            		.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
+            		.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+            		.addContainerGap())
             .addGroup(layout.createSequentialGroup().addContainerGap()
             		.addComponent(commandText)
-            		.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+            		.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+            		.addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -123,13 +136,14 @@ public class UserInterface{
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup()
                 		.addComponent(commandText)
-                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 	}
     
 	private static void setIcon(JFrame f) {
-				String icon = ".\\main\\icon\\d.png";
-				ImageIcon img = new ImageIcon(icon);
+				String icon = "/main/icon/d.png";
+				ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
 				f.setIconImage(img.getImage());
 	}
 	
@@ -220,23 +234,23 @@ public class UserInterface{
 	private static void setIconsForButtons(JButton homeButton,
 			JButton overdueButton, JButton doneButton, JButton allButton,
 			JButton helpButton, JButton settingsButton) {
-		String home = ".\\main\\icon\\home.png";
-		ImageIcon homeImg = new ImageIcon(home);
+		String home = "/main/icon/home.png";
+		ImageIcon homeImg = new ImageIcon(UserInterface.class.getResource(home));
 		homeButton.setIcon(homeImg);
-		String overdue = ".\\main\\icon\\overdue.png";
-		ImageIcon overdueImg = new ImageIcon(overdue);
+		String overdue = "/main/icon/overdue.png";
+		ImageIcon overdueImg = new ImageIcon(UserInterface.class.getResource(overdue));
     	overdueButton.setIcon(overdueImg);
-		String done = ".\\main\\icon\\done.png";
-		ImageIcon doneImg = new ImageIcon(done);
+		String done = "/main/icon/done.png";
+		ImageIcon doneImg = new ImageIcon(UserInterface.class.getResource(done));
     	doneButton.setIcon(doneImg);
-		String all = ".\\main\\icon\\all.png";
-		ImageIcon allImg = new ImageIcon(all);
+		String all = "/main/icon/all.png";
+		ImageIcon allImg = new ImageIcon(UserInterface.class.getResource(all));
     	allButton.setIcon(allImg);
-		String help = ".\\main\\icon\\help.png";
-		ImageIcon helpImg = new ImageIcon(help);
+		String help = "/main/icon/help.png";
+		ImageIcon helpImg = new ImageIcon(UserInterface.class.getResource(help));
     	helpButton.setIcon(helpImg);
-		String settings = ".\\main\\icon\\settings.png";
-		ImageIcon settingsImg = new ImageIcon(settings);
+		String settings = "/main/icon/settings.png";
+		ImageIcon settingsImg = new ImageIcon(UserInterface.class.getResource(settings));
     	settingsButton.setIcon(settingsImg);
 	}
 
@@ -257,7 +271,7 @@ public class UserInterface{
     }
 
 	private static String welcomeMessage(Parser p) {
-		String output = p.parse("display by today").substring(1);
+		String output = p.parse("display today").substring(1);
 		String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
 				+ output + "<br>"
     			+ "<center>To start, enter a task in the command field below.</center><br>"
