@@ -92,80 +92,105 @@ public class CommandList {
 		for (int i = 0; i < Constants.addDefaultCommandList.length; i++) {
 			addCommandList.add(Constants.addDefaultCommandList[i]);
 		}
+		assert addCommandList.size() >= 1;
 		for (int i = 0; i < Constants.deleteDefaultCommandList.length; i++) {
 			deleteCommandList.add(Constants.deleteDefaultCommandList[i]);
 		}
+		assert deleteCommandList.size() >= 1;
 		for (int i = 0; i < Constants.editDefaultCommandList.length; i++) {
 			editCommandList.add(Constants.editDefaultCommandList[i]);
 		}
+		assert editCommandList.size() >= 1;
 		for (int i = 0; i < Constants.doneDefaultCommandList.length; i++) {
 			doneCommandList.add(Constants.doneDefaultCommandList[i]);
 		}
+		assert doneCommandList.size() >= 1;
 		for (int i = 0; i < Constants.displayDefaultCommandList.length; i++) {
 			displayCommandList.add(Constants.displayDefaultCommandList[i]);
 		}
+		assert displayCommandList.size() >= 1;
 		for (int i = 0; i < Constants.searchDefaultCommandList.length; i++) {
 			searchCommandList.add(Constants.searchDefaultCommandList[i]);
 		}
+		assert searchCommandList.size() >= 1;
 		for (int i = 0; i < Constants.setdirDefaultCommandList.length; i++) {
 			setdirCommandList.add(Constants.setdirDefaultCommandList[i]);
 		}
+		assert setdirCommandList.size() >= 1;
 		for (int i = 0; i < Constants.retrieveDefaultCommandList.length; i++) {
 			retrieveCommandList.add(Constants.retrieveDefaultCommandList[i]);
 		}
+		assert retrieveCommandList.size() >= 1;
 		for (int i = 0; i < Constants.recurrenceDefaultCommandList.length; i++) {
 			recurrenceCommandList.add(Constants.recurrenceDefaultCommandList[i]);
 		}
+		assert recurrenceCommandList.size() >= 1;
 		for (int i = 0; i < Constants.undoDefaultCommandList.length; i++) {
 			undoCommandList.add(Constants.undoDefaultCommandList[i]);
 		}
+		assert undoCommandList.size() >= 1;
 		for (int i = 0; i < Constants.exitDefaultCommandList.length; i++) {
 			exitCommandList.add(Constants.exitDefaultCommandList[i]);
 		}
+		assert exitCommandList.size() >= 1;
 		for (int i = 0; i < Constants.helpDefaultCommandList.length; i++) {
 			helpCommandList.add(Constants.helpDefaultCommandList[i]);
 		}
+		assert helpCommandList.size() >= 1;
 		for (int i = 0; i < Constants.aliasDefaultCommandList.length; i++) {
 			aliasCommandList.add(Constants.aliasDefaultCommandList[i]);
 		}
-
+		assert aliasCommandList.size() >= 1;
+		
 		for (int i = 0; i < Constants.addDefaultArgumentList.length; i++) {
 			addArgumentList.add(Constants.addDefaultArgumentList[i]);
 		}
+		assert addArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.editDefaultArgumentList.length; i++) {
 			editArgumentList.add(Constants.editDefaultArgumentList[i]);
 		}
+		assert editArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.displayDefaultArgumentList.length; i++) {
 			displayArgumentList.add(Constants.displayDefaultArgumentList[i]);
 		}
+		assert displayArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
 			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
 		}
+		assert searchArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.recurrenceDefaultArgumentList.length; i++) {
 			recurrenceArgumentList.add(Constants.recurrenceDefaultArgumentList[i]);
 		}
+		assert recurrenceArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.helpDefaultArgumentList.length; i++) {
 			helpArgumentList.add(Constants.helpDefaultArgumentList[i]);
 		}
+		assert helpArgumentList.size() >= 1;
 
 		for (int i = 0; i < Constants.startDateDefaultArgumentList.length; i++) {
 			startDateArgumentList.add(Constants.startDateDefaultArgumentList[i]);
 		}
+		assert startDateArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.endDateDefaultArgumentList.length; i++) {
 			endDateArgumentList.add(Constants.endDateDefaultArgumentList[i]);
 		}
+		assert endDateArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.startTimeDefaultArgumentList.length; i++) {
 			startTimeArgumentList.add(Constants.startTimeDefaultArgumentList[i]);
 		}
+		assert startTimeArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.endTimeDefaultArgumentList.length; i++) {
 			endTimeArgumentList.add(Constants.endTimeDefaultArgumentList[i]);
 		}
+		assert endTimeArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.detailsDefaultArgumentList.length; i++) {
 			detailsArgumentList.add(Constants.detailsDefaultArgumentList[i]);
 		}
+		assert detailsArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.repeatDefaultArgumentList.length; i++) {
 			repeatArgumentList.add(Constants.repeatDefaultArgumentList[i]);
 		}
+		assert repeatArgumentList.size() >= 1;
 	}
 
 	public ArrayList<String> getAddCommandList() {

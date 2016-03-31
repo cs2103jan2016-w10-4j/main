@@ -2,7 +2,9 @@ package Parser;
 
 import java.util.ArrayList;
 
+import main.Constants;
 import main.Constants.COMMAND_TYPE;
+import main.Date;
 
 public class Valid {
 	private NaturalTime naturalTime_;
@@ -61,6 +63,7 @@ public class Valid {
 						invalidDate = true;
 						return false;
 					} else {
+						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
 						arguments[i + 1] = date;
 					}
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {
@@ -113,6 +116,7 @@ public class Valid {
 						invalidDate = true;
 						return false;
 					} else {
+						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
 						arguments[i + 1] = date;
 					}
 				} else if (arguments[i].equals("start") || arguments[i].equals("end")) {

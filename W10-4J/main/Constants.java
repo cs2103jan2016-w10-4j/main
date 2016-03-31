@@ -148,4 +148,7 @@ public class Constants {
 	public static final String ASSERT_FIELD_EXISTENCE = ("Field does not exist");
 	public static final String ASSERT_TASKNAME_EXISTENCE = ("Task name does not exist");
 	public static final String ASSERT_TASKDETAILS_EXISTENCE = ("Task details does not exist");
+	
+	public static final String ASSERT_VALID_TIME = "Invalid time returned by NaturalTime";
+	public static final String ASSERT_VALID_DATE = "Invalid date returned by NaturalDate";
 }

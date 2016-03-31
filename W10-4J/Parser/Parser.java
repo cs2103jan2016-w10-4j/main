@@ -18,6 +18,7 @@ public class Parser {
 	}
 
 	public String parse(String command) {
+		assert command != null;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
@@ -25,13 +26,7 @@ public class Parser {
 		}
 		String[] arguments = getArguments(commandType, command);
 		if (!valid_.isValid(commandType, arguments)) {
-			if (valid_.getInvalidDate()) {
-				return "1" + Constants.MESSAGE_INVALID_DATE;
-			} else if (valid_.getInvalidTime()) {
-				return "1" + Constants.MESSAGE_INVALID_TIME;
-			} else {
-				return "1" + Constants.MESSAGE_INVALID_FORMAT;
-			}
+			getInvalidReturnMessage();
 		}
 		if (commandType == COMMAND_TYPE.ALIAS) {
 			setAlias(arguments);
@@ -45,10 +40,8 @@ public class Parser {
 		}
 	}
 
-	private void setAlias(String[] arguments) {
-		COMMAND_TYPE commandType = getAction(arguments[0]);
-		String alias = arguments[1];
-		commandList_.setAlias(commandType, alias);
+	public String getFirstWord(String command) {
+		return command.split(" ")[0];
 	}
 
 	public COMMAND_TYPE getAction(String command) {
@@ -80,14 +73,6 @@ public class Parser {
 			return COMMAND_TYPE.ALIAS;
 		} else {
 			return COMMAND_TYPE.INVALID;
-		}
-	}
-
-	public boolean isCommandType(String command, ArrayList<String> commandList) {
-		if (commandList.contains(command)) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
@@ -129,6 +114,24 @@ public class Parser {
 			return compactArguments(tokens, commandList_.getSearchArgumentList());
 		} else {
 			return tokens.toArray(new String[0]);
+		}
+	}
+	
+	public String getInvalidReturnMessage(){
+		if (valid_.getInvalidDate()) {
+			return "1" + Constants.MESSAGE_INVALID_DATE;
+		} else if (valid_.getInvalidTime()) {
+			return "1" + Constants.MESSAGE_INVALID_TIME;
+		} else {
+			return "1" + Constants.MESSAGE_INVALID_FORMAT;
+		}
+	}
+
+	public boolean isCommandType(String command, ArrayList<String> commandList) {
+		if (commandList.contains(command)) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -178,8 +181,10 @@ public class Parser {
 		}
 	}
 
-	public String getFirstWord(String command) {
-		return command.split(" ")[0];
+	private void setAlias(String[] arguments) {
+		COMMAND_TYPE commandType = getAction(arguments[0]);
+		String alias = arguments[1];
+		commandList_.setAlias(commandType, alias);
 	}
 
 	public int getNumberOfTaskTotal() {
