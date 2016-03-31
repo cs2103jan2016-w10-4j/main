@@ -24,8 +24,6 @@ public class Constants {
 	public static final String[] addDefaultArgumentList = { "startdate", "enddate", "start", "end", "details",
 			"repeat" };
 	public static final String[] editDefaultArgumentList = { "rename", "date", "start", "end", "details", "repeat" };
-	// public static final String[] displayDefaultArgumentList = { "id", "name",
-	// "starttime", "endtime", "date", "tasks","done" };
 	public static final String[] displayDefaultArgumentList = { "overdue", "name", "done", "id", "today" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
@@ -76,11 +74,27 @@ public class Constants {
 
 	public static final String MESSAGE_DISPLAY_FIELD_ID = ("id");
 	public static final String MESSAGE_DISPLAY_FIELD_NAME = ("name");
-	public static final String MESSAGE_DISPLAY_FIELD_START = ("starttime");
-	public static final String MESSAGE_DISPLAY_FIELD_END = ("endtime");
-	public static final String MESSAGE_DISPLAY_FIELD_DATE = ("date");
+	public static final String MESSAGE_DISPLAY_FIELD_OVERDUE = ("overdue");
+	public static final String MESSAGE_DISPLAY_FIELD_TODAY = ("today");
+	public static final String MESSAGE_DISPLAY_FIELD_STARTDATE = ("startdate");
+	//public static final String MESSAGE_DISPLAY_FIELD_ENDDATE = ("enddate");
 	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
 	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
+	
+	/*
+	 * Red - Exceed the stipulated date and endtime Black - Default color
+	 */
+	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#ff0000>");
+	public static final String MESSAGE_DISPLAY_COLOR_BLACK = ("<font color=#000000>");
+	
+	public static final String MESSAGE_DISPLAYFORMAT_TODAY = ("Today");
+	public static final String MESSAGE_DISPLAYFORMAT_YESTERDAY = ("Yesterday");
+	public static final String MESSAGE_DISPLAYFORMAT_TOMORROW = ("Tomorrow");
+	public static final String MESSAGE_DISPLAYFORMAT_NOSTARTDATE = ("No Start Date");
+	public static final String MESSAGE_DISPLAYFORMAT_MULTIDAYTASK = ("Multi-Day");
+	
+	public static final String MESSAGE_DISPLAYTODAY = ("There is no task today.");
+	public static final String MESSAGE_DISPLAYOVERDUE = ("There is no overdue task.");
 
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
 	public static final String MESSAGE_EDIT_ACTION_START = ("start");
@@ -107,8 +121,8 @@ public class Constants {
 	public static final String MESSAGE_STORAGE_PATH = ("PATH:");
 
 	public static final String MESSAGE_READ_EVENT = ("Event");
-	public static final String MESSAGE_READ_STARTDATE = ("Date");
-	public static final String MESSAGE_READ_ENDDATE = ("Date");
+	public static final String MESSAGE_READ_STARTDATE = ("Start Date");
+	public static final String MESSAGE_READ_ENDDATE = ("End Date");
 	public static final String MESSAGE_READ_STARTTIME = ("Start Time");
 	public static final String MESSAGE_READ_ENDTIME = ("End Time");
 	public static final String MESSAGE_READ_DETAILS = ("Details");
@@ -117,8 +131,8 @@ public class Constants {
 	public static final String MESSAGE_READ_MONTH = ("Month");
 
 	public static final String MESSAGE_WRITE_EVENT = ("%d. Event: %s");
-	public static final String MESSAGE_WRITE_STARTDATE = ("StartDate: %s");
-	public static final String MESSAGE_WRITE_ENDDATE = ("EndDate: %s");
+	public static final String MESSAGE_WRITE_STARTDATE = ("Start Date: %s");
+	public static final String MESSAGE_WRITE_ENDDATE = ("End Date: %s");
 	public static final String MESSAGE_WRITE_STARTTIME = ("Start Time: %s");
 	public static final String MESSAGE_WRITE_ENDTIME = ("End Time: %s");
 	public static final String MESSAGE_WRITE_DETAILS = ("Details: %s");
@@ -148,7 +162,7 @@ public class Constants {
 	public static final String ASSERT_FIELD_EXISTENCE = ("Field does not exist");
 	public static final String ASSERT_TASKNAME_EXISTENCE = ("Task name does not exist");
 	public static final String ASSERT_TASKDETAILS_EXISTENCE = ("Task details does not exist");
-	
+
 	public static final String ASSERT_VALID_TIME = "Invalid time returned by NaturalTime";
 	public static final String ASSERT_VALID_DATE = "Invalid date returned by NaturalDate";
 }

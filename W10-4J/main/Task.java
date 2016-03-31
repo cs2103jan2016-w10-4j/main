@@ -64,6 +64,19 @@ public class Task {
 			return (splitDateObject(task1).compareTo(splitDateObject(task2)));
 		}
 	};
+	
+	public static Comparator<Task> taskStartDateNameComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
+			int startDateValue = taskDateComparator.compare(task1,task2);
+			int nameValue = taskNameComparator.compare(task1,task2);
+			if(startDateValue >= 0 ) {
+				return nameValue;
+			} else {
+				return startDateValue;
+			}
+		}
+	};
+
 
 	private static Calendar splitDateObject(Task task) {
 		// assumes that the date is in yyyy/mm/dd format

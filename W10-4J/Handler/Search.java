@@ -32,7 +32,7 @@ public class Search implements Command {
 			}
 		}
 		if (results.size() != 0) {
-			return DisplayFormat.displayFormat(results);
+			return DisplayDefault.displayDefaultFormat(results);
 		}
 		return Constants.MESSAGE_SEARCH_FAIL;
 	}
