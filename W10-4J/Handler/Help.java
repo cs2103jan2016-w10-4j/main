@@ -14,7 +14,7 @@ public class Help implements Command {
 	public Help() {
 	}
 
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String execute(String[] task) {
 		if (task.length == 0) {
 			return helpFullString();
 		} else {

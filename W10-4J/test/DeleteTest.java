@@ -2,19 +2,16 @@ package test;
 
 import static org.junit.Assert.*;
 import main.Task;
-import java.util.ArrayList;
+
 import org.junit.Test;
 
-import Handler.Delete;
-import Handler.PreviousInput;
-import Storage.Storage;
 
+import Handler.ArraylistStorage;
+import Handler.Delete;
 public class DeleteTest {
 	
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
+	private ArraylistStorage arraylistStorage = new ArraylistStorage();
+	private Delete deleteTask = new Delete(arraylistStorage);
 
 	@Test
 	public void test() {
@@ -36,13 +33,12 @@ public class DeleteTest {
 		String[] input2 = {"1"};
 		String[] input3 = {"2"};
 		
-		notDoneYetStorage.add(firstTask);
-		notDoneYetStorage.add(secondTask);
-		Delete d = new Delete(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+		arraylistStorage.getNotDoneStorage().add(firstTask);
+		arraylistStorage.getNotDoneStorage().add(secondTask);
 
 		// test the delete method
-		assertEquals("sampleTask1 has been deleted.", d.execute(input1, 0));
-		assertEquals("sampleTask2 has been deleted.", d.execute(input2, 0));
-		assertEquals("Task cannot be deleted.", d.execute(input3, 0));
+		assertEquals("sampleTask1 has been deleted.", deleteTask.execute(input1));
+		assertEquals("sampleTask2 has been deleted.", deleteTask.execute(input2));
+		assertEquals("Task cannot be deleted.", deleteTask.execute(input3));
 	}
 }

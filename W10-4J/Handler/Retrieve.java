@@ -7,28 +7,28 @@ import main.Constants;
 import main.Task;
 
 public class Retrieve implements Command{
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	Storage mainStorage;
 	
-	public Retrieve(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.mainStorage = mainStorage;
+	public Retrieve(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		doneStorage = arraylistStorage.getDoneStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
 
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String execute(String[] task) {
 		try {
 			assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
 			ArrayList<ArrayList<Task>> getFromStorage = readFromFile(task[0]);
-			ArrayList<Task> addtionalnotDoneYetStorage = getFromStorage.get(0);
+			ArrayList<Task> addtionalNotDoneStorage = getFromStorage.get(0);
 			ArrayList<Task> additionalDoneStorage = getFromStorage.get(1);
 			
-			ArrayList<Task> combineHandlerMemory = combineArray(notDoneYetStorage, addtionalnotDoneYetStorage);
+			ArrayList<Task> combineHandlerMemory = combineArray(notDoneStorage, addtionalNotDoneStorage);
 			ArrayList<Task> combineDoneStorage = combineArray(doneStorage, additionalDoneStorage);
-			notDoneYetStorage = combineHandlerMemory;
+			notDoneStorage = combineHandlerMemory;
 			doneStorage = combineDoneStorage;
-			mainStorage.write(notDoneYetStorage, doneStorage);
+			mainStorage.write(notDoneStorage, doneStorage);
 
 			return Constants.MESSAGE_RETRIEVE_PASS;
 		} catch (Exception e) {
@@ -92,8 +92,8 @@ public class Retrieve implements Command{
 			}
 			
 			if (isSame == false) {
-				int currentSize = Handler.getTaskID();
-				task1.setTaskID(currentSize + 1);
+//				int currentSize = Handler.getTaskID();
+//				task1.setTaskID(currentSize + 1);
 				originalArray.add(task1);
 			}
 			isSame = false;

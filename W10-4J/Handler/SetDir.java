@@ -1,4 +1,4 @@
-//@@author Berkin
+
 package Handler;
 
 import java.util.ArrayList;
@@ -8,23 +8,22 @@ import main.*;
 
 public class SetDir implements Command {
 
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public SetDir(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+	public SetDir(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		doneStorage = arraylistStorage.getDoneStorage();
+		previousInputStorage = arraylistStorage.getPreInputStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
-	//@@author 
 	
-	public String execute(String[] task, int notUsedInThisCommand){
+	
+	public String execute(String[] task){
   		if(mainStorage.setDirectory(task[0])){
-  			notDoneYetStorage.clear();
+  			notDoneStorage.clear();
   			doneStorage.clear();
   			previousInputStorage.clear();
   			return Constants.MESSAGE_SETDIR_PASS;

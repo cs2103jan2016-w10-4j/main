@@ -7,17 +7,16 @@ import main.Task;
 import main.Constants;
 
 public class Done implements Command{
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Done(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+	public Done(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		doneStorage = arraylistStorage.getDoneStorage();
+		previousInputStorage = arraylistStorage.getPreInputStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
 
 	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
@@ -34,11 +33,11 @@ public class Done implements Command{
 		taskArray.add(task);
 	}
 
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String execute(String[] task) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 
-		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
+		Task eachTask = findByTaskID(notDoneStorage, taskID);
 		if (eachTask==null){
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
@@ -51,10 +50,10 @@ public class Done implements Command{
 //			} else{
 //			}
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
-			notDoneYetStorage.remove(eachTask);
+			notDoneStorage.remove(eachTask);
 			doneStorage.add(eachTask);
 			// write to mainStorage
-			mainStorage.write(notDoneYetStorage, doneStorage);
+			mainStorage.write(notDoneStorage, doneStorage);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
 			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;

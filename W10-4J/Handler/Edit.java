@@ -6,26 +6,25 @@ import Storage.Storage;
 import main.Task;
 import main.Constants;
 public class Edit implements Command{
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Edit(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+	public Edit(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		doneStorage = arraylistStorage.getDoneStorage();
+		previousInputStorage = arraylistStorage.getPreInputStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
 
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String execute(String[] task) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(notDoneYetStorage, taskID);
+		Task eachTask = findByTaskID(notDoneStorage, taskID);
 		if (eachTask==null){
 			return Constants.MESSAGE_EDIT_FAIL;
-		} else if (taskID <= 0 || taskID > Handler.getTaskID()){
+		} else if (taskID <= 0 || taskID > notDoneStorage.size()){
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
@@ -35,13 +34,13 @@ public class Edit implements Command{
 			
 			if(isTimeValid(eachTask)){
 				// write to mainStorage
-				mainStorage.write(notDoneYetStorage, doneStorage);
+				mainStorage.write(notDoneStorage, doneStorage);
 				// remember previous state
 				clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
 				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 			} else{
-				notDoneYetStorage.remove(eachTask);
-				notDoneYetStorage.add(oldTask);
+				notDoneStorage.remove(eachTask);
+				notDoneStorage.add(oldTask);
 				return Constants.MESSAGE_TIME_FAIL;
 			}
 		}

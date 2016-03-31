@@ -8,24 +8,23 @@ import main.Task;
 //@@author Berkin
 public class Add implements Command {
 	// @@author
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 
-	public Add(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-			ArrayList<PreviousInput> previousInputStorage, Storage mainStorage) {
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+	public Add(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		doneStorage = arraylistStorage.getDoneStorage();
+		previousInputStorage = arraylistStorage.getPreInputStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
 
-	public String execute(String[] task, int taskID) {
+	public String execute(String[] task) {
 		assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
 		Task eachTask = new Task(task[0].trim());
-		assert taskID > 0 : Constants.ASSERT_TASKID_EXISTENCE;
-		eachTask.setTaskID(taskID);
+//		assert taskID > 0 : Constants.ASSERT_TASKID_EXISTENCE;
+//		eachTask.setTaskID(taskID);
 		String action;
 		for (int i = 1; i < task.length; i += 2) {
 			action = task[i].trim();
@@ -72,9 +71,9 @@ public class Add implements Command {
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
 			// add to arraylist storage
-			notDoneYetStorage.add(eachTask);
+			notDoneStorage.add(eachTask);
 			// write to mainStorage
-			mainStorage.write(notDoneYetStorage, doneStorage);
+			mainStorage.write(notDoneStorage, doneStorage);
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
 			return Constants.MESSAGE_TIME_FAIL;

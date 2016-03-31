@@ -1,42 +1,38 @@
-//@@author Berkin
+
 package test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 
 import org.junit.Test;
 
 import Handler.Add;
-import Handler.PreviousInput;
+import Handler.ArraylistStorage;
 import Handler.Undo;
-import Storage.Storage;
 import main.Constants;
-import main.Task;
 
 public class UndoTest {
 
-	private ArrayList<Task> notDoneYetStorage = new ArrayList<Task>();
-	private ArrayList<Task> doneStorage = new ArrayList<Task>();
-	private ArrayList<PreviousInput> previousInputStorage = new ArrayList<PreviousInput>();
-	Storage mainStorage = new Storage();
-
+	private ArraylistStorage arraylistStorage = new ArraylistStorage();
+	private Add addTask = new Add(arraylistStorage);
+	private Undo undoTask;
+	
 	@Test
 	public void test() {
 		String task1[]={"test1","2016/03/22","09:00","21:00","None"};
 		String task2[]={"test2","2016/02/23","00:00","10:00","None"};
-		Add add = new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
-		add.execute(task1,1);
-		assertEquals("test1",previousInputStorage.get(0).getTask().getName());
-		assertEquals("add",previousInputStorage.get(0).getAction());
-		add.execute(task2,2);
-		assertEquals("test2",previousInputStorage.get(0).getTask().getName());
-		assertEquals("add",previousInputStorage.get(0).getAction());
-		Undo undo=new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
-		assertEquals(Constants.MESSAGE_UNDO_PASS,undo.execute(null,0));
-		assertTrue(notDoneYetStorage.get(notDoneYetStorage.size()-1).getName()!="test2");
-		assertTrue(notDoneYetStorage.get(notDoneYetStorage.size()-1).getName()=="test1");
+		addTask.execute(task1);
+		assertEquals("test1",arraylistStorage.getPreInputStorage().get(0).getTask().getName());
+		assertEquals("add",arraylistStorage.getPreInputStorage().get(0).getAction());
+		addTask.execute(task2);
+		assertEquals("test2",arraylistStorage.getPreInputStorage().get(0).getTask().getName());
+		assertEquals("add",arraylistStorage.getPreInputStorage().get(0).getAction());
+		
+		// test undo
+		undoTask = new Undo(arraylistStorage);
+		assertEquals(Constants.MESSAGE_UNDO_PASS,undoTask.execute(null));
+		assertTrue(arraylistStorage.getNotDoneStorage().get(arraylistStorage.getNotDoneStorage().size()-1).getName()!="test2");
+		assertTrue(arraylistStorage.getNotDoneStorage().get(arraylistStorage.getNotDoneStorage().size()-1).getName()=="test1");
 	}
 
 }
-// @@author

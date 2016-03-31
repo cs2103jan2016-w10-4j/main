@@ -8,23 +8,43 @@ import Storage.Storage;
 import main.Constants.COMMAND_TYPE;
 
 public class Handler {
-	private static ArrayList<Task> notDoneYetStorage;
-	private static ArrayList<Task> doneStorage;
-	private static ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage = new Storage();
+	private ArraylistStorage arraylistStorage;
+	private Add addTask;
+	private Delete deleteTask;
+	private Display displayTask;
+	private Done doneTask;
+	private Edit editTask;
+	private Recurrence recurrTask;
+	private Retrieve retrieveTask;
+	private Search searchTask;
+	private SetDir setDirTask;
+	private Undo undoTask;
+	private Help helpTask;
 
 	public Handler() {
-		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.fileName);
-		notDoneYetStorage = getFromStorage.get(0);
-		doneStorage = getFromStorage.get(1);
-		previousInputStorage = new ArrayList<PreviousInput>();
+		
+		arraylistStorage = new ArraylistStorage();
+		initialiseAllArrays(arraylistStorage);
+	}
+	
+	public void initialiseAllArrays(ArraylistStorage arraylistStorage){
+		addTask = new Add(arraylistStorage);
+		deleteTask = new Delete(arraylistStorage);
+		displayTask = new Display(arraylistStorage);
+		doneTask = new Done(arraylistStorage);
+		editTask = new Edit(arraylistStorage);
+		recurrTask = new Recurrence(arraylistStorage);
+		retrieveTask = new Retrieve(arraylistStorage);
+		searchTask = new Search(arraylistStorage);
+		setDirTask = new SetDir(arraylistStorage);
+		undoTask = new Undo(arraylistStorage);
+		helpTask = new Help();
 	}
 
-	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
-			return cmd.execute(task, getTaskID());
+			return cmd.execute(task);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
@@ -36,29 +56,29 @@ public class Handler {
 			throws IllegalArgumentException, IllegalStateException {
 		switch (command) {
 		case ADD:
-			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return addTask;
 		case EDIT:
-			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return editTask;
 		case DELETE:
-			return new Delete(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return deleteTask;
 		case DONE:
-			return new Done(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return doneTask;
 		case DISPLAY:
-			return new Display(notDoneYetStorage, doneStorage, mainStorage);
+			return displayTask;
 		case SEARCH:
-			return new Search(notDoneYetStorage, mainStorage);
+			return searchTask;
 		case SETDIR:
-			return new SetDir(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return setDirTask;
 		case RETRIEVE:
-			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
+			return retrieveTask;
 		case RECURRENCE:
-			return new Recurrence(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return recurrTask;
 		case UNDO:
-			return new Undo(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
+			return undoTask;
+		case HELP:
+			return helpTask;
 		case EXIT:
 			System.exit(0);
-		case HELP:
-			return new Help();
 		case INVALID:
 			throw new IllegalArgumentException();
 		default:
@@ -66,13 +86,13 @@ public class Handler {
 		}
 	}
 
-	public static int getTaskID() {
+	public int getTaskID() {
 		ArrayList<Integer> usedID = new ArrayList<>();
-		for (int i = 0; i < doneStorage.size(); i++) {
-			usedID.add(doneStorage.get(i).getTaskID());
+		for (int i = 0; i < arraylistStorage.getDoneStorage().size(); i++) {
+			usedID.add(arraylistStorage.getDoneStorage().get(i).getTaskID());
 		}
-		for (int i = 0; i < notDoneYetStorage.size(); i++) {
-			usedID.add(notDoneYetStorage.get(i).getTaskID());
+		for (int i = 0; i < arraylistStorage.getNotDoneStorage().size(); i++) {
+			usedID.add(arraylistStorage.getNotDoneStorage().get(i).getTaskID());
 		}
 		Collections.sort(usedID);
 		for (int i = 0; i < usedID.size(); i++) {
@@ -84,7 +104,7 @@ public class Handler {
 	}
 
 	public int getNumberOfTaskTotal() {
-		return notDoneYetStorage.size();
+		return arraylistStorage.getNotDoneStorage().size();
 	}
 
 	// Not implemented yet, waiting for handlerMemory to finish
@@ -98,6 +118,6 @@ public class Handler {
 	}
 
 	public int getNumberOfTaskDone() {
-		return doneStorage.size();
+		return arraylistStorage.getDoneStorage().size();
 	}
 }

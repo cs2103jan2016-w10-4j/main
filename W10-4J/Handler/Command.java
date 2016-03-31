@@ -2,8 +2,8 @@
 package Handler;
 
 public interface Command {
-
-	String execute(String[] task, int taskID);
+	
+	String execute(String[] task);
 
 }
 // @@author Berkin

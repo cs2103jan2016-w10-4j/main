@@ -8,25 +8,25 @@ import Storage.Storage;
 import main.Task;
 
 public class Search implements Command {
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	Storage mainStorage;
 
-	public Search(ArrayList<Task> notDoneYetStorage, Storage mainStorage) {
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.mainStorage = mainStorage;
+	public Search(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
 
-	public String execute(String[] task, int notUsedInThisCommand) {
+	public String execute(String[] task) {
 		ArrayList<Task> results = new ArrayList<Task>();
 		// each task is certain to have a name
 		// check whether exclude field exists
 		if (task.length > 1) {
-			for (Task eachTask : notDoneYetStorage) {
+			for (Task eachTask : notDoneStorage) {
 				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 				inclusiveSearch(eachTask, task, results);
 			}
 		} else {
-			for (Task eachTask : notDoneYetStorage) {
+			for (Task eachTask : notDoneStorage) {
 				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 				exclusiveSearch(eachTask, task, results);
 			}

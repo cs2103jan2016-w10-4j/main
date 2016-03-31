@@ -7,20 +7,19 @@ import Storage.Storage;
 import main.Task;
 
 public class Undo implements Command{
-	private ArrayList<Task> notDoneYetStorage;
+	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
 	Storage mainStorage;
 	
-	public Undo(ArrayList<Task> notDoneYetStorage, ArrayList<Task> doneStorage,
-				ArrayList<PreviousInput> previousInputStorage, Storage mainStorage){
-		this.notDoneYetStorage = notDoneYetStorage;
-		this.doneStorage = doneStorage;
-		this.previousInputStorage = previousInputStorage;
-		this.mainStorage = mainStorage;
+	public Undo(ArraylistStorage arraylistStorage) {
+		notDoneStorage = arraylistStorage.getNotDoneStorage();
+		doneStorage = arraylistStorage.getDoneStorage();
+		previousInputStorage = arraylistStorage.getPreInputStorage();
+		mainStorage = arraylistStorage.getMainStorage();
 	}
 
-	public String execute(String[] notUsedInThisCommand, int notUsedInThisCommand2) {
+	public String execute(String[] notUsedInThisCommand) {
 		String actionToBeUndone = previousInputStorage.get(0).getAction();
 		Task previousTask = previousInputStorage.get(0).getTask();
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
@@ -29,21 +28,21 @@ public class Undo implements Command{
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
 			// to restore to previous state, must unadd the task
-			notDoneYetStorage.remove(previousTask);
+			notDoneStorage.remove(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, previousTask));
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
 			// to restore to previous state, must add the task
-			notDoneYetStorage.add(previousTask);
+			notDoneStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_ADD, previousTask));
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
 			// to restore to previous state, must edit again to previous state
 			eachTask = previousInputStorage.get(0).getEditedTask();
-			notDoneYetStorage.remove(eachTask);
-			notDoneYetStorage.add(previousTask);
+			notDoneStorage.remove(eachTask);
+			notDoneStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, previousTask));
 			break;
@@ -51,21 +50,21 @@ public class Undo implements Command{
 			// to restore to previous state, must undone the task
 			// eachTask = taskFinder(doneStorage, previousTask);
 			doneStorage.remove(previousTask);
-			notDoneYetStorage.add(previousTask);
+			notDoneStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, previousTask));
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
 			// to restore to previous state, must undone the task
 			//eachTask = taskFinder(notDoneYetStorage, previousTask);
-			notDoneYetStorage.remove(previousTask);
+			notDoneStorage.remove(previousTask);
 			doneStorage.add(previousTask);
 			// remember previous state
 			clearAndAdd(previousInputStorage, new PreviousInput(Constants.MESSAGE_ACTION_DONE, previousTask));
 			break;
 		}
 		// write to mainStorage
-		mainStorage.write(notDoneYetStorage, doneStorage);
+		mainStorage.write(notDoneStorage, doneStorage);
 		return Constants.MESSAGE_UNDO_PASS;
 	}
 
