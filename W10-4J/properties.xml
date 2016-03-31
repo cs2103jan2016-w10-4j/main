@@ -4,7 +4,7 @@
 <comment>colors</comment>
 <entry key="fontFamily">Arial</entry>
 <entry key="colorOption">option2</entry>
-<entry key="fontSize">20</entry>
+<entry key="fontSize">12</entry>
 <entry key="bottomFontColor">#ffffff r:255, g:255, b:255</entry>
 <entry key="bottomBg">#443266 r:68, g:50, b:102</entry>
 <entry key="topBg">#C3C3E5 r:195, g:195, b: 229</entry>
