@@ -271,7 +271,7 @@ public class UserInterface{
     }
 
 	private static String welcomeMessage(Parser p) {
-		String output = p.parse("display by today").substring(1);
+		String output = p.parse("display today").substring(1);
 		String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
 				+ output + "<br>"
     			+ "<center>To start, enter a task in the command field below.</center><br>"

@@ -88,7 +88,7 @@ public class UIController {
 	private void doneListener(JButton done, Parser p, JTextPane displayOutput) {
 		done.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			String output = p.parse("display by done");
+    			String output = p.parse("display done");
     			printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
     		}
@@ -117,7 +117,7 @@ public class UIController {
 	private void overdueListener(JButton overdue, Parser p, JTextPane displayOutput) {
 		overdue.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			String output = p.parse("display by overdue");
+    			String output = p.parse("display overdue");
     			printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
     		}
