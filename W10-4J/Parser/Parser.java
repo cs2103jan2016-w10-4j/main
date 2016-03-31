@@ -21,7 +21,7 @@ public class Parser {
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
-			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
+			return "1" + Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
 		if (!valid_.isValid(commandType, arguments)) {
