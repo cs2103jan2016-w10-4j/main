@@ -10,25 +10,10 @@ public class Delete implements Command {
 	private Task forEachTask;
 	private Task forOldTask;
 	private HandlerMemory handlerMemory;
-	/*
-	 * private ArrayList<Task> notDoneYetStorage; private ArrayList<Task>
-	 * doneStorage; private ArrayList<PreviousInput> previousInputStorage;
-	 * Storage mainStorage;
-	 */
+	
 
-	public Delete(/*
-					 * ArrayList<Task> notDoneYetStorage, ArrayList<Task>
-					 * doneStorage, ArrayList<PreviousInput>
-					 * previousInputStorage, Storage mainStorage,
-					 */HandlerMemory handlerMemory) {
-		this.handlerMemory = handlerMemory;/*
-											 * this.notDoneYetStorage =
-											 * notDoneYetStorage;
-											 * this.doneStorage = doneStorage;
-											 * this.previousInputStorage =
-											 * previousInputStorage;
-											 * this.mainStorage = mainStorage;
-											 */
+	public Delete(HandlerMemory handlerMemory) {
+		this.handlerMemory = handlerMemory;									
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {

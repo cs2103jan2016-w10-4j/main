@@ -11,11 +11,7 @@ public class Add implements Command {
 	private Task forOldTask;
 	private HandlerMemory handlerMemory;
 
-	public Add(/*
-				 * ArrayList<Task> notDoneYetStorage, ArrayList<Task>
-				 * doneStorage, /*ArrayList<PreviousInput> previousInputStorage,
-				 * Storage mainStorage,
-				 */HandlerMemory handlerMemory) {
+	public Add(HandlerMemory handlerMemory) {
 
 		this.handlerMemory = handlerMemory;
 	}

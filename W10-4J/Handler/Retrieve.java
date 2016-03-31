@@ -13,7 +13,6 @@ public class Retrieve implements Command{
 	private  Task forEachTask;
 	private  Task forOldTask;
 	private  HandlerMemory handlerMemory;
-	
 
 	
 	public Retrieve(HandlerMemory handlerMemory){

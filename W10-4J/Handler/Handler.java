@@ -10,7 +10,7 @@ public class Handler {
 		handlerMemory = new HandlerMemory();
 	}
 
-	// @@author Berkin
+	//@@author A0149174Y
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
@@ -28,7 +28,6 @@ public class Handler {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
-		// int taskID=HandlerMemory.getTaskID();
 		switch (command) {
 		case ADD:
 			HandlerMemory.setTaskID(HandlerMemory.getTaskID() + 1);
