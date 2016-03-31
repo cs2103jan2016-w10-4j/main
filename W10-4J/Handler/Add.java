@@ -6,11 +6,10 @@ import Storage.Storage;
 import main.Task;
 
 public class Add implements Command {
-	Storage mainStorage;
 	ArraylistStorage arraylistStorage_;
 	
 	public Add(ArraylistStorage arraylistStorage) {
-		arraylistStorage_ = arraylistStorage;
+		this.arraylistStorage_ = arraylistStorage;
 	}
 
 	public String execute(String[] task) {
@@ -67,7 +66,7 @@ public class Add implements Command {
 			// add to arraylist storage
 			arraylistStorage_.getNotDoneStorage().add(eachTask);
 			// write to mainStorage
-			mainStorage.write(arraylistStorage_.getNotDoneStorage(), arraylistStorage_.getDoneStorage());
+			arraylistStorage_.getMainStorage().write(arraylistStorage_.getNotDoneStorage(), arraylistStorage_.getDoneStorage());
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
 			return Constants.MESSAGE_TIME_FAIL;
