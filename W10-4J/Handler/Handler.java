@@ -2,6 +2,8 @@ package Handler;
 
 import main.*;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import Storage.Storage;
 import main.Constants.COMMAND_TYPE;
 
@@ -9,7 +11,6 @@ public class Handler {
 	private static ArrayList<Task> notDoneYetStorage;
 	private static ArrayList<Task> doneStorage;
 	private static ArrayList<PreviousInput> previousInputStorage;
-	private static int taskID;
 	Storage mainStorage = new Storage();
 
 	public Handler() {
@@ -17,14 +18,13 @@ public class Handler {
 		notDoneYetStorage = getFromStorage.get(0);
 		doneStorage = getFromStorage.get(1);
 		previousInputStorage = new ArrayList<PreviousInput>();
-		taskID = getTaskID();
 	}
 
 	// @@author Berkin
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
 			Command cmd = createCommand(command, task);
-			return cmd.execute(task, taskID);
+			return cmd.execute(task, getTaskID());
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
@@ -36,7 +36,6 @@ public class Handler {
 			throws IllegalArgumentException, IllegalStateException {
 		switch (command) {
 		case ADD:
-			taskID++;
 			return new Add(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case EDIT:
 			return new Edit(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
@@ -49,7 +48,6 @@ public class Handler {
 		case SEARCH:
 			return new Search(notDoneYetStorage, mainStorage);
 		case SETDIR:
-			taskID = 0;
 			return new SetDir(notDoneYetStorage, doneStorage, previousInputStorage, mainStorage);
 		case RETRIEVE:
 			return new Retrieve(notDoneYetStorage, doneStorage, mainStorage);
@@ -69,40 +67,36 @@ public class Handler {
 	}
 
 	public static int getTaskID() {
-		int id = 0;
+		ArrayList<Integer> usedID = new ArrayList<>();
 		for (int i = 0; i < doneStorage.size(); i++) {
-			int currentId = doneStorage.get(i).getTaskID();
-			if (currentId > id) {
-				id = currentId;
-			}
+			usedID.add(doneStorage.get(i).getTaskID());
 		}
 		for (int i = 0; i < notDoneYetStorage.size(); i++) {
-			int currentId = notDoneYetStorage.get(i).getTaskID();
-			if (currentId > id) {
-				id = currentId;
+			usedID.add(notDoneYetStorage.get(i).getTaskID());
+		}
+		Collections.sort(usedID);
+		for (int i = 0; i < usedID.size(); i++) {
+			if (usedID.get(i) != i + 1) {
+				return i + 1;
 			}
 		}
-		return id;
-	}
-
-	public static void setTaskID(int id) {
-		taskID = id;
+		return usedID.size() + 1;
 	}
 
 	public int getNumberOfTaskTotal() {
 		return notDoneYetStorage.size();
 	}
 
-	//Not implemented yet, waiting for handlerMemory to finish
+	// Not implemented yet, waiting for handlerMemory to finish
 	public int getNumberOfTaskToday() {
 		return -1;
 	}
-	
-	//Not implemented yet, waiting for handlerMemory to finish
+
+	// Not implemented yet, waiting for handlerMemory to finish
 	public int getNumberOfTaskOverdue() {
 		return -1;
 	}
-	
+
 	public int getNumberOfTaskDone() {
 		return doneStorage.size();
 	}

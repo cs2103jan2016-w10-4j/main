@@ -95,7 +95,6 @@ public class Retrieve implements Command{
 				int currentSize = Handler.getTaskID();
 				task1.setTaskID(currentSize + 1);
 				originalArray.add(task1);
-				Handler.setTaskID(currentSize + 1);
 			}
 			isSame = false;
 		}

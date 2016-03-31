@@ -1,6 +1,7 @@
 Tasks on hand:
 1. Event: a
 Start Time: 17:00
+2. Event: b
 3. Event: ls
-Tasks that are done:
-2. Event: l
+4. Event: c
+No tasks are done!

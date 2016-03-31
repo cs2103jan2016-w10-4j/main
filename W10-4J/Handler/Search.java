@@ -7,55 +7,55 @@ import java.util.ArrayList;
 import Storage.Storage;
 import main.Task;
 
-
-public class Search implements Command{
+public class Search implements Command {
 	private ArrayList<Task> notDoneYetStorage;
 	Storage mainStorage;
-	
-	public Search(ArrayList<Task> notDoneYetStorage, Storage mainStorage){
+
+	public Search(ArrayList<Task> notDoneYetStorage, Storage mainStorage) {
 		this.notDoneYetStorage = notDoneYetStorage;
 		this.mainStorage = mainStorage;
 	}
 
 	public String execute(String[] task, int notUsedInThisCommand) {
-		ArrayList<Task> searchNotDoneYetStorage = new ArrayList<Task>();
+		ArrayList<Task> results = new ArrayList<Task>();
 		// each task is certain to have a name
 		// check whether exclude field exists
 		if (task.length > 1) {
 			for (Task eachTask : notDoneYetStorage) {
-				assert eachTask!=null: Constants.ASSERT_TASK_EXISTENCE;
-				inclusiveSearch(eachTask, task, searchNotDoneYetStorage);
+				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
+				inclusiveSearch(eachTask, task, results);
 			}
 		} else {
 			for (Task eachTask : notDoneYetStorage) {
-				assert eachTask!=null: Constants.ASSERT_TASK_EXISTENCE;
-				exclusiveSearch(eachTask, task, searchNotDoneYetStorage);
+				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
+				exclusiveSearch(eachTask, task, results);
 			}
 		}
-		if (searchNotDoneYetStorage.size()!=0){
-			return DisplayFormat.displayFormat(searchNotDoneYetStorage);
+		if (results.size() != 0) {
+			return DisplayFormat.displayFormat(results);
 		}
 		return Constants.MESSAGE_SEARCH_FAIL;
 	}
-	
-	private void inclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage){
-		if (eachTask.getDetails()==null){
-			if (searchName(eachTask, task, true)){
+
+	private void inclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage) {
+		if (eachTask.getDetails() == null) {
+			if (searchName(eachTask, task, true)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		} else {
-			if (searchNameAndDetails(eachTask, task, true)){
+			if (searchNameAndDetails(eachTask, task, true)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		}
 	}
-	private void exclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage){
-		if (eachTask.getDetails()==null){
-			if (searchName(eachTask, task, false)){
+
+	private void exclusiveSearch(Task eachTask, String[] task, ArrayList<Task> searchNotDoneYetStorage) {
+		if (eachTask.getDetails() == null) {
+			if (searchName(eachTask, task, false)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		} else {
-			if (searchNameAndDetails(eachTask, task, false)){
+			if (searchNameAndDetails(eachTask, task, false)) {
 				searchNotDoneYetStorage.add(eachTask);
 			}
 		}
