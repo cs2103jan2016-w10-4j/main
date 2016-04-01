@@ -1,15 +1,13 @@
 package Handler;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import main.Constants;
 
 public class Help implements Command {
-	private static String fileName = ".\\Handler\\help.xml";
 	private static String help;
 	public Help() {
 	}
@@ -23,59 +21,57 @@ public class Help implements Command {
 	}
 
 	public String helpSpecific(String task) {
-		help = read("welcome", fileName);
+		help = read("welcome");
 		switch (task){
 		case Constants.MESSAGE_ACTION_ADD:
-			help += read("add", fileName);
+			help += read("add");
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
-			help += read("delete", fileName);
+			help += read("delete");
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
-			help += read("edit", fileName);
+			help += read("edit");
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
-			help += read("done", fileName);
+			help += read("done");
 			break;
 		case Constants.MESSAGE_ACTION_DISPLAY:
-			help += read("display", fileName);
+			help += read("display");
 			break;
 		case Constants.MESSAGE_ACTION_SEARCH:
-			help += read("search", fileName);
+			help += read("search");
 			break;
 		case Constants.MESSAGE_ACTION_STORAGE:
-			help += read("store", fileName);
+			help += read("store");
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
-			help += read("undo", fileName);
+			help += read("undo");
 			break;
 		}
 		return help;
 	}
 
 	public String helpFullString() {
-		help = read("welcome", fileName);
-		help += read("function", fileName);
-		help += read("add", fileName);
-		help += read("delete", fileName);
-		help += read("edit", fileName);
-		help += read("done", fileName);
-		help += read("display", fileName);
-		help += read("search", fileName);
-		help += read("store", fileName);
-		help += read("undo", fileName);
-		help += read("natural", fileName);
-		help += read("keyboard", fileName);
+		help = read("welcome");
+		help += read("function");
+		help += read("add");
+		help += read("delete");
+		help += read("edit");
+		help += read("done");
+		help += read("display");
+		help += read("search");
+		help += read("store");
+		help += read("undo");
+		help += read("natural");
+		help += read("keyboard");
 		return help;
 	}
 	
-	public static String read(String action, String fileName){
+	public static String read(String action){
+		InputStream fileName = Help.class.getResourceAsStream("/resources/help.xml");
 		try{
-			File file = new File(fileName);
-			FileInputStream fileInput = new FileInputStream(file);
 			Properties prop = new Properties();
-			prop.loadFromXML(fileInput);
-			fileInput.close();
+			prop.loadFromXML(fileName);
 			String details = prop.getProperty(action);
 			return details;
 		}catch (FileNotFoundException e){
