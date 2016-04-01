@@ -7,6 +7,10 @@ package UserInterface;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -22,9 +26,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import Parser.Parser;
 
@@ -36,26 +43,26 @@ public class UserInterface{
 	private static int fontFamilyIndex = 6;
 	private static int fontSizeIndex = 5;
 	
-	static JFrame f = new JFrame("Docket");
-	static JScrollPane jScrollPane1 = new JScrollPane();
-	static JTextPane outputDisplay = new JTextPane();
-	static JButton homeButton = new JButton();
-	static JButton overdueButton = new JButton();
-	static JButton doneButton = new JButton();
-	static JButton allButton = new JButton();
-	static JButton helpButton = new JButton();
-	static JButton settingsButton = new JButton();
-	static JScrollPane jScrollPane2 = new JScrollPane();
-	static JTextArea cmdDisplay = new JTextArea();
-	static JTextField cmdEntry = new JTextField();
-	static JLabel commandText = new JLabel();
+	private static JFrame f = new JFrame("Docket");
+	private static JScrollPane jScrollPane1 = new JScrollPane();
+	private static JTextPane outputDisplay = new JTextPane();
+	private static JButton homeButton = new JButton();
+	private static JButton overdueButton = new JButton();
+	private static JButton doneButton = new JButton();
+	private static JButton allButton = new JButton();
+	private static JButton helpButton = new JButton();
+	private static JButton settingsButton = new JButton();
+	private static JScrollPane jScrollPane2 = new JScrollPane();
+	private static JTextArea cmdDisplay = new JTextArea();
+	private static JTextField cmdEntry = new JTextField();
+	private static JLabel commandText = new JLabel();
 	
 	public static void main(String[] args){
 		initComponents(null);
 	}
 	
 	/* initComponents method is set to return a string array for JUnit testing purposes.*/
-    public static String[] initComponents(String s) {
+    public static String[] initComponents(String s){
     	Parser p = new Parser();
 		UIController uiControl = new UIController();
 
@@ -65,7 +72,8 @@ public class UserInterface{
 		textAreaSettings();
 		textPaneSettings(outputDisplay);
 		buttonSettings(homeButton, overdueButton, doneButton, allButton, helpButton, settingsButton);
-		setWelcomeMessage(p, outputDisplay);
+		setWelcomeMessage(outputDisplay);
+		setTodayTaskMessage(p);
 
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,7 +109,7 @@ public class UserInterface{
         f.getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup().addContainerGap()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(homeButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
@@ -110,16 +118,12 @@ public class UserInterface{
                         .addComponent(allButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(helpButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(settingsButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup().addContainerGap()
-            		.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
-            		.addContainerGap())
-            .addGroup(layout.createSequentialGroup().addContainerGap()
+                .addComponent(jScrollPane1))
+            .addGroup(layout.createSequentialGroup()
+            		.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
             		.addComponent(commandText)
-            		.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-            		.addContainerGap())
+            		.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -132,14 +136,11 @@ public class UserInterface{
                         .addComponent(allButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                         .addComponent(helpButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                         .addComponent(settingsButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup()
                 		.addComponent(commandText)
-                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         );
 	}
     
@@ -185,8 +186,32 @@ public class UserInterface{
 		}
 		cmdEntry.setFocusable(true);
 		cmdEntry.setFont(font);
+		//cmdEntry.setText("Command");
+		//placeholder();
 	}
-    
+	
+	/*private static void placeholder(){
+        cmdEntry.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                warn();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                warn();
+            }
+            public void changedUpdate(DocumentEvent e) {
+                warn();
+            }
+ 
+            public void warn() {
+                if (cmdEntry.getText().trim().length() != 0) {
+                    setFont(originalFont);
+                    setForeground(originalForeground);
+                    setTextWrittenIn(true);
+                }
+ 
+            }
+        });
+	}*/
     private static void textAreaSettings(){
 		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
@@ -283,15 +308,13 @@ public class UserInterface{
     	settingsButton.setToolTipText("Gui Preferences");
 	}
     
-    private static void setWelcomeMessage(Parser p, JTextPane outputDisplay){
-    	String display = welcomeMessage(p);
+    private static void setWelcomeMessage(JTextPane outputDisplay){
+    	String display = welcomeMessage();
     	outputDisplay.setText(display);
     }
 
-	private static String welcomeMessage(Parser p) {
-		String output = p.parse("display today").substring(1);
+	private static String welcomeMessage() {
 		String display = "<center style=\"font-size:24px\"><b>Welcome to Docket! </b></center><br> "
-				+ output + "<br>"
     			+ "<center>To start, enter a task in the command field below.</center><br>"
     			+ "<center>For help, enter <b>help</b> in the command field below.</center><br>";
     	int tipsSize = tipMessage().size();
@@ -320,4 +343,21 @@ public class UserInterface{
 			e.printStackTrace();
 		}
 	}
+	
+	private static String displayToday(Parser p){
+		return p.parse("display today").substring(1);
+	}
+	public static void setTodayTaskMessage(Parser p) {
+        Timer timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                outputDisplay.setText(displayToday(p));
+                outputDisplay.repaint();
+            }
+        });
+        timer.setRepeats(false);
+        timer.setCoalesce(true);
+        timer.start();
+    }
+
 }
