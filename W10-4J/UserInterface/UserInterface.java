@@ -70,7 +70,7 @@ public class UserInterface{
 		textPaneSettings(outputDisplay);
 		buttonSettings(homeButton, overdueButton, doneButton, allButton, helpButton, settingsButton);
 		setWelcomeMessage(outputDisplay);
-		setTodayTaskMessage(p);
+		Timer timer = setTodayTaskMessage(p);
 
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,7 +83,7 @@ public class UserInterface{
 		
     	uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
 
-        uiControl.commandAction(s, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, cmdEntry, cmdDisplay, outputDisplay, commandText);
+        uiControl.commandAction(timer, s, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, cmdEntry, cmdDisplay, outputDisplay, commandText);
         
 		lookAndFeel();
 		f.pack();
@@ -345,7 +345,7 @@ public class UserInterface{
 	private static String displayToday(Parser p){
 		return p.parse("display today").substring(1);
 	}
-	public static void setTodayTaskMessage(Parser p) {
+	public static Timer setTodayTaskMessage(Parser p) {
         Timer timer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -356,6 +356,7 @@ public class UserInterface{
         timer.setRepeats(false);
         timer.setCoalesce(true);
         timer.start();
+        return timer;
     }
 
 }

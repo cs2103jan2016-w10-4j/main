@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.Timer;
 
 import Parser.Parser;
 import main.Constants;
@@ -32,15 +33,15 @@ public class UIController {
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
     
-	public void commandAction(String s, JButton overdue, JButton all,
+	public void commandAction(Timer timer, String s, JButton overdue, JButton all,
 			JButton done, JButton help, JButton settings, JButton home,
 			JTextField cmdEntry, JTextArea cmdDisplay,
 			JTextPane displayOutput, JLabel commandText) {
 		Parser p = new Parser();
 		if (s != null){
-			commandEnteredAction(s, cmdEntry, cmdDisplay, displayOutput, p);
+			commandEnteredAction(timer, s, cmdEntry, cmdDisplay, displayOutput, p);
 		} else {
-			cmdEntryListener(p, cmdEntry, cmdDisplay, displayOutput);
+			cmdEntryListener(timer, p, cmdEntry, cmdDisplay, displayOutput);
 			settingsListener(settings, cmdDisplay, displayOutput, commandText,
 					cmdEntry);
 			allListener(all, p, displayOutput);
@@ -51,8 +52,11 @@ public class UIController {
 		}
     }
 
-	private void commandEnteredAction(String s, JTextField cmdEntry,
+	private void commandEnteredAction(Timer timer, String s, JTextField cmdEntry,
 			JTextArea cmdDisplay, JTextPane displayOutput, Parser p) {
+		if (timer.isRunning()){
+			timer.stop();
+		}
 		cmdEntry.setText("");
 		commands.add(s);
 		commandIndex = commands.size();
@@ -131,11 +135,11 @@ public class UIController {
     	});
 	}
 
-	private void cmdEntryListener(Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput) {
+	private void cmdEntryListener(Timer timer, Parser p, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput) {
 		cmdEntry.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				String s = cmdEntry.getText();
-				commandEnteredAction(s, cmdEntry, cmdDisplay, displayOutput, p);
+				commandEnteredAction(timer, s, cmdEntry, cmdDisplay, displayOutput, p);
 			}
 		});
 	}
