@@ -253,10 +253,10 @@ public class ArraylistStorage {
 	
 	// ** DISPLAY METHOD **
 	public String getNotDoneDisplayFormatByStartDate(){
-		return DisplayByStartDate.displayFormat(sort, this.notDoneStorage, this.previousInputStorage);
+		return DisplayStartDate.displayFormat(sort, this.notDoneStorage, this.previousInputStorage);
 	}
 	public String getNotDoneDisplayFormatByDefault(){
-		return DisplayDefault.displayDefaultFormat(this.notDoneStorage, this.previousInputStorage);
+		return DisplayTableFormat.displayTableFormat(this.notDoneStorage, this.previousInputStorage);
 	}
 	public String getDoneDisplayFormatByDefault(){
 		return DisplayDone.displayDoneFormat(this.doneStorage);

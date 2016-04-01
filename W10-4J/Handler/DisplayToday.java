@@ -7,27 +7,31 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayToday {
-	static String header = "<h1><b>Today's Task</b></h1>";
-	static String beforeHeader = Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
-	static String subHeaderFont = "<h1><b>";
-	static String collated;
+	static String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
+	static String todayOutput;
 	static String output;
 	
 	public static String displayToday(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
-		DisplayByStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		output = header + subHeaderFont;
+		/*
+		 *  Within DisplayStartDate, there will be a returnTodayTasks method
+		 *  that will return the output for those task that falls on today's date
+		 */
+		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
+		output = Constants.MESSAGE_DISPLAY_HEADER_TODAY + Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG;
 		
-		if(collated == null || collated.equals(beforeHeader)) {
+		if(todayOutput == null || todayOutput.equals(beforeTheDateDisplay)) {
 			output += Constants.MESSAGE_DISPLAYTODAY;
 		} else {
-			collated = collated.substring(beforeHeader.length(), collated.length());
-			output += collated;
+			// Remove "Today, " from the return value
+			todayOutput = todayOutput.substring(beforeTheDateDisplay.length(), todayOutput.length());
+			output += todayOutput;
 		}
-		output += "</b></h1>";
+		
+		output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
 		return output;
 	}
 	
-	public static void getTodayTasks(String tasks){
-		collated = tasks;
+	public static void returnTodayTasks(String tasks) {
+		todayOutput = tasks;
 	}
 }

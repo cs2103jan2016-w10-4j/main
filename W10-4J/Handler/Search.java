@@ -22,7 +22,7 @@ public class Search implements Command {
 			results = arraylistStorage_.searchNotDoneStorage(task, false);
 		}
 		if (results.size() != 0) {
-			return DisplayDefault.displayDefaultFormat(results, arraylistStorage_.getPreviousInputStorage());
+			return DisplayTableFormat.displayTableFormat(results, arraylistStorage_.getPreviousInputStorage());
 		}
 		return Constants.MESSAGE_SEARCH_FAIL;
 	}

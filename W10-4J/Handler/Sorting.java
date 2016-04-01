@@ -7,7 +7,6 @@ import main.Constants;
 import main.Task;
 
 public class Sorting {
-	// modularise the display code
 	public void sortByID(ArrayList<Task> clonenotDoneYetStorage){
 		Collections.sort(clonenotDoneYetStorage, Task.taskIDComparator);
 	}
@@ -16,22 +15,6 @@ public class Sorting {
 		Collections.sort(clonenotDoneYetStorage, Task.taskNameComparator);
 	}
 
-	/*private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
-			ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_START);
-			Collections.sort(clonenotDoneYetStorage, Task.taskStarttimeComparator);
-			if (exclusivenotDoneYetStorage != null){
-				clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
-			}
-		}
-		private void sortByEnd(ArrayList<Task> clonenotDoneYetStorage){
-			ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_END);
-			Collections.sort(clonenotDoneYetStorage, Task.taskEndtimeComparator);
-			if (exclusivenotDoneYetStorage != null){
-				clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
-			}
-		}
-	 */
-	
 	public void sortByStartDate(ArrayList<Task> clonenotDoneYetStorage){
 		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_STARTDATE);
 		Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
@@ -39,15 +22,10 @@ public class Sorting {
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	
-	/*
-		private void sortByEndDate(ArrayList<Task> clonenotDoneYetStorage){
-			ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_ENDDATE);
-			Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
-			if (exclusivenotDoneYetStorage != null){
-				clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
-			}
-		}*/
+
+	public void sortByStartDateAndName(ArrayList<Task> clonenotDoneYetStorage){
+		Collections.sort(clonenotDoneYetStorage, Task.taskStartDateAndNameComparator);
+	}
 
 	// separate those tasks with the specific parameters and those that dont
 	// have in null list called result
@@ -66,20 +44,6 @@ public class Sorting {
 	private ArrayList<Task> exclusiveSeparation(ArrayList<Task> taskArray, String field) {
 		ArrayList<Task> result = new ArrayList<Task>();
 		switch (field) {
-		/*case Constants.MESSAGE_DISPLAY_FIELD_START:
-				for (Task task : taskArray) {
-					if (task.getStartTime() == null) {
-						result.add(task);
-					}
-				}
-				break;
-			case Constants.MESSAGE_DISPLAY_FIELD_END:
-				for (Task task : taskArray) {
-					if (task.getEndTime() == null) {
-						result.add(task);
-					}
-				}
-				break;*/
 		case Constants.MESSAGE_DISPLAY_FIELD_STARTDATE:
 			for (Task task : taskArray) {
 				if (task.getStartDate() == null) {
@@ -87,14 +51,53 @@ public class Sorting {
 				}
 			}
 			break;
-			/*case Constants.MESSAGE_DISPLAY_FIELD_ENDDATE:
+			/*case Constants.MESSAGE_DISPLAY_FIELD_START:
+			for (Task task : taskArray) {
+				if (task.getStartTime() == null) {
+					result.add(task);
+				}
+			}
+			break;
+			case Constants.MESSAGE_DISPLAY_FIELD_END:
+			for (Task task : taskArray) {
+				if (task.getEndTime() == null) {
+					result.add(task);
+				}
+			}
+			break;
+			case Constants.MESSAGE_DISPLAY_FIELD_ENDDATE:
 				for (Task task : taskArray) {
 					if (task.getStartDate() == null) {
 						result.add(task);
 					}
 				}
-				break;*/
+			break;*/
 		}
 		return result;
 	}
+
+	/*private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_START);
+		Collections.sort(clonenotDoneYetStorage, Task.taskStarttimeComparator);
+		if (exclusivenotDoneYetStorage != null){
+			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
+		}
+	}
+	
+	private void sortByEnd(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_END);
+		Collections.sort(clonenotDoneYetStorage, Task.taskEndtimeComparator);
+		if (exclusivenotDoneYetStorage != null){
+			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
+		}
+	}
+	 
+	private void sortByEndDate(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_ENDDATE);
+		Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
+		if (exclusivenotDoneYetStorage != null){
+			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
+		}
+	}
+	*/
 }
