@@ -51,33 +51,44 @@ public class Valid {
 		if (arguments.length == 0) {
 			return false;
 		}
-		for (int i = 1; i < arguments.length; i += 2) {
-			if (!commandList_.getAddArgumentList().contains(arguments[i])) {
-				return false;
-			} else {
-				if (i + 1 == arguments.length) {
+		try {
+			for (int i = 1; i < arguments.length; i += 2) {
+				System.out.println(arguments[i]);
+				if (!commandList_.getAddArgumentList().contains(arguments[i])) {
 					return false;
-				} else if (arguments[i].equals("startdate") || arguments[i].equals("enddate")) {
-					String date = naturalDate_.getDate(arguments[i + 1]);
-					if (date == null) {
-						invalidDate = true;
+				} else {
+					if (i + 1 == arguments.length) {
 						return false;
-					} else {
-						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
-						arguments[i + 1] = date;
-					}
-				} else if (arguments[i].equals("starttime") || arguments[i].equals("endtime")) {
-					String time = naturalTime_.getTime(arguments[i + 1]);
-					if (time == null) {
-						invalidTime = true;
-						return false;
-					} else {
-						arguments[i + 1] = time;
+					} else if (arguments[i].equals("startdate") || arguments[i].equals("enddate")) {
+						String date = naturalDate_.getDate(arguments[i + 1]);
+						if (date == null) {
+							invalidDate = true;
+							return false;
+						} else {
+							assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
+							arguments[i + 1] = date;
+						}
+					} else if (arguments[i].equals("starttime") || arguments[i].equals("endtime")) {
+						String time = naturalTime_.getTime(arguments[i + 1]);
+						if (time == null) {
+							invalidTime = true;
+							return false;
+						} else {
+							arguments[i + 1] = time;
+						}
+					} else if (arguments[i].equals("repeat")) {
+						String[] repeatArgument = arguments[i + 1].split(" ");
+						if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
+								|| !isInteger(repeatArgument[1])) {
+							return false;
+						}
 					}
 				}
 			}
+			return true;
+		} catch (IndexOutOfBoundsException e) {
+			return false;
 		}
-		return true;
 	}
 
 	public boolean isDeleteValid(String[] arguments) {
@@ -176,28 +187,30 @@ public class Valid {
 	}
 
 	public boolean isRecurrenceValid(String[] arguments) {
-		if (arguments.length != 2) {
+		if (arguments.length != 3) {
 			return false;
-		} else if (!isInteger(arguments[0])) {
+		} else if (!isInteger(arguments[0]) || !isInteger(arguments[2])) {
+			return false;
+		} else if (Integer.parseInt(arguments[2]) <= 1) {
 			return false;
 		} else {
 			return commandList_.getRecurrenceArgumentList().contains(arguments[1]);
 		}
 	}
-	
+
 	public boolean isAliasValid(String[] arguments) {
 		if (arguments.length != 2) {
 			return false;
 		}
 		COMMAND_TYPE command1 = getAction(arguments[0]);
 		COMMAND_TYPE command2 = getAction(arguments[1]);
-		if(command1 != COMMAND_TYPE.INVALID && command2 == COMMAND_TYPE.INVALID){
+		if (command1 != COMMAND_TYPE.INVALID && command2 == COMMAND_TYPE.INVALID) {
 			return true;
-		} else{
+		} else {
 			return false;
 		}
 	}
-	
+
 	public COMMAND_TYPE getAction(String command) {
 		if (isCommandType(command, commandList_.getAddCommandList())) {
 			return COMMAND_TYPE.ADD;
@@ -229,7 +242,7 @@ public class Valid {
 			return COMMAND_TYPE.INVALID;
 		}
 	}
-	
+
 	public boolean isCommandType(String command, ArrayList<String> commandList) {
 		if (commandList.contains(command)) {
 			return true;

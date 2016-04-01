@@ -18,7 +18,7 @@ public class Parser {
 	}
 
 	public String parse(String command) {
-//		System.out.println("Command entered: " + command);
+		// System.out.println("Command entered: " + command);
 		assert command != null;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
@@ -29,10 +29,10 @@ public class Parser {
 		if (!valid_.isValid(commandType, arguments)) {
 			return getInvalidReturnMessage();
 		}
-//		for(String s : arguments){
-//			System.out.println(s);
-//		}
-//		System.out.println("*");
+		// for(String s : arguments){
+		// System.out.println(s);
+		// }
+		// System.out.println("*");
 		if (commandType == COMMAND_TYPE.ALIAS) {
 			setAlias(arguments);
 			return "1" + Constants.MESSAGE_ALIAS_PASS;
@@ -121,8 +121,8 @@ public class Parser {
 			return tokens.toArray(new String[0]);
 		}
 	}
-	
-	public String getInvalidReturnMessage(){
+
+	public String getInvalidReturnMessage() {
 		if (valid_.getInvalidDate()) {
 			return "1" + Constants.MESSAGE_INVALID_DATE;
 		} else if (valid_.getInvalidTime()) {

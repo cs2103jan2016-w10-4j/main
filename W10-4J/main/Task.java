@@ -65,19 +65,18 @@ public class Task {
 			return (splitDateObject(task1).compareTo(splitDateObject(task2)));
 		}
 	};
-	
+
 	public static Comparator<Task> taskStartDateNameComparator = new Comparator<Task>() {
 		public int compare(Task task1, Task task2) {
-			int startDateValue = taskDateComparator.compare(task1,task2);
-			int nameValue = taskNameComparator.compare(task1,task2);
-			if(startDateValue == 0 ) {
+			int startDateValue = taskDateComparator.compare(task1, task2);
+			int nameValue = taskNameComparator.compare(task1, task2);
+			if (startDateValue == 0) {
 				return nameValue;
 			} else {
 				return startDateValue;
 			}
 		}
 	};
-
 
 	private static Calendar splitDateObject(Task task) {
 		// assumes that the date is in yyyy/mm/dd format
@@ -88,19 +87,21 @@ public class Task {
 		return calendar;
 	}
 
-//	public void done() {
-//		if (day_) {
-//			date_ = Date.addDay(date_);
-//		} else if (week_) {
-//			for (int i = 0; i < 7; i++) {
-//				date_ = Date.addDay(date_);
-//			}
-//		} else if (month_) {
-//			date_ = Date.addMonth(date_);
-//		} else if (year_) {
-//			date_ = Date.addYear(date_);
-//		}
-//	}
+	public void nextDate() {
+		if (startdate_ != null) {
+			if (day_) {
+				startdate_ = Date.addDay(startdate_);
+			} else if (week_) {
+				for (int i = 0; i < 7; i++) {
+					startdate_ = Date.addDay(startdate_);
+				}
+			} else if (month_) {
+				startdate_ = Date.addMonth(startdate_);
+			} else if (year_) {
+				startdate_ = Date.addYear(startdate_);
+			}
+		}
+	}
 
 	public Task(String name) {
 		name_ = name;
@@ -113,7 +114,7 @@ public class Task {
 	public void setStartDate(String startdate) {
 		startdate_ = startdate;
 	}
-	
+
 	public void setEndDate(String enddate) {
 		enddate_ = enddate;
 	}
@@ -185,7 +186,7 @@ public class Task {
 	public void setMultiDay(boolean multiDay) {
 		multiday_ = multiDay;
 	}
-	
+
 	public String getName() {
 		return name_;
 	}
@@ -193,7 +194,7 @@ public class Task {
 	public String getStartDate() {
 		return startdate_;
 	}
-	
+
 	public String getEndDate() {
 		return enddate_;
 	}
@@ -201,12 +202,12 @@ public class Task {
 	public String getStartTime() {
 		return startTime_;
 	}
-	
-	public int getStartTimeInt(){
-		try{
+
+	public int getStartTimeInt() {
+		try {
 			String output = startTime_.split(":")[0] + startTime_.split(":")[1];
 			return Integer.parseInt(output);
-		} catch(Exception e){
+		} catch (Exception e) {
 			return -1;
 		}
 	}
@@ -214,12 +215,12 @@ public class Task {
 	public String getEndTime() {
 		return endTime_;
 	}
-	
-	public int getEndTimeInt(){
-		try{
+
+	public int getEndTimeInt() {
+		try {
 			String output = endTime_.split(":")[0] + endTime_.split(":")[1];
 			return Integer.parseInt(output);
-		} catch(Exception e){
+		} catch (Exception e) {
 			return -1;
 		}
 	}
@@ -251,7 +252,7 @@ public class Task {
 	public boolean isRecurring() {
 		return recurring_;
 	}
-	
+
 	public boolean isMultiDay() {
 		return multiday_;
 	}

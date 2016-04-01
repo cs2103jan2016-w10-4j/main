@@ -66,6 +66,7 @@ public class Constants {
 	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
 	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
 	public static final String MESSAGE_TIME_FAIL = ("Start time must be before end time.");
+	public static final String MESSAGE_RECUR_FAIL = ("Start date must exist for recurrance to occur.");
 	public static final String MESSAGE_ALIAS_PASS = ("Alias set successfully.");
 
 	public static final String MESSAGE_ADD_ACTION_STARTDATE = ("startdate");
