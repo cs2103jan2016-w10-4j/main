@@ -7,6 +7,8 @@ package UserInterface;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -57,10 +59,10 @@ public class UserInterface{
     	Parser p = new Parser();
 		UIController uiControl = new UIController();
 
-		setIcon(f);
-		commandTextSettings(commandText);
-		cmdEntrySettings(cmdEntry);
-		textAreaSettings(cmdDisplay);
+		setIcon();
+		commandTextSettings();
+		cmdEntrySettings();
+		textAreaSettings();
 		textPaneSettings(outputDisplay);
 		buttonSettings(homeButton, overdueButton, doneButton, allButton, helpButton, settingsButton);
 		setWelcomeMessage(p, outputDisplay);
@@ -73,14 +75,14 @@ public class UserInterface{
         setLayoutForUI(f, jScrollPane1, homeButton, overdueButton, doneButton,
 				allButton, helpButton, settingsButton, jScrollPane2, cmdEntry,
 				commandText);
-        
-		lookAndFeel();
-		f.pack();
-		f.setVisible(true);
 		
     	uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
 
         uiControl.commandAction(s, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, cmdEntry, cmdDisplay, outputDisplay, commandText);
+        
+		lookAndFeel();
+		f.pack();
+		f.setVisible(true);
         return returnOutput();
     }
     
@@ -141,35 +143,51 @@ public class UserInterface{
         );
 	}
     
-	private static void setIcon(JFrame f) {
+	private static void setIcon() {
 				String icon = "/main/icon/d.png";
 				ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
 				f.setIconImage(img.getImage());
 	}
 	
-	private static void commandTextSettings(JLabel commandText){
+	private static void commandTextSettings(){
 		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
 		commandText.setText("command: ");
 		String fontFamily = properties.get(fontFamilyIndex);
-		int fontStyle = commandText.getFont().getStyle();
-		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
-		Font font = new Font(fontFamily, fontStyle, fontSize);
+		String fontSize = properties.get(fontSizeIndex);
+		Font font;
+		if (fontFamily == null || fontSize == null){
+			font = commandText.getFont();
+		} else {
+			int fontStyle = commandText.getFont().getStyle();
+			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
+		}
 		commandText.setFont(font);
 		
 	}
 	
-	private static void cmdEntrySettings(JTextField cmdEntry){
+	private static void cmdEntrySettings(){
+        f.addWindowListener( new WindowAdapter() {
+            public void windowOpened( WindowEvent e ){
+                cmdEntry.requestFocus();
+            }
+        }); 
 		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
 		String fontFamily = properties.get(fontFamilyIndex);
+		String fontSize = properties.get(fontSizeIndex);
 		int fontStyle = cmdEntry.getFont().getStyle();
-		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
-		Font font = new Font(fontFamily, fontStyle, fontSize);
+		Font font;
+		if (fontFamily == null || fontSize == null){
+			font = new Font(Font.MONOSPACED, Font.BOLD, 12);
+		} else {
+			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
+		}
+		cmdEntry.setFocusable(true);
 		cmdEntry.setFont(font);
 	}
     
-    private static void textAreaSettings(JTextArea cmdDisplay){
+    private static void textAreaSettings(){
 		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
 		String bottomBg = properties.get(bottomBgIndex);

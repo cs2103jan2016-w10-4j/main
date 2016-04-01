@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import Parser.Parser;
+import main.Constants;
 
 public class UIController {
 	
@@ -60,11 +61,16 @@ public class UIController {
 		assert output != null;
 		if (isDisplay(output)){
 			printInDisplayOutput(displayOutput, output.substring(1));
-		} else {
+		} else if (isInvalidMessages(output.substring(1))){
 			printInCommandDisplay(cmdDisplay, output.substring(1));
+		} else {
 			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
 		}
 		displayOutput.setCaretPosition(0);
+	}
+	
+	private static boolean isInvalidMessages(String message){
+		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT) || message.equals(Constants.MESSAGE_INVALID_TIME) || message.equals(Constants.MESSAGE_UNRECOGNISED_COMMAND);
 	}
 
 	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText, JTextField cmdEntry) {
