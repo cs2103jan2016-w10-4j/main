@@ -253,19 +253,19 @@ public class ArraylistStorage {
 	
 	// ** DISPLAY METHOD **
 	public String getNotDoneDisplayFormatByStartDate(){
-		return DisplayByStartDate.displayFormat(sort, this.notDoneStorage);
+		return DisplayByStartDate.displayFormat(sort, this.notDoneStorage, this.previousInputStorage);
 	}
 	public String getNotDoneDisplayFormatByDefault(){
-		return DisplayDefault.displayDefaultFormat(this.notDoneStorage);
+		return DisplayDefault.displayDefaultFormat(this.notDoneStorage, this.previousInputStorage);
 	}
 	public String getDoneDisplayFormatByDefault(){
 		return DisplayDone.displayDoneFormat(this.doneStorage);
 	}
 	public String getNotDoneDisplayFormatByOverdue(){
-		return DisplayOverdue.displayOverdue(sort, this.notDoneStorage);
+		return DisplayOverdue.displayOverdue(sort, this.notDoneStorage, this.previousInputStorage);
 	}
 	public String getNotDoneDisplayFormatByToday(){
-		return DisplayToday.displayToday(sort, this.notDoneStorage);
+		return DisplayToday.displayToday(sort, this.notDoneStorage, this.previousInputStorage);
 	}
 	public void sortNotDoneStorageByName(){
 		sort.sortByName(this.notDoneStorage);

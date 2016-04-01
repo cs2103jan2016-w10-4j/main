@@ -13,16 +13,17 @@ public class DisplayToday {
 	static String collated;
 	static String output;
 	
-	public static String displayToday(Sorting sort, ArrayList<Task> notDoneYetStorage) {
-		DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
+	public static String displayToday(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
+		DisplayByStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
 		output = header + subHeaderFont;
 		
 		if(collated == null || collated.equals(beforeHeader)) {
-			output += Constants.MESSAGE_DISPLAYTODAY + "</b></h1>";
+			output += Constants.MESSAGE_DISPLAYTODAY;
 		} else {
 			collated = collated.substring(beforeHeader.length(), collated.length());
 			output += collated;
 		}
+		output += "</b></h1>";
 		return output;
 	}
 	

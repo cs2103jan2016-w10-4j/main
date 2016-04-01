@@ -22,7 +22,7 @@ public class DisplayByStartDate {
 	static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	static int counter = 0; //-1: overdue, 1: today
 	
-	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList) {
+	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
 		output = "";
 		noStartDateList = new ArrayList<Task>();
 		haveStartDateList = new ArrayList<Task>();
@@ -30,18 +30,23 @@ public class DisplayByStartDate {
 		taskToBeRemoved = new ArrayList<Integer>();
 		
 		if(sortedList.size() == 0) {
-			output += Constants.MESSAGE_ALLDISPLAYS_NOTASKONHAND;
+			output += "<h1><b>" + Constants.MESSAGE_ALLDISPLAYS_NOTASKONHAND + "</b></h1>";
 		} else {
+			int taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTask(sortedList, previousInput);
+		//	System.out.println(taskIDForRecentTask);
+
 			seperateToRespectiveArrayList(sortedList);
 		
 			while(!(haveStartDateList.isEmpty())) {
 				sortByStartDate(haveStartDateList);
-				displayingTasks();
+				displayingTasks(taskIDForRecentTask);
+				sortByStartDate(haveStartDateList);
 			}
 		
 			if(!(noStartDateList.isEmpty())) {
 				sort.sortByName(noStartDateList);
-				displayingNoStartDateTasks();
+				displayingNoStartDateTasks(taskIDForRecentTask);
+				sort.sortByName(noStartDateList);
 			}
 		}
 		
@@ -59,11 +64,11 @@ public class DisplayByStartDate {
 		}
 	}
 	
-	private static void displayingTasks() {
+	private static void displayingTasks(int taskIDForRecentTask) {
 		getHeader(haveStartDateList);
 		createTable();
 		
-		int index = getTaskDetails(haveStartDateList);	
+		int index = getTaskDetails(haveStartDateList, taskIDForRecentTask);	
 		if(index != -1) {
 			haveStartDateList = removeTaskAlreadyDisplay(index);
 			addMultiDayTaskToList();
@@ -88,10 +93,10 @@ public class DisplayByStartDate {
 		}
 	}
 	
-	private static void displayingNoStartDateTasks() {
+	private static void displayingNoStartDateTasks(int taskIDForRecentTask) {
 		getHeader(noStartDateList);
 		createTable();
-		getTaskDetails(noStartDateList);
+		getTaskDetails(noStartDateList, taskIDForRecentTask);
 		output += "</table>";
 	}
 	
@@ -135,20 +140,25 @@ public class DisplayByStartDate {
 		output += "<table width=\"100%\" style=\"margin-top:5px; margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>";
 	}
 	
-	private static int getTaskDetails(ArrayList<Task> taskList) {		
+	private static int getTaskDetails(ArrayList<Task> taskList, int taskIDForRecentTask) {		
+		boolean isRecentTask = false;
 		for (int i = 0; i < taskList.size(); i++) {
 			Task task = taskList.get(i);
+			if(task.getTaskID() == taskIDForRecentTask) {
+				isRecentTask = true;
+			}
+
 			if(task.getStartDate() == null) {
-				getTask(task);
+				getTask(task, isRecentTask);
 			} else if (currentDate.equals(task.getStartDate())) {
 				if(task.getEndDate() != null) {
 					if(task.getEndDate().equals(task.getStartDate())) {
-						getTask(task);
+						getTask(task, isRecentTask);
 					} else {
-						multiDayTaskList = createSeveralTasks(task);
+						multiDayTaskList = createSeveralTasks(task, taskIDForRecentTask);
 					}
 				} else {				
-					getTask(task);
+					getTask(task, isRecentTask);
 				}
 			} else {
 				return i;
@@ -202,18 +212,22 @@ public class DisplayByStartDate {
 		return currentDay;
 	}
 
-	private static void getTask(Task task) {
+	private static void getTask(Task task, boolean isRecentTask) {
 		String color = CommonFunctionInDisplay.determineColor(task);
 		String repeat = CommonFunctionInDisplay.assignRepeat(task);
-		output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat);
+		if(isRecentTask) {
+			output += "<span style=\"background-color: #FFFF00\">" + CommonFunctionInDisplay.getTaskDetails(task, color, repeat) + "</span>";
+		} else {
+			output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat);
+		}
 	}
 	
-	private static ArrayList<Task> createSeveralTasks(Task task) {
+	private static ArrayList<Task> createSeveralTasks(Task task, int taskIDForRecentTask) {
 		ArrayList<Task> taskList = new ArrayList<Task>();
 		try {
 			Date startDate = dateFormat.parse(task.getStartDate());
 			Date endDate = dateFormat.parse(task.getEndDate());
-			createStartingTasks(startDate, endDate, task);
+			createStartingTasks(taskIDForRecentTask, startDate, endDate, task);
 			taskList = createMiddleTasks(startDate, endDate, taskList, task);
 			taskList = createEndingTasks(startDate, endDate, taskList, task);
 		} catch (ParseException e) {
@@ -222,8 +236,9 @@ public class DisplayByStartDate {
 		return taskList;
 	}
 
-	private static void createStartingTasks(Date startDate, Date endDate, Task task) {
-        String taskName = task.getName();
+	private static void createStartingTasks(int taskIDForRecentTask, Date startDate, Date endDate, Task task) {
+		boolean isRecentTask = false;
+		String taskName = task.getName();
         String taskStartDate = task.getStartDate();
         String taskStartTime = task.getStartTime();
         int taskID = task.getTaskID();
@@ -235,8 +250,13 @@ public class DisplayByStartDate {
         
         if(taskStartTime != null) {
             newTask.setStartTime(taskStartTime);
-        }        
-        getTask(newTask);
+        }
+        
+        if(task.getTaskID() == taskIDForRecentTask) {
+			isRecentTask = true;
+		}
+        
+        getTask(newTask, isRecentTask);
 	}
 	
 	private static ArrayList<Task> createMiddleTasks(Date startDate, Date endDate, ArrayList<Task> taskList, Task task) throws ParseException {

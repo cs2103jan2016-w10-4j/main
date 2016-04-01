@@ -1,12 +1,42 @@
 package Handler;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import main.Constants;
 import main.Task;
 
 public class CommonFunctionInDisplay {
+	public static int checkRecentUpdatedTask(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
+		int taskID = -1;
+
+		if(previousList.size() == 0 && currentList.size() != 0) {
+			return -1;
+		} else if(previousList.size() == 0 && currentList.size() == 1) {
+			return currentList.get(0).getTaskID();
+		}
+		
+		for(int i = 0; i < previousList.size(); i++) {
+			Task task = previousList.get(i).getTask();
+			//System.out.println(task.getTaskID());
+			for(int h = 0; h < currentList.size(); h++) {
+				Task currentTask = currentList.get(h);
+				if(task.getTaskID() == currentTask.getTaskID()) {
+					break;
+				} else {
+					taskID = task.getTaskID();
+				}
+			}
+			
+			if(taskID != -1) {
+				return taskID;
+			}
+		}
+		//System.out.println(taskID);
+		return taskID;
+	}
+	
 	public static String determineColor(Task t) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		
