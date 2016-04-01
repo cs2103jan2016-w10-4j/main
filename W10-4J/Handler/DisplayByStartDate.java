@@ -230,7 +230,8 @@ public class DisplayByStartDate {
         Task newTask = new Task(taskName);
         newTask.setTaskID(taskID);
         newTask.setStartDate(taskStartDate);
-        newTask.setDetails(Constants.MESSAGE_DISPLAYFORMAT_MULTIDAYTASK);
+        newTask.setEndTime("-");
+        newTask.setMultiDay(true);
         
         if(taskStartTime != null) {
             newTask.setStartTime(taskStartTime);
@@ -259,7 +260,9 @@ public class DisplayByStartDate {
             	Task newTask = new Task(taskName);
                 newTask.setTaskID(taskID);
                 newTask.setStartDate(dateValue);
-                newTask.setDetails(Constants.MESSAGE_DISPLAYFORMAT_MULTIDAYTASK);
+                newTask.setStartTime("-");
+                newTask.setEndTime("-");
+                newTask.setMultiDay(true);
                 taskList.add(newTask);
             } else {
             	flag = false;
@@ -277,7 +280,8 @@ public class DisplayByStartDate {
         newTask.setTaskID(taskID);
         newTask.setStartDate(taskEndDate);
         newTask.setEndDate(taskEndDate);
-        newTask.setDetails(Constants.MESSAGE_DISPLAYFORMAT_MULTIDAYTASK);
+        newTask.setStartTime("-");
+        newTask.setMultiDay(true);
         
         if(taskEndTime != null) {
             newTask.setEndTime(taskEndTime);

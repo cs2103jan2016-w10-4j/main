@@ -12,6 +12,7 @@ public class Task {
 	private String details_;
 	private int taskID_;
 	private boolean recurring_, day_, week_, month_, year_;
+	private boolean multiday_;
 
 	// use trim method to ensure all strings are compared properly
 	public static Comparator<Task> taskIDComparator = new Comparator<Task>() {
@@ -181,6 +182,10 @@ public class Task {
 		}
 	}
 
+	public void setMultiDay(boolean multiDay) {
+		multiday_ = multiDay;
+	}
+	
 	public String getName() {
 		return name_;
 	}
@@ -245,5 +250,9 @@ public class Task {
 
 	public boolean isRecurring() {
 		return recurring_;
+	}
+	
+	public boolean isMultiDay() {
+		return multiday_;
 	}
 }

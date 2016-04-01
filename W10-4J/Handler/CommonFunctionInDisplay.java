@@ -10,6 +10,9 @@ public class CommonFunctionInDisplay {
 	public static String determineColor(Task t) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		
+		if(t.isMultiDay()) {
+			return Constants.MESSAGE_DISPLAY_COLOR_BROWN;
+		}
 		// Determine which color to display
 		if (t.getStartDate() != null && t.getEndTime() == null) {
 			Date date = new Date();
