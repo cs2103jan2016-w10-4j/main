@@ -8,19 +8,15 @@ import main.Constants;
 import main.Task;
 
 public class CommonFunctionInDisplay {
-	public static int checkRecentUpdatedTask(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
+	public static int checkRecentUpdatedTaskID(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
 		int taskID = -1;
-
-		if(previousList.size() == 0 && currentList.size() != 0) {
-			return -1;
-		} else if(previousList.size() == 0 && currentList.size() == 1) {
-			return currentList.get(0).getTaskID();
-		}
 
 		for(int i = 0; i < previousList.size(); i++) {
 			Task task = previousList.get(i).getTask();
+			
 			for(int h = 0; h < currentList.size(); h++) {
 				Task currentTask = currentList.get(h);
+				
 				if(task.getTaskID() == currentTask.getTaskID()) {
 					break;
 				} else {
@@ -37,25 +33,22 @@ public class CommonFunctionInDisplay {
 
 	public static String determineColor(Task t) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
 		if(t.isMultiDay()) {
 			return Constants.MESSAGE_DISPLAY_COLOR_BROWN;
 		}
+		
 		// Determine which color to display
 		if (t.getStartDate() != null && t.getEndTime() == null) {
 			Date date = new Date();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
 			if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
 				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
 			}
 		} else if (t.getEndTime() != null && t.getStartDate() != null) {
 			Date time = new Date();
-			SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
 			Date date = new Date();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
 			if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
 				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
 			} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) < 0
@@ -82,14 +75,14 @@ public class CommonFunctionInDisplay {
 		return repeat;
 	}
 
-	// Use by DisplayByStartDate, DisplayOverdue and DisplayToday
+	// Use by DisplayStartDate, DisplayOverdue and DisplayToday
 	public static String getTaskDetails(Task t, String color, String repeat, int taskIDForRecentTask) {
 		String output = "";
-
+		
+		// Highlight the row if its the recent task
 		if(taskIDForRecentTask == t.getTaskID()) {
 			output = "<tr style=\"border-bottom:1px solid #E5E4E2\" bgcolor= #FFFF00><td align=\"right\"><h3>" + color + t.getTaskID()
 			+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
-
 		} else {
 			output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><h3>" + color + t.getTaskID()
 			+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
@@ -122,7 +115,7 @@ public class CommonFunctionInDisplay {
 	}
 
 	// Use by DisplayDefault and DisplayDone
-	public static String getTaskDetailsWithStartEndDate(Task t, String color, String repeat) {
+	public static String getTaskDetailsForTableFormat(Task t, String color, String repeat) {
 		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><h3>" + color + t.getTaskID()
 		+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
 

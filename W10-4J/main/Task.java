@@ -66,7 +66,7 @@ public class Task {
 		}
 	};
 
-	public static Comparator<Task> taskStartDateNameComparator = new Comparator<Task>() {
+	public static Comparator<Task> taskStartDateAndNameComparator = new Comparator<Task>() {
 		public int compare(Task task1, Task task2) {
 			int startDateValue = taskDateComparator.compare(task1, task2);
 			int nameValue = taskNameComparator.compare(task1, task2);
