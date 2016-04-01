@@ -31,12 +31,14 @@ public class Constants {
 	public static final String[] helpDefaultArgumentList = { "add", "delete", "edit", "done", "display", "search",
 			"storage", "undo" };
 
-	public static final String[] startDateDefaultArgumentList = { "startdate", "d", "date" };
-	public static final String[] endDateDefaultArgumentList = { "enddate" };
-	public static final String[] startTimeDefaultArgumentList = { "start", "starttime", "s", "time" };
-	public static final String[] endTimeDefaultArgumentList = { "end", "endtime", "e" };
+	public static final String[] startDateDefaultArgumentList = { "startdate", "date" };
+	public static final String[] endDateDefaultArgumentList = { "enddate", "by", "due" };
+	public static final String[] startTimeDefaultArgumentList = { "start", "starttime", "time" };
+	public static final String[] endTimeDefaultArgumentList = { "end", "endtime", "e", "on" };
 	public static final String[] detailsDefaultArgumentList = { "details", "details", "d" };
 	public static final String[] repeatDefaultArgumentList = { "repeat", "recur", "r", "recurrence" };
+	public static final String[] todayArgumentList = { "today", "later" };
+	public static final String[] tomorrowArgumentList = { "tomorrow", "tmr" };
 
 	public static final String[] month = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
 			"oct", "nov", "dec", "january", "february", "march", "april", "may", "june", "july", "august", "september",
