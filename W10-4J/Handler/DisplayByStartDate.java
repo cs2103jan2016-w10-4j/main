@@ -28,16 +28,21 @@ public class DisplayByStartDate {
 		haveStartDateList = new ArrayList<Task>();
 		multiDayTaskList = new ArrayList<Task>();
 		taskToBeRemoved = new ArrayList<Integer>();
-		seperateToRespectiveArrayList(sortedList);
 		
-		while(!(haveStartDateList.isEmpty())) {
-			sortByStartDate(haveStartDateList);
-			displayingTasks();
-		}
+		if(sortedList.size() == 0) {
+			output += Constants.MESSAGE_ALLDISPLAYS_NOTASKONHAND;
+		} else {
+			seperateToRespectiveArrayList(sortedList);
 		
-		if(!(noStartDateList.isEmpty())) {
-			sort.sortByName(noStartDateList);
-			displayingNoStartDateTasks();
+			while(!(haveStartDateList.isEmpty())) {
+				sortByStartDate(haveStartDateList);
+				displayingTasks();
+			}
+		
+			if(!(noStartDateList.isEmpty())) {
+				sort.sortByName(noStartDateList);
+				displayingNoStartDateTasks();
+			}
 		}
 		
 		return output;

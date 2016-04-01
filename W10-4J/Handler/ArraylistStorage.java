@@ -259,6 +259,9 @@ public class ArraylistStorage {
 		return DisplayDefault.displayDefaultFormat(this.notDoneStorage);
 	}
 	public String getDoneDisplayFormatByDefault(){
+		// To indicate to DisplayDefault that this is done
+		Task task = new Task(Constants.MESSAGE_ACTION_DONE);
+		this.doneStorage.add(0, task);
 		return DisplayDefault.displayDefaultFormat(this.doneStorage);
 	}
 	public String getNotDoneDisplayFormatByOverdue(){
