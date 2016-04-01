@@ -1,8 +1,6 @@
 package Handler;
 
 import main.Constants;
-import java.util.ArrayList;
-import Storage.Storage;
 import main.Task;
 
 public class Add implements Command {
@@ -61,21 +59,16 @@ public class Add implements Command {
 			}
 		}
 		if (isTimeValid(eachTask)) {
-			// remember previous state
-			clearAndAdd(arraylistStorage_.getPreviousInputStorage(), new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
+			// remember previous state via arraylistStorage
+			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
 			// add to arraylist storage
-			arraylistStorage_.getNotDoneStorage().add(eachTask);
-			// write to mainStorage
-			arraylistStorage_.getMainStorage().write(arraylistStorage_.getNotDoneStorage(), arraylistStorage_.getDoneStorage());
+			arraylistStorage_.addTaskToNotDoneStorage(eachTask);
+			// write to mainStorage via arraylistStorage
+			arraylistStorage_.writeToStorage();
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
 			return Constants.MESSAGE_TIME_FAIL;
 		}
-	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
 	}
 
 	private boolean isTimeValid(Task task) {

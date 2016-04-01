@@ -1,61 +1,38 @@
 
 package Handler;
 
-import java.util.ArrayList;
 import main.Constants;
-import Storage.Storage;
 import main.Task;
 
 public class Recurrence implements Command {
 
-	private ArrayList<Task> notDoneStorage;
-	private ArrayList<Task> doneStorage;
-	private ArrayList<PreviousInput> previousInputStorage;
-	Storage mainStorage;
+	ArraylistStorage arraylistStorage_;
 	
 	public Recurrence(ArraylistStorage arraylistStorage) {
-		notDoneStorage = arraylistStorage.getNotDoneStorage();
-		doneStorage = arraylistStorage.getDoneStorage();
-		previousInputStorage = arraylistStorage.getPreviousInputStorage();
-		mainStorage = arraylistStorage.getMainStorage();
+		arraylistStorage_ = arraylistStorage;
 	}
-	
 	
 	public String execute(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = findByTaskID(notDoneStorage, taskID);
+		Task eachTask = arraylistStorage_.findByTaskIDNotDoneStorage(taskID);
 		Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
-		case "day":
+		case Constants.MESSAGE_REPEAT_DAY:
 			eachTask.setDay(true);
 			break;
-		case "week":
+		case Constants.MESSAGE_REPEAT_WEEK:
 			eachTask.setWeek(true);
 			break;
-		case "month":
+		case Constants.MESSAGE_REPEAT_MONTH:
 			eachTask.setMonth(true);
 			break;
-		case "year":
+		case Constants.MESSAGE_REPEAT_YEAR:
 			eachTask.setYear(true);
 			break;
 		}
-		mainStorage.write(notDoneStorage, doneStorage);
-		clearAndAdd(previousInputStorage, new PreviousInput("edit", oldTask, eachTask));
+		arraylistStorage_.writeToStorage();
+		arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
-	}
-
-	public Task findByTaskID(ArrayList<Task> taskList, int taskID) {
-		for (Task task : taskList) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
-	}
-
-	private void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
-		taskArray.clear();
-		taskArray.add(task);
 	}
 
 	public Task cloneTask(Task task) {

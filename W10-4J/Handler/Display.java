@@ -1,66 +1,51 @@
 package Handler;
 
-import java.util.ArrayList;
 
-import Storage.Storage;
 import main.Constants;
-import main.Task;
 
 public class Display implements Command {
-	private ArrayList<Task> notDoneYetStorage;
-	private ArrayList<Task> doneStorage;
-	Storage mainStorage;
+	ArraylistStorage arraylistStorage_;
 	String outputDisplay;
-	Sorting sort = new Sorting();
+	Sorting sort;
 	
-	public Display(ArraylistStorage storage){
-		this.notDoneYetStorage = storage.getNotDoneStorage();
-		this.doneStorage = storage.getDoneStorage();
-		this.mainStorage = storage.getMainStorage();
+	public Display(ArraylistStorage arraylistStorage){
+		arraylistStorage_ = arraylistStorage;
+		sort = new Sorting();
 	}
 
 	public String execute(String[] task) {
 		if(task.length==0){ 
-			mainStorage.write(notDoneYetStorage, doneStorage);
-			outputDisplay = DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
+			arraylistStorage_.writeToStorage();
+			outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByStartDate();
 		}else{
 			String displayField = task[0].trim();
 			assert displayField != null: Constants.ASSERT_FIELD_EXISTENCE;
-			//ArrayList<Task> clonenotDoneYetStorage = cloneArray(notDoneYetStorage);
 			switch (displayField)
 			{
 				case Constants.MESSAGE_DISPLAY_FIELD_NAME:
-					sort.sortByName(notDoneYetStorage);
-					mainStorage.write(notDoneYetStorage, doneStorage);
-					outputDisplay = DisplayDefault.displayDefaultFormat(notDoneYetStorage);
+					arraylistStorage_.sortNotDoneStorageByName();
+					arraylistStorage_.writeToStorage();
+					outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByDefault();
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_ID:
-					sort.sortByID(notDoneYetStorage);
-					mainStorage.write(notDoneYetStorage, doneStorage);
-					outputDisplay = DisplayDefault.displayDefaultFormat(notDoneYetStorage);
+					arraylistStorage_.sortNotDoneStorageByID();
+					arraylistStorage_.writeToStorage();
+					outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByDefault();
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_OVERDUE:
-					mainStorage.write(notDoneYetStorage, doneStorage);
-					outputDisplay = DisplayOverdue.displayOverdue(sort, notDoneYetStorage);
+					arraylistStorage_.writeToStorage();
+					outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByOverdue();
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TODAY:
-					mainStorage.write(notDoneYetStorage, doneStorage);
-					outputDisplay = DisplayToday.displayToday(sort, notDoneYetStorage);
+					arraylistStorage_.writeToStorage();
+					outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByToday();
 					break;
 				case Constants.MESSAGE_DISPLAY_FIELD_TASKS:
-					return DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
+					outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByStartDate();
 				case Constants.MESSAGE_DISPLAY_FIELD_DONE:
-					return DisplayDefault.displayDefaultFormat(doneStorage);
+					outputDisplay = arraylistStorage_.getDoneDisplayFormatByDefault();
 			}
 		}
 		return outputDisplay;
 	}
-	// private ArrayList<Task> cloneArray(ArrayList<Task> taskArray) {
-	// ArrayList<Task> clone = new ArrayList<Task>(taskArray.size());
-	// for (Task task : taskArray) {
-	// clone.add(task);
-	// }
-	// return clone;
-	// }
-
 }
