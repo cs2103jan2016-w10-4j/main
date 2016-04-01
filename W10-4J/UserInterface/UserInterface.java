@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,13 +23,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.LayoutStyle;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import Parser.Parser;
 
@@ -56,6 +51,8 @@ public class UserInterface{
 	private static JTextArea cmdDisplay = new JTextArea();
 	private static JTextField cmdEntry = new JTextField();
 	private static JLabel commandText = new JLabel();
+	
+	private static Color placeholderForeground = new Color(160, 160, 160);
 	
 	public static void main(String[] args){
 		initComponents(null);
@@ -122,7 +119,6 @@ public class UserInterface{
             .addGroup(layout.createSequentialGroup()
             		.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-            		.addComponent(commandText)
             		.addComponent(cmdEntry, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,7 +135,6 @@ public class UserInterface{
                     .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
                 .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup()
-                		.addComponent(commandText)
                 		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         );
 	}
@@ -168,11 +163,6 @@ public class UserInterface{
 	}
 	
 	private static void cmdEntrySettings(){
-        f.addWindowListener( new WindowAdapter() {
-            public void windowOpened( WindowEvent e ){
-                cmdEntry.requestFocus();
-            }
-        }); 
 		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
 		String fontFamily = properties.get(fontFamilyIndex);
@@ -184,34 +174,42 @@ public class UserInterface{
 		} else {
 			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
 		}
-		cmdEntry.setFocusable(true);
 		cmdEntry.setFont(font);
-		//cmdEntry.setText("Command");
-		//placeholder();
+		setPlaceholderFontColor();
+		placeholder();
 	}
 	
-	/*private static void placeholder(){
-        cmdEntry.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {
-                warn();
-            }
-            public void removeUpdate(DocumentEvent e) {
-                warn();
-            }
-            public void changedUpdate(DocumentEvent e) {
-                warn();
-            }
- 
-            public void warn() {
+	/*private static String customisePlaceholderText(){
+		return 
+	}*/
+	
+	private static void placeholder(){
+        cmdEntry.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
                 if (cmdEntry.getText().trim().length() != 0) {
-                    setFont(originalFont);
-                    setForeground(originalForeground);
-                    setTextWrittenIn(true);
+                	setOriginalColor();
                 }
  
             }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (cmdEntry.getText().trim().length() == 0) {
+                	setPlaceholderFontColor();
+                }
+            }
         });
-	}*/
+	}
+	
+	private static void setPlaceholderFontColor(){
+		cmdEntry.setForeground(placeholderForeground);
+		cmdEntry.setText("Enter commands here");
+	}
+	
+	private static void setOriginalColor(){
+		cmdEntry.setForeground(Color.BLACK);
+        cmdEntry.setText("");
+	}
     private static void textAreaSettings(){
 		ReadWriteXml prop = new ReadWriteXml();
 		ArrayList<String> properties = prop.readToArrayList();
@@ -266,12 +264,12 @@ public class UserInterface{
 				helpButton, settingsButton);
 		setIconsForButtons(homeButton, overdueButton, doneButton, allButton,
 				helpButton, settingsButton);
-		homeButton.setFocusable(false);
+		/*homeButton.setFocusable(false);
 		overdueButton.setFocusable(false);
 		doneButton.setFocusable(false);
 		allButton.setFocusable(false);
 		helpButton.setFocusable(false);
-		settingsButton.setFocusable(false);
+		settingsButton.setFocusable(false);*/
     }
 
 	private static void setIconsForButtons(JButton homeButton,
