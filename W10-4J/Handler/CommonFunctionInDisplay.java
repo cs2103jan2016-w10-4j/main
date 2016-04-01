@@ -51,28 +51,75 @@ public class CommonFunctionInDisplay {
 		return repeat;
 	}
 	
+	// Use by DisplayByStartDate, DisplayOverdue and DisplayToday
 	public static String getTaskDetails(Task t, String color, String repeat) {
-		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font face = \"Arial\" size = \"4\">" + color + t.getTaskID()
-		+ ")</td><td>" + color + t.getName() + "</td>";
+		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><h3>" + color + t.getTaskID()
+		+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
 		
 		if (t.getStartTime() != null) {
-			output += "<td>" + color + t.getStartTime() + "</td>";
+			output += "<td><h3>" + color + t.getStartTime() + "</h3></td>";
 		} else {
 			output += "<td></td>";
 		}
+		
 		if (t.getEndTime() != null) {
-			output += "<td>" + color + t.getEndTime() + "</td>";
+			output += "<td><h3>" + color + t.getEndTime() + "</h3></td>";
 		} else {
 			output += "<td></td>";
 		}
+		
 		if (t.getDetails() != null) {
-			output += "<td>" + color + t.getDetails() + "</td>";
+			output += "<td><h3>" + color + t.getDetails() + "</h3></td>";
 		} else {
 			output += "<td></td>";
 		}
+		
 		if (repeat != null) {
-			output += "<td>" + color + repeat + "</td>";
+			output += "<td><h3>" + color + repeat + "</h3></td>";
 		}
+		
+		return output;
+	}
+	
+	// Use by DisplayDefault and DisplayDone
+	public static String getTaskDetailsWithStartEndDate(Task t, String color, String repeat) {
+		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><h3>" + color + t.getTaskID()
+		+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
+		
+		if (t.getStartDate() != null) {
+			output += "<td><h3>" + color + t.getStartDate() + "</h3></td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getEndDate() != null) {
+			output += "<td><h3>" + color + t.getEndDate() + "</h3></td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getStartTime() != null) {
+			output += "<td><h3>" + color + t.getStartTime() + "</h3></td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getEndTime() != null) {
+			output += "<td><h3>" + color + t.getEndTime() + "</h3></td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getDetails() != null) {
+			output += "<td><h3>" + color + t.getDetails() + "</h3></td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (repeat != null) {
+			output += "<td><h3>" + color + repeat + "</h3></td>";
+		}
+		
 		return output;
 	}
 }

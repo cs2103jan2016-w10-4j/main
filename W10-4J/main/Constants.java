@@ -87,7 +87,7 @@ public class Constants {
 	 */
 	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#ff0000>");
 	public static final String MESSAGE_DISPLAY_COLOR_BLACK = ("<font color=#000000>");
-
+	
 	public static final String MESSAGE_DISPLAYFORMAT_TODAY = ("Today");
 	public static final String MESSAGE_DISPLAYFORMAT_YESTERDAY = ("Yesterday");
 	public static final String MESSAGE_DISPLAYFORMAT_TOMORROW = ("Tomorrow");
@@ -96,6 +96,8 @@ public class Constants {
 
 	public static final String MESSAGE_DISPLAYTODAY = ("There is no task today.");
 	public static final String MESSAGE_DISPLAYOVERDUE = ("There is no overdue task.");
+	public static final String MESSAGE_ALLDISPLAYS_NOTASKONHAND = ("No tasks on hand!");
+	public static final String MESSAGE_ALLDISPLAYS_NOTASKDONE = ("No tasks are done!");
 
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
 	public static final String MESSAGE_EDIT_ACTION_START = ("start");

@@ -28,16 +28,21 @@ public class DisplayByStartDate {
 		haveStartDateList = new ArrayList<Task>();
 		multiDayTaskList = new ArrayList<Task>();
 		taskToBeRemoved = new ArrayList<Integer>();
-		seperateToRespectiveArrayList(sortedList);
 		
-		while(!(haveStartDateList.isEmpty())) {
-			sortByStartDate(haveStartDateList);
-			displayingTasks();
-		}
+		if(sortedList.size() == 0) {
+			output += Constants.MESSAGE_ALLDISPLAYS_NOTASKONHAND;
+		} else {
+			seperateToRespectiveArrayList(sortedList);
 		
-		if(!(noStartDateList.isEmpty())) {
-			sort.sortByName(noStartDateList);
-			displayingNoStartDateTasks();
+			while(!(haveStartDateList.isEmpty())) {
+				sortByStartDate(haveStartDateList);
+				displayingTasks();
+			}
+		
+			if(!(noStartDateList.isEmpty())) {
+				sort.sortByName(noStartDateList);
+				displayingNoStartDateTasks();
+			}
 		}
 		
 		return output;
@@ -92,7 +97,7 @@ public class DisplayByStartDate {
 	
 	private static void getHeader(ArrayList<Task> taskList) {
 		counter = 0;
-		output += "<font face = \"Helvetica\" size = \"6\"><b>";
+		output += "<h1><b>";
 		if(taskList.size() != 0) {
 			currentDate = taskList.get(0).getStartDate();
 			if(currentDate != null) {
@@ -118,15 +123,16 @@ public class DisplayByStartDate {
 						counter = -1;
 					}
 				}			
-				output += currentDate + "</b></font>";
+				output += currentDate;
 			} else {
 				output += Constants.MESSAGE_DISPLAYFORMAT_NOSTARTDATE;
 			}
+			output += "</b></h1>";
 		}
 	}
 	
 	private static void createTable() {
-		output += "<table width=\"100%\" style=\"margin-top:5px; margin-bottom:15px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><font face = \"Arial\" size = \"5\"><b> Event <b></th><th style=\"width:15%;\" align=\"left\"><font face = \"Arial\" size = \"5\"><b> Start Time <b></th><th style=\"width:15%;\" align=\"left\"><font face = \"Arial\" size = \"5\"><b> End Time <b></th><th style=\"width:25%;\" align=\"left\"><font face = \"Arial\" size = \"5\"><b> Details </b></th><th style=\"width:15%;\" align=\"left\"><font face = \"Arial\" size = \"5\"><b> Repeat <b></th></ltr>";
+		output += "<table width=\"100%\" style=\"margin-top:5px; margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>";
 	}
 	
 	private static int getTaskDetails(ArrayList<Task> taskList) {		

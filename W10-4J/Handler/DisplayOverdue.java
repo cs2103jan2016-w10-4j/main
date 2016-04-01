@@ -7,14 +7,14 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayOverdue {
-	static String header = "<font face = \"Helvetica\" size = \"10\"><b>Overdue Task<b>";
-	static String subHeaderFont = "<font face = \"Helvetica\" size = \"6\"><b>";
+	static String header = "<h1><b>Overdue Task<b></h1>";
+	static String subHeaderFont = "<h1><b>";
 	static String collated;
 	static String output;
 	
 	public static String displayOverdue(Sorting sort, ArrayList<Task> notDoneYetStorage) {
 		DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
-		output = header + "<p>" + subHeaderFont;
+		output = header + subHeaderFont;
 		
 		if(collated == null || collated.equals(subHeaderFont)) {
 			output += Constants.MESSAGE_DISPLAYOVERDUE;
@@ -22,6 +22,7 @@ public class DisplayOverdue {
 			output += collated;
 		}
 		
+		output += "</b></h1>";
 		return output;
 	}
 	
