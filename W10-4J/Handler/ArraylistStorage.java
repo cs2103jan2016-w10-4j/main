@@ -265,7 +265,7 @@ public class ArraylistStorage {
 		return DisplayOverdue.displayOverdue(sort, this.notDoneStorage);
 	}
 	public String getNotDoneDisplayFormatByToday(){
-		return DisplayOverdue.displayOverdue(sort, this.notDoneStorage);
+		return DisplayToday.displayToday(sort, this.notDoneStorage);
 	}
 	public void sortNotDoneStorageByName(){
 		sort.sortByName(this.notDoneStorage);
