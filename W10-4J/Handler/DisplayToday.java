@@ -7,18 +7,18 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayToday {
-	static String header = "<font face = \"Helvetica\" size = \"10\"><b>Today's Task</b></font>";
+	static String header = "<h1><b>Today's Task</b></h1>";
 	static String beforeHeader = Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
-	static String subHeaderFont = "<font face = \"Helvetica\" size = \"6\"><b>";
+	static String subHeaderFont = "<h1><b>";
 	static String collated;
 	static String output;
 	
 	public static String displayToday(Sorting sort, ArrayList<Task> notDoneYetStorage) {
 		DisplayByStartDate.displayFormat(sort, notDoneYetStorage);
-		output = header + "<p>" + subHeaderFont;
+		output = header + subHeaderFont;
 		
 		if(collated == null || collated.equals(beforeHeader)) {
-			output += Constants.MESSAGE_DISPLAYTODAY + "</b></font></p>";
+			output += Constants.MESSAGE_DISPLAYTODAY + "</b></h1>";
 		} else {
 			collated = collated.substring(beforeHeader.length(), collated.length());
 			output += collated;
