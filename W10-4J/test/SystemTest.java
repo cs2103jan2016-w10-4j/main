@@ -2,10 +2,44 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import org.junit.Test;
 import Parser.Parser;
+import UserInterface.UserInterface;
 
-public class SystemTest {
+public class SystemTest {	@Test
+	public void testRobot(){
+	UserInterface.initComponents(null);
+	try {
+		Robot robot = new Robot();
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_D);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_I);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_S);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_P);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_L);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_A);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_Y);
+		robot.delay(100);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.delay(1000);
+	} catch (AWTException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	String[] output = UserInterface.initComponents("display");
+	System.out.println(output[0]);
+	System.out.println(output[1]);
+}
 	
 	@Test
 	public void testParse() {
