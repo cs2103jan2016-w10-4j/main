@@ -51,6 +51,7 @@ public class CommonFunctionInDisplay {
 		return repeat;
 	}
 	
+	// Use by DisplayByStartDate, DisplayOverdue and DisplayToday
 	public static String getTaskDetails(Task t, String color, String repeat) {
 		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font face = \"Arial\" size = \"4\">" + color + t.getTaskID()
 		+ ")</td><td>" + color + t.getName() + "</td>";
@@ -60,16 +61,60 @@ public class CommonFunctionInDisplay {
 		} else {
 			output += "<td></td>";
 		}
+		
 		if (t.getEndTime() != null) {
 			output += "<td>" + color + t.getEndTime() + "</td>";
 		} else {
 			output += "<td></td>";
 		}
+		
 		if (t.getDetails() != null) {
 			output += "<td>" + color + t.getDetails() + "</td>";
 		} else {
 			output += "<td></td>";
 		}
+		
+		if (repeat != null) {
+			output += "<td>" + color + repeat + "</td>";
+		}
+		return output;
+	}
+	
+	// Use by DisplayDefault and DisplayDone
+	public static String getTaskDetailsWithStartEndDate(Task t, String color, String repeat) {
+		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font face = \"Arial\" size = \"4\">" + color + t.getTaskID()
+		+ ")</td><td>" + color + t.getName() + "</td>";
+		
+		if (t.getStartDate() != null) {
+			output += "<td>" + color + t.getStartDate() + "</td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getEndDate() != null) {
+			output += "<td>" + color + t.getEndDate() + "</td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getStartTime() != null) {
+			output += "<td>" + color + t.getStartTime() + "</td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getEndTime() != null) {
+			output += "<td>" + color + t.getEndTime() + "</td>";
+		} else {
+			output += "<td></td>";
+		}
+		
+		if (t.getDetails() != null) {
+			output += "<td>" + color + t.getDetails() + "</td>";
+		} else {
+			output += "<td></td>";
+		}
+		
 		if (repeat != null) {
 			output += "<td>" + color + repeat + "</td>";
 		}
