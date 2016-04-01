@@ -80,7 +80,7 @@ public class UserInterface{
 		
     	uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
 
-        uiControl.commandAction(s, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, welcomeMessage(p), cmdEntry, cmdDisplay, outputDisplay, commandText);
+        uiControl.commandAction(s, overdueButton, allButton, doneButton, helpButton, settingsButton, homeButton, cmdEntry, cmdDisplay, outputDisplay, commandText);
         return returnOutput();
     }
     

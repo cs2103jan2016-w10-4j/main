@@ -33,7 +33,7 @@ public class UIController {
     
 	public void commandAction(String s, JButton overdue, JButton all,
 			JButton done, JButton help, JButton settings, JButton home,
-			String welcome, JTextField cmdEntry, JTextArea cmdDisplay,
+			JTextField cmdEntry, JTextArea cmdDisplay,
 			JTextPane displayOutput, JLabel commandText) {
 		Parser p = new Parser();
 		if (s != null){
@@ -45,7 +45,7 @@ public class UIController {
 			allListener(all, p, displayOutput);
 			doneListener(done, p, displayOutput);
 			helpListener(help, p, displayOutput);
-			homeListener(home, p, displayOutput, welcome);
+			homeListener(home, p, displayOutput);
 			overdueListener(overdue, p, displayOutput);
 		}
     }
@@ -95,10 +95,11 @@ public class UIController {
     	});
 	}
 
-	private void homeListener(JButton home, Parser p, JTextPane displayOutput, String welcome) {
+	private void homeListener(JButton home, Parser p, JTextPane displayOutput) {
 		home.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			printInDisplayOutput(displayOutput, welcome);
+    			String todayTask = p.parse("display today").substring(1);
+    			printInDisplayOutput(displayOutput, todayTask);
 				displayOutput.setCaretPosition(0);
     		}
     	});
