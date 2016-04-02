@@ -194,7 +194,7 @@ public class ArraylistStorage {
 	}
 	// For undo function for Retrieve method. Placed in ArraylistStorage since it directly touches the arraylists.
 	public void addPreviousInputStorages(String command){
-		addTaskToPreInputStorage(new PreviousInput(command, this.notDoneStorage, this.doneStorage));
+		addTaskToPreInputStorage(new PreviousInput(command, (ArrayList<Task>)this.notDoneStorage.clone(), (ArrayList<Task>)this.doneStorage.clone()));
 	}
 	public void rememberPreviousStorages(){
 		this.previousNotDoneStorage = getPreviousInputNotDoneStorage();
