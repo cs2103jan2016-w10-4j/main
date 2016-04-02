@@ -264,12 +264,12 @@ public class UserInterface{
 				helpButton, settingsButton);
 		setIconsForButtons(homeButton, overdueButton, doneButton, allButton,
 				helpButton, settingsButton);
-		/*homeButton.setFocusable(false);
+		homeButton.setFocusable(false);
 		overdueButton.setFocusable(false);
 		doneButton.setFocusable(false);
 		allButton.setFocusable(false);
 		helpButton.setFocusable(false);
-		settingsButton.setFocusable(false);*/
+		settingsButton.setFocusable(false);
     }
 
 	private static void setIconsForButtons(JButton homeButton,
