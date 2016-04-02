@@ -15,6 +15,8 @@ public class ArraylistStorage {
 	private Sorting sort;
 	private ArrayList<Task> additionalNotDoneStorage;
 	private ArrayList<Task> additionalDoneStorage;
+	private ArrayList<Task> previousNotDoneStorage;
+	private ArrayList<Task> previousDoneStorage;
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
@@ -195,12 +197,12 @@ public class ArraylistStorage {
 		addTaskToPreInputStorage(new PreviousInput(command, this.notDoneStorage, this.doneStorage));
 	}
 	public void rememberPreviousStorages(){
-		this.additionalNotDoneStorage = getPreviousInputNotDoneStorage();
-		this.additionalDoneStorage = getPreviousInputDoneStorage();
+		this.previousNotDoneStorage = getPreviousInputNotDoneStorage();
+		this.previousDoneStorage = getPreviousInputDoneStorage();
 	}
 	public void setNewStorages(){
-		this.notDoneStorage = this.additionalNotDoneStorage;
-		this.doneStorage = this.additionalDoneStorage;
+		this.notDoneStorage = this.previousNotDoneStorage;
+		this.doneStorage = this.previousDoneStorage;
 	}
 	
 	public void combineArrays(String fileName){
