@@ -41,20 +41,18 @@ public class UIController {
 			commandEnteredAction(timer, s, cmdEntry, cmdDisplay, displayOutput, p);
 		} else {
 			cmdEntryListener(timer, p, cmdEntry, cmdDisplay, displayOutput);
-			settingsListener(settings, cmdDisplay, displayOutput, commandText, cmdEntry);
-			allListener(all, p, displayOutput);
-			doneListener(done, p, displayOutput);
-			helpListener(help, p, displayOutput);
-			homeListener(home, p, displayOutput);
-			overdueListener(overdue, p, displayOutput);
+			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry);
+			allListener(timer, all, p, displayOutput);
+			doneListener(timer, done, p, displayOutput);
+			helpListener(timer, help, p, displayOutput);
+			homeListener(timer, home, p, displayOutput);
+			overdueListener(timer, overdue, p, displayOutput);
 		}
 	}
 
 	private void commandEnteredAction(Timer timer, String s, JTextField cmdEntry, JTextArea cmdDisplay,
 			JTextPane displayOutput, Parser p) {
-		if (timer.isRunning()) {
-			timer.stop();
-		}
+		stopTimer(timer);
 		cmdEntry.setText("");
 		commands.add(s);
 		commandIndex = commands.size();
@@ -69,6 +67,12 @@ public class UIController {
 		}
 		displayOutput.setCaretPosition(0);
 	}
+	
+	private static void stopTimer(Timer timer){
+		if (timer.isRunning()){
+			timer.stop();
+		}
+	}
 
 	private static boolean isInvalidMessages(String message) {
 		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT)
@@ -77,18 +81,20 @@ public class UIController {
 				|| message.equals(Constants.MESSAGE_RECUR_FAIL);
 	}
 
-	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
+	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
 			JTextField cmdEntry) {
 		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry);
 			}
 		});
 	}
 
-	private void allListener(JButton all, Parser p, JTextPane displayOutput) {
+	private void allListener(Timer timer, JButton all, Parser p, JTextPane displayOutput) {
 		all.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("display");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -96,9 +102,10 @@ public class UIController {
 		});
 	}
 
-	private void doneListener(JButton done, Parser p, JTextPane displayOutput) {
+	private void doneListener(Timer timer, JButton done, Parser p, JTextPane displayOutput) {
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("display done");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -106,9 +113,10 @@ public class UIController {
 		});
 	}
 
-	private void homeListener(JButton home, Parser p, JTextPane displayOutput) {
+	private void homeListener(Timer timer, JButton home, Parser p, JTextPane displayOutput) {
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String todayTask = p.parse("display today").substring(1);
 				printInDisplayOutput(displayOutput, todayTask);
 				displayOutput.setCaretPosition(0);
@@ -116,9 +124,10 @@ public class UIController {
 		});
 	}
 
-	private void helpListener(JButton help, Parser p, JTextPane displayOutput) {
+	private void helpListener(Timer timer, JButton help, Parser p, JTextPane displayOutput) {
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("help");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -126,9 +135,10 @@ public class UIController {
 		});
 	}
 
-	private void overdueListener(JButton overdue, Parser p, JTextPane displayOutput) {
+	private void overdueListener(Timer timer, JButton overdue, Parser p, JTextPane displayOutput) {
 		overdue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("display overdue");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
