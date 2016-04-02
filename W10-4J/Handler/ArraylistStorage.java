@@ -13,8 +13,8 @@ public class ArraylistStorage {
 	private Storage mainStorage;
 	
 	private Sorting sort;
-	private ArrayList<Task> addtionalNotDoneStorage;
-	private ArrayList<Task> addtionalDoneStorage;
+	private ArrayList<Task> additionalNotDoneStorage;
+	private ArrayList<Task> additionalDoneStorage;
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
@@ -45,6 +45,14 @@ public class ArraylistStorage {
 	}
 	public Task getPreviousInputEditedTask(){
 		return this.previousInputStorage.get(0).getEditedTask();
+	}
+	
+	// Only for Retrieve method
+	public ArrayList<Task> getPreviousInputNotDoneStorage(){
+		return this.previousInputStorage.get(0).getPreviousNotDoneStorage();
+	}
+	public ArrayList<Task> getPreviousInputDoneStorage(){
+		return this.previousInputStorage.get(0).getPreviousDoneStorage();
 	}
 
 	public Storage getMainStorage() {
@@ -179,19 +187,32 @@ public class ArraylistStorage {
 		return taskList;
 	}
 	private void getNewArrays(String fileName){
-		this.addtionalNotDoneStorage = getNewStorages(fileName).get(0);
-		this.addtionalDoneStorage = getNewStorages(fileName).get(1);	
+		this.additionalNotDoneStorage = getNewStorages(fileName).get(0);
+		this.additionalDoneStorage = getNewStorages(fileName).get(1);	
 	}
+	// For undo function for Retrieve method. Placed in ArraylistStorage since it directly touches the arraylists.
+	public void addPreviousInputStorages(String command){
+		addTaskToPreInputStorage(new PreviousInput(command, this.notDoneStorage, this.doneStorage));
+	}
+	public void rememberPreviousStorages(){
+		this.additionalNotDoneStorage = getPreviousInputNotDoneStorage();
+		this.additionalDoneStorage = getPreviousInputDoneStorage();
+	}
+	public void setPreviousInputStorages(){
+		this.notDoneStorage = this.additionalNotDoneStorage;
+		this.doneStorage = this.additionalDoneStorage;
+	}
+	
 	public void combineArrays(String fileName){
 		getNewArrays(fileName);
 		combineDoneStorages();
 		combineNotDoneStorages();
 	}
 	private void combineDoneStorages(){
-		mergeWithoutRepeat(this.doneStorage, this.addtionalDoneStorage);
+		mergeWithoutRepeat(this.doneStorage, this.additionalDoneStorage);
 	}
 	private void combineNotDoneStorages(){
-		mergeWithoutRepeat(this.notDoneStorage, this.addtionalNotDoneStorage);
+		mergeWithoutRepeat(this.notDoneStorage, this.additionalNotDoneStorage);
 	}
 	private void mergeWithoutRepeat(ArrayList<Task> originalArray, ArrayList<Task> additionalArray) {
 		boolean isSame = false;
@@ -202,8 +223,6 @@ public class ArraylistStorage {
 				}
 			}
 			if (isSame == false) {
-//				int currentSize = Handler.getTaskID();
-//				task1.setTaskID(currentSize + 1);
 				originalArray.add(task1);
 			}
 			isSame = false;

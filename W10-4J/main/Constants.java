@@ -131,6 +131,9 @@ public class Constants {
 	public static final String MESSAGE_ACTION_UNDO = ("undo");
 	public static final String MESSAGE_ACTION_READ = ("read");
 	public static final String MESSAGE_ACTION_RETRIEVE = ("retrieve");
+	public static final String MESSAGE_ACTION_UNRETRIEVE = ("unretrieve");
+	public static final String MESSAGE_ACTION_SETDIR = ("set directory");
+	public static final String MESSAGE_ACTION_UNSETDIR = ("unset directory");
 	public static final String MESSAGE_ACTION_WRITE = ("write");
 
 	public static final String MESSAGE_STORAGE_SUCCESS = ("Success");
