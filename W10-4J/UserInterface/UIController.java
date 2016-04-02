@@ -33,12 +33,12 @@ public class UIController {
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
 
-	public void commandAction(Timer timer, String s, JButton overdue, JButton all, JButton done, JButton help,
+	public void commandAction(Timer timer, String command, JButton overdue, JButton all, JButton done, JButton help,
 			JButton settings, JButton home, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput,
 			JLabel commandText) {
 		Parser p = new Parser();
-		if (s != null) {
-			commandEnteredAction(timer, s, cmdEntry, cmdDisplay, displayOutput, p);
+		if (command != null) {
+			commandEnteredAction(timer, command, cmdEntry, cmdDisplay, displayOutput, p);
 		} else {
 			cmdEntryListener(timer, p, cmdEntry, cmdDisplay, displayOutput);
 			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry);
@@ -50,14 +50,14 @@ public class UIController {
 		}
 	}
 
-	private void commandEnteredAction(Timer timer, String s, JTextField cmdEntry, JTextArea cmdDisplay,
+	private void commandEnteredAction(Timer timer, String command, JTextField cmdEntry, JTextArea cmdDisplay,
 			JTextPane displayOutput, Parser p) {
 		stopTimer(timer);
 		cmdEntry.setText("");
-		commands.add(s);
+		commands.add(command);
 		commandIndex = commands.size();
-		printInCommandDisplay(cmdDisplay, "> " + s);
-		String output = p.parse(s);
+		printInCommandDisplay(cmdDisplay, command);
+		String output = p.parse(command);
 		assert output != null;
 		if (isDisplay(output)) {
 			printInDisplayOutput(displayOutput, output.substring(1));
@@ -170,7 +170,7 @@ public class UIController {
 	}
 
 	private static void printInCommandDisplay(JTextArea cmdDisplay, String content) {
-		cmdDisplay.append(content + "\n");
+		cmdDisplay.append("> " + content + "\n");
 	}
 
 	private static void printInDisplayOutput(JTextPane displayOutput, String s) {
