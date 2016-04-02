@@ -55,18 +55,21 @@ public class Undo implements Command{
 		case Constants.MESSAGE_ACTION_RETRIEVE:
 			arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNRETRIEVE);
-			arraylistStorage_.setPreviousInputStorages();
+			arraylistStorage_.setNewStorages();
 			arraylistStorage_.writeToStorage();
 			break;
+			
 		case Constants.MESSAGE_ACTION_UNRETRIEVE:
 			arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
-			arraylistStorage_.setPreviousInputStorages();
+			arraylistStorage_.setNewStorages();
 			arraylistStorage_.writeToStorage();
 			break;
 			
 		case Constants.MESSAGE_ACTION_SETDIR:
+			
 			break;
+			
 		case Constants.MESSAGE_ACTION_UNSETDIR:
 			break;
 			

@@ -198,7 +198,7 @@ public class ArraylistStorage {
 		this.additionalNotDoneStorage = getPreviousInputNotDoneStorage();
 		this.additionalDoneStorage = getPreviousInputDoneStorage();
 	}
-	public void setPreviousInputStorages(){
+	public void setNewStorages(){
 		this.notDoneStorage = this.additionalNotDoneStorage;
 		this.doneStorage = this.additionalDoneStorage;
 	}

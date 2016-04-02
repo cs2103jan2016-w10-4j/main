@@ -12,6 +12,9 @@ public class PreviousInput {
 	// only for retrieve method
 	private ArrayList<Task> previousNotDoneStorage_;
 	private ArrayList<Task> previousDoneStorage_;
+	// only for setdir method
+	private String oldFileName_;
+	private String newFileName_;
 
 	public PreviousInput(String action, Task task) {
 		action_ = action;
@@ -28,6 +31,12 @@ public class PreviousInput {
 		action_ = action;
 		previousNotDoneStorage_ = previousNotDoneStorage;
 		previousDoneStorage_ = previousDoneStorage;
+	}
+	
+	public PreviousInput(String action, String oldFileName, String newFileName) {
+		action_ = action;
+		oldFileName_ = oldFileName;
+		newFileName_ = newFileName;
 	}
 
 	public String getAction() {
@@ -48,6 +57,14 @@ public class PreviousInput {
 	
 	public ArrayList<Task> getPreviousDoneStorage(){
 		return previousDoneStorage_;
+	}
+	
+	public String getOldFileName(){
+		return oldFileName_;
+	}
+	
+	public String getNewFileName(){
+		return newFileName_;
 	}
 
 	public void setAction(String action) {
