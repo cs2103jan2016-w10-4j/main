@@ -63,9 +63,8 @@ public class UIController {
 		assert output != null;
 		if (isDisplay(output)) {
 			printInDisplayOutput(displayOutput, output.substring(1));
-		} else if (isInvalidMessages(output.substring(1))) {
-			printInCommandDisplay(cmdDisplay, output.substring(1));
 		} else {
+			printInCommandDisplay(cmdDisplay, output.substring(1));
 			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
 		}
 		displayOutput.setCaretPosition(0);
