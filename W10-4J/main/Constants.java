@@ -127,6 +127,7 @@ public class Constants {
 	public static final String MESSAGE_COMMONFUNCTION_TR_CLOSETAG = ("</tr>");
 	public static final String MESSAGE_COMMONFUNCTION_HEADER_OPENTAG = ("<h3>");
 	public static final String MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG = ("</h3>");
+	public static final String MESSAGE_COMMONFUNCTION_RETRIEVE = ("retrieve");
 	
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
 	public static final String MESSAGE_EDIT_ACTION_START = ("start");

@@ -10,7 +10,11 @@ import main.Task;
 public class CommonFunctionInDisplay {
 	public static int checkRecentUpdatedTaskID(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
 		int taskID = -1;
-
+		
+		if(previousList.size() == 1 && previousList.get(0).getAction().equals(Constants.MESSAGE_COMMONFUNCTION_RETRIEVE)) {
+			return -1;
+		}
+		
 		// When user first add a task into the empty file
 		if(previousList.size() == 1 && currentList.size() == 1) {
 			Task previousTask = previousList.get(0).getTask();
