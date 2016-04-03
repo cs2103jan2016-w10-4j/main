@@ -95,7 +95,7 @@ public class Constants {
 	// Use commonly throughout all types of Display
 	public static final String MESSAGE_DISPLAY_SUBHEADER_OPENTAG_TABLE = ("<table id=\"underline\"><th style=\"font-size:120%\">");
 	public static final String MESSAGE_DISPLAY_SUBHEADER_CLOSETAG_TABLE = ("</th></table>");
-	public static final String MESSAGE_DISPLAY_SUBHEADER_OPENTAG = ("<h1><b>");
+	public static final String MESSAGE_DISPLAY_SUBHEADER_OPENTAG = ("<style>#underline{border-bottom: 3px solid black;}</style><h1><b>");
 	public static final String MESSAGE_DISPLAY_SUBHEADER_CLOSETAG = ("</b></h1>");
 	public static final String MESSAGE_DISPLAY_TABLEANDHEADER = ("<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\">Start Date </th><th style=\"width:15%;\" align=\"left\">End Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr>");
 	public static final String MESSAGE_DISPLAY_TABLECLOSETAG = ("</table>");

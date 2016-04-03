@@ -47,7 +47,7 @@ public class DisplayStartDate {
 	}
 	
 	private static void initializeVariables() {
-		output = "<style>#underline{border-bottom: 3px solid black;}</style>";
+		output = "";
 		overdueOrToday = "";
 		taskWithNoStartDateList = new ArrayList<Task>();
 		taskWithStartDateList = new ArrayList<Task>();
