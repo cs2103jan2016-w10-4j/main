@@ -46,7 +46,7 @@ public class Parser {
 	}
 
 	public String getFirstWord(String command) {
-		return command.split(" ")[0];
+		return command.trim().split(" ")[0];
 	}
 
 	public COMMAND_TYPE getAction(String command) {
@@ -98,14 +98,15 @@ public class Parser {
 			if (c[i] == '"') {
 				insideQuote = !insideQuote;
 			} else if (c[i] == ' ' && !insideQuote) {
-				tokens.add(sb.toString());
-
+				if (sb.toString().trim().length() > 0) {
+					tokens.add(sb.toString());
+				}
 				sb.delete(0, sb.length());
 			} else {
 				sb.append(c[i]);
 			}
 		}
-		tokens.add(sb.toString());
+		tokens.add(sb.toString().trim());
 		tokens.remove(0);
 		if (commandType == COMMAND_TYPE.ADD) {
 			replaceModifiers(tokens);
