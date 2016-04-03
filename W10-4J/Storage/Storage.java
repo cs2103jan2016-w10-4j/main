@@ -157,4 +157,9 @@ public class Storage {
 		}
 		return outcome;
 	}
+	
+	// Needed for Handler when undo setdir
+	public String getCurrentFilename() {
+		return filename;
+	}
 }

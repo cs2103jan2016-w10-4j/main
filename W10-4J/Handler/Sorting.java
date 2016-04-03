@@ -17,7 +17,7 @@ public class Sorting {
 
 	public void sortByStartDate(ArrayList<Task> clonenotDoneYetStorage){
 		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_STARTDATE);
-		Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
+		Collections.sort(clonenotDoneYetStorage, Task.taskStartDateComparator);
 		if (exclusivenotDoneYetStorage != null){
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}

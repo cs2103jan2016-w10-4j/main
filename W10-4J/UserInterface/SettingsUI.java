@@ -7,7 +7,6 @@
 package UserInterface;
 
 import java.awt.Button;
-import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
@@ -24,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,51 +31,50 @@ import javax.swing.JLabel;
 public class SettingsUI {
 	private static String fileName = ".\\properties.xml";
 	
-    public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry) {
-        initComponents(outputDisplay, cmdDisplay, commandText, cmdEntry);
-    }
+	private static ColorsForSettings colors = new ColorsForSettings();
+	
+	static JFrame f = new JFrame("Settings");
+    JPanel jPanel3 = new JPanel();
+    JRadioButton defaultRadioButton = new JRadioButton();
+    JRadioButton seaRadioButton = new JRadioButton();
+    JRadioButton sunsetRadioButton = new JRadioButton();
+    JRadioButton dawnRadioButton = new JRadioButton();
+    JRadioButton natureRadioButton = new JRadioButton();
+    JTextPane textPane1 = new JTextPane();
+    JTextPane textPane2 = new JTextPane();
+    JScrollPane jScrollPane1 = new JScrollPane();
+    JScrollPane jScrollPane2 = new JScrollPane();
+    Button cancelButton = new Button();
+    JComboBox<String> fontSizeBox = new JComboBox<String>();
+    JComboBox<String> fontFamilyBox = new JComboBox<String>();
+    JLabel jLabel1 = new JLabel();
+    JLabel jLabel2 = new JLabel();
+    Button saveButton = new Button();
+    ReadWriteXml prop = new ReadWriteXml();
     
-    private void initComponents(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry) {
-    	JFrame f = new JFrame("Settings");
-        JPanel jPanel3 = new JPanel();
-        JRadioButton defaultRadioButton = new JRadioButton();
-        JRadioButton seaRadioButton = new JRadioButton();
-        JRadioButton sunsetRadioButton = new JRadioButton();
-        JRadioButton dawnRadioButton = new JRadioButton();
-        JRadioButton natureRadioButton = new JRadioButton();
-        JScrollPane jScrollPane1 = new JScrollPane();
-        JScrollPane jScrollPane2 = new JScrollPane();
-        Button cancelButton = new Button();
-        JComboBox<String> fontSizeBox = new JComboBox<String>();
-        JComboBox<String> fontFamilyBox = new JComboBox<String>();
-        JLabel jLabel1 = new JLabel();
-        JLabel jLabel2 = new JLabel();
-        Button saveButton = new Button();
-        ReadWriteXml prop = new ReadWriteXml();
-        
-        ArrayList<String> properties = prop.readToArrayList();
-        
-        JTextPane textPane1 = new JTextPane();
+    ArrayList<String> properties = prop.readToArrayList();
+	
+    public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help,
+			JButton settings) {
+        initComponents(outputDisplay, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help, settings);
+    }
+    private void initComponents(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings) {
         jScrollPane1.setViewportView(textPane1);
-        JTextPane textPane2 = new JTextPane();
         jScrollPane2.setViewportView(textPane2);
-
-        setIcon(f);
-        fontSizeBoxSettings(fontSizeBox, prop);
-        fontFamilyBoxSettings(fontFamilyBox, prop);
-        jLabelSettings(jLabel1, jLabel2);
-        cancelAndSaveButtonSettings(cancelButton, saveButton);
-        ButtonGroup button = radioButtonsSettings(defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton,
-				natureRadioButton);
         
-        radioButtonSelectionAndDisplayExample(defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				textPane1, textPane2, properties, button);
+        setIcon();
+        fontSizeBoxSettings();
+        fontFamilyBoxSettings();
+        jLabelSettings();
+        cancelAndSaveButtonSettings();
+        ButtonGroup button = radioButtonsSettings();
         
-        setLayoutForSettingsUI(f, jPanel3, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				jScrollPane1, jScrollPane2, cancelButton, saveButton, fontSizeBox, fontFamilyBox, jLabel1, jLabel2);
+        radioButtonSelectionAndDisplayExample(button);
+        
+        setLayoutForSettingsUI();
 
         SettingsUIController controller = new SettingsUIController();
-        controller.action(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton, textPane1, textPane2, saveButton, cancelButton, properties, outputDisplay, cmdDisplay, fontSizeBox, fontFamilyBox, commandText, cmdEntry);
+        controller.action(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton, textPane1, textPane2, saveButton, cancelButton, properties, outputDisplay, cmdDisplay, fontSizeBox, fontFamilyBox, commandText, cmdEntry, home, overdue, all, done, help, settings);
 
 		lookAndFeel();
 		
@@ -83,63 +82,19 @@ public class SettingsUI {
         f.setVisible(true);
     }
 
-	private void cancelAndSaveButtonSettings(Button cancelButton,
-			Button saveButton) {
-		cancelButton.setLabel("Cancel");
-        saveButton.setLabel("Save");
-	}
-
-	private void jLabelSettings(JLabel jLabel1, JLabel jLabel2) {
-		jLabel1.setText("Font Size");
-        jLabel2.setText("Font");
-	}
-
-	private void fontFamilyBoxSettings(JComboBox<String> fontFamilyBox,
-			ReadWriteXml prop) {
-		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getAvailableFontFamilyNames();
-		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
-        fontFamilyBox.setSelectedItem(prop.read("fontFamily", fileName));
-	}
-
-	private void fontSizeBoxSettings(JComboBox<String> fontSizeBox, ReadWriteXml prop) {
-		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
-        fontSizeBox.setSelectedItem(prop.read("fontSize", fileName));
-	}
-
-	private void lookAndFeel() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void setLayoutForSettingsUI(JFrame f, JPanel jPanel3, JRadioButton defaultRadioButton,
-			JRadioButton seaRadioButton, JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton,
-			JRadioButton natureRadioButton, JScrollPane jScrollPane1, JScrollPane jScrollPane2, Button cancelButton,
-			Button saveButton, JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox, JLabel jLabel1, JLabel jLabel2) {
+	private void setLayoutForSettingsUI() {
 		GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
-		panelHorizontalLayout(defaultRadioButton, seaRadioButton,
-				sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				fontSizeBox, fontFamilyBox, jLabel1, jLabel2, jPanel3Layout);
-        panelVerticalLayout(defaultRadioButton, seaRadioButton,
-				sunsetRadioButton, dawnRadioButton, natureRadioButton,
-				fontSizeBox, fontFamilyBox, jLabel1, jLabel2, jPanel3Layout);
+		panelHorizontalLayout(jPanel3Layout);
+        panelVerticalLayout(jPanel3Layout);
 
         GroupLayout layout = new GroupLayout(f.getContentPane());
         f.getContentPane().setLayout(layout);
-        horizontalLayout(jPanel3, jScrollPane1, jScrollPane2, cancelButton,
-				saveButton, layout);
-        verticalLayout(jPanel3, jScrollPane1, jScrollPane2, cancelButton,
-				saveButton, layout);
+        horizontalLayout(layout);
+        verticalLayout(layout);
 	}
 
-	private void verticalLayout(JPanel jPanel3, JScrollPane jScrollPane1,
-			JScrollPane jScrollPane2, Button cancelButton, Button saveButton,
-			GroupLayout layout) {
+	private void verticalLayout(GroupLayout layout) {
 		layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -153,9 +108,7 @@ public class SettingsUI {
         );
 	}
 
-	private void horizontalLayout(JPanel jPanel3, JScrollPane jScrollPane1,
-			JScrollPane jScrollPane2, Button cancelButton, Button saveButton,
-			GroupLayout layout) {
+	private void horizontalLayout(GroupLayout layout) {
 		layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -171,11 +124,7 @@ public class SettingsUI {
         );
 	}
 
-	private void panelVerticalLayout(JRadioButton defaultRadioButton,
-			JRadioButton seaRadioButton, JRadioButton sunsetRadioButton,
-			JRadioButton dawnRadioButton, JRadioButton natureRadioButton,
-			JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox,
-			JLabel jLabel1, JLabel jLabel2, GroupLayout jPanel3Layout) {
+	private void panelVerticalLayout(GroupLayout jPanel3Layout) {
 		jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -201,11 +150,7 @@ public class SettingsUI {
         );
 	}
 
-	private void panelHorizontalLayout(JRadioButton defaultRadioButton,
-			JRadioButton seaRadioButton, JRadioButton sunsetRadioButton,
-			JRadioButton dawnRadioButton, JRadioButton natureRadioButton,
-			JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox,
-			JLabel jLabel1, JLabel jLabel2, GroupLayout jPanel3Layout) {
+	private void panelHorizontalLayout(GroupLayout jPanel3Layout) {
 		jPanel3Layout.setHorizontalGroup(
 				jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						.addGroup(jPanel3Layout.createSequentialGroup()
@@ -229,63 +174,49 @@ public class SettingsUI {
         );
 	}
 
-	private void radioButtonSelectionAndDisplayExample(JRadioButton defaultRadioButton, JRadioButton seaRadioButton,
-			JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, JTextPane textPane1,
-			JTextPane textPane2, ArrayList<String> properties, ButtonGroup button) {
-        String colorOption = properties.get(0);
-		if (colorOption == null){
-        	button.setSelected(defaultRadioButton.getModel(), true);
-        	defaultColor(textPane1, textPane2);
-        } else if (colorOption.equals("default")){
-        	button.setSelected(defaultRadioButton.getModel(), true);
-        	defaultColor(textPane1, textPane2);
-        } else if (colorOption.equals("option1")){
-        	button.setSelected(seaRadioButton.getModel(), true);
-			seaColor(textPane1, textPane2);
-        } else if (colorOption.equals("option2")) {
-        	button.setSelected(sunsetRadioButton.getModel(), true);
-			sunsetColor(textPane1, textPane2);
-        } else if (colorOption.equals("option3")) {
-        	button.setSelected(dawnRadioButton.getModel(), true);
-			dawnColor(textPane1, textPane2);
-        } else if (colorOption.equals("option4")) {
-        	button.setSelected(natureRadioButton.getModel(), true);
-			natureColor(textPane1, textPane2);
-        }
+	private void lookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+	}
+    
+	private static void setIcon() {
+		String icon = "/main/icon/d.png";
+		ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
+		f.setIconImage(img.getImage());
 	}
 
-	private static void natureColor(JTextPane textPane1, JTextPane textPane2) {
-		textPane1.setBackground(new Color(199, 225, 196));
-		textPane2.setBackground(new Color(57, 114, 73));
+	private void cancelAndSaveButtonSettings() {
+		cancelButton.setLabel("Cancel");
+        saveButton.setLabel("Save");
 	}
 
-	private static void dawnColor(JTextPane textPane1, JTextPane textPane2) {
-		textPane1.setBackground(new Color(238, 205, 134));
-		textPane2.setBackground(new Color(225, 137, 66));
+	private void jLabelSettings() {
+		jLabel1.setText("Font Size");
+        jLabel2.setText("Font");
 	}
 
-	private static void sunsetColor(JTextPane textPane1, JTextPane textPane2) {
-		textPane1.setBackground(new Color(195, 195, 229));
-		textPane2.setBackground(new Color(68, 50, 102));
+	private void fontFamilyBoxSettings() {
+		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getAvailableFontFamilyNames();
+		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
+        fontFamilyBox.setSelectedItem(prop.read("fontFamily", fileName));
 	}
 
-	private static void seaColor(JTextPane textPane1, JTextPane textPane2) {
-		textPane1.setBackground(new Color(180, 216, 231));
-		textPane2.setBackground(new Color(86, 186, 236));
+	private void fontSizeBoxSettings() {
+		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
+        fontSizeBox.setSelectedItem(prop.read("fontSize", fileName));
 	}
 
-	private static void defaultColor(JTextPane textPane1, JTextPane textPane2) {
-		textPane1.setBackground(Color.WHITE);
-		textPane2.setBackground(Color.BLACK);
-	}
-
-	private ButtonGroup radioButtonsSettings(JRadioButton defaultRadioButton, JRadioButton seaRadioButton,
-			JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton) {
+	private ButtonGroup radioButtonsSettings() {
 		defaultRadioButton.setText("Default Colour");
         seaRadioButton.setText("Sea");
-        sunsetRadioButton.setText("Sunset");
-        dawnRadioButton.setText("Dawn");
-        natureRadioButton.setText("Nature");
+        sunsetRadioButton.setText("Option 2");
+        dawnRadioButton.setText("Option 3");
+        natureRadioButton.setText("Option 4");
         
         ButtonGroup button = new ButtonGroup();
         button.add(defaultRadioButton);
@@ -295,10 +226,27 @@ public class SettingsUI {
         button.add(natureRadioButton);
 		return button;
 	}
-    
-	private void setIcon(JFrame f) {
-				String icon = ".\\main\\icon\\d.png";
-				ImageIcon img = new ImageIcon(icon);
-				f.setIconImage(img.getImage());
+
+	private void radioButtonSelectionAndDisplayExample(ButtonGroup button) {
+        String colorOption = properties.get(0);
+		if (colorOption == null){
+        	button.setSelected(defaultRadioButton.getModel(), true);
+        	colors.defaultColor(textPane1, textPane2);
+        } else if (colorOption.equals("default")){
+        	button.setSelected(defaultRadioButton.getModel(), true);
+        	colors.defaultColor(textPane1, textPane2);
+        } else if (colorOption.equals("option1")){
+        	button.setSelected(seaRadioButton.getModel(), true);
+        	colors.seaColor(textPane1, textPane2);
+        } else if (colorOption.equals("option2")) {
+        	button.setSelected(sunsetRadioButton.getModel(), true);
+        	colors.sunsetColor(textPane1, textPane2);
+        } else if (colorOption.equals("option3")) {
+        	button.setSelected(dawnRadioButton.getModel(), true);
+        	colors.dawnColor(textPane1, textPane2);
+        } else if (colorOption.equals("option4")) {
+        	button.setSelected(natureRadioButton.getModel(), true);
+        	colors.natureColor(textPane1, textPane2);
+        }
 	}
 }

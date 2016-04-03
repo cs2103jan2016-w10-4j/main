@@ -33,63 +33,46 @@ public class UIController {
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
 
-	public void commandAction(Timer timer, String s, JButton overdue, JButton all, JButton done, JButton help,
+	public void commandAction(Timer timer, String command, JButton overdue, JButton all, JButton done, JButton help,
 			JButton settings, JButton home, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput,
 			JLabel commandText) {
 		Parser p = new Parser();
-		if (s != null) {
-			commandEnteredAction(timer, s, cmdEntry, cmdDisplay, displayOutput, p);
+		if (command != null) {
+			commandEnteredAction(timer, command, cmdEntry, cmdDisplay, displayOutput, p);
 		} else {
 			cmdEntryListener(timer, p, cmdEntry, cmdDisplay, displayOutput);
-			settingsListener(settings, cmdDisplay, displayOutput, commandText, cmdEntry);
-			allListener(all, p, displayOutput);
-			doneListener(done, p, displayOutput);
-			helpListener(help, p, displayOutput);
-			homeListener(home, p, displayOutput);
-			overdueListener(overdue, p, displayOutput);
+			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry, home, overdue, all, done, help);
+			allListener(timer, all, p, displayOutput);
+			doneListener(timer, done, p, displayOutput);
+			helpListener(timer, help, p, displayOutput);
+			homeListener(timer, home, p, displayOutput);
+			overdueListener(timer, overdue, p, displayOutput);
 		}
 	}
 
-	private void commandEnteredAction(Timer timer, String s, JTextField cmdEntry, JTextArea cmdDisplay,
-			JTextPane displayOutput, Parser p) {
-		if (timer.isRunning()) {
-			timer.stop();
-		}
-		cmdEntry.setText("");
-		commands.add(s);
-		commandIndex = commands.size();
-		printInCommandDisplay(cmdDisplay, "> " + s);
-		String output = p.parse(s);
-		assert output != null;
-		if (isDisplay(output)) {
-			printInDisplayOutput(displayOutput, output.substring(1));
-		} else if (isInvalidMessages(output.substring(1))) {
-			printInCommandDisplay(cmdDisplay, output.substring(1));
-		} else {
-			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
-		}
-		displayOutput.setCaretPosition(0);
-	}
-
-	private static boolean isInvalidMessages(String message) {
-		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT)
-				|| message.equals(Constants.MESSAGE_INVALID_TIME)
-				|| message.equals(Constants.MESSAGE_UNRECOGNISED_COMMAND)
-				|| message.equals(Constants.MESSAGE_RECUR_FAIL);
-	}
-
-	private void settingsListener(JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
-			JTextField cmdEntry) {
-		settings.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry);
+	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
+				return false;
 			}
 		});
 	}
 
-	private void allListener(JButton all, Parser p, JTextPane displayOutput) {
+	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
+			JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help) {
+		settings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
+				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help, settings);
+			}
+		});
+	}
+
+	private void allListener(Timer timer, JButton all, Parser p, JTextPane displayOutput) {
 		all.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("display");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -97,9 +80,10 @@ public class UIController {
 		});
 	}
 
-	private void doneListener(JButton done, Parser p, JTextPane displayOutput) {
+	private void doneListener(Timer timer, JButton done, Parser p, JTextPane displayOutput) {
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("display done");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -107,9 +91,10 @@ public class UIController {
 		});
 	}
 
-	private void homeListener(JButton home, Parser p, JTextPane displayOutput) {
+	private void homeListener(Timer timer, JButton home, Parser p, JTextPane displayOutput) {
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String todayTask = p.parse("display today").substring(1);
 				printInDisplayOutput(displayOutput, todayTask);
 				displayOutput.setCaretPosition(0);
@@ -117,9 +102,10 @@ public class UIController {
 		});
 	}
 
-	private void helpListener(JButton help, Parser p, JTextPane displayOutput) {
+	private void helpListener(Timer timer, JButton help, Parser p, JTextPane displayOutput) {
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("help");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -127,9 +113,10 @@ public class UIController {
 		});
 	}
 
-	private void overdueListener(JButton overdue, Parser p, JTextPane displayOutput) {
+	private void overdueListener(Timer timer, JButton overdue, Parser p, JTextPane displayOutput) {
 		overdue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer(timer);
 				String output = p.parse("display overdue");
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
@@ -147,13 +134,35 @@ public class UIController {
 		});
 	}
 
-	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-			public boolean dispatchKeyEvent(KeyEvent e) {
-				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
-				return false;
-			}
-		});
+	private void commandEnteredAction(Timer timer, String command, JTextField cmdEntry, JTextArea cmdDisplay,
+			JTextPane displayOutput, Parser p) {
+		stopTimer(timer);
+		cmdEntry.setText("");
+		commands.add(command);
+		commandIndex = commands.size();
+		printInCommandDisplay(cmdDisplay, command);
+		String output = p.parse(command);
+		assert output != null;
+		if (isDisplay(output)) {
+			printInDisplayOutput(displayOutput, output.substring(1));
+		} else {
+			printInCommandDisplay(cmdDisplay, output.substring(1));
+			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
+		}
+		displayOutput.setCaretPosition(0);
+	}
+	
+	private static void stopTimer(Timer timer){
+		if (timer.isRunning()){
+			timer.stop();
+		}
+	}
+
+	private static boolean isInvalidMessages(String message) {
+		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT)
+				|| message.equals(Constants.MESSAGE_INVALID_TIME)
+				|| message.equals(Constants.MESSAGE_UNRECOGNISED_COMMAND)
+				|| message.equals(Constants.MESSAGE_RECUR_FAIL);
 	}
 
 	public static boolean isDisplay(String s) {
@@ -161,7 +170,7 @@ public class UIController {
 	}
 
 	private static void printInCommandDisplay(JTextArea cmdDisplay, String content) {
-		cmdDisplay.append(content + "\n");
+		cmdDisplay.append("> " + content + "\n");
 	}
 
 	private static void printInDisplayOutput(JTextPane displayOutput, String s) {
