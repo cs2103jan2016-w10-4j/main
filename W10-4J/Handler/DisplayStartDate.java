@@ -114,12 +114,9 @@ public class DisplayStartDate {
 			output += Constants.MESSAGE_DISPLAYFORMAT_YESTERDAY + ", ";
 			overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_OVERDUE;
 		} else if(currentDate.equals(getTodayDate())) {
-			DisplayOverdue.returnOverdueTasks(output);
 			output += Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
 			overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_TODAY;
 		} else if(currentDate.equals(getTomorrowDate())) {
-			String todayOutput = output.substring(output.indexOf("Today, "), output.length());
-			DisplayToday.returnTodayTasks(todayOutput);
 			output += Constants.MESSAGE_DISPLAYFORMAT_TOMORROW + ", ";
 		} else {
 			try {
@@ -168,12 +165,13 @@ public class DisplayStartDate {
 		return false;
 	}
 	
+	// Return the correct output to DisplayToday or DisplayOverdue
 	private static void returnOutputToTheCorrectClass() {
 		if(overdueOrToday.equals(Constants.MESSAGE_DISPLAYSTARTDATE_TODAY)) {
 			String todayOutput = output.substring(output.indexOf("Today, "), output.length());
-			DisplayToday.returnTodayTasks(todayOutput);
+			DisplayToday.getTodayTasks(todayOutput);
 		} else if (overdueOrToday.equals(Constants.MESSAGE_DISPLAYSTARTDATE_OVERDUE)) {
-			DisplayOverdue.returnOverdueTasks(output);
+			DisplayOverdue.getOverdueTasks(output);
 		}
 	}
 	

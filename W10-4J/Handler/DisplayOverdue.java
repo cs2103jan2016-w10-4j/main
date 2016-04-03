@@ -22,7 +22,8 @@ public class DisplayOverdue {
 		return output;
 	}
 	
-	public static void returnOverdueTasks(String tasks) {
+	// Get the overdue tasks from DisplayStartDate
+	public static void getOverdueTasks(String tasks) {
 		overdueOutput = tasks;
 	}
 }

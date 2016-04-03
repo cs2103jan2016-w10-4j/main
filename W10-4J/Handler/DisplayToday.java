@@ -31,7 +31,8 @@ public class DisplayToday {
 		return output;
 	}
 	
-	public static void returnTodayTasks(String tasks) {
+	// Get today's tasks from DisplayStartDate
+	public static void getTodayTasks(String tasks) {
 		todayOutput = tasks;
 	}
 }
