@@ -195,6 +195,14 @@ public class Task {
 			year_ = year;
 		}
 	}
+	
+	public void resetRecursion(){
+		recurring_ = false;
+		day_ = false;
+		week_ = false;
+		month_ = false;
+		year_ = false;
+	}
 
 	public void setMultiDay(boolean multiDay) {
 		multiday_ = multiDay;

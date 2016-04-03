@@ -78,8 +78,12 @@ public class Valid {
 						}
 					} else if (arguments[i].equals("repeat")) {
 						String[] repeatArgument = arguments[i + 1].split(" ");
-						if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
-								|| !isInteger(repeatArgument[1])) {
+						try {
+							if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
+									|| !isInteger(repeatArgument[1])) {
+								return false;
+							}
+						} catch (ArrayIndexOutOfBoundsException e) {
 							return false;
 						}
 					}
@@ -141,8 +145,12 @@ public class Valid {
 					}
 				} else if (arguments[i].equals("repeat")) {
 					String[] repeatArgument = arguments[i + 1].split(" ");
-					if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
-							|| !isInteger(repeatArgument[1])) {
+					try {
+						if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
+								|| !isInteger(repeatArgument[1])) {
+							return false;
+						}
+					} catch (ArrayIndexOutOfBoundsException e) {
 						return false;
 					}
 				}

@@ -24,6 +24,7 @@ public class Edit implements Command {
 			// edits the task
 			int recurCounter = fieldEditor(eachTask, task);
 			if (recurCounter != -1 && eachTask.getStartDate() == null) {
+				eachTask.resetRecursion();
 				return Constants.MESSAGE_RECUR_FAIL;
 			}
 			Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());

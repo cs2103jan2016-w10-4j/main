@@ -32,6 +32,7 @@ public class Recurrence implements Command {
 			break;
 		}
 		if (recurCounter != 0 && eachTask.getStartDate() == null) {
+			eachTask.resetRecursion();
 			return Constants.MESSAGE_RECUR_FAIL;
 		}
 		Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());
