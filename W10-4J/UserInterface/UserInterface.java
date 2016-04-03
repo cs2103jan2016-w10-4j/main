@@ -37,8 +37,9 @@ public class UserInterface{
 	private static int topBgIndex = 2;
 	private static int bottomBgIndex = 3;
 	private static int bottomFontColorIndex = 4;
-	private static int fontFamilyIndex = 6;
 	private static int fontSizeIndex = 5;
+	private static int fontFamilyIndex = 6;
+	private static int buttonColorIndex = 7;
 	
 	private static JFrame f = new JFrame("Docket");
 	private static JScrollPane jScrollPane1 = new JScrollPane();
@@ -56,12 +57,15 @@ public class UserInterface{
 	
 	private static Color placeholderForeground = new Color(160, 160, 160);
 	
+	private static ColorsForSettings colors = new ColorsForSettings();
+	
 	private static ReadWriteXml prop = new ReadWriteXml();
 	private static ArrayList<String> properties = prop.readToArrayList();
 	private static String fontFamily = properties.get(fontFamilyIndex);
 	private static String fontSize = properties.get(fontSizeIndex);
 	private static String bottomBg = properties.get(bottomBgIndex);
 	private static String topBg = properties.get(topBgIndex);
+	private static String buttonColors = properties.get(buttonColorIndex);
 	private static Font font;
 	
 	public static void main(String[] args){
@@ -220,8 +224,8 @@ public class UserInterface{
     		cmdDisplay.setForeground(Color.WHITE);
         	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     	} else {
-    		cmdDisplay.setBackground(prop.rgbColor(bottomBg));
-    		cmdDisplay.setForeground(prop.rgbColor(properties.get(bottomFontColorIndex)));
+    		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
+    		cmdDisplay.setForeground(colors.rgbColor(properties.get(bottomFontColorIndex)));
     		String fontFamily = cmdDisplay.getFont().getName();
     		int fontStyle = cmdDisplay.getFont().getStyle();
     		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
@@ -238,8 +242,8 @@ public class UserInterface{
     		outputDisplay.setBackground(Color.WHITE);
     		outputDisplay.setForeground(Color.BLACK);
     	} else {
-    		outputDisplay.setBackground(prop.rgbColor(topBg));
-    		outputDisplay.setForeground(prop.rgbColor(properties.get(topFontColorIndex)));
+    		outputDisplay.setBackground(colors.rgbColor(topBg));
+    		outputDisplay.setForeground(colors.rgbColor(properties.get(topFontColorIndex)));
     		int fontStyle = outputDisplay.getFont().getStyle();
     		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
     		font = new Font(fontFamily, fontStyle, fontSize);
@@ -261,6 +265,21 @@ public class UserInterface{
 		allButton.setFocusable(false);
 		helpButton.setFocusable(false);
 		settingsButton.setFocusable(false);
+    	if (buttonColors == null){
+    		homeButton.setBackground(Color.gray);
+    		overdueButton.setBackground(Color.gray);
+    		doneButton.setBackground(Color.gray);
+    		allButton.setBackground(Color.gray);
+    		helpButton.setBackground(Color.gray);
+    		settingsButton.setBackground(Color.gray);
+    	} else {
+    		homeButton.setBackground(colors.rgbColor(buttonColors));
+    		overdueButton.setBackground(colors.rgbColor(buttonColors));
+    		doneButton.setBackground(colors.rgbColor(buttonColors));
+    		allButton.setBackground(colors.rgbColor(buttonColors));
+    		helpButton.setBackground(colors.rgbColor(buttonColors));
+    		settingsButton.setBackground(colors.rgbColor(buttonColors));
+    	}
     }
 
 	private static void setIconsForButtons() {

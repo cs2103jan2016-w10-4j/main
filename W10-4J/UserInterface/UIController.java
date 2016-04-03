@@ -41,7 +41,7 @@ public class UIController {
 			commandEnteredAction(timer, command, cmdEntry, cmdDisplay, displayOutput, p);
 		} else {
 			cmdEntryListener(timer, p, cmdEntry, cmdDisplay, displayOutput);
-			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry);
+			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry, home, overdue, all, done, help);
 			allListener(timer, all, p, displayOutput);
 			doneListener(timer, done, p, displayOutput);
 			helpListener(timer, help, p, displayOutput);
@@ -82,11 +82,11 @@ public class UIController {
 	}
 
 	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
-			JTextField cmdEntry) {
+			JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help) {
 		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry);
+				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help, settings);
 			}
 		});
 	}

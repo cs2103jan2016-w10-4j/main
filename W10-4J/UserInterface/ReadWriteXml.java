@@ -24,6 +24,7 @@ public class ReadWriteXml {
 	private int bottomFontColorIndex = 4;
 	private int fontSizeIndex = 5;
 	private int fontFamilyIndex = 6;
+	private int buttonsColorIndex = 7;
 	
 	public String read(String action, String fileName){
 		try{
@@ -56,6 +57,7 @@ public class ReadWriteXml {
 		String bottomBg = read("bottomBg", fileName);
 		String fontSize = read("fontSize", fileName);
 		String fontFamily = read("fontFamily", fileName);
+		String buttonsColor = read("buttonsColor", fileName);
 		properties.add(colorOptionIndex, colorOption);
 		properties.add(topFontColorIndex, topFontColor);
 		properties.add(topBgIndex, topBg);
@@ -63,6 +65,7 @@ public class ReadWriteXml {
 		properties.add(bottomFontColorIndex, bottomFontColor);
 		properties.add(fontSizeIndex, fontSize);
 		properties.add(fontFamilyIndex, fontFamily);
+		properties.add(buttonsColorIndex, buttonsColor);
 		return properties;
 	}
 	
@@ -75,6 +78,7 @@ public class ReadWriteXml {
 		properties.setProperty("bottomFontColor", prop.get(bottomFontColorIndex));
 		properties.setProperty("fontSize", prop.get(fontSizeIndex));
 		properties.setProperty("fontFamily", prop.get(fontFamilyIndex));
+		properties.setProperty("buttonsColor", prop.get(buttonsColorIndex));
 		
 		File file = new File(".\\properties.xml");
 		try {
@@ -83,24 +87,5 @@ public class ReadWriteXml {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static int getRed(String color){
-		return Integer.valueOf(color.substring(color.indexOf("r:") + 2, color.indexOf(",")).trim());
-	}
-	
-	public static int getGreen(String color){
-		return Integer.valueOf(color.substring(color.indexOf("g:") + 2, color.indexOf(",", color.indexOf("g:"))).trim());
-	}
-	
-	public static int getBlue(String color){
-		return Integer.valueOf(color.substring(color.indexOf("b:") + 2).trim());
-	}
-	
-	public Color rgbColor(String color){
-		int red = getRed(color);
-		int green = getGreen(color);
-		int blue = getBlue(color);
-		return new Color(red, green, blue);
 	}
 }
