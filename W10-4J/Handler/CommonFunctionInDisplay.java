@@ -63,12 +63,10 @@ public class CommonFunctionInDisplay {
 	
 	private static boolean compareName(Task previousTask, Task currentTask) {
 		int compareValue;
-		if(previousTask.getName() == null && currentTask.getName() != null) {
-			return false;
-		} else if (previousTask.getName() != null && currentTask.getName() == null) {
-			return false;
-		} else if (previousTask.getName() == null && currentTask.getName() == null) {
+		if (previousTask.getName() == null && currentTask.getName() == null) {
 			return true;
+		} else if (previousTask.getName() != null || currentTask.getName() != null) {
+			return false;
 		} else { 
 			compareValue = Task.taskNameComparator.compare(previousTask, currentTask);
 			if(compareValue == 0) {
@@ -81,12 +79,10 @@ public class CommonFunctionInDisplay {
 	
 	private static boolean compareStartDate(Task previousTask, Task currentTask) {
 		int compareValue;
-		if(previousTask.getStartDate() == null && currentTask.getStartDate() != null) {
-			return false;
-		} else if (previousTask.getStartDate() != null && currentTask.getStartDate() == null) {
-			return false;
-		} else if (previousTask.getStartDate() == null && currentTask.getStartDate() == null) {
+		if (previousTask.getStartDate() == null && currentTask.getStartDate() == null) {
 			return true;
+		} else if (previousTask.getStartDate() != null || currentTask.getStartDate() != null) {
+			return false;
 		} else {
 			compareValue = Task.taskStartDateComparator.compare(previousTask, currentTask);
 			if(compareValue == 0) {
@@ -99,12 +95,10 @@ public class CommonFunctionInDisplay {
 	
 	private static boolean compareEndDate(Task previousTask, Task currentTask) {
 		int compareValue;
-		if(previousTask.getEndDate() == null && currentTask.getEndDate() != null) {
-			return false;
-		} else if (previousTask.getEndDate() != null && currentTask.getEndDate() == null) {
-			return false;
-		} else if (previousTask.getEndDate() == null && currentTask.getEndDate() == null) {
+		if (previousTask.getEndDate() == null && currentTask.getEndDate() == null) {
 			return true;
+		} else if (previousTask.getEndDate() != null || currentTask.getEndDate() != null) {
+			return false;
 		} else {
 			compareValue = Task.taskEndDateComparator.compare(previousTask, currentTask);
 			if(compareValue == 0) {
@@ -117,12 +111,14 @@ public class CommonFunctionInDisplay {
 	
 	private static boolean compareStartTime(Task previousTask, Task currentTask) {
 		int compareValue;
-		if(previousTask.getStartTime() == null && currentTask.getStartTime() != null) {
-			return false;
-		} else if (previousTask.getStartTime() != null && currentTask.getStartTime() == null) {
-			return false;
-		} else if (previousTask.getStartTime() == null && currentTask.getStartTime() == null) {
+		if (previousTask.getStartTime() == null && currentTask.getStartTime() == null) {
 			return true;
+		} else if(previousTask.getStartTime() != null || currentTask.getStartTime() != null) {
+			return false;
+		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) && currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return true;
+		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) || currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return false;
 		} else {
 			compareValue = Task.taskStarttimeComparator.compare(previousTask, currentTask);
 			if(compareValue == 0) {
@@ -135,12 +131,14 @@ public class CommonFunctionInDisplay {
 	
 	private static boolean compareEndTime(Task previousTask, Task currentTask) {
 		int compareValue;
-		if(previousTask.getEndTime() == null && currentTask.getEndTime() != null) {
-			return false;
-		} else if (previousTask.getEndTime() != null && currentTask.getEndTime() == null) {
-			return false;
-		} else if (previousTask.getEndTime() == null && currentTask.getEndTime() == null) {
+		if (previousTask.getEndTime() == null && currentTask.getEndTime() == null) {
 			return true;
+		} else if(previousTask.getEndTime() != null || currentTask.getEndTime() != null) {
+			return false;
+		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) && currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return true;
+		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) || currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return false;
 		} else {
 			compareValue = Task.taskEndtimeComparator.compare(previousTask, currentTask);
 			if(compareValue == 0) {
@@ -153,12 +151,10 @@ public class CommonFunctionInDisplay {
 	
 	private static boolean compareDetails(Task previousTask, Task currentTask) {
 		int compareValue;
-		if(previousTask.getDetails() == null && currentTask.getDetails() != null) {
-			return false;
-		} else if (previousTask.getDetails() != null && currentTask.getDetails() == null) {
-			return false;
-		} else if (previousTask.getDetails() == null && currentTask.getDetails() == null) {
+		if (previousTask.getDetails() == null && currentTask.getDetails() == null) {
 			return true;
+		} else if (previousTask.getDetails() != null || currentTask.getDetails() != null) {
+			return false;
 		} else {
 			compareValue = Task.taskDetailsComparator.compare(previousTask, currentTask);
 			if(compareValue == 0) {

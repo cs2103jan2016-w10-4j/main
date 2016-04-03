@@ -110,13 +110,15 @@ public class Constants {
 	public static final String MESSAGE_DISPLAYTODAY_TODAY = ("Today");
 	
 	public static final String MESSAGE_DISPLAYSTARTDATE_OVERDUE = ("Overdue");
-	public static final String MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG = ("<table width=\"100%\" style=\"margin-top:5px; margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
+	public static final String MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG = ("<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG = ("</table>");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TODAY = ("Today");
 	public static final String MESSAGE_DISPLAYSTARTDATE_YESTERDAY = ("Yesterday");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TOMORROW = ("Tomorrow");
 	public static final String MESSAGE_DISPLAYSTARTDATE_FLOATINGTASKS = ("Floating Tasks");
 	public static final String MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND = ("No tasks on hand!");
+	public static final String MESSAGE_DISPLAYSTARTDATE_UNDERLINEOPENTAG = ("<style #underline{border-bottom:3px solid black}></style><table id = \"underline\">");
+	public static final String MESSAGE_DISPLAYSTARTDATE_UNDERLINECLOSETAG = ("</table>");
 
 	public static final String MESSAGE_COMMONFUNCTION_TD_OPENTAG = ("<td>");
 	public static final String MESSAGE_COMMONFUNCTION_TD_CLOSETAG = ("</td>");
@@ -128,7 +130,8 @@ public class Constants {
 	public static final String MESSAGE_COMMONFUNCTION_HEADER_OPENTAG = ("<h3>");
 	public static final String MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG = ("</h3>");
 	public static final String MESSAGE_COMMONFUNCTION_RETRIEVE = ("retrieve");
-	
+	public static final String MESSAGE_COMMONFUNCTION_DASH = ("-");
+
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
 	public static final String MESSAGE_EDIT_ACTION_START = ("start");
 	public static final String MESSAGE_EDIT_ACTION_END = ("end");
