@@ -47,7 +47,7 @@ public class DisplayStartDate {
 	}
 	
 	private static void initializeVariables() {
-		output = "";
+		output = "<style>#underline{border-bottom: 3px solid black;}</style>";
 		overdueOrToday = "";
 		taskWithNoStartDateList = new ArrayList<Task>();
 		taskWithStartDateList = new ArrayList<Task>();
@@ -97,7 +97,7 @@ public class DisplayStartDate {
 	// Use by both startDateTasks and noStartDateTasks
 	private static void getHeader(ArrayList<Task> taskList) {
 		overdueOrToday = "";
-		output += Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG;
+		output += Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG_TABLE;
 		if(taskList.size() != 0) {
 			currentDate = taskList.get(0).getStartDate();
 			if(currentDate != null) {
@@ -105,7 +105,7 @@ public class DisplayStartDate {
 			} else {
 				output += Constants.MESSAGE_DISPLAYSTARTDATE_FLOATINGTASKS;
 			}
-			output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
+			output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG_TABLE;
 		}
 	}
 	
