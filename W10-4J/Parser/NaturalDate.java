@@ -83,8 +83,8 @@ public class NaturalDate {
 
 		for (int i = 0; i < Constants.tomorrowArgumentList.length; i++) {
 			if (Constants.tomorrowArgumentList[i].equals(input)) {
-				int year = Calendar.getInstance().get(Calendar.YEAR) + 1;
-				int month = Calendar.getInstance().get(Calendar.MONTH) + 2;
+				int year = Calendar.getInstance().get(Calendar.YEAR);
+				int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 				int day = Calendar.getInstance().get(Calendar.DATE) + 1;
 				String output = String.format("%04d/%02d/%02d", year, month, day);
 				return output;

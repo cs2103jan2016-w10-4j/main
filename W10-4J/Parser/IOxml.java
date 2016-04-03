@@ -17,8 +17,14 @@ public class IOxml {
 	public IOxml() {
 		for (int i = 0; i < commandlist.length; i++) {
 			String s = commandlist[i];
-			this.alias_.add(read(s, filename));
+			String aliaslist = read(s, filename);
+			if (aliaslist == null) {
+				this.alias_.add("");
+			} else {
+				this.alias_.add(aliaslist);
+			}
 		}
+		write();
 	}
 
 	private String read(String action, String fileName) {
@@ -68,6 +74,7 @@ public class IOxml {
 	}
 
 	public ArrayList<String> getSpecificAlias(int index) {
+		alias_.get(index).split(",");
 		String[] argument = alias_.get(index).split(",");
 		ArrayList<String> output = new ArrayList<>();
 		for (int i = 0; i < argument.length; i++) {
