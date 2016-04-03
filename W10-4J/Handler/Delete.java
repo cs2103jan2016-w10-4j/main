@@ -24,7 +24,7 @@ public class Delete implements Command {
 				arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
 				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 			} 
-		} else if (taskID <= 0 || taskID > arraylistStorage_.getNotDoneStorageSize()) {
+		} else if (taskID <= 0) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
