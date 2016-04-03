@@ -12,7 +12,12 @@ public class Undo implements Command{
 	}
 
 	public String execute(String[] notUsedInThisCommand) {
-		String actionToBeUndone = arraylistStorage_.getPreviousInputAction();
+		String actionToBeUndone;
+		try{
+			actionToBeUndone = arraylistStorage_.getPreviousInputAction();
+		} catch(IndexOutOfBoundsException e){
+			return Constants.MESSAGE_UNDO_FAIL;
+		}
 		Task previousTask;
 		Task eachTask;
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
