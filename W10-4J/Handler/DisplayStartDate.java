@@ -103,7 +103,7 @@ public class DisplayStartDate {
 			if(currentDate != null) {
 				displayAppropriateDay();
 			} else {
-				output += Constants.MESSAGE_DISPLAYFORMAT_NOSTARTDATE;
+				output += Constants.MESSAGE_DISPLAYFORMAT_FLOATINGTASKS;
 			}
 			output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
 		}

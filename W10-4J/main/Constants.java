@@ -101,7 +101,7 @@ public class Constants {
 	public static final String MESSAGE_DISPLAYFORMAT_TODAY = ("Today");
 	public static final String MESSAGE_DISPLAYFORMAT_YESTERDAY = ("Yesterday");
 	public static final String MESSAGE_DISPLAYFORMAT_TOMORROW = ("Tomorrow");
-	public static final String MESSAGE_DISPLAYFORMAT_NOSTARTDATE = ("No Start Date");
+	public static final String MESSAGE_DISPLAYFORMAT_FLOATINGTASKS = ("Floating Tasks");
 	public static final String MESSAGE_DISPLAYFORMAT_MULTIDAYTASK = ("Multi-Day");
 
 	public static final String MESSAGE_DISPLAYTODAY = ("There is no task today.");
