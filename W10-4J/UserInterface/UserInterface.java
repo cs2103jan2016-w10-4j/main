@@ -211,7 +211,6 @@ public class UserInterface{
     private static void textAreaSettings(){
     	cmdDisplay.setColumns(20);
     	cmdDisplay.setLineWrap(true);
-    	cmdDisplay.setRows(5);
     	cmdDisplay.setWrapStyleWord(true);
     	cmdDisplay.setEditable(false);
     	cmdDisplay.setFocusable(false);

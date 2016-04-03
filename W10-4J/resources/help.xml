@@ -2,10 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="welcome"><![CDATA[
-<style>
-	#helpTable{border: 1px solid black; background-color: black;}
-	#helpTableThTd{background-color:white;}
-</style>
 <h1> Welcome to the Docket Help Manual </h1>
 ]]></entry>
 
@@ -119,46 +115,46 @@ In using this command, future uses of Docket will be on this new datapath. If th
 <h2> Natural Commands </h2>
 Users can enter commands that sounds like something you would naturally say, in your own language, rather than some thing you would say only because you're talking to a computer. <br>
 Valid Natural Commands:<br>
-<table id="helpTable">
+<table border="2">
 	<tr>
-		<th id="helpTableThTd" align="left">Function</th>
-		<th id="helpTableThTd" align="left">Natural Commands</th>
+		<th align="left">Function</th>
+		<th align="left">Natural Commands</th>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">add</td>
-		<td id="helpTableThTd">new, + </td>
+		<td >add</td>
+		<td >new, + </td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">delete</td>
-		<td id="helpTableThTd">del, remove, rm, bin, trash, -</td>
+		<td >delete</td>
+		<td >del, remove, rm, bin, trash, -</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">edit</td>
-		<td id="helpTableThTd">change, edittask</td>
+		<td >edit</td>
+		<td >change, edittask</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">done</td>
-		<td id="helpTableThTd">finish, complete</td>
+		<td >done</td>
+		<td >finish, complete</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">display</td>
-		<td id="helpTableThTd">ls, list, show, print</td>
+		<td >display</td>
+		<td >ls, list, show, print</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">search</td>
-		<td id="helpTableThTd">find, contains</td>
+		<td >search</td>
+		<td >find, contains</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">storage</td>
-		<td id="helpTableThTd">get, open, grab, grep</td>
+		<td >storage</td>
+		<td >get, open, grab, grep</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">undo</td>
-		<td id="helpTableThTd">whoops, mb</td>
+		<td >undo</td>
+		<td >whoops, mb</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">exit</td>
-		<td id="helpTableThTd">quit</td>
+		<td >exit</td>
+		<td >quit</td>
 	</tr>
 </table>
 ]]></entry>
@@ -171,26 +167,26 @@ User can enter the <span style="background-color:#E5E4E2;"><b>undo</b></span> co
 <entry key="keyboard"><![CDATA[
 <h2> Keyboard Shortcuts </h2>
 To help you use Docket more efficiently, some keyboard shortcuts have been implemented.
-<table id="helpTable">
+<table border="2">
 	<tr>
-		<th id="helpTableThTd" align="left">Keyboard Shortcut</th>
-		<th id="helpTableThTd" align="left">Description</th>
+		<th align="left">Keyboard Shortcut</th>
+		<th align="left">Description</th>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">Ctrl + Shift + "="</td>
-		<td id="helpTableThTd">Increases font size in the top white display</td>
+		<td >Ctrl + Shift + "="</td>
+		<td >Increases font size in the top white display</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">Ctrl + Shift + "-"</td>
-		<td id="helpTableThTd">Decreases font size in the top white display</td>
+		<td >Ctrl + Shift + "-"</td>
+		<td >Decreases font size in the top white display</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">Arrow Up / Arrow Down</td>
-		<td id="helpTableThTd">Returns the previous commands in the command field</td>
+		<td >Arrow Up / Arrow Down</td>
+		<td >Returns the previous commands in the command field</td>
 	</tr>
 	<tr>
-		<td id="helpTableThTd">PgUp / PgDn</td>
-		<td id="helpTableThTd">Scrolls through the top white display</td>
+		<td >PgUp / PgDn</td>
+		<td >Scrolls through the top white display</td>
 	</tr>
 </table>
 ]]></entry>
