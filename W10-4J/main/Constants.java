@@ -24,7 +24,7 @@ public class Constants {
 	public static final String[] addDefaultArgumentList = { "startdate", "enddate", "start", "end", "details",
 			"repeat" };
 	public static final String[] editDefaultArgumentList = { "rename", "startdate", "enddate", "starttime", "endtime",
-			"details" };
+			"details", "repeat" };
 	public static final String[] displayDefaultArgumentList = { "overdue", "name", "done", "id", "today" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
@@ -106,11 +106,11 @@ public class Constants {
 
 	public static final String MESSAGE_DISPLAYOVERDUE_HEADER = ("Overdue Tasks");
 	public static final String MESSAGE_DISPLAYOVERDUE_NOTASK = ("There is no overdue task.");
-	
+
 	public static final String MESSAGE_DISPLAYTODAY_HEADER = ("Today's Task");
 	public static final String MESSAGE_DISPLAYTODAY = ("There is no task today.");
 	public static final String MESSAGE_DISPLAYTODAY_TODAY = ("Today");
-	
+
 	public static final String MESSAGE_DISPLAYSTARTDATE_OVERDUE = ("Overdue");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG = ("<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG = ("</table>");
