@@ -24,7 +24,7 @@ public class DisplayToday {
 		} else {
 			// Remove "Today, " from the return value
 			todayOutput = todayOutput.substring(beforeTheDateDisplay.length(), todayOutput.length());
-			output += todayOutput;
+			output += Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG_TABLE + todayOutput + Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG_TABLE;
 		}
 		
 		output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
