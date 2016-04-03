@@ -116,6 +116,7 @@ public class Valid {
 			return false;
 		}
 		for (int i = 1; i < arguments.length; i += 2) {
+			System.out.println(arguments[i]);
 			if (!commandList_.getEditArgumentList().contains(arguments[i])) {
 				return false;
 			} else {
@@ -137,6 +138,12 @@ public class Valid {
 						return false;
 					} else {
 						arguments[i + 1] = time;
+					}
+				} else if (arguments[i].equals("repeat")) {
+					String[] repeatArgument = arguments[i + 1].split(" ");
+					if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
+							|| !isInteger(repeatArgument[1])) {
+						return false;
 					}
 				}
 			}

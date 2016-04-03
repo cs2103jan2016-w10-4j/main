@@ -1,11 +1,11 @@
 package Handler;
 
-
 import main.Task;
 import main.Constants;
-public class Edit implements Command{
+
+public class Edit implements Command {
 	ArraylistStorage arraylistStorage_;
-	
+
 	public Edit(ArraylistStorage arraylistStorage) {
 		arraylistStorage_ = arraylistStorage;
 	}
@@ -14,23 +14,32 @@ public class Edit implements Command{
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.findByTaskIDNotDoneStorage(taskID);
-		if (eachTask==null){
+		if (eachTask == null) {
 			return Constants.MESSAGE_EDIT_FAIL;
-		} else if (taskID <= 0 || taskID > arraylistStorage_.getNotDoneStorageSize()){
+		} else if (taskID <= 0 || taskID > arraylistStorage_.getNotDoneStorageSize()) {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
-			fieldEditor(eachTask, task);
-			
-			if(isTimeValid(eachTask)){
+			int recurCounter = fieldEditor(eachTask, task);
+			if (recurCounter != -1 && eachTask.getStartDate() == null) {
+				return Constants.MESSAGE_RECUR_FAIL;
+			}
+			Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());
+			for (int i = 0; i < recurCounter - 1; i++) {
+				clone = cloneTask(clone, arraylistStorage_.getTaskID());
+				clone.nextDate();
+				arraylistStorage_.addTaskToNotDoneStorage(clone);
+			}
+			if (isTimeValid(eachTask)) {
 				// write to mainStorage
 				arraylistStorage_.writeToStorage();
 				// remember previous state
-				arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
+				arraylistStorage_
+						.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
 				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
-			} else{
+			} else {
 				arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
 				arraylistStorage_.addTaskToNotDoneStorage(oldTask);
 				return Constants.MESSAGE_TIME_FAIL;
@@ -53,8 +62,9 @@ public class Edit implements Command{
 		return result;
 	}
 
-	private void fieldEditor(Task eachTask, String[] task) {
+	private int fieldEditor(Task eachTask, String[] task) {
 		String action;
+		int recurCounter = -1;
 		for (int i = 1; i < task.length; i += 2) {
 			action = task[i].trim();
 			switch (action) {
@@ -77,7 +87,8 @@ public class Edit implements Command{
 				eachTask.setDetails(task[i + 1].trim());
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_REPEAT:
-				switch (task[i + 1].trim()) {
+				String[] repeatArgument = task[i + 1].split(" ");
+				switch (repeatArgument[0]) {
 				case Constants.MESSAGE_REPEAT_DAY:
 					eachTask.setDay(true);
 					break;
@@ -93,12 +104,28 @@ public class Edit implements Command{
 				default:
 					assert false;
 				}
+				recurCounter = Integer.parseInt(repeatArgument[1]);
 				break;
 			}
 		}
+		return recurCounter;
 	}
 
-	
+	public Task cloneTask(Task task, int taskID) {
+		Task result = new Task(task.getName());
+		result.setStartDate(task.getStartDate());
+		result.setEndDate(task.getEndDate());
+		result.setStartTime(task.getStartTime());
+		result.setEndTime(task.getEndTime());
+		result.setDetails(task.getDetails());
+		result.setTaskID(taskID);
+		result.setYear(task.getYear());
+		result.setMonth(task.getMonth());
+		result.setWeek(task.getWeek());
+		result.setDay(task.getDay());
+		return result;
+	}
+
 	private boolean isTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
 		int endtime = task.getEndTimeInt();
@@ -109,5 +136,4 @@ public class Edit implements Command{
 			return true;
 		}
 	}
-	// add a start 1730 end 1930
 }
