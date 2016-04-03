@@ -60,15 +60,19 @@ public class Task {
 			}
 		}
 	};
-	public static Comparator<Task> taskDateComparator = new Comparator<Task>() {
+	public static Comparator<Task> taskStartDateComparator = new Comparator<Task>() {
 		public int compare(Task task1, Task task2) {
-			return (splitDateObject(task1).compareTo(splitDateObject(task2)));
+			return (splitStartDateObject(task1).compareTo(splitStartDateObject(task2)));
 		}
 	};
-
+	public static Comparator<Task> taskEndDateComparator = new Comparator<Task>() {
+		public int compare(Task task1, Task task2) {
+			return (splitEndDateObject(task1).compareTo(splitEndDateObject(task2)));
+		}
+	};
 	public static Comparator<Task> taskStartDateAndNameComparator = new Comparator<Task>() {
 		public int compare(Task task1, Task task2) {
-			int startDateValue = taskDateComparator.compare(task1, task2);
+			int startDateValue = taskStartDateComparator.compare(task1, task2);
 			int nameValue = taskNameComparator.compare(task1, task2);
 			if (startDateValue == 0) {
 				return nameValue;
@@ -78,7 +82,7 @@ public class Task {
 		}
 	};
 
-	private static Calendar splitDateObject(Task task) {
+	private static Calendar splitStartDateObject(Task task) {
 		// assumes that the date is in yyyy/mm/dd format
 		String[] date = task.getStartDate().split("/");
 		Calendar calendar = Calendar.getInstance();
@@ -87,6 +91,15 @@ public class Task {
 		return calendar;
 	}
 
+	private static Calendar splitEndDateObject(Task task) {
+		// assumes that the date is in yyyy/mm/dd format
+		String[] date = task.getEndDate().split("/");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Integer.parseInt(date[0].trim()), Integer.parseInt(date[1].trim()),
+				Integer.parseInt(date[2].trim()));
+		return calendar;
+	}
+	
 	public void nextDate() {
 		if (startdate_ != null) {
 			if (day_) {

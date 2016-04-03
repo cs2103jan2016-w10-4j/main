@@ -11,16 +11,28 @@ public class CommonFunctionInDisplay {
 	public static int checkRecentUpdatedTaskID(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
 		int taskID = -1;
 
+		// When user first add a task into the empty file
+		if(previousList.size() == 1 && currentList.size() == 1) {
+			Task previousTask = previousList.get(0).getTask();
+			Task currentTask = currentList.get(0);
+			if(previousTask.getTaskID() == currentTask.getTaskID()) {
+				return previousTask.getTaskID();
+			}
+		}
+		
 		for(int i = 0; i < previousList.size(); i++) {
-			Task task = previousList.get(i).getTask();
+			Task previousTask = previousList.get(i).getTask();
 			
 			for(int h = 0; h < currentList.size(); h++) {
 				Task currentTask = currentList.get(h);
 				
-				if(task.getTaskID() == currentTask.getTaskID()) {
-					break;
+				if(previousTask.getTaskID() == currentTask.getTaskID()) {
+					boolean isTwoTasksTheSame = compareTasks(previousTask, currentTask);
+					if(!(isTwoTasksTheSame)) {
+						taskID = previousTask.getTaskID();
+					}
 				} else {
-					taskID = task.getTaskID();
+					taskID = previousTask.getTaskID();
 				}
 			}
 
@@ -31,6 +43,128 @@ public class CommonFunctionInDisplay {
 		return taskID;
 	}
 
+	private static boolean compareTasks(Task previousTask, Task currentTask) {
+		boolean isSameName = compareName(previousTask, currentTask);
+		boolean isSameStartDate = compareStartDate(previousTask, currentTask);
+		boolean isSameEndDate = compareEndDate(previousTask, currentTask);
+		boolean isSameStartTime = compareStartTime(previousTask, currentTask);
+		boolean isSameEndTime = compareEndTime(previousTask, currentTask);
+		boolean isSameDetails = compareDetails(previousTask, currentTask);
+		
+		if(isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static boolean compareName(Task previousTask, Task currentTask) {
+		int compareValue;
+		if(previousTask.getName() == null && currentTask.getName() != null) {
+			return false;
+		} else if (previousTask.getName() != null && currentTask.getName() == null) {
+			return false;
+		} else if (previousTask.getName() == null && currentTask.getName() == null) {
+			return true;
+		} else { 
+			compareValue = Task.taskNameComparator.compare(previousTask, currentTask);
+			if(compareValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	private static boolean compareStartDate(Task previousTask, Task currentTask) {
+		int compareValue;
+		if(previousTask.getStartDate() == null && currentTask.getStartDate() != null) {
+			return false;
+		} else if (previousTask.getStartDate() != null && currentTask.getStartDate() == null) {
+			return false;
+		} else if (previousTask.getStartDate() == null && currentTask.getStartDate() == null) {
+			return true;
+		} else {
+			compareValue = Task.taskStartDateComparator.compare(previousTask, currentTask);
+			if(compareValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	private static boolean compareEndDate(Task previousTask, Task currentTask) {
+		int compareValue;
+		if(previousTask.getEndDate() == null && currentTask.getEndDate() != null) {
+			return false;
+		} else if (previousTask.getEndDate() != null && currentTask.getEndDate() == null) {
+			return false;
+		} else if (previousTask.getEndDate() == null && currentTask.getEndDate() == null) {
+			return true;
+		} else {
+			compareValue = Task.taskEndDateComparator.compare(previousTask, currentTask);
+			if(compareValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	private static boolean compareStartTime(Task previousTask, Task currentTask) {
+		int compareValue;
+		if(previousTask.getStartTime() == null && currentTask.getStartTime() != null) {
+			return false;
+		} else if (previousTask.getStartTime() != null && currentTask.getStartTime() == null) {
+			return false;
+		} else if (previousTask.getStartTime() == null && currentTask.getStartTime() == null) {
+			return true;
+		} else {
+			compareValue = Task.taskStarttimeComparator.compare(previousTask, currentTask);
+			if(compareValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	private static boolean compareEndTime(Task previousTask, Task currentTask) {
+		int compareValue;
+		if(previousTask.getEndTime() == null && currentTask.getEndTime() != null) {
+			return false;
+		} else if (previousTask.getEndTime() != null && currentTask.getEndTime() == null) {
+			return false;
+		} else if (previousTask.getEndTime() == null && currentTask.getEndTime() == null) {
+			return true;
+		} else {
+			compareValue = Task.taskEndtimeComparator.compare(previousTask, currentTask);
+			if(compareValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	private static boolean compareDetails(Task previousTask, Task currentTask) {
+		int compareValue;
+		if(previousTask.getDetails() == null && currentTask.getDetails() != null) {
+			return false;
+		} else if (previousTask.getDetails() != null && currentTask.getDetails() == null) {
+			return false;
+		} else if (previousTask.getDetails() == null && currentTask.getDetails() == null) {
+			return true;
+		} else {
+			compareValue = Task.taskDetailsComparator.compare(previousTask, currentTask);
+			if(compareValue == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
 	public static String determineColor(Task t) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
