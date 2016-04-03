@@ -8,12 +8,11 @@ import Handler.Sorting;
 
 public class DisplayOverdue {
 	static String overdueOutput;
-	static String output;
 	
 	public static String displayOverdue(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
 		overdueOutput = null;
 		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
+		String output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
 		if(overdueOutput == null || overdueOutput.equals(Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG)) {
 			output += Constants.MESSAGE_DISPLAYOVERDUE_NOTASK;

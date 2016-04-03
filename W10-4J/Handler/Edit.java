@@ -16,7 +16,7 @@ public class Edit implements Command {
 		Task eachTask = arraylistStorage_.findByTaskIDNotDoneStorage(taskID);
 		if (eachTask == null) {
 			return Constants.MESSAGE_EDIT_FAIL;
-		} else if (taskID <= 0 || taskID > arraylistStorage_.getNotDoneStorageSize()) {
+		} else if (taskID <= 0) {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;

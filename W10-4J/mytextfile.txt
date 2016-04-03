@@ -1,4 +1,6 @@
-Tasks on hand:
+No tasks on hand!
+Tasks that are done:
 1. Event: a
-Start Date: 2016/04/05
-No tasks are done!
+Start Date: 2016/04/03
+2. Event: b
+Start Date: 2016/04/03

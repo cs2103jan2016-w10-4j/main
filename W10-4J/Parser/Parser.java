@@ -18,7 +18,7 @@ public class Parser {
 	}
 
 	public String parse(String command) {
-		System.out.println("Command entered: " + command);
+//		System.out.println("Command entered: " + command);
 		assert command != null;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
@@ -26,10 +26,10 @@ public class Parser {
 			return "1" + Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
-		for (String s : arguments) {
-			System.out.println(s);
-		}
-		System.out.println("*");
+//		for (String s : arguments) {
+//			System.out.println(s);
+//		}
+//		System.out.println("*");
 		if (!valid_.isValid(commandType, arguments)) {
 			return getInvalidReturnMessage();
 		}
