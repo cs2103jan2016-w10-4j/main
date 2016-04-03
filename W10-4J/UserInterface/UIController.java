@@ -50,35 +50,13 @@ public class UIController {
 		}
 	}
 
-	private void commandEnteredAction(Timer timer, String command, JTextField cmdEntry, JTextArea cmdDisplay,
-			JTextPane displayOutput, Parser p) {
-		stopTimer(timer);
-		cmdEntry.setText("");
-		commands.add(command);
-		commandIndex = commands.size();
-		printInCommandDisplay(cmdDisplay, command);
-		String output = p.parse(command);
-		assert output != null;
-		if (isDisplay(output)) {
-			printInDisplayOutput(displayOutput, output.substring(1));
-		} else {
-			printInCommandDisplay(cmdDisplay, output.substring(1));
-			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
-		}
-		displayOutput.setCaretPosition(0);
-	}
-	
-	private static void stopTimer(Timer timer){
-		if (timer.isRunning()){
-			timer.stop();
-		}
-	}
-
-	private static boolean isInvalidMessages(String message) {
-		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT)
-				|| message.equals(Constants.MESSAGE_INVALID_TIME)
-				|| message.equals(Constants.MESSAGE_UNRECOGNISED_COMMAND)
-				|| message.equals(Constants.MESSAGE_RECUR_FAIL);
+	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
+				return false;
+			}
+		});
 	}
 
 	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
@@ -156,13 +134,35 @@ public class UIController {
 		});
 	}
 
-	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-			public boolean dispatchKeyEvent(KeyEvent e) {
-				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
-				return false;
-			}
-		});
+	private void commandEnteredAction(Timer timer, String command, JTextField cmdEntry, JTextArea cmdDisplay,
+			JTextPane displayOutput, Parser p) {
+		stopTimer(timer);
+		cmdEntry.setText("");
+		commands.add(command);
+		commandIndex = commands.size();
+		printInCommandDisplay(cmdDisplay, command);
+		String output = p.parse(command);
+		assert output != null;
+		if (isDisplay(output)) {
+			printInDisplayOutput(displayOutput, output.substring(1));
+		} else {
+			printInCommandDisplay(cmdDisplay, output.substring(1));
+			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
+		}
+		displayOutput.setCaretPosition(0);
+	}
+	
+	private static void stopTimer(Timer timer){
+		if (timer.isRunning()){
+			timer.stop();
+		}
+	}
+
+	private static boolean isInvalidMessages(String message) {
+		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT)
+				|| message.equals(Constants.MESSAGE_INVALID_TIME)
+				|| message.equals(Constants.MESSAGE_UNRECOGNISED_COMMAND)
+				|| message.equals(Constants.MESSAGE_RECUR_FAIL);
 	}
 
 	public static boolean isDisplay(String s) {

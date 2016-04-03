@@ -69,27 +69,43 @@ public class SettingsUIController {
 	}
 	
 	public static void setVariables(ArrayList<String> properties, ReadWriteXml prop, String colorOption, String topBg, String bottomBg, String bottomFontColor, String topFontColor, JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry, JComboBox<String> fontSizeBox, JComboBox<String> fontFamilyBox, String buttonsColor){
-		outputDisplay.setBackground(colors.rgbColor(topBg));
-		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
-		cmdDisplay.setForeground(Color.WHITE);
-
-		String fontFamily = (String) fontFamilyBox.getSelectedItem();
-		int fontStyleCmdDisplay = cmdDisplay.getFont().getStyle();
-		int fontStyleDisplayOutput = outputDisplay.getFont().getStyle();
-		int fontStyleCommandText = commandText.getFont().getStyle();
-		int fontStylecmdEntry = cmdEntry.getFont().getStyle();
 		int fontSize = Integer.valueOf((String) fontSizeBox.getSelectedItem());
-		Font fontCmdDisplay = new Font(fontFamily, fontStyleCmdDisplay, fontSize);
-		Font fontDisplayOutput = new Font(fontFamily, fontStyleDisplayOutput, fontSize);
-		Font fontCommandText = new Font(fontFamily, fontStyleCommandText, fontSize);
-		Font fontCmdEntry = new Font(fontFamily, fontStylecmdEntry, fontSize);
-		cmdDisplay.setFont(fontDisplayOutput);
-		outputDisplay.setFont(fontCmdDisplay);
-		commandText.setFont(fontCommandText);
-		cmdEntry.setFont(fontCmdEntry);
+		String fontFamily = (String) fontFamilyBox.getSelectedItem();
+		
+		setOutputDisplay(topBg, outputDisplay, fontSize, fontFamily);
+		setCommandText(commandText, fontSize, fontFamily);
+		setCmdDisplay(bottomBg, cmdDisplay, fontSize, fontFamily);
+		setCmdEntry(cmdEntry, fontSize, fontFamily);
 		
 		setProperties(properties, colorOption, topFontColor, bottomFontColor, topBg, bottomBg, fontSize, fontFamily, buttonsColor);
 		prop.setProperties(properties);
+	}
+
+	private static void setCmdEntry(JTextField cmdEntry, int fontSize, String fontFamily) {
+		int fontStylecmdEntry = cmdEntry.getFont().getStyle();
+		Font fontCmdEntry = new Font(fontFamily, fontStylecmdEntry, fontSize);
+		cmdEntry.setFont(fontCmdEntry);
+	}
+
+	private static void setCmdDisplay(String bottomBg, JTextArea cmdDisplay, int fontSize, String fontFamily) {
+		int fontStyleCmdDisplay = cmdDisplay.getFont().getStyle();
+		Font fontCmdDisplay = new Font(fontFamily, fontStyleCmdDisplay, fontSize);
+		cmdDisplay.setFont(fontCmdDisplay);
+		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
+		cmdDisplay.setForeground(Color.WHITE);
+	}
+
+	private static void setCommandText(JLabel commandText, int fontSize, String fontFamily) {
+		int fontStyleCommandText = commandText.getFont().getStyle();
+		Font fontCommandText = new Font(fontFamily, fontStyleCommandText, fontSize);
+		commandText.setFont(fontCommandText);
+	}
+
+	private static void setOutputDisplay(String topBg, JTextPane outputDisplay, int fontSize, String fontFamily) {
+		outputDisplay.setBackground(colors.rgbColor(topBg));
+		int fontStyleDisplayOutput = outputDisplay.getFont().getStyle();
+		Font fontDisplayOutput = new Font(fontFamily, fontStyleDisplayOutput, fontSize);
+		outputDisplay.setFont(fontDisplayOutput);
 	}
 	
 	private static void setButtonColors(JButton home, JButton overdue, JButton all, JButton done, JButton help,

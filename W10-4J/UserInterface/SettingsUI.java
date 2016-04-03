@@ -7,7 +7,6 @@
 package UserInterface;
 
 import java.awt.Button;
-import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
@@ -82,37 +81,6 @@ public class SettingsUI {
         f.pack();
         f.setVisible(true);
     }
-
-	private void cancelAndSaveButtonSettings() {
-		cancelButton.setLabel("Cancel");
-        saveButton.setLabel("Save");
-	}
-
-	private void jLabelSettings() {
-		jLabel1.setText("Font Size");
-        jLabel2.setText("Font");
-	}
-
-	private void fontFamilyBoxSettings() {
-		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getAvailableFontFamilyNames();
-		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
-        fontFamilyBox.setSelectedItem(prop.read("fontFamily", fileName));
-	}
-
-	private void fontSizeBoxSettings() {
-		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
-        fontSizeBox.setSelectedItem(prop.read("fontSize", fileName));
-	}
-
-	private void lookAndFeel() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-	}
 
 	private void setLayoutForSettingsUI() {
 		GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
@@ -206,6 +174,59 @@ public class SettingsUI {
         );
 	}
 
+	private void lookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+	}
+    
+	private static void setIcon() {
+		String icon = "/main/icon/d.png";
+		ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
+		f.setIconImage(img.getImage());
+	}
+
+	private void cancelAndSaveButtonSettings() {
+		cancelButton.setLabel("Cancel");
+        saveButton.setLabel("Save");
+	}
+
+	private void jLabelSettings() {
+		jLabel1.setText("Font Size");
+        jLabel2.setText("Font");
+	}
+
+	private void fontFamilyBoxSettings() {
+		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getAvailableFontFamilyNames();
+		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
+        fontFamilyBox.setSelectedItem(prop.read("fontFamily", fileName));
+	}
+
+	private void fontSizeBoxSettings() {
+		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
+        fontSizeBox.setSelectedItem(prop.read("fontSize", fileName));
+	}
+
+	private ButtonGroup radioButtonsSettings() {
+		defaultRadioButton.setText("Default Colour");
+        seaRadioButton.setText("Sea");
+        sunsetRadioButton.setText("Option 2");
+        dawnRadioButton.setText("Option 3");
+        natureRadioButton.setText("Option 4");
+        
+        ButtonGroup button = new ButtonGroup();
+        button.add(defaultRadioButton);
+        button.add(seaRadioButton);
+        button.add(sunsetRadioButton);
+        button.add(dawnRadioButton);
+        button.add(natureRadioButton);
+		return button;
+	}
+
 	private void radioButtonSelectionAndDisplayExample(ButtonGroup button) {
         String colorOption = properties.get(0);
 		if (colorOption == null){
@@ -227,27 +248,5 @@ public class SettingsUI {
         	button.setSelected(natureRadioButton.getModel(), true);
         	colors.natureColor(textPane1, textPane2);
         }
-	}
-
-	private ButtonGroup radioButtonsSettings() {
-		defaultRadioButton.setText("Default Colour");
-        seaRadioButton.setText("Sea");
-        sunsetRadioButton.setText("Option 2");
-        dawnRadioButton.setText("Option 3");
-        natureRadioButton.setText("Option 4");
-        
-        ButtonGroup button = new ButtonGroup();
-        button.add(defaultRadioButton);
-        button.add(seaRadioButton);
-        button.add(sunsetRadioButton);
-        button.add(dawnRadioButton);
-        button.add(natureRadioButton);
-		return button;
-	}
-    
-	private static void setIcon() {
-		String icon = "/main/icon/d.png";
-		ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
-		f.setIconImage(img.getImage());
 	}
 }

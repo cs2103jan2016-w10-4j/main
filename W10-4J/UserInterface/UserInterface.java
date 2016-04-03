@@ -103,18 +103,36 @@ public class UserInterface{
         return returnOutput();
     }
     
-    private static String[] returnOutput(){
-    	String[] output = new String[2];
-    	output[0] = outputDisplay.getText();
-    	output[1] = cmdDisplay.getText();
-    	return output;
-    }
-    
 	private static void setLayoutForUI() {
 		int maxWidth = (int)overdueButton.getMaximumSize().getWidth();
 		GroupLayout layout = new GroupLayout(f.getContentPane());
         f.getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
+        setHoriGroup(maxWidth, layout);
+        setVertiGroup(layout);
+	}
+
+	private static void setVertiGroup(GroupLayout layout) {
+		layout.setVerticalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(homeButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(doneButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(overdueButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(allButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(helpButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
+                        .addComponent(settingsButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup()
+                		.addComponent(commandText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        );
+	}
+
+	private static void setHoriGroup(int maxWidth, GroupLayout layout) {
+		layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
@@ -132,23 +150,15 @@ public class UserInterface{
             		.addComponent(commandText)
             		.addComponent(cmdEntry))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(homeButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(doneButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(overdueButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(allButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(helpButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(settingsButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
-                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup()
-                		.addComponent(commandText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                		.addComponent(cmdEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-        );
+	}
+	
+	private static void lookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 	}
     
 	private static void setIcon() {
@@ -185,6 +195,28 @@ public class UserInterface{
 		placeholder();
 	}
 	
+    private static void textAreaSettings(){
+    	cmdDisplay.setColumns(20);
+    	cmdDisplay.setLineWrap(true);
+    	cmdDisplay.setWrapStyleWord(true);
+    	cmdDisplay.setEditable(false);
+    	cmdDisplay.setFocusable(false);
+		// If the background color obtained from the xml file is null, then default colors are used.
+    	if (bottomBg == null){
+    		cmdDisplay.setBackground(Color.BLACK);
+    		cmdDisplay.setForeground(Color.WHITE);
+        	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
+    	} else {
+    		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
+    		cmdDisplay.setForeground(colors.rgbColor(properties.get(bottomFontColorIndex)));
+    		String fontFamily = cmdDisplay.getFont().getName();
+    		int fontStyle = cmdDisplay.getFont().getStyle();
+    		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
+    		font = new Font(fontFamily, fontStyle, fontSize);
+    		cmdDisplay.setFont(font);
+    	}
+    }
+	
 	private static void placeholder(){
         cmdEntry.addFocusListener(new FocusListener() {
             @Override
@@ -212,27 +244,6 @@ public class UserInterface{
 		cmdEntry.setForeground(Color.BLACK);
         cmdEntry.setText("");
 	}
-    private static void textAreaSettings(){
-    	cmdDisplay.setColumns(20);
-    	cmdDisplay.setLineWrap(true);
-    	cmdDisplay.setWrapStyleWord(true);
-    	cmdDisplay.setEditable(false);
-    	cmdDisplay.setFocusable(false);
-		// If the background color obtained from the xml file is null, then default colors are used.
-    	if (bottomBg == null){
-    		cmdDisplay.setBackground(Color.BLACK);
-    		cmdDisplay.setForeground(Color.WHITE);
-        	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
-    	} else {
-    		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
-    		cmdDisplay.setForeground(colors.rgbColor(properties.get(bottomFontColorIndex)));
-    		String fontFamily = cmdDisplay.getFont().getName();
-    		int fontStyle = cmdDisplay.getFont().getStyle();
-    		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
-    		font = new Font(fontFamily, fontStyle, fontSize);
-    		cmdDisplay.setFont(font);
-    	}
-    }
     
     private static void textPaneSettings(JTextPane outputDisplay){
     	outputDisplay.setEditable(false);
@@ -332,14 +343,6 @@ public class UserInterface{
     	tips.add("Natural Language is supported in Docket. See Natural Commands section of help for more info");
     	return tips;
     }
-	private static void lookAndFeel() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private static String displayToday(Parser p){
 		return p.parse("display today").substring(1);
@@ -358,5 +361,11 @@ public class UserInterface{
         timer.start();
         return timer;
     }
-
+    
+    private static String[] returnOutput(){
+    	String[] output = new String[2];
+    	output[0] = outputDisplay.getText();
+    	output[1] = cmdDisplay.getText();
+    	return output;
+    }
 }
