@@ -215,78 +215,79 @@ public class CommonFunctionInDisplay {
 		
 		// Highlight the row if its the recent task
 		if(taskIDForRecentTask == t.getTaskID()) {
-			output = "<tr style=\"border-bottom:1px solid #E5E4E2\" bgcolor= #FFFF00><td align=\"right\"><h3>" + color + t.getTaskID()
-			+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
+			output = Constants.MESSAGE_COMMONFUNCTION_TRHIGHLIGHT_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN + Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID()
+			+ ")" + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><h3>" + color + t.getTaskID()
-			+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
+			output = Constants.MESSAGE_COMMONFUNCTION_TR_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN + Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID()
+			+ ")" + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		}
 
 		if (t.getStartTime() != null) {
-			output += "<td><h3>" + color + t.getStartTime() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (t.getEndTime() != null) {
-			output += "<td><h3>" + color + t.getEndTime() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (t.getDetails() != null) {
-			output += "<td><h3>" + color + t.getDetails() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getDetails() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (repeat != null) {
-			output += "<td><h3>" + color + repeat + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + repeat + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		}
 
-		output += "</tr>";
+		output += Constants.MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TR_CLOSETAG;
 		return output;
 	}
 
 	// Use by DisplayDefault and DisplayDone
 	public static String getTaskDetailsForTableFormat(Task t, String color, String repeat) {
-		String output = "<tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><h3>" + color + t.getTaskID()
-		+ ")</h3></td><td><h3>" + color + t.getName() + "</h3></td>";
+		String output = Constants.MESSAGE_COMMONFUNCTION_TR_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN + Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID()
+		+ ")" + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 
 		if (t.getStartDate() != null) {
-			output += "<td><h3>" + color + t.getStartDate() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartDate() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (t.getEndDate() != null) {
-			output += "<td><h3>" + color + t.getEndDate() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndDate() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (t.getStartTime() != null) {
-			output += "<td><h3>" + color + t.getStartTime() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (t.getEndTime() != null) {
-			output += "<td><h3>" + color + t.getEndTime() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (t.getDetails() != null) {
-			output += "<td><h3>" + color + t.getDetails() + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getDetails() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output += "<td></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
 		}
 
 		if (repeat != null) {
-			output += "<td><h3>" + color + repeat + "</h3></td>";
+			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + repeat + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		}
 
+		output += Constants.MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TR_CLOSETAG;
 		return output;
 	}
 }

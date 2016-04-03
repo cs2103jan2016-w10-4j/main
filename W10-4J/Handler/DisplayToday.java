@@ -7,7 +7,7 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayToday {
-	static String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
+	static String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYTODAY_TODAY + ", ";
 	static String todayOutput;
 	static String output;
 	
@@ -17,7 +17,7 @@ public class DisplayToday {
 		 *  that will return the output for those task that falls on today's date
 		 */
 		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		output = Constants.MESSAGE_DISPLAY_HEADER_TODAY + Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG;
+		output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
 		if(todayOutput == null || todayOutput.equals(beforeTheDateDisplay)) {
 			output += Constants.MESSAGE_DISPLAYTODAY;

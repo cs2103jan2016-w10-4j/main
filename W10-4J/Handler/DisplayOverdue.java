@@ -12,13 +12,14 @@ public class DisplayOverdue {
 	
 	public static String displayOverdue(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
 		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		output = Constants.MESSAGE_DISPLAY_HEADER_OVERDUE;
+		output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
 		if(overdueOutput == null || overdueOutput.equals(Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG)) {
-			output += Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE + Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
+			output += Constants.MESSAGE_DISPLAYOVERDUE_NOTASK;
 		} else {
 			output += overdueOutput;
 		}
+		output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
 		return output;
 	}
 	

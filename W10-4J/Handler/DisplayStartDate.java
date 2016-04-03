@@ -26,7 +26,7 @@ public class DisplayStartDate {
 		initializeVariables();
 		
 		if(sortedList.size() == 0) {
-			output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_ALLDISPLAYS_NOTASKONHAND + Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
+			output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND + Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
 		} else {
 			taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
 			seperateToRespectiveArrayList(sortedList);
@@ -83,7 +83,7 @@ public class DisplayStartDate {
 		}
 		
 		multiDayTaskList.clear();
-		output += Constants.MESSAGE_DISPLAY_TABLE_CLOSETAG;
+		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG;
 		returnOutputToTheCorrectClass();
 	}
 	
@@ -91,7 +91,7 @@ public class DisplayStartDate {
 		getHeader(taskWithNoStartDateList);
 		createTable();
 		getLatestIndexOfTaskIncludeInDisplay(taskWithNoStartDateList);
-		output += Constants.MESSAGE_DISPLAY_TABLE_CLOSETAG;
+		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG;
 	}
 	
 	// Use by both startDateTasks and noStartDateTasks
@@ -103,7 +103,7 @@ public class DisplayStartDate {
 			if(currentDate != null) {
 				displayAppropriateDay();
 			} else {
-				output += Constants.MESSAGE_DISPLAYFORMAT_FLOATINGTASKS;
+				output += Constants.MESSAGE_DISPLAYSTARTDATE_FLOATINGTASKS;
 			}
 			output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
 		}
@@ -111,13 +111,13 @@ public class DisplayStartDate {
 	
 	private static void displayAppropriateDay() {
 		if(currentDate.equals(getYesterdayDate())) {
-			output += Constants.MESSAGE_DISPLAYFORMAT_YESTERDAY + ", ";
+			output += Constants.MESSAGE_DISPLAYSTARTDATE_YESTERDAY + ", ";
 			overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_OVERDUE;
 		} else if(currentDate.equals(getTodayDate())) {
-			output += Constants.MESSAGE_DISPLAYFORMAT_TODAY + ", ";
+			output += Constants.MESSAGE_DISPLAYSTARTDATE_TODAY + ", ";
 			overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_TODAY;
 		} else if(currentDate.equals(getTomorrowDate())) {
-			output += Constants.MESSAGE_DISPLAYFORMAT_TOMORROW + ", ";
+			output += Constants.MESSAGE_DISPLAYSTARTDATE_TOMORROW + ", ";
 		} else {
 			try {
 				output += getCurrentDay(currentDate) + ", ";
@@ -133,7 +133,7 @@ public class DisplayStartDate {
 	}
 	
 	private static void createTable() {
-		output += "<table width=\"100%\" style=\"margin-top:5px; margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>";
+		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG;
 	}
 	
 	private static int getLatestIndexOfTaskIncludeInDisplay(ArrayList<Task> taskList) {		
