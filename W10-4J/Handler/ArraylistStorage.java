@@ -315,7 +315,7 @@ public class ArraylistStorage {
 	}
 
 	public String getDoneDisplayFormatByDefault() {
-		return DisplayDone.displayDoneFormat(this.doneStorage);
+		return DisplayDone.displayDoneFormat(this.doneStorage, this.previousInputStorage);
 	}
 
 	public String getNotDoneDisplayFormatByOverdue() {
