@@ -34,9 +34,9 @@ public class SettingsUIController {
     public void action(JFrame f, JRadioButton defaultRadioButton, JRadioButton seaRadioButton, JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2, Button save, Button cancel, ArrayList<String> properties, JTextPane outputDisplay, JTextArea cmdDisplay, JComboBox<String> fontSize, JComboBox<String> fontFamily, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings){
     	defaultRadioListener(defaultRadioButton, textPane1, textPane2);
     	seaRadioListener(seaRadioButton, textPane1, textPane2);
-    	sunsetRadioListener(sunsetRadioButton, textPane1, textPane2);
-    	dawnRadioListener(dawnRadioButton, textPane1, textPane2);
-    	natureRadioListener(natureRadioButton, textPane1, textPane2, home, overdue, all, done, help, settings);
+    	optionTwoListener(sunsetRadioButton, textPane1, textPane2);
+    	optionThreeListener(dawnRadioButton, textPane1, textPane2);
+    	optionFourListener(natureRadioButton, textPane1, textPane2, home, overdue, all, done, help, settings);
     	saveButtonListener(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton,
 				save, properties, outputDisplay, cmdDisplay, fontSize, fontFamily, commandText, cmdEntry, home, overdue, all, done, help, settings);
     	cancelButtonListener(f, cancel);
@@ -50,18 +50,18 @@ public class SettingsUIController {
     		public void actionPerformed(ActionEvent e){
     			ReadWriteXml prop = new ReadWriteXml();
     			if (defaultRadioButton.isSelected()){
-    				setVariables(properties, prop, "default", "#ffffff r:255, g:255, b:255", "#000000 r:0, g:0, b:0", white, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set1));
+    				setVariables(properties, prop, "default", "#ffffff r:255, g:255, b:255", "#000000 r:0, g:0, b:0", white, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set2));
     			} else if (seaRadioButton.isSelected()){
-    				setVariables(properties, prop, "option1", "#B4D8E7 r:180, g:216, b: 231", "#56BAEC r:86, g:186, b:236", white, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set1));
+    				setVariables(properties, prop, "option1", "#B4D8E7 r:180, g:216, b: 231", "#56BAEC r:86, g:186, b:236", white, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set2));
     			} else if (sunsetRadioButton.isSelected()){
-    				setVariables(properties, prop, "option2", colors.getTopBg(ColorsForSettings.set3), colors.getBottomBg(ColorsForSettings.set3), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set3));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set3);
-    			} else if (dawnRadioButton.isSelected()){
-    				setVariables(properties, prop, "option3", colors.getTopBg(ColorsForSettings.set2), colors.getBottomBg(ColorsForSettings.set2), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set2));
+    				setVariables(properties, prop, "option2", colors.getTopBg(ColorsForSettings.set2), colors.getBottomBg(ColorsForSettings.set2), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set2));
     				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set2);
+    			} else if (dawnRadioButton.isSelected()){
+    				setVariables(properties, prop, "option3", colors.getTopBg(ColorsForSettings.set3), colors.getBottomBg(ColorsForSettings.set3), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set3));
+    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set3);
     			} else if (natureRadioButton.isSelected()){
-    				setVariables(properties, prop, "option4", colors.getTopBg(ColorsForSettings.set1), colors.getBottomBg(ColorsForSettings.set1), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set1));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set1);
+    				setVariables(properties, prop, "option4", colors.getTopBg(ColorsForSettings.set4), colors.getBottomBg(ColorsForSettings.set4), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set4));
+    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set4);
     			} 
     			f.dispose();
     		}
@@ -126,27 +126,27 @@ public class SettingsUIController {
     	});
 	}
 
-	private static void natureRadioListener(JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2, JButton home, JButton overdue, JButton all, JButton done, JButton help,
+	private static void optionFourListener(JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2, JButton home, JButton overdue, JButton all, JButton done, JButton help,
 			JButton settings) {
 		natureRadioButton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-				colors.natureColor(textPane1, textPane2);
+				colors.optionFourColor(textPane1, textPane2);
     		}
     	});
 	}
 
-	private static void dawnRadioListener(JRadioButton dawnRadioButton, JTextPane textPane1, JTextPane textPane2) {
+	private static void optionThreeListener(JRadioButton dawnRadioButton, JTextPane textPane1, JTextPane textPane2) {
 		dawnRadioButton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			colors.dawnColor(textPane1, textPane2);
+    			colors.optionThreeColor(textPane1, textPane2);
     		}
     	});
 	}
 
-	private static void sunsetRadioListener(JRadioButton sunsetRadioButton, JTextPane textPane1, JTextPane textPane2) {
+	private static void optionTwoListener(JRadioButton sunsetRadioButton, JTextPane textPane1, JTextPane textPane2) {
 		sunsetRadioButton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e){
-    			colors.sunsetColor(textPane1, textPane2);
+    			colors.optionTwoColor(textPane1, textPane2);
     		}
     	});
 	}

@@ -240,13 +240,13 @@ public class SettingsUI {
         	colors.seaColor(textPane1, textPane2);
         } else if (colorOption.equals("option2")) {
         	button.setSelected(sunsetRadioButton.getModel(), true);
-        	colors.sunsetColor(textPane1, textPane2);
+        	colors.optionTwoColor(textPane1, textPane2);
         } else if (colorOption.equals("option3")) {
         	button.setSelected(dawnRadioButton.getModel(), true);
-        	colors.dawnColor(textPane1, textPane2);
+        	colors.optionThreeColor(textPane1, textPane2);
         } else if (colorOption.equals("option4")) {
         	button.setSelected(natureRadioButton.getModel(), true);
-        	colors.natureColor(textPane1, textPane2);
+        	colors.optionFourColor(textPane1, textPane2);
         }
 	}
 }
