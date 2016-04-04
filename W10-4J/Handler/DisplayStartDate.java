@@ -1,3 +1,9 @@
+/*
+ * This is the class that will be executed when user enter display 
+ * In this class, the tasks are being displayed in terms of their start date
+ * 
+ * @@author A0126129J
+ */
 package Handler;
 
 import java.text.DateFormat;
@@ -12,7 +18,7 @@ import main.Task;
 import Handler.CommonFunctionInDisplay;
 
 public class DisplayStartDate {
-	static int taskIDForRecentTask = -1;
+	static int taskIDForRecentTask;
 	static String output;
 	static String currentDate;
 	static String overdueOrToday;
@@ -25,19 +31,20 @@ public class DisplayStartDate {
 	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
 		initializeVariables();
 		
-		if(sortedList.size() == 0) {
-			output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND + Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
+		if (sortedList.size() == 0) {
+			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND 
+					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		} else {
 			taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
 			seperateToRespectiveArrayList(sortedList);
 		
-			while(!(taskWithStartDateList.isEmpty())) {
+			while (!(taskWithStartDateList.isEmpty())) {
 				sort.sortByStartDateAndName(taskWithStartDateList);
 				displayStartDateTasks();
 				sort.sortByStartDateAndName(taskWithStartDateList);
 			}
 		
-			if(!(taskWithNoStartDateList.isEmpty())) {
+			if (!(taskWithNoStartDateList.isEmpty())) {
 				sort.sortByName(taskWithNoStartDateList);
 				displayNoStartDateTasks();
 				sort.sortByName(taskWithNoStartDateList);
@@ -47,6 +54,7 @@ public class DisplayStartDate {
 	}
 	
 	private static void initializeVariables() {
+		taskIDForRecentTask = -1;
 		output = "";
 		overdueOrToday = "";
 		taskWithNoStartDateList = new ArrayList<Task>();
@@ -56,9 +64,9 @@ public class DisplayStartDate {
 	}
 	
 	private static void seperateToRespectiveArrayList(ArrayList<Task> taskList) {
-		for(int i = 0; i < taskList.size(); i++) {
+		for (int i = 0; i < taskList.size(); i++) {
 			Task task = taskList.get(i);
-			if(task.getStartDate() == null) {
+			if (task.getStartDate() == null) {
 				taskWithNoStartDateList.add(task);
 			} else {
 				taskWithStartDateList.add(task);
@@ -67,18 +75,18 @@ public class DisplayStartDate {
 	}
 	
 	private static void displayStartDateTasks() {
-		getHeader(taskWithStartDateList);
+		displayHeader(taskWithStartDateList);
 		createTable();
 		
 		int index = getLatestIndexOfTaskIncludeInDisplay(taskWithStartDateList);	
-		if(index != -1) {
+		if (index != -1) {
 			taskWithStartDateList = removeTaskAlreadyInDisplay(index);
 			addMultiDayTaskToList();
-		} else if (index == -1 && multiDayTaskList.size() != 0){
+		} else if (index == -1 && multiDayTaskList.size() != 0) {
+			// User enter a multiday task immediately after opening the program or when the list is empty
 			taskWithStartDateList.clear();
 			addMultiDayTaskToList();
-		}
-		else {
+		} else {
 			taskWithStartDateList.clear();
 		}
 		
@@ -88,35 +96,35 @@ public class DisplayStartDate {
 	}
 	
 	private static void displayNoStartDateTasks() {
-		getHeader(taskWithNoStartDateList);
+		displayHeader(taskWithNoStartDateList);
 		createTable();
 		getLatestIndexOfTaskIncludeInDisplay(taskWithNoStartDateList);
 		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG;
 	}
 	
 	// Use by both startDateTasks and noStartDateTasks
-	private static void getHeader(ArrayList<Task> taskList) {
+	private static void displayHeader(ArrayList<Task> taskList) {
 		overdueOrToday = "";
-		output += Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG_TABLE;
-		if(taskList.size() != 0) {
+		output += Constants.MESSAGE_DISPLAY_HEADERTABLE_OPENTAG;
+		if (taskList.size() != 0) {
 			currentDate = taskList.get(0).getStartDate();
 			if(currentDate != null) {
 				displayAppropriateDay();
 			} else {
 				output += Constants.MESSAGE_DISPLAYSTARTDATE_FLOATINGTASKS;
 			}
-			output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG_TABLE;
 		}
+		output += Constants.MESSAGE_DISPLAY_HEADERTABLE_CLOSETAG;
 	}
 	
 	private static void displayAppropriateDay() {
-		if(currentDate.equals(getYesterdayDate())) {
+		if (currentDate.equals(getYesterdayDate())) {
 			output += Constants.MESSAGE_DISPLAYSTARTDATE_YESTERDAY + ", ";
 			overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_OVERDUE;
-		} else if(currentDate.equals(getTodayDate())) {
+		} else if (currentDate.equals(getTodayDate())) {
 			output += Constants.MESSAGE_DISPLAYSTARTDATE_TODAY + ", ";
 			overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_TODAY;
-		} else if(currentDate.equals(getTomorrowDate())) {
+		} else if (currentDate.equals(getTomorrowDate())) {
 			output += Constants.MESSAGE_DISPLAYSTARTDATE_TOMORROW + ", ";
 		} else {
 			try {
@@ -125,7 +133,7 @@ public class DisplayStartDate {
 				e.printStackTrace();
 			}
 			
-			if(currentDate.compareTo(getYesterdayDate()) < 0) {
+			if (currentDate.compareTo(getYesterdayDate()) < 0) {
 				overdueOrToday = Constants.MESSAGE_DISPLAYSTARTDATE_OVERDUE;
 			}
 		}			
@@ -140,11 +148,11 @@ public class DisplayStartDate {
 		for (int i = 0; i < taskList.size(); i++) {
 			Task task = taskList.get(i);
 			
-			if(task.getStartDate() == null) {
+			if (task.getStartDate() == null) {
 				getTaskDetails(task);
 			} else if (currentDate.equals(task.getStartDate())) {
 				boolean isMultiDayTask = checkIfItsMultiDayTask(task);
-				if(isMultiDayTask) {
+				if (isMultiDayTask) {
 					multiDayTaskList = createSeveralTasks(task);
 				} else {
 					getTaskDetails(task);
@@ -157,8 +165,8 @@ public class DisplayStartDate {
 	}
 	
 	private static boolean checkIfItsMultiDayTask(Task task) {
-		if(task.getEndDate() != null) {
-			if(!(task.getEndDate().equals(task.getStartDate()))) {
+		if (task.getEndDate() != null) {
+			if (!(task.getEndDate().equals(task.getStartDate()))) {
 				return true;
 			} 
 		}
@@ -167,7 +175,7 @@ public class DisplayStartDate {
 	
 	// Return the correct output to DisplayToday or DisplayOverdue
 	private static void returnOutputToTheCorrectClass() {
-		if(overdueOrToday.equals(Constants.MESSAGE_DISPLAYSTARTDATE_TODAY)) {
+		if (overdueOrToday.equals(Constants.MESSAGE_DISPLAYSTARTDATE_TODAY)) {
 			String todayOutput = output.substring(output.indexOf("Today, "), output.length());
 			DisplayToday.getTodayTasks(todayOutput);
 		} else if (overdueOrToday.equals(Constants.MESSAGE_DISPLAYSTARTDATE_OVERDUE)) {
@@ -196,7 +204,7 @@ public class DisplayStartDate {
 	private static String getCurrentDay(String currentDate) throws ParseException {
 		Date date = dateFormat.parse(currentDate);
 		
-		// The day of the week spelled out completely
+		// The day of the week will be spelled out completely
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
 		String currentDay = simpleDateFormat.format(date);
 		return currentDay;
@@ -205,21 +213,21 @@ public class DisplayStartDate {
 	private static void getTaskDetails(Task task) {
 		String color = CommonFunctionInDisplay.determineColor(task);
 		String repeat = CommonFunctionInDisplay.assignRepeat(task);
-		output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask);
+		output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE);
 	}
 	
 	// Use by only startDateTasks
 	private static ArrayList<Task> removeTaskAlreadyInDisplay(int index) {
-		for(int i = 0; i < index; i++) {
+		for (int i = 0; i < index; i++) {
 			taskWithStartDateList.remove(0);
 		}
 		return taskWithStartDateList;
 	}
 	
-	private static void addMultiDayTaskToList(){
-		for(int h = 0; h < multiDayTaskList.size(); h++) {
-			Task t = multiDayTaskList.get(h);
-			taskWithStartDateList.add(t);
+	private static void addMultiDayTaskToList() {
+		for (int h = 0; h < multiDayTaskList.size(); h++) {
+			Task task = multiDayTaskList.get(h);
+			taskWithStartDateList.add(task);
 		}
 	}
 	
@@ -250,7 +258,7 @@ public class DisplayStartDate {
         newTask.setDetails(task.getDetails());
         newTask.setMultiDay(true);
         
-        if(taskStartTime != null) {
+        if (taskStartTime != null) {
             newTask.setStartTime(taskStartTime);
         }
         
@@ -266,16 +274,16 @@ public class DisplayStartDate {
         calendar.setTime(startDate);
     	calendar.add(Calendar.DATE, +1);
 
-    	// Increment startDate by 1
         boolean flag = true;
         while (flag) {      
             Date date = calendar.getTime();
             String dateValue = dateFormat.format(date);
             startDate = dateFormat.parse(dateValue);
             calendar.setTime(startDate);
+        	// Increment startDate by 1
         	calendar.add(Calendar.DATE, +1);
 
-            if(!dateValue.equals(taskEndDate)) {
+            if (!dateValue.equals(taskEndDate)) {
             	Task newTask = new Task(taskName);
                 newTask.setTaskID(taskID);
                 newTask.setStartDate(dateValue);
@@ -305,9 +313,10 @@ public class DisplayStartDate {
         newTask.setDetails(task.getDetails());
         newTask.setMultiDay(true);
         
-        if(taskEndTime != null) {
+        if (taskEndTime != null) {
             newTask.setEndTime(taskEndTime);
         }
+        
         taskList.add(newTask);
         return taskList;
 	}

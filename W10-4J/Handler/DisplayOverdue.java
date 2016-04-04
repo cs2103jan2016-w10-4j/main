@@ -1,3 +1,9 @@
+/*
+ * This is the class that will be executed when user enter display overdue 
+ * As the name suggests, it display all the tasks that are overdue
+ * 
+ * @@author A0126129J
+ */
 package Handler;
 
 import java.util.ArrayList;
@@ -11,15 +17,17 @@ public class DisplayOverdue {
 	
 	public static String displayOverdue(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
 		overdueOutput = null;
-		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		String output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
-		if(overdueOutput == null || overdueOutput.equals(Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG)) {
-			output += Constants.MESSAGE_DISPLAYOVERDUE_NOTASK;
+		// Within DisplayStartDate, there will be returnOutputToTheCorrectClass() method that will return overdue tasks
+		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
+		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
+		
+		if(overdueOutput == null) {
+			output += Constants.MESSAGE_DISPLAYOVERDUE_NOOVERDUETASK;
 		} else {
 			output += overdueOutput;
 		}
-		output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
+		output += Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		return output;
 	}
 	

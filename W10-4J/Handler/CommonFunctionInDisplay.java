@@ -1,3 +1,9 @@
+/*
+ * This is the class that consist of functions that are usable by 
+ * DisplayDone, DisplayTableFormat, DisplayStartDate, DisplayToday and DisplayOverdue
+ * 
+ * @@author A0126129J
+ */
 package Handler;
 
 import java.text.SimpleDateFormat;
@@ -11,28 +17,29 @@ public class CommonFunctionInDisplay {
 	public static int checkRecentUpdatedTaskID(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
 		int taskID = -1;
 		
-		if(previousList.size() == 1 && previousList.get(0).getAction().equals(Constants.MESSAGE_COMMONFUNCTION_RETRIEVE)) {
+		// Applicable if user calls retrieve method 
+		if (previousList.size() == 1 && previousList.get(0).getAction().equals(Constants.MESSAGE_COMMONFUNCTION_RETRIEVE)) {
 			return -1;
 		}
 		
 		// When user first add a task into the empty file
-		if(previousList.size() == 1 && currentList.size() == 1) {
+		if (previousList.size() == 1 && currentList.size() == 1) {
 			Task previousTask = previousList.get(0).getTask();
 			Task currentTask = currentList.get(0);
-			if(previousTask.getTaskID() == currentTask.getTaskID()) {
+			if (previousTask.getTaskID() == currentTask.getTaskID()) {
 				return previousTask.getTaskID();
 			}
 		}
 		
-		for(int i = 0; i < previousList.size(); i++) {
+		for (int i = 0; i < previousList.size(); i++) {
 			Task previousTask = previousList.get(i).getTask();
 			
-			for(int h = 0; h < currentList.size(); h++) {
+			for (int h = 0; h < currentList.size(); h++) {
 				Task currentTask = currentList.get(h);
 				
-				if(previousTask.getTaskID() == currentTask.getTaskID()) {
+				if (previousTask.getTaskID() == currentTask.getTaskID()) {
 					boolean isTwoTasksTheSame = compareTasks(previousTask, currentTask);
-					if(!(isTwoTasksTheSame)) {
+					if (!(isTwoTasksTheSame)) {
 						taskID = previousTask.getTaskID();
 					}
 				} else {
@@ -40,7 +47,7 @@ public class CommonFunctionInDisplay {
 				}
 			}
 
-			if(taskID != -1) {
+			if (taskID != -1) {
 				return taskID;
 			}
 		}
@@ -55,7 +62,7 @@ public class CommonFunctionInDisplay {
 		boolean isSameEndTime = compareEndTime(previousTask, currentTask);
 		boolean isSameDetails = compareDetails(previousTask, currentTask);
 		
-		if(isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails) {
+		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails) {
 			return true;
 		}
 		return false;
@@ -69,7 +76,7 @@ public class CommonFunctionInDisplay {
 			return false;
 		} else { 
 			compareValue = Task.taskNameComparator.compare(previousTask, currentTask);
-			if(compareValue == 0) {
+			if (compareValue == 0) {
 				return true;
 			} else {
 				return false;
@@ -85,7 +92,7 @@ public class CommonFunctionInDisplay {
 			return false;
 		} else {
 			compareValue = Task.taskStartDateComparator.compare(previousTask, currentTask);
-			if(compareValue == 0) {
+			if (compareValue == 0) {
 				return true;
 			} else {
 				return false;
@@ -101,7 +108,7 @@ public class CommonFunctionInDisplay {
 			return false;
 		} else {
 			compareValue = Task.taskEndDateComparator.compare(previousTask, currentTask);
-			if(compareValue == 0) {
+			if (compareValue == 0) {
 				return true;
 			} else {
 				return false;
@@ -113,7 +120,7 @@ public class CommonFunctionInDisplay {
 		int compareValue;
 		if (previousTask.getStartTime() == null && currentTask.getStartTime() == null) {
 			return true;
-		} else if(previousTask.getStartTime() != null || currentTask.getStartTime() != null) {
+		} else if (previousTask.getStartTime() != null || currentTask.getStartTime() != null) {
 			return false;
 		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) && currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
 			return true;
@@ -121,7 +128,7 @@ public class CommonFunctionInDisplay {
 			return false;
 		} else {
 			compareValue = Task.taskStarttimeComparator.compare(previousTask, currentTask);
-			if(compareValue == 0) {
+			if (compareValue == 0) {
 				return true;
 			} else {
 				return false;
@@ -133,7 +140,7 @@ public class CommonFunctionInDisplay {
 		int compareValue;
 		if (previousTask.getEndTime() == null && currentTask.getEndTime() == null) {
 			return true;
-		} else if(previousTask.getEndTime() != null || currentTask.getEndTime() != null) {
+		} else if (previousTask.getEndTime() != null || currentTask.getEndTime() != null) {
 			return false;
 		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) && currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
 			return true;
@@ -141,7 +148,7 @@ public class CommonFunctionInDisplay {
 			return false;
 		} else {
 			compareValue = Task.taskEndtimeComparator.compare(previousTask, currentTask);
-			if(compareValue == 0) {
+			if (compareValue == 0) {
 				return true;
 			} else {
 				return false;
@@ -157,7 +164,7 @@ public class CommonFunctionInDisplay {
 			return false;
 		} else {
 			compareValue = Task.taskDetailsComparator.compare(previousTask, currentTask);
-			if(compareValue == 0) {
+			if (compareValue == 0) {
 				return true;
 			} else {
 				return false;
@@ -209,62 +216,37 @@ public class CommonFunctionInDisplay {
 		return repeat;
 	}
 
-	// Use by DisplayStartDate, DisplayOverdue and DisplayToday
-	public static String getTaskDetails(Task t, String color, String repeat, int taskIDForRecentTask) {
+	public static String getTaskDetails(Task t, String color, String repeat, int taskIDForRecentTask, String action) {
 		String output = "";
 		
 		// Highlight the row if its the recent task
-		if(taskIDForRecentTask == t.getTaskID()) {
-			output = Constants.MESSAGE_COMMONFUNCTION_TRHIGHLIGHT_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN + Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID()
-			+ ")" + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+		if (taskIDForRecentTask == t.getTaskID()) {
+			output = Constants.MESSAGE_COMMONFUNCTION_TRHIGHLIGHT_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN 
+					+ Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID() + ")" 
+					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG 
+					+ color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {
-			output = Constants.MESSAGE_COMMONFUNCTION_TR_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN + Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID()
-			+ ")" + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output = Constants.MESSAGE_COMMONFUNCTION_TR_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN 
+					+ Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID() + ")" 
+					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG 
+					+ color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		}
 
-		if (t.getStartTime() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+		// Check if its called from DisplayDone, DisplayTableFormat
+		if(action.equals(Constants.MESSAGE_COMMONFUNCTION_DONE) || action.equals(Constants.MESSAGE_COMMONFUNCTION_TABLE)) {
+			if (t.getStartDate() != null) {
+				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartDate() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			} else {
+				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+			}
+
+			if (t.getEndDate() != null) {
+				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndDate() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			} else {
+				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+			}
 		}
-
-		if (t.getEndTime() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
-		}
-
-		if (t.getDetails() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getDetails() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
-		}
-
-		if (repeat != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + repeat + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-		}
-
-		output += Constants.MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TR_CLOSETAG;
-		return output;
-	}
-
-	// Use by DisplayDefault and DisplayDone
-	public static String getTaskDetailsForTableFormat(Task t, String color, String repeat) {
-		String output = Constants.MESSAGE_COMMONFUNCTION_TR_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN + Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID()
-		+ ")" + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-
-		if (t.getStartDate() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartDate() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
-		}
-
-		if (t.getEndDate() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndDate() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
-		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
-		}
-
+		
 		if (t.getStartTime() != null) {
 			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartTime() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
 		} else {

@@ -1,3 +1,9 @@
+/*
+ * This is the class that will be executed when user enter display today
+ * As the name suggests, it display all the tasks that whose start date is today's date
+ * 
+ * @@author A0126129J
+ */
 package Handler;
 
 import java.util.ArrayList;
@@ -7,28 +13,25 @@ import main.Task;
 import Handler.Sorting;
 
 public class DisplayToday {
-	static String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYTODAY_TODAY + ", ";
 	static String todayOutput;
-	static String output;
 	
 	public static String displayToday(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
-		/*
-		 *  Within DisplayStartDate, there will be a returnTodayTasks method
-		 *  that will return the output for those task that falls on today's date
-		 */
 		todayOutput = null;
+		String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYTODAY_TODAY + ", ";
+
+		// Within DisplayStartDate, there will be returnOutputToTheCorrectClass() method that will return today's tasks
 		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
+		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
-		if(todayOutput == null || todayOutput.equals(beforeTheDateDisplay)) {
-			output += Constants.MESSAGE_DISPLAYTODAY;
+		if(todayOutput == null) {
+			output += Constants.MESSAGE_DISPLAYTODAY_NOTASK;
 		} else {
 			// Remove "Today, " from the return value
 			todayOutput = todayOutput.substring(beforeTheDateDisplay.length(), todayOutput.length());
-			output += Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG_TABLE + todayOutput + Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG_TABLE;
+			output += Constants.MESSAGE_DISPLAY_HEADERTABLE_OPENTAG + todayOutput + Constants.MESSAGE_DISPLAY_HEADERTABLE_CLOSETAG;
 		}
 		
-		output += Constants.MESSAGE_DISPLAY_SUBHEADER_CLOSETAG;
+		output += Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		return output;
 	}
 	
