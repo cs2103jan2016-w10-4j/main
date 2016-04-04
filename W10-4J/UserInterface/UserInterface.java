@@ -57,6 +57,8 @@ public class UserInterface{
 	
 	private static Color placeholderForeground = new Color(160, 160, 160);
 	
+	private static String focusString = "";
+	
 	private static ColorsForSettings colors = new ColorsForSettings();
 	
 	private static ReadWriteXml prop = new ReadWriteXml();
@@ -224,12 +226,16 @@ public class UserInterface{
                 if (cmdEntry.getText().trim().length() != 0) {
                 	setOriginalColor();
                 }
+                cmdEntry.setText(focusString);
  
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (cmdEntry.getText().trim().length() == 0) {
                 	setPlaceholderFontColor();
+                	focusString = "";
+                } else {
+                	focusString = cmdEntry.getText();
                 }
             }
         });

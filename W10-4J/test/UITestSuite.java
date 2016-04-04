@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ UIControllerTest.class, ReadWriteXmlTest.class })
+@SuiteClasses({ UIControllerTest.class, ColorsForSettingsTest.class })
 public class UITestSuite {
 
 }
