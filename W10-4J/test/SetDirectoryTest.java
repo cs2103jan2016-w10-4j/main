@@ -1,3 +1,7 @@
+/*
+ * JUnit test for SetDirectory class
+ * @@author A0126129J
+ */
 package test;
 
 import static org.junit.Assert.*;

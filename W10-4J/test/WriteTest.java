@@ -1,3 +1,7 @@
+/*
+ * JUnit test for Write class
+ * @@author A0126129J
+ */
 package test;
 
 import static org.junit.Assert.*;
@@ -26,7 +30,7 @@ public class WriteTest extends Write {
 	static ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
 	static ArrayList<Task> doneTaskList = new ArrayList<Task> ();
 	static ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
-		
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// Set up write class
@@ -38,7 +42,7 @@ public class WriteTest extends Write {
 		toDoTaskList.add(b);
 		taskList.add(toDoTaskList);
 		taskList.add(doneTaskList);
-		
+
 		// Write to testFile.txt
 		PrintWriter print = new PrintWriter(new FileWriter("testFile.txt"));
 		print.println("Tasks on hand:");
@@ -46,8 +50,16 @@ public class WriteTest extends Write {
 		print.println("2. Event: B");
 		print.println("No tasks are done!");
 		print.close();
+
+		// Write to list.txt needed for testWriteToOtherFileWithUpdatePath()
+		PrintWriter printWriter = new PrintWriter(new FileWriter("list.txt"));
+		printWriter.println("Tasks on hand:");
+		printWriter.println("1. Event: A");
+		printWriter.println("2. Event: B");
+		printWriter.println("No tasks are done!");
+		printWriter.close();
 	}	
-	
+
 	@Test
 	public void testWrite() throws NoSuchAlgorithmException, IOException {
 		if (Storage.filename.equals(Constants.fileName)) {
@@ -56,35 +68,35 @@ public class WriteTest extends Write {
 			testWriteToOtherFileWithUpdatePath();
 		}
 	}
-	
+
 	@Test
 	public void testWriteToDefaultFile() throws NoSuchAlgorithmException, IOException {
 		writeToFile(toDoTaskList, doneTaskList);
-		
+
 		String testFile = "testFile.txt";
 		String returnFile = Constants.fileName;
 		byte[] digestTest = computeCheckSum(testFile);
 		byte[] digestReturn = computeCheckSum(returnFile);
-		
+
 		assertEquals(true, checkSumEqual(digestTest, digestReturn));
 	}
-	
+
 	@Test
 	public void testWriteToOtherFileWithUpdatePath() throws NoSuchAlgorithmException, IOException {
 		boolean returnValue = false;
 		writeToFile("list.txt", toDoTaskList, doneTaskList);
-		
+
 		String testFile = "testFile.txt";
 		String returnFile = "list.txt";
 		byte[] digestTest = computeCheckSum(testFile);
 		byte[] digestReturn = computeCheckSum(returnFile);
-		
+
 		String pathContent = getPathContentFromDefaultFile();
 
 		if (checkSumEqual(digestTest, digestReturn) && pathContent.equals("list.txt")) {
 			returnValue = true;
 		}
-		
+
 		assertEquals(true, returnValue);
 	}
 
@@ -94,13 +106,13 @@ public class WriteTest extends Write {
 		byte[] digest = messageDigest.digest();
 		return digest;
 	}
-	
+
 	boolean checkSumEqual(byte[] digestTest, byte[] digestReturn) {
 		boolean returnValue = false;
 		returnValue = Arrays.equals(digestTest, digestReturn);
 		return returnValue;
 	}
-	
+
 	String getPathContentFromDefaultFile() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(Constants.fileName));
 		String content = reader.readLine();

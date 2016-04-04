@@ -1,3 +1,6 @@
+/*
+ * @@author A0126129J
+ */
 package Storage;
 
 import java.io.BufferedReader;
@@ -108,11 +111,11 @@ public class Read {
 		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1).trim();
 		
 		if (taskHeader.equals(Constants.MESSAGE_READ_STARTDATE)) {
-			String taskDate = taskContent;
-			task.setStartDate(taskDate);
+			String taskStartDate = taskContent;
+			task.setStartDate(taskStartDate);
 		} else if (taskHeader.equals(Constants.MESSAGE_READ_ENDDATE)) {
-			String taskEndTime = taskContent;
-			task.setEndDate(taskEndTime);
+			String taskEndDate = taskContent;
+			task.setEndDate(taskEndDate);
 		} else if (taskHeader.equals(Constants.MESSAGE_READ_STARTTIME)) {
 			String taskStartTime = taskContent;
 			task.setStartTime(taskStartTime);
