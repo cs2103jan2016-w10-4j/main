@@ -16,6 +16,7 @@ public class DisplayToday {
 		 *  Within DisplayStartDate, there will be a returnTodayTasks method
 		 *  that will return the output for those task that falls on today's date
 		 */
+		todayOutput = null;
 		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
 		output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		

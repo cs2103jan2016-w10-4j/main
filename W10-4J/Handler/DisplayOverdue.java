@@ -11,6 +11,7 @@ public class DisplayOverdue {
 	static String output;
 	
 	public static String displayOverdue(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
+		overdueOutput = null;
 		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
 		output = Constants.MESSAGE_DISPLAY_SUBHEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
