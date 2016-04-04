@@ -213,7 +213,7 @@ public class SettingsUI {
 
 	private ButtonGroup radioButtonsSettings() {
 		defaultRadioButton.setText("Default Colour");
-        seaRadioButton.setText("Sea");
+        seaRadioButton.setText("Option 1");
         sunsetRadioButton.setText("Option 2");
         dawnRadioButton.setText("Option 3");
         natureRadioButton.setText("Option 4");
@@ -237,7 +237,7 @@ public class SettingsUI {
         	colors.defaultColor(textPane1, textPane2);
         } else if (colorOption.equals("option1")){
         	button.setSelected(seaRadioButton.getModel(), true);
-        	colors.seaColor(textPane1, textPane2);
+        	colors.optionOneColor(textPane1, textPane2);
         } else if (colorOption.equals("option2")) {
         	button.setSelected(sunsetRadioButton.getModel(), true);
         	colors.optionTwoColor(textPane1, textPane2);
