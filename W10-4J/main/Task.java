@@ -99,8 +99,8 @@ public class Task {
 				Integer.parseInt(date[2].trim()));
 		return calendar;
 	}
-	
-	//@@author A0140114A
+
+	// @@author A0140114A
 	public void nextDate() {
 		if (startdate_ != null) {
 			if (day_) {
@@ -217,9 +217,9 @@ public class Task {
 		return startdate_;
 	}
 
-	public boolean isDateValid() {
+	public int isDateValid() {
 		if (startdate_ == null || enddate_ == null) {
-			return true;
+			return -1;
 		}
 		int startYear = Integer.parseInt(startdate_.split("/")[0]);
 		int startMonth = Integer.parseInt(startdate_.split("/")[1]);
@@ -228,19 +228,25 @@ public class Task {
 		int endMonth = Integer.parseInt(enddate_.split("/")[1]);
 		int endDay = Integer.parseInt(enddate_.split("/")[2]);
 		if (startYear > endYear) {
-			return false;
+			return -1;
 		} else if (startYear < endYear) {
-			return true;
+			return 1;
 		} else {
 			if (startMonth > endMonth) {
-				return false;
+				return -1;
 			} else if (startMonth < endMonth) {
-				return true;
+				return 1;
 			} else {
 				if (startMonth > endMonth) {
-					return false;
+					return -1;
 				} else {
-					return true;
+					if (startDay > endDay) {
+						return -1;
+					} else if (startDay < endDay) {
+						return 1;
+					} else {
+						return 0;
+					}
 				}
 			}
 		}

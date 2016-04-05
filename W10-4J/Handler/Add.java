@@ -101,14 +101,19 @@ public class Add implements Command {
 	private boolean isDateAndTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
 		int endtime = task.getEndTimeInt();
-		if (task.isDateValid()) {
+		switch(task.isDateValid()){
+		case 1:
+			return true;
+		case -1:
+			return false;
+		case 0:
 			if (starttime != -1 && endtime != -1) {
 				return endtime > starttime;
 			} else {
 				return true;
 			}
-		} else {
-			return false;
 		}
+		assert false;
+		return false;
 	}
 }
