@@ -1,4 +1,4 @@
-//@@author Berkin
+//@@author A0149174Y
 package Handler;
 
 public interface Command {
@@ -6,4 +6,4 @@ public interface Command {
 	String execute(String[] task);
 
 }
-// @@author Berkin
+// @@author

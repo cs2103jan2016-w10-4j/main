@@ -5,7 +5,7 @@ import java.util.Collections;
 import Storage.Storage;
 import main.Constants;
 import main.Task;
-
+//@@author A0149174Y
 public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
@@ -28,7 +28,7 @@ public class ArraylistStorage {
 		this.previousInputStorage = new ArrayList<PreviousInput>();
 		this.sort = new Sorting();
 	}
-
+	//@@author
 	public ArrayList<Task> getNotDoneStorage() {
 		return this.notDoneStorage;
 	}
@@ -161,25 +161,19 @@ public class ArraylistStorage {
 	private boolean taskSearchNameAndDetails(Task eachTask, String[] task, boolean excludeField) {
 		// check whether exclude field exists
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;
-		if (excludeField) {
-			return ((eachTask.getName().contains(task[0].trim()) && !eachTask.getName().contains(task[2].trim()))
-					|| (eachTask.getDetails().contains(task[0].trim())
-							&& !eachTask.getDetails().contains(task[2].trim())));
-		} else {
-			return (eachTask.getName().contains(task[0].trim()) || eachTask.getDetails().contains(task[0].trim()));
-		}
+		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;	
+		//@@author A0149174Y
+		return ((eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase())) || ((eachTask.getDetails().toLowerCase().startsWith(task[0].trim().toLowerCase()))));
+		//@@author 
 	}
 
 	// Search helper for each individual task with only name
 	private boolean taskSearchName(Task eachTask, String[] task, boolean excludeField) {
 		// check whether exclude field exists
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-		if (excludeField) {
-			return ((eachTask.getName().contains(task[0].trim()) && !eachTask.getName().contains(task[2].trim())));
-		} else {
-			return (eachTask.getName().contains(task[0].trim()));
-		}
+		//@@author A0149174Y
+			return (eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()));
+			//@@author 
 	}
 
 	// ** SET DIR METHOD **

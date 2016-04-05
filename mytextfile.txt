@@ -1,3 +1,12 @@
 Tasks on hand:
 1. Event: meeting1
+2. Event: cs2103
+3. Event: cs3203
+4. Event: wtfcs
+5. Event: CS2103
+6. Event: wtf
+7. Event: big
+8. Event: 4
+9. Event: 5
+10. Event: cs2102
 No tasks are done!
