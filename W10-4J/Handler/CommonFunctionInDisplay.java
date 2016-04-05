@@ -73,7 +73,8 @@ public class CommonFunctionInDisplay {
 		boolean isSameDetails = compareDetails(previousTask, currentTask);
 		boolean isSameTaskID = compareTaskID(previousTask, currentTask);
 
-		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails && isSameTaskID) {
+		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails
+				&& isSameTaskID) {
 			return true;
 		}
 		return false;
@@ -181,7 +182,8 @@ public class CommonFunctionInDisplay {
 		int compareValue;
 		if (previousTask.getDetails() == null && currentTask.getDetails() == null) {
 			return true;
-		} else if (previousTask.getDetails() != null || currentTask.getDetails() != null) {
+		} else if ((previousTask.getDetails() == null && currentTask.getDetails() != null)
+				|| (previousTask.getDetails() != null && currentTask.getDetails() == null)) {
 			return false;
 		} else {
 			compareValue = Task.taskDetailsComparator.compare(previousTask, currentTask);
@@ -192,7 +194,7 @@ public class CommonFunctionInDisplay {
 			}
 		}
 	}
-	
+
 	private static boolean compareTaskID(Task previousTask, Task currentTask) {
 		return previousTask.getTaskID() == currentTask.getTaskID();
 	}
@@ -315,29 +317,19 @@ public class CommonFunctionInDisplay {
 				boolean found = false;
 				for (int j = 0; j < previousList.size(); j++) {
 					if (compareTasks(previousList.get(j), sortedList.get(i))) {
-						// System.out.println(previousList.get(j).getName() +
-						// sortedList.get(i).getName());
-						// System.out.println(previousList.get(j).getStartDate()
-						// + sortedList.get(i).getStartDate());
-						// System.out.println(previousList.get(j).getEndDate() +
-						// sortedList.get(i).getEndDate());
-						// System.out.println(previousList.get(j).getStartTime()
-						// + sortedList.get(i).getStartTime());
-						// System.out.println(previousList.get(j).getEndTime() +
-						// sortedList.get(i).getEndTime());
+//						System.out.println(previousList.get(j).getName() + sortedList.get(i).getName());
+//						System.out.println(previousList.get(j).getStartDate() + sortedList.get(i).getStartDate());
+//						System.out.println(previousList.get(j).getEndDate() + sortedList.get(i).getEndDate());
+//						System.out.println(previousList.get(j).getStartTime() + sortedList.get(i).getStartTime());
+//						System.out.println(previousList.get(j).getEndTime() + sortedList.get(i).getEndTime());
 						found = true;
 						continue;
 					} else {
-						// System.out.println(previousList.get(j).getName() + "
-						// " + sortedList.get(i).getName());
-						// System.out.println(previousList.get(j).getStartDate()
-						// + sortedList.get(i).getStartDate());
-						// System.out.println(previousList.get(j).getEndDate() +
-						// sortedList.get(i).getEndDate());
-						// System.out.println(previousList.get(j).getStartTime()
-						// + sortedList.get(i).getStartTime());
-						// System.out.println(previousList.get(j).getEndTime() +
-						// sortedList.get(i).getEndTime());
+//						System.out.println(previousList.get(j).getName() + " " + sortedList.get(i).getName());
+//						System.out.println(previousList.get(j).getStartDate() + sortedList.get(i).getStartDate());
+//						System.out.println(previousList.get(j).getEndDate() + sortedList.get(i).getEndDate());
+//						System.out.println(previousList.get(j).getStartTime() + sortedList.get(i).getStartTime());
+//						System.out.println(previousList.get(j).getEndTime() + sortedList.get(i).getEndTime());
 					}
 				}
 				if (!found) {
