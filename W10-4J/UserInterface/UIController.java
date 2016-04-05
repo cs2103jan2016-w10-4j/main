@@ -28,7 +28,16 @@ import main.Constants;
 
 public class UIController {
 
+	private static final String isDisplayFlag = "0";
+	private static final String displayOverdueCommand = "display overdue";
+	private static final String helpCommand = "help";
+	private static final String displayTodayCommand = "display today";
+	private static final String displayDoneCommand = "display done";
+	private static final String displayCommand = "display";
+	private static final String EMPTY_STRING = "";
+	
 	private static ArrayList<String> commands = new ArrayList<String>();
+	
 	private static int commandIndex = commands.size();
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
@@ -73,7 +82,7 @@ public class UIController {
 		all.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				String output = p.parse("display");
+				String output = p.parse(displayCommand);
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -84,7 +93,7 @@ public class UIController {
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				String output = p.parse("display done");
+				String output = p.parse(displayDoneCommand);
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -95,7 +104,7 @@ public class UIController {
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				String todayTask = p.parse("display today").substring(1);
+				String todayTask = p.parse(displayTodayCommand).substring(1);
 				printInDisplayOutput(displayOutput, todayTask);
 				displayOutput.setCaretPosition(0);
 			}
@@ -106,7 +115,7 @@ public class UIController {
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				String output = p.parse("help");
+				String output = p.parse(helpCommand);
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -117,7 +126,7 @@ public class UIController {
 		overdue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				String output = p.parse("display overdue");
+				String output = p.parse(displayOverdueCommand);
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -137,7 +146,7 @@ public class UIController {
 	private void commandEnteredAction(Timer timer, String command, JTextField cmdEntry, JTextArea cmdDisplay,
 			JTextPane displayOutput, Parser p) {
 		stopTimer(timer);
-		cmdEntry.setText("");
+		cmdEntry.setText(EMPTY_STRING);
 		commands.add(command);
 		commandIndex = commands.size();
 		printInCommandDisplay(cmdDisplay, command);
@@ -147,7 +156,7 @@ public class UIController {
 			printInDisplayOutput(displayOutput, output.substring(1));
 		} else {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
-			printInDisplayOutput(displayOutput, p.parse("display").substring(1));
+			printInDisplayOutput(displayOutput, p.parse(displayCommand).substring(1));
 		}
 		displayOutput.setCaretPosition(0);
 	}
@@ -166,7 +175,7 @@ public class UIController {
 	}
 
 	public static boolean isDisplay(String s) {
-		return s.substring(0, 1).equals("0");
+		return s.substring(0, 1).equals(isDisplayFlag);
 	}
 
 	private static void printInCommandDisplay(JTextArea cmdDisplay, String content) {
@@ -232,13 +241,13 @@ public class UIController {
 			commandIndex += 1;
 			cmdEntry.setText(commands.get(commandIndex));
 		} else {
-			cmdEntry.setText("");
+			cmdEntry.setText(EMPTY_STRING);
 		}
 	}
 
 	private static void arrowUpPreviousInput(JTextField cmdEntry) {
 		if (commands.size() == 0) {
-			cmdEntry.setText("");
+			cmdEntry.setText(EMPTY_STRING);
 		} else if (arrowUpTrue()) {
 			commandIndex -= 1;
 			cmdEntry.setText(commands.get(commandIndex));

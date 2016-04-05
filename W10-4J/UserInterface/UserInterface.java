@@ -33,13 +33,31 @@ import Parser.Parser;
 
 
 public class UserInterface{
-	private static int topFontColorIndex = 1;
-	private static int topBgIndex = 2;
-	private static int bottomBgIndex = 3;
-	private static int bottomFontColorIndex = 4;
-	private static int fontSizeIndex = 5;
-	private static int fontFamilyIndex = 6;
-	private static int buttonColorIndex = 7;
+	
+	private static final Color BLACK_COLOR = Color.BLACK;
+	private static final Color WHITE_COLOR = Color.WHITE;
+	private static final String EMPTY_STRING = "";
+	private static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";
+	private static final String COMMAND_LABEL_TEXT = " Command: ";
+	private static final int CMD_DISPLAY_INDEX = 1;
+	private static final int OUTPUT_DISPLAY_INDEX = 0;
+	private static final int OUTPUT_SIZE = 2;
+	
+	private static final String GUI_PREFERENCES_TOOLTIP = "Gui Preferences";
+	private static final String HELP_TOOLTIP = "Help";
+	private static final String ALL_TASKS_TOOLTIP = "All Tasks";
+	private static final String DONE_TASKS_TOOLTIP = "Done Tasks";
+	private static final String OVERDUE_TASKS_TOOLTIP = "Overdue Tasks";
+	private static final String HOME_TOOLTIP = "Home";
+	
+	private static final String SETTINGS_ICON_PATH = "/main/icon/settings.png";
+	private static final String HELP_ICON_PATH = "/main/icon/help.png";
+	private static final String ALL_ICON_PATH = "/main/icon/all.png";
+	private static final String DONE_ICON_PATH = "/main/icon/done.png";
+	private static final String OVERDUE_ICON_PATH = "/main/icon/overdue.png";
+	private static final String HOME_ICON_PATH = "/main/icon/home.png";
+	
+	private static final Color GRAY_COLOR = Color.gray;
 	
 	private static JFrame f = new JFrame("Docket");
 	private static JScrollPane jScrollPane1 = new JScrollPane();
@@ -57,17 +75,17 @@ public class UserInterface{
 	
 	private static Color placeholderForeground = new Color(160, 160, 160);
 	
-	private static String focusString = "";
+	private static String focusString = EMPTY_STRING;
 	
 	private static ColorsForSettings colors = new ColorsForSettings();
 	
 	private static ReadWriteXml prop = new ReadWriteXml();
 	private static ArrayList<String> properties = prop.readToArrayList();
-	private static String fontFamily = properties.get(fontFamilyIndex);
-	private static String fontSize = properties.get(fontSizeIndex);
-	private static String bottomBg = properties.get(bottomBgIndex);
-	private static String topBg = properties.get(topBgIndex);
-	private static String buttonColors = properties.get(buttonColorIndex);
+	private static String fontFamily = properties.get(ReadWriteXml.FONT_FAMILY_INDEX);
+	private static String fontSize = properties.get(ReadWriteXml.FONT_SIZE_INDEX);
+	private static String bottomBg = properties.get(ReadWriteXml.BOTTOM_BG_INDEX);
+	private static String topBg = properties.get(ReadWriteXml.TOP_BG_INDEX);
+	private static String buttonColors = properties.get(ReadWriteXml.BUTTONS_COLOR_INDEX);
 	private static Font font;
 	
 	public static void main(String[] args){
@@ -170,7 +188,7 @@ public class UserInterface{
 	}
 	
 	private static void commandTextSettings(){
-		commandText.setText(" Command: ");
+		commandText.setText(COMMAND_LABEL_TEXT);
 		if (fontFamily == null || fontSize == null){
 			font = commandText.getFont();
 		} else {
@@ -178,9 +196,9 @@ public class UserInterface{
 			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
 		}
 		commandText.setOpaque(true);
-        commandText.setBackground(Color.WHITE);
+        commandText.setBackground(WHITE_COLOR);
 		commandText.setFont(font);
-        commandText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.WHITE));
+        commandText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, WHITE_COLOR));
 		
 	}
 	
@@ -192,7 +210,7 @@ public class UserInterface{
 			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
 		}
 		cmdEntry.setFont(font);
-        cmdEntry.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.WHITE));
+        cmdEntry.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, WHITE_COLOR));
 		setPlaceholderFontColor();
 		placeholder();
 	}
@@ -205,16 +223,15 @@ public class UserInterface{
     	cmdDisplay.setFocusable(false);
 		// If the background color obtained from the xml file is null, then default colors are used.
     	if (bottomBg == null){
-    		cmdDisplay.setBackground(Color.BLACK);
-    		cmdDisplay.setForeground(Color.WHITE);
+    		cmdDisplay.setBackground(BLACK_COLOR);
+    		cmdDisplay.setForeground(WHITE_COLOR);
         	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     	} else {
     		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
-    		cmdDisplay.setForeground(colors.rgbColor(properties.get(bottomFontColorIndex)));
     		String fontFamily = cmdDisplay.getFont().getName();
     		int fontStyle = cmdDisplay.getFont().getStyle();
-    		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
-    		font = new Font(fontFamily, fontStyle, fontSize);
+    		int fontSizeFromFile = Integer.valueOf(fontSize);
+    		font = new Font(fontFamily, fontStyle, fontSizeFromFile);
     		cmdDisplay.setFont(font);
     	}
     }
@@ -233,7 +250,7 @@ public class UserInterface{
             public void focusLost(FocusEvent e) {
                 if (cmdEntry.getText().trim().length() == 0) {
                 	setPlaceholderFontColor();
-                	focusString = "";
+                	focusString = EMPTY_STRING;
                 } else {
                 	focusString = cmdEntry.getText();
                 }
@@ -243,12 +260,12 @@ public class UserInterface{
 	
 	private static void setPlaceholderFontColor(){
 		cmdEntry.setForeground(placeholderForeground);
-		cmdEntry.setText("Enter commands here");
+		cmdEntry.setText(CMD_ENTRY_PLACEHOLDER_TEXT);
 	}
 	
 	private static void setOriginalColor(){
-		cmdEntry.setForeground(Color.BLACK);
-        cmdEntry.setText("");
+		cmdEntry.setForeground(BLACK_COLOR);
+        cmdEntry.setText(EMPTY_STRING);
 	}
     
     private static void textPaneSettings(JTextPane outputDisplay){
@@ -256,14 +273,13 @@ public class UserInterface{
     	outputDisplay.setFocusable(false);
 		// If the background color obtained from the xml file is null, then default colors are used.
     	if (topBg == null){
-    		outputDisplay.setBackground(Color.WHITE);
-    		outputDisplay.setForeground(Color.BLACK);
+    		outputDisplay.setBackground(WHITE_COLOR);
+    		outputDisplay.setForeground(BLACK_COLOR);
     	} else {
     		outputDisplay.setBackground(colors.rgbColor(topBg));
-    		outputDisplay.setForeground(colors.rgbColor(properties.get(topFontColorIndex)));
     		int fontStyle = outputDisplay.getFont().getStyle();
-    		int fontSize = Integer.valueOf(properties.get(fontSizeIndex));
-    		font = new Font(fontFamily, fontStyle, fontSize);
+    		int fontSizeFromFile = Integer.valueOf(fontSize);
+    		font = new Font(fontFamily, fontStyle, fontSizeFromFile);
     		outputDisplay.setFont(font);
     	}
     	outputDisplay.setContentType("text/html");
@@ -283,12 +299,12 @@ public class UserInterface{
 		helpButton.setFocusable(false);
 		settingsButton.setFocusable(false);
     	if (buttonColors == null){
-    		homeButton.setBackground(Color.gray);
-    		overdueButton.setBackground(Color.gray);
-    		doneButton.setBackground(Color.gray);
-    		allButton.setBackground(Color.gray);
-    		helpButton.setBackground(Color.gray);
-    		settingsButton.setBackground(Color.gray);
+    		homeButton.setBackground(GRAY_COLOR);
+    		overdueButton.setBackground(GRAY_COLOR);
+    		doneButton.setBackground(GRAY_COLOR);
+    		allButton.setBackground(GRAY_COLOR);
+    		helpButton.setBackground(GRAY_COLOR);
+    		settingsButton.setBackground(GRAY_COLOR);
     	} else {
     		homeButton.setBackground(colors.rgbColor(buttonColors));
     		overdueButton.setBackground(colors.rgbColor(buttonColors));
@@ -300,12 +316,12 @@ public class UserInterface{
     }
 
 	private static void setIconsForButtons() {
-		getAndSetIconsForButtons("/main/icon/home.png", homeButton);
-		getAndSetIconsForButtons("/main/icon/overdue.png", overdueButton);
-		getAndSetIconsForButtons("/main/icon/done.png", doneButton);
-		getAndSetIconsForButtons("/main/icon/all.png", allButton);
-		getAndSetIconsForButtons("/main/icon/help.png", helpButton);
-		getAndSetIconsForButtons("/main/icon/settings.png", settingsButton);
+		getAndSetIconsForButtons(HOME_ICON_PATH, homeButton);
+		getAndSetIconsForButtons(OVERDUE_ICON_PATH, overdueButton);
+		getAndSetIconsForButtons(DONE_ICON_PATH, doneButton);
+		getAndSetIconsForButtons(ALL_ICON_PATH, allButton);
+		getAndSetIconsForButtons(HELP_ICON_PATH, helpButton);
+		getAndSetIconsForButtons(SETTINGS_ICON_PATH, settingsButton);
 	}
 	
 	private static void getAndSetIconsForButtons(String path, JButton button){
@@ -314,12 +330,12 @@ public class UserInterface{
 	}
 
 	private static void setToolTipForButtons() {
-		homeButton.setToolTipText("Home");
-    	overdueButton.setToolTipText("Overdue Tasks");
-    	doneButton.setToolTipText("Done Tasks");
-    	allButton.setToolTipText("All Tasks");
-    	helpButton.setToolTipText("Help");
-    	settingsButton.setToolTipText("Gui Preferences");
+		homeButton.setToolTipText(HOME_TOOLTIP);
+    	overdueButton.setToolTipText(OVERDUE_TASKS_TOOLTIP);
+    	doneButton.setToolTipText(DONE_TASKS_TOOLTIP);
+    	allButton.setToolTipText(ALL_TASKS_TOOLTIP);
+    	helpButton.setToolTipText(HELP_TOOLTIP);
+    	settingsButton.setToolTipText(GUI_PREFERENCES_TOOLTIP);
 	}
     
     private static void setWelcomeMessage(JTextPane outputDisplay){
@@ -369,9 +385,9 @@ public class UserInterface{
     }
     
     private static String[] returnOutput(){
-    	String[] output = new String[2];
-    	output[0] = outputDisplay.getText();
-    	output[1] = cmdDisplay.getText();
+    	String[] output = new String[OUTPUT_SIZE];
+    	output[OUTPUT_DISPLAY_INDEX] = outputDisplay.getText();
+    	output[CMD_DISPLAY_INDEX] = cmdDisplay.getText();
     	return output;
     }
 }

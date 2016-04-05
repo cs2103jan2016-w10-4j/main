@@ -1,6 +1,7 @@
 /*
- * This class is the GUI for the button GUI preferences. It currently allows the user to change the colors of the display output and command output.
- * Five colors are currently allowed to be changed. They are named Sea, Sunset, Dawn, Nature.
+ * This class is the GUI for the button for Settings. It currently allows the user to change the colors of the display output, command output and the buttons.
+ * It also allows the user to change the font and font size of the whole program.
+ * Five colors are currently allowed to be changed. They are named Default, Option 1, Option 2, Option 3, Option 4.
  * 
  * @@author A0113761M
  */
@@ -29,17 +30,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class SettingsUI {
-	private static String fileName = ".\\properties.xml";
+	private static final String SETTINGS_TEXT = "Settings";
+	private static final String FONT_TEXT = "Font";
+	private static final String FONT_SIZE_TEXT = "Font Size";
+	private static final String SAVE_BUTTON_TEXT = "Save";
+	private static final String CANCEL_BUTTON_TEXT = "Cancel";
+
+	private static final String OPTION_1_TEXT = "Option 1";
+	private static final String OPTION_2_TEXT = "Option 2";
+	private static final String OPTION_3_TEXT = "Option 3";
+	private static final String OPTION_4_TEXT = "Option 4";
+	private static final String DEFAULT_COLOR_TEXT = "Default Colour";
+
+	private static final String FILE_NAME = ".\\properties.xml";
+
+	private static final int COLOR_OPTION_INDEX = 0;
 	
-	private static ColorsForSettings colors = new ColorsForSettings();
-	
-	static JFrame f = new JFrame("Settings");
+	static JFrame f = new JFrame(SETTINGS_TEXT);
     JPanel jPanel3 = new JPanel();
     JRadioButton defaultRadioButton = new JRadioButton();
-    JRadioButton seaRadioButton = new JRadioButton();
-    JRadioButton sunsetRadioButton = new JRadioButton();
-    JRadioButton dawnRadioButton = new JRadioButton();
-    JRadioButton natureRadioButton = new JRadioButton();
+    JRadioButton optionOneRadioButton = new JRadioButton();
+    JRadioButton optionTwoRadioButton = new JRadioButton();
+    JRadioButton optionThreeRadioButton = new JRadioButton();
+    JRadioButton optionFourRadioButton = new JRadioButton();
     JTextPane textPane1 = new JTextPane();
     JTextPane textPane2 = new JTextPane();
     JScrollPane jScrollPane1 = new JScrollPane();
@@ -54,10 +67,13 @@ public class SettingsUI {
     
     ArrayList<String> properties = prop.readToArrayList();
 	
+	private static ColorsForSettings colors = new ColorsForSettings();
+	
     public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help,
 			JButton settings) {
         initComponents(outputDisplay, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help, settings);
     }
+    
     private void initComponents(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings) {
         jScrollPane1.setViewportView(textPane1);
         jScrollPane2.setViewportView(textPane2);
@@ -74,7 +90,7 @@ public class SettingsUI {
         setLayoutForSettingsUI();
 
         SettingsUIController controller = new SettingsUIController();
-        controller.action(f, defaultRadioButton, seaRadioButton, sunsetRadioButton, dawnRadioButton, natureRadioButton, textPane1, textPane2, saveButton, cancelButton, properties, outputDisplay, cmdDisplay, fontSizeBox, fontFamilyBox, commandText, cmdEntry, home, overdue, all, done, help, settings);
+        controller.action(f, defaultRadioButton, optionOneRadioButton, optionTwoRadioButton, optionThreeRadioButton, optionFourRadioButton, textPane1, textPane2, saveButton, cancelButton, properties, outputDisplay, cmdDisplay, fontSizeBox, fontFamilyBox, commandText, cmdEntry, home, overdue, all, done, help, settings);
 
 		lookAndFeel();
 		
@@ -131,13 +147,13 @@ public class SettingsUI {
                 .addContainerGap()
                 .addComponent(defaultRadioButton)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(seaRadioButton)
+                .addComponent(optionOneRadioButton)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sunsetRadioButton)
+                .addComponent(optionTwoRadioButton)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dawnRadioButton)
+                .addComponent(optionThreeRadioButton)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(natureRadioButton)
+                .addComponent(optionFourRadioButton)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
@@ -157,10 +173,10 @@ public class SettingsUI {
 			                    .addContainerGap()
 								.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 										.addComponent(defaultRadioButton)
-										.addComponent(seaRadioButton)
-										.addComponent(sunsetRadioButton)
-										.addComponent(dawnRadioButton)
-										.addComponent(natureRadioButton))
+										.addComponent(optionOneRadioButton)
+										.addComponent(optionTwoRadioButton)
+										.addComponent(optionThreeRadioButton)
+										.addComponent(optionFourRadioButton))
 	                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 				.addGroup(jPanel3Layout.createSequentialGroup()
 	                    .addContainerGap()
@@ -190,45 +206,45 @@ public class SettingsUI {
 	}
 
 	private void cancelAndSaveButtonSettings() {
-		cancelButton.setLabel("Cancel");
-        saveButton.setLabel("Save");
+		cancelButton.setLabel(CANCEL_BUTTON_TEXT);
+        saveButton.setLabel(SAVE_BUTTON_TEXT);
 	}
 
 	private void jLabelSettings() {
-		jLabel1.setText("Font Size");
-        jLabel2.setText("Font");
+		jLabel1.setText(FONT_SIZE_TEXT);
+        jLabel2.setText(FONT_TEXT);
 	}
 
 	private void fontFamilyBoxSettings() {
 		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getAvailableFontFamilyNames();
 		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
-        fontFamilyBox.setSelectedItem(prop.read("fontFamily", fileName));
+        fontFamilyBox.setSelectedItem(prop.read(ReadWriteXml.FONT_FAMILY_KEY, FILE_NAME));
 	}
 
 	private void fontSizeBoxSettings() {
 		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
-        fontSizeBox.setSelectedItem(prop.read("fontSize", fileName));
+        fontSizeBox.setSelectedItem(prop.read(ReadWriteXml.FONT_SIZE_KEY, FILE_NAME));
 	}
 
 	private ButtonGroup radioButtonsSettings() {
-		defaultRadioButton.setText("Default Colour");
-        seaRadioButton.setText("Option 1");
-        sunsetRadioButton.setText("Option 2");
-        dawnRadioButton.setText("Option 3");
-        natureRadioButton.setText("Option 4");
+		defaultRadioButton.setText(DEFAULT_COLOR_TEXT);
+        optionOneRadioButton.setText(OPTION_1_TEXT);
+        optionTwoRadioButton.setText(OPTION_2_TEXT);
+        optionThreeRadioButton.setText(OPTION_3_TEXT);
+        optionFourRadioButton.setText(OPTION_4_TEXT);
         
         ButtonGroup button = new ButtonGroup();
         button.add(defaultRadioButton);
-        button.add(seaRadioButton);
-        button.add(sunsetRadioButton);
-        button.add(dawnRadioButton);
-        button.add(natureRadioButton);
+        button.add(optionOneRadioButton);
+        button.add(optionTwoRadioButton);
+        button.add(optionThreeRadioButton);
+        button.add(optionFourRadioButton);
 		return button;
 	}
 
 	private void radioButtonSelectionAndDisplayExample(ButtonGroup button) {
-        String colorOption = properties.get(0);
+        String colorOption = properties.get(COLOR_OPTION_INDEX);
 		if (colorOption == null){
         	button.setSelected(defaultRadioButton.getModel(), true);
         	colors.defaultColor(textPane1, textPane2);
@@ -236,16 +252,16 @@ public class SettingsUI {
         	button.setSelected(defaultRadioButton.getModel(), true);
         	colors.defaultColor(textPane1, textPane2);
         } else if (colorOption.equals("option1")){
-        	button.setSelected(seaRadioButton.getModel(), true);
+        	button.setSelected(optionOneRadioButton.getModel(), true);
         	colors.optionOneColor(textPane1, textPane2);
         } else if (colorOption.equals("option2")) {
-        	button.setSelected(sunsetRadioButton.getModel(), true);
+        	button.setSelected(optionTwoRadioButton.getModel(), true);
         	colors.optionTwoColor(textPane1, textPane2);
         } else if (colorOption.equals("option3")) {
-        	button.setSelected(dawnRadioButton.getModel(), true);
+        	button.setSelected(optionThreeRadioButton.getModel(), true);
         	colors.optionThreeColor(textPane1, textPane2);
         } else if (colorOption.equals("option4")) {
-        	button.setSelected(natureRadioButton.getModel(), true);
+        	button.setSelected(optionFourRadioButton.getModel(), true);
         	colors.optionFourColor(textPane1, textPane2);
         }
 	}

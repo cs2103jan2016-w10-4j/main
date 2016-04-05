@@ -1,7 +1,6 @@
 package UserInterface;
 
 import java.awt.Button;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +28,6 @@ public class SettingsUIController {
 	private static ColorsForSettings colors = new ColorsForSettings();
 	
 	private static String black = "#000000 r:0, g:0, b:0";
-	private static String white = "#ffffff r:255, g:255, b:255";
 	
     public void action(JFrame f, JRadioButton defaultRadioButton, JRadioButton seaRadioButton, JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2, Button save, Button cancel, ArrayList<String> properties, JTextPane outputDisplay, JTextArea cmdDisplay, JComboBox<String> fontSize, JComboBox<String> fontFamily, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings){
     	defaultRadioListener(defaultRadioButton, textPane1, textPane2);

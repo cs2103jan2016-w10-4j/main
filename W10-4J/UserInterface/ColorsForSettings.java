@@ -11,6 +11,7 @@ public class ColorsForSettings {
 	public static String set4 = "button r:233, g:236, b:229 topBg r:192, g:223, b:217 bottomBg r:179, g:194, b:191";
 	public static String set5 = "button r:217, g:206, b:178 topBg r:213, g:222, b:217 bottomBg r:148, g:140, b:117";
 	*/
+	/* These are the sets of colors used for the User Interface. Set 1 to Set 4 corresponds to Option 1 to Option 4, Set 5 corresponds to Default*/ 
 	public static String set1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
 	public static String set2 = "button r:241, g:243, b:206 topBg r:206, g:223, b:243 bottomBg r:243, g:220, b:206";
 	public static String set3 = "button r:201, g:216, b:194 topBg r:216, g:194, b:201 bottomBg r:194, g:201, b:216";
