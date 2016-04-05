@@ -228,9 +228,31 @@ public class ArraylistStorage {
 	// For undo function for Retrieve method. Placed in ArraylistStorage since
 	// it directly touches the arraylists.
 	public void addPreviousInputStorages(String command) {
-		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
-		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
+		ArrayList<Task> cloneNotDoneStorage = cloneStorage(this.notDoneStorage);
+		ArrayList<Task> cloneDoneStorage = cloneStorage(this.doneStorage);
 		addTaskToPreInputStorage(new PreviousInput(command, cloneNotDoneStorage, cloneDoneStorage));
+	}
+	// clones the arraylist to prevent referencing problems
+	private ArrayList<Task> cloneStorage(ArrayList<Task> storage){
+		ArrayList<Task> clone = new ArrayList<Task>();
+		for (Task task: storage){
+			clone.add(cloneTask(task));
+		}
+		return clone;
+	}
+	private Task cloneTask(Task task) {
+		Task result = new Task(task.getName());
+		result.setStartDate(task.getStartDate());
+		result.setEndDate(task.getEndDate());
+		result.setStartTime(task.getStartTime());
+		result.setEndTime(task.getEndTime());
+		result.setDetails(task.getDetails());
+		result.setTaskID(task.getTaskID());
+		result.setYear(task.getYear());
+		result.setMonth(task.getMonth());
+		result.setWeek(task.getWeek());
+		result.setDay(task.getDay());
+		return result;
 	}
 
 	public void rememberPreviousStorages() {
