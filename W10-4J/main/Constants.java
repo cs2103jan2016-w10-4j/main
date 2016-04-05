@@ -1,6 +1,7 @@
 package main;
 
 public class Constants {
+	//@@author A0140114A
 	public enum COMMAND_TYPE {
 		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, SETDIR, RETRIEVE, RECURRENCE, UNDO, EXIT, INVALID, HELP, ALIAS
 	};
