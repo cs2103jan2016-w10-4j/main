@@ -19,7 +19,7 @@ public class Parser {
 	}
 
 	public String parse(String command) {
-		System.out.println("Command entered: " + command);
+//		System.out.println("Command entered: " + command);
 		assert command != null;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);

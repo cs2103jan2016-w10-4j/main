@@ -10,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.hamcrest.core.IsNot;
-
 import main.Constants;
 import main.Task;
 
@@ -73,8 +71,9 @@ public class CommonFunctionInDisplay {
 		boolean isSameStartTime = compareStartTime(previousTask, currentTask);
 		boolean isSameEndTime = compareEndTime(previousTask, currentTask);
 		boolean isSameDetails = compareDetails(previousTask, currentTask);
+		boolean isSameTaskID = compareTaskID(previousTask, currentTask);
 
-		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails) {
+		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails && isSameTaskID) {
 			return true;
 		}
 		return false;
@@ -192,6 +191,10 @@ public class CommonFunctionInDisplay {
 				return false;
 			}
 		}
+	}
+	
+	private static boolean compareTaskID(Task previousTask, Task currentTask) {
+		return previousTask.getTaskID() == currentTask.getTaskID();
 	}
 
 	public static String determineColor(Task t) {
@@ -312,14 +315,39 @@ public class CommonFunctionInDisplay {
 				boolean found = false;
 				for (int j = 0; j < previousList.size(); j++) {
 					if (compareTasks(previousList.get(j), sortedList.get(i))) {
+						// System.out.println(previousList.get(j).getName() +
+						// sortedList.get(i).getName());
+						// System.out.println(previousList.get(j).getStartDate()
+						// + sortedList.get(i).getStartDate());
+						// System.out.println(previousList.get(j).getEndDate() +
+						// sortedList.get(i).getEndDate());
+						// System.out.println(previousList.get(j).getStartTime()
+						// + sortedList.get(i).getStartTime());
+						// System.out.println(previousList.get(j).getEndTime() +
+						// sortedList.get(i).getEndTime());
 						found = true;
 						continue;
-					} 
+					} else {
+						// System.out.println(previousList.get(j).getName() + "
+						// " + sortedList.get(i).getName());
+						// System.out.println(previousList.get(j).getStartDate()
+						// + sortedList.get(i).getStartDate());
+						// System.out.println(previousList.get(j).getEndDate() +
+						// sortedList.get(i).getEndDate());
+						// System.out.println(previousList.get(j).getStartTime()
+						// + sortedList.get(i).getStartTime());
+						// System.out.println(previousList.get(j).getEndTime() +
+						// sortedList.get(i).getEndTime());
+					}
 				}
 				if (!found) {
 					sortedList.get(i).getTaskID();
 					output.add(sortedList.get(i).getTaskID());
 				}
+			}
+		} else {
+			for (int i = 0; i < sortedList.size(); i++) {
+				output.add(sortedList.get(i).getTaskID());
 			}
 		}
 		return output;
