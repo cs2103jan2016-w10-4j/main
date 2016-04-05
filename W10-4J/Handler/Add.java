@@ -64,7 +64,7 @@ public class Add implements Command {
 		if (recurCounter != 0 && eachTask.getStartDate() == null) {
 			return Constants.MESSAGE_RECUR_FAIL;
 		}
-		if (isTimeValid(eachTask)) {
+		if (isDateAndTimeValid(eachTask)) {
 			// remember previous state via arraylistStorage
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
 			// add to arraylist storage
@@ -98,13 +98,17 @@ public class Add implements Command {
 		return result;
 	}
 
-	private boolean isTimeValid(Task task) {
+	private boolean isDateAndTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
 		int endtime = task.getEndTimeInt();
-		if (starttime != -1 && endtime != -1) {
-			return endtime > starttime;
+		if (task.isDateValid()) {
+			if (starttime != -1 && endtime != -1) {
+				return endtime > starttime;
+			} else {
+				return true;
+			}
 		} else {
-			return true;
+			return false;
 		}
 	}
 }
