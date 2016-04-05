@@ -11,17 +11,24 @@ import java.util.ArrayList;
 import main.Constants;
 import main.Task;
 
-public class DisplayDone {	
+public class DisplayDone {
 	public static String displayDoneFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
 		String output = "";
-		int taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
-		
+		// int taskIDForRecentTask =
+		// CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList,
+		// previousInput);
+		ArrayList<Integer> taskIDForRecentTask;
+		if (previousInput.size() != 0) {
+			taskIDForRecentTask = previousInput.get(previousInput.size() - 1).getChanges();
+		} else {
+			taskIDForRecentTask = new ArrayList<>();
+		}
 		if (sortedList.size() == 0) {
-			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_NOTASKDONE 
+			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_NOTASKDONE
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		} else {
-			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_HEADER 
-					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG + Constants.MESSAGE_DISPLAY_SPACING 
+			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_HEADER
+					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG + Constants.MESSAGE_DISPLAY_SPACING
 					+ Constants.MESSAGE_DISPLAY_TABLEANDHEADER;
 
 			for (int i = 0; i < sortedList.size(); i++) {
@@ -34,9 +41,10 @@ public class DisplayDone {
 		return output;
 	}
 
-	private static String getTask(Task task, int taskIDForRecentTask) {
+	private static String getTask(Task task, ArrayList<Integer> taskIDForRecentTask) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		String repeat = CommonFunctionInDisplay.assignRepeat(task);
-		return CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYDONE_DONE);
+		return CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask,
+				Constants.MESSAGE_DISPLAYDONE_DONE);
 	}
 }

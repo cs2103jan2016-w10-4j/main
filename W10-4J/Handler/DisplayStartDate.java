@@ -18,7 +18,7 @@ import main.Task;
 import Handler.CommonFunctionInDisplay;
 
 public class DisplayStartDate {
-	static int taskIDForRecentTask;
+	static ArrayList<Integer> taskIDForRecentTask;
 	static String output;
 	static String currentDate;
 	static String overdueOrToday;
@@ -35,7 +35,12 @@ public class DisplayStartDate {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND 
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		} else {
-			taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
+			//taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
+			if(previousInput.size()!=0){
+				taskIDForRecentTask = previousInput.get(previousInput.size()-1).getChanges();
+			} else{
+				taskIDForRecentTask = new ArrayList<>();
+			}
 			seperateToRespectiveArrayList(sortedList);
 		
 			while (!(taskWithStartDateList.isEmpty())) {
@@ -54,13 +59,13 @@ public class DisplayStartDate {
 	}
 	
 	private static void initializeVariables() {
-		taskIDForRecentTask = -1;
 		output = "";
 		overdueOrToday = "";
 		taskWithNoStartDateList = new ArrayList<Task>();
 		taskWithStartDateList = new ArrayList<Task>();
 		multiDayTaskList = new ArrayList<Task>();
 		taskToBeRemoved = new ArrayList<Integer>();
+		taskIDForRecentTask = new ArrayList<>();
 	}
 	
 	private static void seperateToRespectiveArrayList(ArrayList<Task> taskList) {
@@ -213,6 +218,7 @@ public class DisplayStartDate {
 	private static void getTaskDetails(Task task) {
 		String color = CommonFunctionInDisplay.determineColor(task);
 		String repeat = CommonFunctionInDisplay.assignRepeat(task);
+		System.out.println(taskIDForRecentTask);
 		output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE);
 	}
 	

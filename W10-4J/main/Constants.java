@@ -36,7 +36,7 @@ public class Constants {
 	public static final String[] endDateDefaultArgumentList = { "enddate", "by", "due" };
 	public static final String[] startTimeDefaultArgumentList = { "start", "starttime", "time" };
 	public static final String[] endTimeDefaultArgumentList = { "end", "endtime", "e" };
-	public static final String[] detailsDefaultArgumentList = { "details", "details", "d" };
+	public static final String[] detailsDefaultArgumentList = { "details", "details"};
 	public static final String[] repeatDefaultArgumentList = { "repeat", "recur", "r", "recurrence" };
 	public static final String[] todayArgumentList = { "today", "later" };
 	public static final String[] tomorrowArgumentList = { "tomorrow", "tmr" };

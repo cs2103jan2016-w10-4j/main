@@ -27,11 +27,11 @@ public class CommonFunctionInDisplay {
 		if (previousList.size() == 1 && currentList.size() == 1) {
 			Task previousTask = previousList.get(0).getTask();
 			Task currentTask = currentList.get(0);
-			//Temp fix
-			if (previousTask == null || currentTask == null) {
-				return -1;
-			}
-			//Temp fix
+			// //Temp fix
+			// if (previousTask == null || currentTask == null) {
+			// return -1;
+			// }
+			// //Temp fix
 			if (previousTask.getTaskID() == currentTask.getTaskID()) {
 				return previousTask.getTaskID();
 			}
@@ -42,11 +42,11 @@ public class CommonFunctionInDisplay {
 
 			for (int h = 0; h < currentList.size(); h++) {
 				Task currentTask = currentList.get(h);
-				//Temp fix
-				if (previousTask == null || currentTask == null) {
-					return -1;
-				}
-				//Temp fix
+				// //Temp fix
+				// if (previousTask == null || currentTask == null) {
+				// return -1;
+				// }
+				// //Temp fix
 				if (previousTask.getTaskID() == currentTask.getTaskID()) {
 					boolean isTwoTasksTheSame = compareTasks(previousTask, currentTask);
 					if (!(isTwoTasksTheSame)) {
@@ -230,11 +230,12 @@ public class CommonFunctionInDisplay {
 		return repeat;
 	}
 
-	public static String getTaskDetails(Task t, String color, String repeat, int taskIDForRecentTask, String action) {
+	public static String getTaskDetails(Task t, String color, String repeat, ArrayList<Integer> taskIDForRecentTask,
+			String action) {
 		String output = "";
 
 		// Highlight the row if its the recent task
-		if (taskIDForRecentTask == t.getTaskID()) {
+		if (taskIDForRecentTask != null && taskIDForRecentTask.contains(t.getTaskID())) {
 			output = Constants.MESSAGE_COMMONFUNCTION_TRHIGHLIGHT_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN
 					+ Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + t.getTaskID() + ")"
 					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color

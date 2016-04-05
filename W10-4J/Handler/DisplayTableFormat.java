@@ -14,7 +14,8 @@ import main.Task;
 public class DisplayTableFormat {	
 	public static String displayTableFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
 		String output = "";
-		int taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
+		//int taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
+		ArrayList<Integer> taskIDForRecentTask = previousInput.get(previousInput.size()-1).getChanges();
 		
 		if (sortedList.size() == 0) {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTABLEFORMAT_NOTASKONHAND 
@@ -30,7 +31,7 @@ public class DisplayTableFormat {
 		return output;
 	}
 	
-	private static String getTask (Task task, int taskIDForRecentTask) {
+	private static String getTask (Task task, ArrayList<Integer> taskIDForRecentTask) {
 		String color = CommonFunctionInDisplay.determineColor(task);
 		String repeat = CommonFunctionInDisplay.assignRepeat(task);
 		return CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_COMMONFUNCTION_TABLE);
