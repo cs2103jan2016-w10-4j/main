@@ -5,10 +5,16 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 
 public class ColorsForSettings {
-	public static String set1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
+	/*public static String set1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
 	public static String set2 = "button r:194, g:212, b:216 topBg r:219, g:233, b:216 bottomBg r:176, g:170, b:194";
 	public static String set3 = "button r:201, g:216, b:197 topBg r:237, g:217, b:192 bottomBg r:168, g:182, b:191";
 	public static String set4 = "button r:233, g:236, b:229 topBg r:192, g:223, b:217 bottomBg r:179, g:194, b:191";
+	public static String set5 = "button r:217, g:206, b:178 topBg r:213, g:222, b:217 bottomBg r:148, g:140, b:117";
+	*/
+	public static String set1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
+	public static String set2 = "button r:241, g:243, b:206 topBg r:206, g:223, b:243 bottomBg r:243, g:220, b:206";
+	public static String set3 = "button r:201, g:216, b:194 topBg r:216, g:194, b:201 bottomBg r:194, g:201, b:216";
+	public static String set4 = "button r:254, g:109, b:93  topBg r:254, g:216, b:93  bottomBg r:93, g:211, b:254";
 	public static String set5 = "button r:217, g:206, b:178 topBg r:213, g:222, b:217 bottomBg r:148, g:140, b:117";
 	
 	public void defaultColor(JTextPane textPane1, JTextPane textPane2) {
