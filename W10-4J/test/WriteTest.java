@@ -35,11 +35,39 @@ public class WriteTest extends Write {
 	public static void setUpBeforeClass() throws Exception {
 		// Set up write class
 		Task a = new Task("A");
-		Task b = new Task("B");
 		a.setTaskID(1);
+		a.setStartDate("1/4/2016");
+		
+		Task b = new Task("B");
 		b.setTaskID(2);
+		b.setStartDate("2/4/2016");
+		b.setEndDate("2/4/2016");
+		
+		Task c = new Task("C");		
+		c.setTaskID(3);
+		c.setStartDate("2/4/2016");
+		c.setEndDate("5/4/2016");
+		c.setStartTime("14:00");
+		c.setEndTime("18:00");
+		
+		Task d = new Task("D");
+		d.setTaskID(4);
+		d.setStartDate("2/4/2016");
+		d.setWeek(true);
+		
+		Task e = new Task("E");
+		e.setTaskID(5);
+		e.setStartDate("2/4/2016");
+		e.setEndDate("5/4/2016");
+		e.setStartTime("15:00");
+		e.setEndTime("17:00");
+		e.setWeek(true);
+		
 		toDoTaskList.add(a);
 		toDoTaskList.add(b);
+		toDoTaskList.add(c);
+		toDoTaskList.add(d);
+		doneTaskList.add(e);
 		taskList.add(toDoTaskList);
 		taskList.add(doneTaskList);
 
@@ -47,57 +75,60 @@ public class WriteTest extends Write {
 		PrintWriter print = new PrintWriter(new FileWriter("testFile.txt"));
 		print.println("Tasks on hand:");
 		print.println("1. Event: A");
+		print.println("Start Date: 1/4/2016");
 		print.println("2. Event: B");
-		print.println("No tasks are done!");
-		print.close();
-
-		// Write to list.txt needed for testWriteToOtherFileWithUpdatePath()
-		PrintWriter printWriter = new PrintWriter(new FileWriter("list.txt"));
-		printWriter.println("Tasks on hand:");
-		printWriter.println("1. Event: A");
-		printWriter.println("2. Event: B");
-		printWriter.println("No tasks are done!");
-		printWriter.close();
+		print.println("Start Date: 2/4/2016");
+		print.println("End Date: 2/4/2016");
+		print.println("3. Event: C");
+		print.println("Start Date: 2/4/2016");
+		print.println("End Date: 5/4/2016");
+		print.println("Start Time: 14:00");
+		print.println("End Time: 18:00");
+		print.println("4. Event: D");
+		print.println("Start Date: 2/4/2016");
+		print.println("Week: true");
+		print.println("Tasks that are done:");
+		print.println("5. Event: E");
+		print.println("Start Date: 2/4/2016");
+		print.println("End Date: 5/4/2016");
+		print.println("Start Time: 15:00");
+		print.println("End Time: 17:00");
+		print.println("Week: true");
+		print.close();	
 	}	
 
 	@Test
 	public void testWrite() throws NoSuchAlgorithmException, IOException {
-		if (Storage.filename.equals(Constants.fileName)) {
-			testWriteToDefaultFile();
-		} else {
-			testWriteToOtherFileWithUpdatePath();
-		}
+		testWriteToDefaultFile();
+		testWriteToOtherFileWithUpdatePath();
 	}
 
-	@Test
 	public void testWriteToDefaultFile() throws NoSuchAlgorithmException, IOException {
 		writeToFile(toDoTaskList, doneTaskList);
 
 		String testFile = "testFile.txt";
-		String returnFile = Constants.fileName;
+		String actualFile = Constants.fileName;
 		byte[] digestTest = computeCheckSum(testFile);
-		byte[] digestReturn = computeCheckSum(returnFile);
+		byte[] digestActual = computeCheckSum(actualFile);
 
-		assertEquals(true, checkSumEqual(digestTest, digestReturn));
+		assertEquals(true, checkSumEqual(digestTest, digestActual));
 	}
 
-	@Test
 	public void testWriteToOtherFileWithUpdatePath() throws NoSuchAlgorithmException, IOException {
-		boolean returnValue = false;
+		boolean isSameFile = false;
+		Storage.filename = "list.txt";
 		writeToFile("list.txt", toDoTaskList, doneTaskList);
 
 		String testFile = "testFile.txt";
-		String returnFile = "list.txt";
+		String actualFile = "list.txt";
 		byte[] digestTest = computeCheckSum(testFile);
-		byte[] digestReturn = computeCheckSum(returnFile);
+		byte[] digestActual = computeCheckSum(actualFile);
 
 		String pathContent = getPathContentFromDefaultFile();
-
-		if (checkSumEqual(digestTest, digestReturn) && pathContent.equals("list.txt")) {
-			returnValue = true;
+		if (checkSumEqual(digestTest, digestActual) && pathContent.equals("list.txt")) {
+			isSameFile = true;
 		}
-
-		assertEquals(true, returnValue);
+		assertEquals(true, isSameFile);
 	}
 
 	byte[] computeCheckSum(String file) throws NoSuchAlgorithmException, IOException {
@@ -108,9 +139,9 @@ public class WriteTest extends Write {
 	}
 
 	boolean checkSumEqual(byte[] digestTest, byte[] digestReturn) {
-		boolean returnValue = false;
-		returnValue = Arrays.equals(digestTest, digestReturn);
-		return returnValue;
+		boolean isSameCheckSum = false;
+		isSameCheckSum = Arrays.equals(digestTest, digestReturn);
+		return isSameCheckSum;
 	}
 
 	String getPathContentFromDefaultFile() throws IOException {
