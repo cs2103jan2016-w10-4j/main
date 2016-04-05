@@ -14,6 +14,12 @@ public class ParserTest {
 		Parser p = new Parser();
 		String command, commandTypeString;
 		COMMAND_TYPE commandType;
+		
+		command = "add cs2103 details comment on code";
+		commandTypeString = p.getFirstWord(command);
+		commandType = p.getAction(commandTypeString);
+		assertArrayEquals(new String[] { "cs2103", "details", "comment", "endtime" ,"code"}, p.getArguments(commandType, command));
+
 
 		command = " add     123    date    today    ";
 		commandTypeString = p.getFirstWord(command);

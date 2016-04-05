@@ -6,7 +6,12 @@ public class NaturalTime {
 
 	public String getTime(String input) {
 		input = input.trim();
-		ArrayList<Integer> result = splitStringByInt(input);
+		ArrayList<Integer> result;
+		try {
+			result = splitStringByInt(input);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 		int hour, minute;
 		if (result.size() == 1) {
 			minute = 0;
@@ -32,15 +37,15 @@ public class NaturalTime {
 		}
 		return String.format("%02d:%02d", hour, minute);
 	}
-	
+
 	public ArrayList<Integer> splitStringByInt(String input) {
 		char[] str = input.toCharArray();
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		String hold = "";
 		int holdType = -1;
 		int type;
-		
-		for(int i=0;i<str.length;i++){
+
+		for (int i = 0; i < str.length; i++) {
 			char c = str[i];
 			if (Character.isDigit(c)) {
 				type = 1;

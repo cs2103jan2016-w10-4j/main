@@ -27,7 +27,7 @@ public class Parser {
 		}
 		String[] arguments = getArguments(commandType, command);
 //		for (String s : arguments) {
-//			System.out.println(s);
+//			System.out.print(s + ",");
 //		}
 //		System.out.println("*");
 		if (!valid_.isValid(commandType, arguments)) {
@@ -37,6 +37,10 @@ public class Parser {
 			setAlias(arguments);
 			return "1" + Constants.MESSAGE_ALIAS_PASS;
 		}
+//		for (String s : arguments) {
+//			System.out.print(s +",");
+//		}
+//		System.out.println("*");
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
 			return "0" + handler_.executeCommand(commandType, arguments);

@@ -84,6 +84,9 @@ public class NaturalLanguageTest {
 		NaturalTime n = new NaturalTime();
 		String input;
 
+		input = "code";
+		assertEquals(input, null, n.getTime(input));
+
 		input = "7:30";
 		assertEquals(input, "07:30", n.getTime(input));
 

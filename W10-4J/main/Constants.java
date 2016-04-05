@@ -21,7 +21,7 @@ public class Constants {
 	public static final String[] helpDefaultCommandList = { "help", "h", "?" };
 	public static final String[] aliasDefaultCommandList = { "alias", "set" };
 
-	public static final String[] addDefaultArgumentList = { "startdate", "enddate", "start", "end", "details",
+	public static final String[] addDefaultArgumentList = { "startdate", "enddate", "starttime", "endtime", "details",
 			"repeat" };
 	public static final String[] editDefaultArgumentList = { "rename", "startdate", "enddate", "starttime", "endtime",
 			"details", "repeat" };
@@ -34,7 +34,7 @@ public class Constants {
 	public static final String[] startDateDefaultArgumentList = { "startdate", "date" };
 	public static final String[] endDateDefaultArgumentList = { "enddate", "by", "due" };
 	public static final String[] startTimeDefaultArgumentList = { "start", "starttime", "time" };
-	public static final String[] endTimeDefaultArgumentList = { "end", "endtime", "e", "on" };
+	public static final String[] endTimeDefaultArgumentList = { "end", "endtime", "e" };
 	public static final String[] detailsDefaultArgumentList = { "details", "details", "d" };
 	public static final String[] repeatDefaultArgumentList = { "repeat", "recur", "r", "recurrence" };
 	public static final String[] todayArgumentList = { "today", "later" };
@@ -72,8 +72,8 @@ public class Constants {
 
 	public static final String MESSAGE_ADD_ACTION_STARTDATE = ("startdate");
 	public static final String MESSAGE_ADD_ACTION_ENDDATE = ("enddate");
-	public static final String MESSAGE_ADD_ACTION_START = ("start");
-	public static final String MESSAGE_ADD_ACTION_END = ("end");
+	public static final String MESSAGE_ADD_ACTION_START = ("starttime");
+	public static final String MESSAGE_ADD_ACTION_END = ("endtime");
 	public static final String MESSAGE_ADD_ACTION_DETAILS = ("details");
 	public static final String MESSAGE_ADD_ACTION_REPEAT = ("repeat");
 
@@ -95,18 +95,18 @@ public class Constants {
 	// Use commonly throughout all types of Display
 	public static final String MESSAGE_DISPLAY_HEADER_OPENTAG = ("<style>#underline{border-bottom: 3px solid black;}</style><h1><b>");
 	public static final String MESSAGE_DISPLAY_HEADER_CLOSETAG = ("</b></h1>");
-	
+
 	// Use only by DisplayDone and DisplayTableFormat
 	public static final String MESSAGE_DISPLAY_TABLEANDHEADER = ("<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\">Start Date </th><th style=\"width:15%;\" align=\"left\">End Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr>");
 	public static final String MESSAGE_DISPLAY_TABLECLOSETAG = ("</table>");
 
 	// Use by DisplayToday and DisplayOverdue
 	public static final String MESSAGE_DISPLAY_SPACING = ("<br><br>");
-		
+
 	// Use by DisplayStart and DisplayToday
 	public static final String MESSAGE_DISPLAY_HEADERTABLE_OPENTAG = ("<table id=\"underline\"><th style=\"font-size:120%\">");
 	public static final String MESSAGE_DISPLAY_HEADERTABLE_CLOSETAG = ("</th></table>");
-	
+
 	public static final String MESSAGE_DISPLAYTABLEFORMAT_NOTASKONHAND = ("No tasks on hand!");
 	public static final String MESSAGE_DISPLAYTABLEFORMAT_TABLE = ("display in table format");
 
@@ -120,7 +120,7 @@ public class Constants {
 	public static final String MESSAGE_DISPLAYDONE_HEADER = ("Done Tasks");
 	public static final String MESSAGE_DISPLAYDONE_NOTASKDONE = ("No tasks are done!");
 	public static final String MESSAGE_DISPLAYDONE_DONE = ("display done");
-	
+
 	public static final String MESSAGE_DISPLAYSTARTDATE_OVERDUE = ("Overdue");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TODAY = ("Today");
 	public static final String MESSAGE_DISPLAYSTARTDATE_YESTERDAY = ("Yesterday");
