@@ -27,6 +27,11 @@ public class CommonFunctionInDisplay {
 		if (previousList.size() == 1 && currentList.size() == 1) {
 			Task previousTask = previousList.get(0).getTask();
 			Task currentTask = currentList.get(0);
+			//Temp fix
+			if (previousTask == null || currentTask == null) {
+				return -1;
+			}
+			//Temp fix
 			if (previousTask.getTaskID() == currentTask.getTaskID()) {
 				return previousTask.getTaskID();
 			}
@@ -37,7 +42,11 @@ public class CommonFunctionInDisplay {
 
 			for (int h = 0; h < currentList.size(); h++) {
 				Task currentTask = currentList.get(h);
-
+				//Temp fix
+				if (previousTask == null || currentTask == null) {
+					return -1;
+				}
+				//Temp fix
 				if (previousTask.getTaskID() == currentTask.getTaskID()) {
 					boolean isTwoTasksTheSame = compareTasks(previousTask, currentTask);
 					if (!(isTwoTasksTheSame)) {
