@@ -26,6 +26,18 @@ To add events with date, start time and end time into Task Manager, use this com
 	<p>Example:</p>
 	<span style="background-color:#E5E4E2;"><b>add</b> Meeting <b>date</b> 12/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0</span></li></ul>
 
+To add events that last for days into Task Manager, use this command: <br>
+<span style="background-color:#E5E4E2"><b>add</b> &#60your task&#62 <b>startdate</b> &#60date&#62 <b>enddate</b> &#60date&#62 <b>start</b> &#60start time&#62 <b>end</b> &#60end time&#62 <b>details</b> &#60task details&#62</span><br>
+<ul><li>
+	<p>Example:</p>
+	<span style="background-color:#E5E4E2;"><b>add</b> Multi date <b>startdate</b> 12/2/16 <b>enddate</b> 13/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0</span></li></ul>
+
+To add tasks that recurs into Task Manager, use this command: <br>
+<span style="background-color:#E5E4E2"><b>add</b> &#60your task&#62 <b>date</b> &#60date&#62 <b>start</b> &#60start time&#62 <b>end</b> &#60end time&#62 <b>details</b> &#60task details&#62 <b>repeat</b> &#60day, week, month, or year&#62 </span><br>
+<ul><li>
+	<p>Example:</p>
+	<span style="background-color:#E5E4E2;"><b>add</b> Tutorial <b>date</b> 12/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0 <b>repeat</b> week</span></li></ul>
+
 <p>To add deadlines with date and time into Task Manager, use this command:</p>
 <span style="background-color:#E5E4E2"><b>add</b> &#60deadline&#62 <b>date</b> &#60date&#62 <b>time</b> &#60time&#62<b>details</b> &#60task details&#62</span><br>
 <ul><li>
@@ -71,26 +83,24 @@ To specify a task is done, use this command:<br>
 To keep track of all the tasks you have on hand, and to list tasks that you have done, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>display by</b> &#60sorting term&#62</span>
 	<ul><li>To display tasks alphabetically based on the name of the task, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> name</span></li>
-	<li>To display tasks based on the start time, task with unspecified start time will be placed at the bottom, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> starttime</span></li>
-	<li>To display tasks based on the end time of the task, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> endtime</span></li>
-	<li>To display tasks based on the date of the task, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> date</span></li>
-	<li>To keep track of only the tasks that you have on hand, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> tasks</span></li>
+		<span style="background-color:#E5E4E2;"><b>display</b> name</span></li>
+	<li>To display tasks that are overdue, use this command:<br>
+		<span style="background-color:#E5E4E2;"><b>display</b> overdue</span></li>
+	<li>To display tasks based on the task ID, use this command:<br>
+		<span style="background-color:#E5E4E2;"><b>display</b> id</span></li>
+	<li>To keep track of only the tasks that you have today, use this command:<br>
+		<span style="background-color:#E5E4E2;"><b>display</b> today</span></li>
 	<li>To keep track of tasks that you have done, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display by</b> done</span></li></ul>
+		<span style="background-color:#E5E4E2;"><b>display</b> done</span></li></ul>
 ]]></entry>
 
 <entry key="search"><![CDATA[
 <h2> Simple Search </h2>
 A simple text search for finding an item if the user remembers some keywords from the item description.
 To search for a keyword and excluding another, use this command: <br>
-<span style="background-color:#E5E4E2;"><b>search</b> &#60keyword&#62 <b>excl</b> &#60exclude keyword&#62</span>
+<span style="background-color:#E5E4E2;"><b>search</b> &#60keyword&#62 </span>
 	<ul><li>Examples:<br>
-		<span style="background-color:#E5E4E2;"><b>search</b> task <b>excl</b> home</span></li></ul>
+		<span style="background-color:#E5E4E2;"><b>search</b> task</span></li></ul>
 To search for a keyword, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>search</b> &#60keyword&#62</span>
 	<ul><li>Examples:<br>
@@ -108,7 +118,7 @@ To specify a particular folder to store the task list in, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>set directory</b> &#60datapath&#62</span><br>
 In using this command, future uses of Docket will be on this new datapath. If the file does not exist, a new empty text file will be created. To move the tasks from the default text file in Docket to the new path, use <b>retrieve</b>.
 	<ul><li>Examples:<br>
-	<span style="background-color:#E5E4E2;"><b>setdir</b> C:\Users\User\Desktop</span></li></ul>
+	<span style="background-color:#E5E4E2;"><b>setdir</b> C:\Users\User\Desktop\file.txt</span></li></ul>
 ]]></entry>
 
 <entry key="natural"><![CDATA[
