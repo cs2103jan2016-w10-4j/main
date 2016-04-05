@@ -148,8 +148,8 @@ public class Constants {
 	public static final String MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG = ("</h3>");
 
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
-	public static final String MESSAGE_EDIT_ACTION_START = ("start");
-	public static final String MESSAGE_EDIT_ACTION_END = ("end");
+	public static final String MESSAGE_EDIT_ACTION_START = ("starttime");
+	public static final String MESSAGE_EDIT_ACTION_END = ("endtime");
 	public static final String MESSAGE_EDIT_ACTION_STARTDATE = ("startdate");
 	public static final String MESSAGE_EDIT_ACTION_ENDDATE = ("enddate");
 	public static final String MESSAGE_EDIT_ACTION_DETAILS = ("details");
