@@ -37,9 +37,6 @@ public class CommonFunctionInDisplay {
 
 			for (int h = 0; h < currentList.size(); h++) {
 				Task currentTask = currentList.get(h);
-				if (previousTask == null || currentTask == null) {
-					return -1;
-				}
 
 				if (previousTask.getTaskID() == currentTask.getTaskID()) {
 					boolean isTwoTasksTheSame = compareTasks(previousTask, currentTask);
