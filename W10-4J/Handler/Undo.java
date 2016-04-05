@@ -24,58 +24,67 @@ public class Undo implements Command{
 		switch (actionToBeUndone) {
 		
 		case Constants.MESSAGE_ACTION_ADD:
-			previousTask = arraylistStorage_.getPreviousInputTask();
-			arraylistStorage_.delTaskFromNotDoneStorage(previousTask);
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DELETE, previousTask));
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
+			arraylistStorage_.setNewStorages();
 			break;
 			
 		case Constants.MESSAGE_ACTION_DELETE:
-			previousTask = arraylistStorage_.getPreviousInputTask();
-			arraylistStorage_.addTaskToNotDoneStorage(previousTask);
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_ADD, previousTask));
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
+			arraylistStorage_.setNewStorages();
 			break;
 			
 		case Constants.MESSAGE_ACTION_EDIT:
-			previousTask = arraylistStorage_.getPreviousInputTask();
-			eachTask = arraylistStorage_.getPreviousInputEditedTask();
-			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
-			arraylistStorage_.addTaskToNotDoneStorage(previousTask);
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, previousTask));
+//			previousTask = arraylistStorage_.getPreviousInputTask();
+//			eachTask = arraylistStorage_.getPreviousInputEditedTask();
+//			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
+//			arraylistStorage_.addTaskToNotDoneStorage(previousTask);
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
+			arraylistStorage_.setNewStorages();
 			break;
 			
 		case Constants.MESSAGE_ACTION_DONE:
-			previousTask = arraylistStorage_.getPreviousInputTask();
-			arraylistStorage_.delTaskFromDoneStorage(previousTask);
-			arraylistStorage_.addTaskToNotDoneStorage(previousTask);
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_UNDO, previousTask));
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNDO);
+			arraylistStorage_.setNewStorages();
 			break;
 			
 		case Constants.MESSAGE_ACTION_UNDO:
-			previousTask = arraylistStorage_.getPreviousInputTask();
-			arraylistStorage_.delTaskFromNotDoneStorage(previousTask);
-			arraylistStorage_.addTaskToDoneStorage(previousTask);
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DONE, previousTask));
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
+			arraylistStorage_.setNewStorages();
 			break;
 		
 		case Constants.MESSAGE_ACTION_RETRIEVE:
 			arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNRETRIEVE);
 			arraylistStorage_.setNewStorages();
-			arraylistStorage_.writeToStorage();
 			break;
 			
 		case Constants.MESSAGE_ACTION_UNRETRIEVE:
 			arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
 			arraylistStorage_.setNewStorages();
-			arraylistStorage_.writeToStorage();
 			break;
 			
 		case Constants.MESSAGE_ACTION_SETDIR:
-			
+			arraylistStorage_.rememberOldDirectory();
+			arraylistStorage_.getNewDirectory();
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_UNSETDIR);
+			arraylistStorage_.setNewDirectory();
+			arraylistStorage_.setNewStorages();
 			break;
 			
 		case Constants.MESSAGE_ACTION_UNSETDIR:
+			arraylistStorage_.rememberOldDirectory();
+			arraylistStorage_.getNewDirectory();
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
+			arraylistStorage_.setNewDirectory();
+			arraylistStorage_.setNewStorages();
 			break;
 			
 		}

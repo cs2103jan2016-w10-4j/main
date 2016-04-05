@@ -19,10 +19,12 @@ public class Edit implements Command {
 		} else if (taskID <= 0) {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
+			// remember previous state
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
-			int recurCounter = fieldEditor(eachTask, task);
+			int recurCounter = fieldEditor(eachTask, task); // fieldEditor edits the element itself
 			if (recurCounter != -1 && eachTask.getStartDate() == null) {
 				eachTask.resetRecursion();
 				return Constants.MESSAGE_RECUR_FAIL;
@@ -36,9 +38,6 @@ public class Edit implements Command {
 			if (isTimeValid(eachTask)) {
 				// write to mainStorage
 				arraylistStorage_.writeToStorage();
-				// remember previous state
-				arraylistStorage_
-						.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
 				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 			} else {
 				arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
@@ -130,7 +129,7 @@ public class Edit implements Command {
 	private boolean isTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
 		int endtime = task.getEndTimeInt();
-		System.out.println(starttime + endtime);
+		//System.out.println(starttime + endtime);
 		if (starttime != -1 && endtime != -1) {
 			return endtime > starttime;
 		} else {

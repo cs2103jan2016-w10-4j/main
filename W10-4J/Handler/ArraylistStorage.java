@@ -17,6 +17,8 @@ public class ArraylistStorage {
 	private ArrayList<Task> additionalDoneStorage;
 	private ArrayList<Task> previousNotDoneStorage;
 	private ArrayList<Task> previousDoneStorage;
+	private String oldFileName;
+	private String newFileName;
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
@@ -196,6 +198,22 @@ public class ArraylistStorage {
 	public void clearPreInputStorage() {
 		this.previousInputStorage.clear();
 	}
+	
+	public void addPreviousDirectory(String command){
+		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
+		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
+		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName, cloneNotDoneStorage, cloneDoneStorage));
+	}
+	
+	public void rememberOldDirectory(){
+		this.oldFileName = mainStorage.getCurrentFilename();
+	}
+	public void getNewDirectory(){
+		this.newFileName = this.previousInputStorage.get(0).getFileName();
+	}
+	public void setNewDirectory(){
+		mainStorage.setDirectory(newFileName);
+	}
 
 	// ** RETRIEVE METHOD **
 	private ArrayList<ArrayList<Task>> getNewStorages(String fileName) {
@@ -216,8 +234,9 @@ public class ArraylistStorage {
 	// For undo function for Retrieve method. Placed in ArraylistStorage since
 	// it directly touches the arraylists.
 	public void addPreviousInputStorages(String command) {
-		addTaskToPreInputStorage(new PreviousInput(command, (ArrayList<Task>) this.notDoneStorage.clone(),
-				(ArrayList<Task>) this.doneStorage.clone()));
+		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
+		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
+		addTaskToPreInputStorage(new PreviousInput(command, cloneNotDoneStorage, cloneDoneStorage));
 	}
 
 	public void rememberPreviousStorages() {

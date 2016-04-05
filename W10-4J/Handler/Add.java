@@ -65,6 +65,8 @@ public class Add implements Command {
 			return Constants.MESSAGE_RECUR_FAIL;
 		}
 		if (isTimeValid(eachTask)) {
+			// remember previous state via arraylistStorage
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
 			// add to arraylist storage
 			arraylistStorage_.addTaskToNotDoneStorage(eachTask);
 			Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());
@@ -73,8 +75,6 @@ public class Add implements Command {
 				clone.nextDate();
 				arraylistStorage_.addTaskToNotDoneStorage(clone);
 			}
-			// remember previous state via arraylistStorage
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_ADD, eachTask));
 			// write to mainStorage via arraylistStorage
 			arraylistStorage_.writeToStorage();
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());

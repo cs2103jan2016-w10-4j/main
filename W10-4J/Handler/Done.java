@@ -27,12 +27,14 @@ public class Done implements Command{
 //			} else{
 //			}
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
+			// remember previous state
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
 			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
 			arraylistStorage_.addTaskToDoneStorage(eachTask);
 			// write to mainStorage
 			arraylistStorage_.writeToStorage();
 			// remember previous state
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+//			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
 			assert eachTask.getName() != null: Constants.ASSERT_TASKNAME_EXISTENCE;
 			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		}

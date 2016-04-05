@@ -19,20 +19,21 @@ public class Delete implements Command {
 			if(eachTask == null){
 				return Constants.MESSAGE_DELETE_FAIL;
 			} else{
+				// remember previous state
+				arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
 				arraylistStorage_.delTaskFromDoneStorage(eachTask);
 				arraylistStorage_.writeToStorage();
-				arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
 				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 			} 
 		} else if (taskID <= 0) {
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
+			// remember previous state
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
 			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
 			// write to mainStorage
 			arraylistStorage_.writeToStorage();
-			// remember previous state
-			arraylistStorage_.addTaskToPreInputStorage(new PreviousInput(Constants.MESSAGE_ACTION_DELETE, eachTask));
 			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 		}
 	}
