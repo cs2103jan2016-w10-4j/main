@@ -193,6 +193,10 @@ public class Valid {
 		}
 	}
 
+	public boolean isSearchValid(String[] arguments) {
+		return arguments.length != 0;
+	}
+
 	public boolean isRetrieveValid(String[] arguments) {
 		if (arguments.length == 1) {
 			return true;
