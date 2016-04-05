@@ -99,7 +99,7 @@ public class Task {
 				Integer.parseInt(date[2].trim()));
 		return calendar;
 	}
-	
+
 	public void nextDate() {
 		if (startdate_ != null) {
 			if (day_) {
@@ -195,8 +195,8 @@ public class Task {
 			year_ = year;
 		}
 	}
-	
-	public void resetRecursion(){
+
+	public void resetRecursion() {
 		recurring_ = false;
 		day_ = false;
 		week_ = false;
@@ -214,6 +214,35 @@ public class Task {
 
 	public String getStartDate() {
 		return startdate_;
+	}
+
+	public boolean isDateValid() {
+		if (startdate_ == null || enddate_ == null) {
+			return true;
+		}
+		int startYear = Integer.parseInt(startdate_.split("/")[0]);
+		int startMonth = Integer.parseInt(startdate_.split("/")[1]);
+		int startDay = Integer.parseInt(startdate_.split("/")[2]);
+		int endYear = Integer.parseInt(enddate_.split("/")[0]);
+		int endMonth = Integer.parseInt(enddate_.split("/")[1]);
+		int endDay = Integer.parseInt(enddate_.split("/")[2]);
+		if (startYear > endYear) {
+			return false;
+		} else if (startYear < endYear) {
+			return true;
+		} else {
+			if (startMonth > endMonth) {
+				return false;
+			} else if (startMonth < endMonth) {
+				return true;
+			} else {
+				if (startMonth > endMonth) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		}
 	}
 
 	public String getEndDate() {
