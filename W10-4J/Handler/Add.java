@@ -66,7 +66,7 @@ public class Add implements Command {
 		}
 		if (isDateAndTimeValid(eachTask)) {
 			// remember previous state via arraylistStorage
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
 			// add to arraylist storage
 			arraylistStorage_.addTaskToNotDoneStorage(eachTask);
 			Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());

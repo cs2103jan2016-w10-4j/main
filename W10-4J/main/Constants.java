@@ -168,6 +168,7 @@ public class Constants {
 	public static final String MESSAGE_ACTION_SETDIR = ("set directory");
 	public static final String MESSAGE_ACTION_UNSETDIR = ("unset directory");
 	public static final String MESSAGE_ACTION_WRITE = ("write");
+	public static final String MESSAGE_ACTION_BASICOP = ("basic operations");
 
 	public static final String MESSAGE_STORAGE_SUCCESS = ("Success");
 	public static final String MESSAGE_STORAGE_FAILURE = ("Failure");

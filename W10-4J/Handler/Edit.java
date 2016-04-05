@@ -20,7 +20,7 @@ public class Edit implements Command {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
 			// remember previous state
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task

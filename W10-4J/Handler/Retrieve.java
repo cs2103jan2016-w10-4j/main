@@ -13,7 +13,7 @@ public class Retrieve implements Command{
 	public String execute(String[] task) {
 		try {
 			assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
 			arraylistStorage_.combineArrays(task[0]);
 			arraylistStorage_.writeToStorage();
 			return Constants.MESSAGE_RETRIEVE_PASS;

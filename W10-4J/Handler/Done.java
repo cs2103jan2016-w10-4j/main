@@ -28,7 +28,7 @@ public class Done implements Command{
 //			}
 			assert eachTask != null: Constants.ASSERT_TASK_EXISTENCE;
 			// remember previous state
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
 			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
 			arraylistStorage_.addTaskToDoneStorage(eachTask);
 			// write to mainStorage

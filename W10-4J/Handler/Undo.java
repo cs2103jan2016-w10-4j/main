@@ -18,67 +18,58 @@ public class Undo implements Command{
 		} catch(IndexOutOfBoundsException e){
 			return Constants.MESSAGE_UNDO_FAIL;
 		}
-		Task previousTask;
-		Task eachTask;
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
 		switch (actionToBeUndone) {
 		
-		case Constants.MESSAGE_ACTION_ADD:
+		case Constants.MESSAGE_ACTION_BASICOP:
 			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
-			arraylistStorage_.setNewStorages();
-			break;
-			
-		case Constants.MESSAGE_ACTION_DELETE:
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
-			arraylistStorage_.setNewStorages();
-			break;
-			
-		case Constants.MESSAGE_ACTION_EDIT:
-//			previousTask = arraylistStorage_.getPreviousInputTask();
-//			eachTask = arraylistStorage_.getPreviousInputEditedTask();
-//			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
-//			arraylistStorage_.addTaskToNotDoneStorage(previousTask);
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
-			arraylistStorage_.setNewStorages();
-			break;
-			
-		case Constants.MESSAGE_ACTION_DONE:
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNDO);
-			arraylistStorage_.setNewStorages();
-			break;
-			
-		case Constants.MESSAGE_ACTION_UNDO:
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
 			arraylistStorage_.setNewStorages();
 			break;
 		
-		case Constants.MESSAGE_ACTION_RETRIEVE:
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNRETRIEVE);
-			arraylistStorage_.setNewStorages();
-			break;
-			
-		case Constants.MESSAGE_ACTION_UNRETRIEVE:
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
-			arraylistStorage_.setNewStorages();
-			break;
+//		case Constants.MESSAGE_ACTION_ADD:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
+//			arraylistStorage_.setNewStorages();
+//			break;
+//			
+//		case Constants.MESSAGE_ACTION_DELETE:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
+//			arraylistStorage_.setNewStorages();
+//			break;
+//			
+//		case Constants.MESSAGE_ACTION_EDIT:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
+//			arraylistStorage_.setNewStorages();
+//			break;
+//			
+//		case Constants.MESSAGE_ACTION_DONE:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNDO);
+//			arraylistStorage_.setNewStorages();
+//			break;
+//			
+//		case Constants.MESSAGE_ACTION_UNDO:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
+//			arraylistStorage_.setNewStorages();
+//			break;
+//		
+//		case Constants.MESSAGE_ACTION_RETRIEVE:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNRETRIEVE);
+//			arraylistStorage_.setNewStorages();
+//			break;
+//			
+//		case Constants.MESSAGE_ACTION_UNRETRIEVE:
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
+//			arraylistStorage_.setNewStorages();
+//			break;
 			
 		case Constants.MESSAGE_ACTION_SETDIR:
-			arraylistStorage_.rememberOldDirectory();
-			arraylistStorage_.getNewDirectory();
-			arraylistStorage_.rememberPreviousStorages();
-			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_UNSETDIR);
-			arraylistStorage_.setNewDirectory();
-			arraylistStorage_.setNewStorages();
-			break;
-			
-		case Constants.MESSAGE_ACTION_UNSETDIR:
 			arraylistStorage_.rememberOldDirectory();
 			arraylistStorage_.getNewDirectory();
 			arraylistStorage_.rememberPreviousStorages();
@@ -87,6 +78,15 @@ public class Undo implements Command{
 			arraylistStorage_.setNewStorages();
 			break;
 			
+//		case Constants.MESSAGE_ACTION_UNSETDIR:
+//			arraylistStorage_.rememberOldDirectory();
+//			arraylistStorage_.getNewDirectory();
+//			arraylistStorage_.rememberPreviousStorages();
+//			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
+//			arraylistStorage_.setNewDirectory();
+//			arraylistStorage_.setNewStorages();
+//			break;
+//			
 		}
 		// write to mainStorage
 		arraylistStorage_.writeToStorage();
