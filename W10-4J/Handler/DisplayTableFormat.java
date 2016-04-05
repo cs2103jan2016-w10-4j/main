@@ -15,7 +15,7 @@ public class DisplayTableFormat {
 	public static String displayTableFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
 		String output = "";
 		//int taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
-		ArrayList<Integer> taskIDForRecentTask = previousInput.get(previousInput.size()-1).getChanges();
+		ArrayList<Integer> taskIDForRecentTask = CommonFunctionInDisplay.generateChanges(sortedList, previousInput);
 		
 		if (sortedList.size() == 0) {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTABLEFORMAT_NOTASKONHAND 

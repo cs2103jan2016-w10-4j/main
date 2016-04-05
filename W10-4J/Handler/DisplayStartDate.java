@@ -37,7 +37,7 @@ public class DisplayStartDate {
 		} else {
 			//taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
 			if(previousInput.size()!=0){
-				taskIDForRecentTask = previousInput.get(previousInput.size()-1).getChanges();
+				taskIDForRecentTask = CommonFunctionInDisplay.generateChanges(sortedList, previousInput);
 			} else{
 				taskIDForRecentTask = new ArrayList<>();
 			}
@@ -218,7 +218,6 @@ public class DisplayStartDate {
 	private static void getTaskDetails(Task task) {
 		String color = CommonFunctionInDisplay.determineColor(task);
 		String repeat = CommonFunctionInDisplay.assignRepeat(task);
-		System.out.println(taskIDForRecentTask);
 		output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE);
 	}
 	

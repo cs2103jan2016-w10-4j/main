@@ -89,7 +89,14 @@ public class PreviousInput {
 		previousDoneStorage_ = doneStorage;
 	}
 	
-	public ArrayList<Integer> getChanges(){
-		return changes_;
-	}
+//	public ArrayList<Integer> getChanges(){
+//		if(changes_!=null){
+//			ArrayList<Integer> output = new ArrayList<>();
+//			output.addAll(changes_);
+//			changes_.clear();
+//			return output;
+//		} else{
+//			return changes_;
+//		}
+//	}
 }

@@ -19,7 +19,7 @@ public class DisplayDone {
 		// previousInput);
 		ArrayList<Integer> taskIDForRecentTask;
 		if (previousInput.size() != 0) {
-			taskIDForRecentTask = previousInput.get(previousInput.size() - 1).getChanges();
+			taskIDForRecentTask = CommonFunctionInDisplay.generateChanges(sortedList, previousInput);
 		} else {
 			taskIDForRecentTask = new ArrayList<>();
 		}
