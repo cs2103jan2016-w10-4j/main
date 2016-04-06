@@ -15,12 +15,14 @@ import Handler.Sorting;
 public class DisplayToday {
 	static String todayOutput;
 	
-	public static String displayToday(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
+	public static String displayToday(Sorting sort, ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
+		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
+		
 		todayOutput = null;
 		String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYTODAY_TODAY + ", ";
 
 		// Within DisplayStartDate, there will be returnOutputToTheCorrectClass() method that will return today's tasks
-		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
+		DisplayStartDate.displayFormat(sort, sortedList, previousInput);
 		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
 		if(todayOutput == null) {

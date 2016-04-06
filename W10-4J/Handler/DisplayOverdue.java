@@ -15,12 +15,15 @@ import Handler.Sorting;
 public class DisplayOverdue {
 	static String overdueOutput;
 	
-	public static String displayOverdue(Sorting sort, ArrayList<Task> notDoneYetStorage, ArrayList<PreviousInput> previousInput) {
+	public static String displayOverdue(Sorting sort, ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
+		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
+		
 		overdueOutput = null;
 		
 		// Within DisplayStartDate, there will be returnOutputToTheCorrectClass() method that will return overdue tasks
-		DisplayStartDate.displayFormat(sort, notDoneYetStorage, previousInput);
-		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
+		DisplayStartDate.displayFormat(sort, sortedList, previousInput);
+		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER 
+				+ Constants.MESSAGE_DISPLAY_SPACING;
 		
 		if(overdueOutput == null) {
 			output += Constants.MESSAGE_DISPLAYOVERDUE_NOOVERDUETASK;

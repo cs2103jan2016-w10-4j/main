@@ -13,16 +13,17 @@ import main.Task;
 
 public class DisplayDone {
 	public static String displayDoneFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
+		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
+		
 		String output = "";
-		// int taskIDForRecentTask =
-		// CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList,
-		// previousInput);
 		ArrayList<Integer> taskIDForRecentTask;
+		
 		if (previousInput.size() != 0) {
-			taskIDForRecentTask = CommonFunctionInDisplay.generateChanges(sortedList, previousInput);
+			taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
 		} else {
 			taskIDForRecentTask = new ArrayList<>();
 		}
+		
 		if (sortedList.size() == 0) {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_NOTASKDONE
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
@@ -33,7 +34,7 @@ public class DisplayDone {
 
 			for (int i = 0; i < sortedList.size(); i++) {
 				Task task = sortedList.get(i);
-				output += getTask(task, taskIDForRecentTask);
+				output += getTask(i, task, taskIDForRecentTask);
 			}
 
 			output += Constants.MESSAGE_DISPLAY_TABLECLOSETAG;
@@ -41,10 +42,10 @@ public class DisplayDone {
 		return output;
 	}
 
-	private static String getTask(Task task, ArrayList<Integer> taskIDForRecentTask) {
+	private static String getTask(int index, Task task, ArrayList<Integer> taskIDForRecentTask) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
-		String repeat = CommonFunctionInDisplay.assignRepeat(task);
-		return CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask,
+		String repeat = CommonFunctionsInDisplay.assignRepeat(task);
+		return CommonFunctionsInDisplay.getTaskDetails(index, task, color, repeat, taskIDForRecentTask,
 				Constants.MESSAGE_DISPLAYDONE_DONE);
 	}
 }

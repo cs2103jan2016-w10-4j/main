@@ -11,38 +11,45 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 
 import main.Constants;
 import main.Task;
-import Handler.CommonFunctionInDisplay;
+import Handler.CommonFunctionsInDisplay;
 
 public class DisplayStartDate {
-	static ArrayList<Integer> taskIDForRecentTask;
+	static int currentIndex;
 	static String output;
 	static String currentDate;
 	static String overdueOrToday;
+	static ArrayList<Integer> taskIDForRecentTask;
+	static ArrayList<Integer> taskToBeRemoved;
 	static ArrayList<Task> taskWithNoStartDateList;
 	static ArrayList<Task> taskWithStartDateList;
 	static ArrayList<Task> multiDayTaskList;
-	static ArrayList<Integer> taskToBeRemoved;
+	static ArrayList<String> currentDayTaskList;
+	static HashMap <Task, Integer> multiDayTaskListIndex;
 	static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
+	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList, 
+			ArrayList<PreviousInput> previousInput) {
+		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
+		
 		initializeVariables();
 		
 		if (sortedList.size() == 0) {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND 
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		} else {
-			//taskIDForRecentTask = CommonFunctionInDisplay.checkRecentUpdatedTaskID(sortedList, previousInput);
-			if(previousInput.size()!=0){
-				taskIDForRecentTask = CommonFunctionInDisplay.generateChanges(sortedList, previousInput);
+			if (previousInput.size()!= 0) {
+				taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
 			} else{
 				taskIDForRecentTask = new ArrayList<>();
 			}
-			seperateToRespectiveArrayList(sortedList);
-		
+			
+			separateToRespectiveArrayList(sortedList);
 			while (!(taskWithStartDateList.isEmpty())) {
 				sort.sortByStartDateAndName(taskWithStartDateList);
 				displayStartDateTasks();
@@ -59,16 +66,19 @@ public class DisplayStartDate {
 	}
 	
 	private static void initializeVariables() {
+		currentIndex = 1;
 		output = "";
 		overdueOrToday = "";
+		taskIDForRecentTask = new ArrayList<>();
+		taskToBeRemoved = new ArrayList<Integer>();
 		taskWithNoStartDateList = new ArrayList<Task>();
 		taskWithStartDateList = new ArrayList<Task>();
 		multiDayTaskList = new ArrayList<Task>();
-		taskToBeRemoved = new ArrayList<Integer>();
-		taskIDForRecentTask = new ArrayList<>();
+		currentDayTaskList = new ArrayList<String>();
+		multiDayTaskListIndex = new HashMap<Task, Integer>();
 	}
 	
-	private static void seperateToRespectiveArrayList(ArrayList<Task> taskList) {
+	private static void separateToRespectiveArrayList(ArrayList<Task> taskList) {
 		for (int i = 0; i < taskList.size(); i++) {
 			Task task = taskList.get(i);
 			if (task.getStartDate() == null) {
@@ -83,11 +93,11 @@ public class DisplayStartDate {
 		displayHeader(taskWithStartDateList);
 		createTable();
 		
-		int index = getLatestIndexOfTaskIncludeInDisplay(taskWithStartDateList);	
-		if (index != -1) {
-			taskWithStartDateList = removeTaskAlreadyInDisplay(index);
+		int index = getLatestIndexOfTaskInArrayList(taskWithStartDateList);
+		if (index != Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST) {
+			taskWithStartDateList = removeTaskAlreadyInCurrentDayArraylist(index);
 			addMultiDayTaskToList();
-		} else if (index == -1 && multiDayTaskList.size() != 0) {
+		} else if (index == Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST && multiDayTaskList.size() != 0) {
 			// User enter a multiday task immediately after opening the program or when the list is empty
 			taskWithStartDateList.clear();
 			addMultiDayTaskToList();
@@ -96,6 +106,7 @@ public class DisplayStartDate {
 		}
 		
 		multiDayTaskList.clear();
+		sortByNumberingAndDisplay();
 		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG;
 		returnOutputToTheCorrectClass();
 	}
@@ -103,7 +114,8 @@ public class DisplayStartDate {
 	private static void displayNoStartDateTasks() {
 		displayHeader(taskWithNoStartDateList);
 		createTable();
-		getLatestIndexOfTaskIncludeInDisplay(taskWithNoStartDateList);
+		getLatestIndexOfTaskInArrayList(taskWithNoStartDateList);
+		sortByNumberingAndDisplay();
 		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG;
 	}
 	
@@ -149,10 +161,14 @@ public class DisplayStartDate {
 		output += Constants.MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG;
 	}
 	
-	private static int getLatestIndexOfTaskIncludeInDisplay(ArrayList<Task> taskList) {		
+	/*
+	 *  Get the latest index of tasks that have been processed from 
+	 *  taskWithStartDateList or taskWithNoStartDateList and stored 
+	 *  the output into currentDayTaskList
+	 */
+	private static int getLatestIndexOfTaskInArrayList(ArrayList<Task> taskList) {		
 		for (int i = 0; i < taskList.size(); i++) {
 			Task task = taskList.get(i);
-			
 			if (task.getStartDate() == null) {
 				getTaskDetails(task);
 			} else if (currentDate.equals(task.getStartDate())) {
@@ -166,16 +182,27 @@ public class DisplayStartDate {
 				return i;
 			}
 		}
-		return -1;
+		return Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST;
 	}
 	
 	private static boolean checkIfItsMultiDayTask(Task task) {
 		if (task.getEndDate() != null) {
 			if (!(task.getEndDate().equals(task.getStartDate()))) {
 				return true;
-			} 
+			} else {
+				return false;
+			}
+		} else {
+			return false;
 		}
-		return false;
+	}
+	
+	private static void sortByNumberingAndDisplay() {
+		Collections.sort(currentDayTaskList);
+		for (int i = 0; i < currentDayTaskList.size(); i++) {
+			output += currentDayTaskList.get(i).substring(1);
+		}
+		currentDayTaskList.clear();
 	}
 	
 	// Return the correct output to DisplayToday or DisplayOverdue
@@ -216,13 +243,25 @@ public class DisplayStartDate {
 	}
 	
 	private static void getTaskDetails(Task task) {
-		String color = CommonFunctionInDisplay.determineColor(task);
-		String repeat = CommonFunctionInDisplay.assignRepeat(task);
-		output += CommonFunctionInDisplay.getTaskDetails(task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE);
+		String color = CommonFunctionsInDisplay.determineColor(task);
+		String repeat = CommonFunctionsInDisplay.assignRepeat(task);
+		
+		int index;
+		if(task.isMultiDay()) {
+			index = getMultiDayTaskIndex(task);			
+			currentDayTaskList.add(index + CommonFunctionsInDisplay.getTaskDetails(index, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE));
+		} else {
+			currentDayTaskList.add(currentIndex + CommonFunctionsInDisplay.getTaskDetails(currentIndex, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE));
+			currentIndex += 1;
+		}
 	}
 	
-	// Use by only startDateTasks
-	private static ArrayList<Task> removeTaskAlreadyInDisplay(int index) {
+	private static int getMultiDayTaskIndex(Task task) {
+		return multiDayTaskListIndex.get(task);
+	}
+	
+	// Use by startDateTasks
+	private static ArrayList<Task> removeTaskAlreadyInCurrentDayArraylist(int index) {
 		for (int i = 0; i < index; i++) {
 			taskWithStartDateList.remove(0);
 		}
@@ -241,38 +280,40 @@ public class DisplayStartDate {
 		try {
 			Date startDate = dateFormat.parse(task.getStartDate());
 			Date endDate = dateFormat.parse(task.getEndDate());
-			createStartingTasks(startDate, endDate, task);
+			createStartingTasks(task);
 			taskList = createMiddleTasks(startDate, endDate, taskList, task);
-			taskList = createEndingTasks(startDate, endDate, taskList, task);
+			taskList = createEndingTasks(taskList, task);
+			currentIndex += 1;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return taskList;
 	}
 
-	private static void createStartingTasks(Date startDate, Date endDate, Task task) {
-		int taskID = task.getTaskID();
+	private static void createStartingTasks(Task task) {
+        Task newTask = setStartingTaskDetails(task);
+        multiDayTaskListIndex.put(newTask, currentIndex);
+        getTaskDetails(newTask);
+	}
+	
+	private static Task setStartingTaskDetails(Task task) {
 		String taskName = task.getName();
         String taskStartDate = task.getStartDate();
         String taskStartTime = task.getStartTime();
         
-        Task newTask = new Task(taskName);
-        newTask.setTaskID(taskID);
-        newTask.setStartDate(taskStartDate);
-        newTask.setEndTime("-");
-        newTask.setDetails(task.getDetails());
-        newTask.setMultiDay(true);
-        
-        if (taskStartTime != null) {
-            newTask.setStartTime(taskStartTime);
-        }
-        
-        getTaskDetails(newTask);
+		Task newTask = new Task(taskName);
+		newTask.setStartDate(taskStartDate);
+		newTask.setEndTime("-");
+		newTask.setDetails(task.getDetails());
+		newTask.setMultiDay(true);
+
+		if (taskStartTime != null) {
+			newTask.setStartTime(taskStartTime);
+		}
+		return newTask;
 	}
 	
 	private static ArrayList<Task> createMiddleTasks(Date startDate, Date endDate, ArrayList<Task> taskList, Task task) throws ParseException {
-        int taskID = task.getTaskID();
-		String taskName = task.getName();
         String taskEndDate = dateFormat.format(endDate);
 
         Calendar calendar = Calendar.getInstance();
@@ -289,29 +330,41 @@ public class DisplayStartDate {
         	calendar.add(Calendar.DATE, +1);
 
             if (!dateValue.equals(taskEndDate)) {
-            	Task newTask = new Task(taskName);
-                newTask.setTaskID(taskID);
-                newTask.setStartDate(dateValue);
-                newTask.setStartTime("-");
-                newTask.setEndTime("-");
-                newTask.setDetails(task.getDetails());
-                newTask.setMultiDay(true);
+            	Task newTask = setMiddleTaskDetails(task, dateValue);
                 taskList.add(newTask);
+                multiDayTaskListIndex.put(newTask, currentIndex);
             } else {
             	flag = false;
             }
         }
         return taskList;
 	}
+
+	private static Task setMiddleTaskDetails(Task task, String dateValue) {
+		String taskName = task.getName();
+		
+		Task newTask = new Task(taskName);
+        newTask.setStartDate(dateValue);
+        newTask.setStartTime("-");
+        newTask.setEndTime("-");
+        newTask.setDetails(task.getDetails());
+        newTask.setMultiDay(true);
+		return newTask;
+	}
 	
-	private static ArrayList<Task> createEndingTasks(Date startDate, Date endDate, ArrayList<Task> taskList, Task task) {
-	    int taskID = task.getTaskID();
+	private static ArrayList<Task> createEndingTasks(ArrayList<Task> taskList, Task task) {
+		Task newTask = setEndingTaskDetails(task);
+        taskList.add(newTask);
+        multiDayTaskListIndex.put(newTask, currentIndex);
+        return taskList;
+	}
+	
+	private static Task setEndingTaskDetails(Task task) {
 		String taskName = task.getName();
         String taskEndDate = task.getEndDate();
         String taskEndTime = task.getEndTime();
  
         Task newTask = new Task(taskName);
-        newTask.setTaskID(taskID);
         newTask.setStartDate(taskEndDate);
         newTask.setEndDate(taskEndDate);
         newTask.setStartTime("-");
@@ -321,8 +374,6 @@ public class DisplayStartDate {
         if (taskEndTime != null) {
             newTask.setEndTime(taskEndTime);
         }
-        
-        taskList.add(newTask);
-        return taskList;
+		return newTask;
 	}
 }
