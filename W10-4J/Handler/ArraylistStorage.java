@@ -22,7 +22,7 @@ public class ArraylistStorage {
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
-		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.fileName);
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.DEFAULT_FILENAME);
 		this.notDoneStorage = getFromStorage.get(0);
 		this.doneStorage = getFromStorage.get(1);
 		this.previousInputStorage = new ArrayList<PreviousInput>();

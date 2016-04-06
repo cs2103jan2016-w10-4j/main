@@ -2,7 +2,6 @@
 package Parser;
 
 import java.util.ArrayList;
-
 import main.Constants;
 import main.Constants.COMMAND_TYPE;
 import main.Date;
@@ -60,7 +59,8 @@ public class Valid {
 				} else {
 					if (i + 1 == arguments.length) {
 						return false;
-					} else if (arguments[i].equals("startdate") || arguments[i].equals("enddate")) {
+					} else if (arguments[i].equals(Constants.MESSAGE_ADD_ACTION_STARTDATE)
+							|| arguments[i].equals(Constants.MESSAGE_ADD_ACTION_ENDDATE)) {
 						String date = naturalDate_.getDate(arguments[i + 1]);
 						if (date == null) {
 							invalidDate = true;
@@ -69,7 +69,8 @@ public class Valid {
 							assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
 							arguments[i + 1] = date;
 						}
-					} else if (arguments[i].equals("starttime") || arguments[i].equals("endtime")) {
+					} else if (arguments[i].equals(Constants.MESSAGE_ADD_ACTION_START)
+							|| arguments[i].equals(Constants.MESSAGE_ADD_ACTION_END)) {
 						String time = naturalTime_.getTime(arguments[i + 1]);
 						if (time == null) {
 							invalidTime = true;
@@ -77,8 +78,8 @@ public class Valid {
 						} else {
 							arguments[i + 1] = time;
 						}
-					} else if (arguments[i].equals("repeat")) {
-						String[] repeatArgument = arguments[i + 1].split(" ");
+					} else if (arguments[i].equals(Constants.MESSAGE_ADD_ACTION_REPEAT)) {
+						String[] repeatArgument = arguments[i + 1].split(Constants.WHITESPACE);
 						try {
 							if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
 									|| !isInteger(repeatArgument[1])) {
@@ -97,15 +98,6 @@ public class Valid {
 	}
 
 	public boolean isDeleteValid(String[] arguments) {
-		// if (arguments.length == 0) {
-		// return false;
-		// }
-		// for(int i=0;i<arguments.length;i++){
-		// if(!isInteger(arguments[i])){
-		// return false;
-		// }
-		// }
-		// return true;
 		if (arguments.length != 1) {
 			return false;
 		} else {
@@ -127,9 +119,13 @@ public class Valid {
 			} else {
 				if (i + 1 == arguments.length) {
 					return false;
-				} else if (arguments[i].equals("-")) {
+				}
+				if (arguments[i + 1].equals(Constants.DASH)) {
+					arguments[i + 1] = null;
 					continue;
-				} else if (arguments[i].equals("startdate") || arguments[i].equals("enddate")) {
+				}
+				if (arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_STARTDATE)
+						|| arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_ENDDATE)) {
 					String date = naturalDate_.getDate(arguments[i + 1]);
 					if (date == null) {
 						invalidDate = true;
@@ -138,7 +134,8 @@ public class Valid {
 						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
 						arguments[i + 1] = date;
 					}
-				} else if (arguments[i].equals("starttime") || arguments[i].equals("endtime")) {
+				} else if (arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_START)
+						|| arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_END)) {
 					String time = naturalTime_.getTime(arguments[i + 1]);
 					if (time == null) {
 						invalidTime = true;
@@ -146,8 +143,8 @@ public class Valid {
 					} else {
 						arguments[i + 1] = time;
 					}
-				} else if (arguments[i].equals("repeat")) {
-					String[] repeatArgument = arguments[i + 1].split(" ");
+				} else if (arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_REPEAT)) {
+					String[] repeatArgument = arguments[i + 1].split(Constants.WHITESPACE);
 					try {
 						if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
 								|| !isInteger(repeatArgument[1])) {

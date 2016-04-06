@@ -22,7 +22,7 @@ import main.Task;
 
 public class Storage {
 	private final Logger LOGGER = Logger.getLogger(Storage.class.getName());
-	public static String filename = Constants.fileName;
+	public static String filename = Constants.DEFAULT_FILENAME;
 
 	Write taskWriter;
 	Read taskReader;
@@ -72,7 +72,7 @@ public class Storage {
 	}
 	
 	public void write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
-		if (filename.equals(Constants.fileName)) {
+		if (filename.equals(Constants.DEFAULT_FILENAME)) {
 			taskWriter.writeToFile(toDoTaskList, doneTaskList);
 		} else {
 			updateFilenameIfPathExists();
@@ -127,7 +127,7 @@ public class Storage {
 	 */
 	private void updateFilenameIfPathExists() {
 		try {
-			BufferedReader read = new BufferedReader(new FileReader(Constants.fileName));
+			BufferedReader read = new BufferedReader(new FileReader(Constants.DEFAULT_FILENAME));
 			String content = read.readLine();
 			
 			if (content != null) {

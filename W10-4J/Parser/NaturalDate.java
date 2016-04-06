@@ -77,7 +77,7 @@ public class NaturalDate {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 				int day = Calendar.getInstance().get(Calendar.DATE);
-				String output = String.format("%04d/%02d/%02d", year, month, day);
+				String output = String.format(Constants.DATE_FORMAT, year, month, day);
 				return output;
 			}
 		}
@@ -87,7 +87,7 @@ public class NaturalDate {
 				int year = Calendar.getInstance().get(Calendar.YEAR);
 				int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 				int day = Calendar.getInstance().get(Calendar.DATE) + 1;
-				String output = String.format("%04d/%02d/%02d", year, month, day);
+				String output = String.format(Constants.DATE_FORMAT, year, month, day);
 				return output;
 			}
 		}
@@ -101,7 +101,7 @@ public class NaturalDate {
 		if (year < 1000) {
 			year += 2000;
 		}
-		String output = String.format("%04d/%02d/%02d", year, month, day);
+		String output = String.format(Constants.DATE_FORMAT, year, month, day);
 		if (Date.isLegalDate(output)) {
 			return output;
 		} else {
@@ -112,20 +112,20 @@ public class NaturalDate {
 	public String[] splitStringByCharType(String input) {
 		char[] str = input.toCharArray();
 		ArrayList<String> list = new ArrayList<String>();
-		String hold = "";
+		String hold = Constants.EMPTY_STRING;
 		int holdType = -1;
 
 		for (int i = 0; i < str.length; i++) {
 			char c = str[i];
 			int type = getCharType(c);
 			if (type != holdType) {
-				if (!hold.equals("")) {
+				if (!hold.equals(Constants.EMPTY_STRING)) {
 					list.add(hold);
 				}
 				if (type != 0) {
-					hold = "" + c;
+					hold = Constants.EMPTY_STRING + c;
 				} else {
-					hold = "";
+					hold = Constants.EMPTY_STRING;
 				}
 				holdType = type;
 			} else {
@@ -174,118 +174,4 @@ public class NaturalDate {
 	private static boolean isMonth(int s) {
 		return (s > 0 && s < 13);
 	}
-
-	// public ArrayList<Integer> splitStringByInt(String input) {
-	// char[] str = input.toCharArray();
-	// ArrayList<Integer> list = new ArrayList<Integer>();
-	// String hold = "";
-	// int holdType = -1;
-	// int type;
-	//
-	// for (int i = 0; i < str.length; i++) {
-	// char c = str[i];
-	// if (Character.isDigit(c)) {
-	// type = 1;
-	// } else {
-	// type = 0;
-	// }
-	//
-	// if (type != holdType) {
-	// if (!hold.equals("")) {
-	// list.add(Integer.parseInt(hold));
-	// }
-	// if (type != 0) {
-	// hold = "" + c;
-	// } else {
-	// hold = "";
-	// }
-	// holdType = type;
-	// } else {
-	// if (type != 0) {
-	// hold += c;
-	// }
-	// }
-	// }
-	// list.add(Integer.parseInt(hold));
-	// return list;
-	// }
-
-	// public String confirmDate(ArrayList<Integer> day, ArrayList<Integer>
-	// month, int year, boolean confirmMonth) {
-	// int finalDay, finalMonth, finalYear;
-	// if (confirmMonth) {
-	// finalMonth = month.get(0);
-	// day.add(year);
-	// finalDay = day.get(0);
-	// finalYear = day.get(1);
-	// } else {
-	// month.addAll(day);
-	// month.add(year);
-	// finalMonth = month.get(1);
-	// finalDay = month.get(0);
-	// finalYear = month.get(2);
-	// }
-	// if (finalYear == -1) {
-	// finalYear = Calendar.getInstance().get(Calendar.YEAR);
-	// }
-	// if (finalYear < 1000) {
-	// finalYear += 2000;
-	// }
-	// return String.format("%04d/%02d/%02d", finalYear, finalMonth, finalDay);
-	// }
-
-	// public String getDateX(String input) {
-	// input = input.trim();
-	// String[] result = splitStringByCharType(input);
-	// if (result.length > 3 || result.length < 2) {
-	// return null;
-	// }
-	//
-	// ArrayList<Integer> day = new ArrayList<Integer>();
-	// ArrayList<Integer> month = new ArrayList<Integer>();
-	// int year = -1;
-	// boolean confirmMonth = false, confirmYear = false;
-	//
-	// for (int i = 0; i < result.length; i++) {
-	// String s = result[i];
-	// if (isInteger(s)) {
-	// int temp = Integer.parseInt(s);
-	// if (isMonth(temp) && !confirmMonth) {
-	// month.add(temp);
-	// } else if (isDay(temp)) {
-	// day.add(temp);
-	// } else if (!confirmYear) {
-	// year = temp;
-	// confirmYear = true;
-	// } else {
-	// return null;
-	// }
-	// } else {
-	// if (!confirmMonth) {
-	// int temp = monthValue(s);
-	// if (temp == -1) {
-	// return null;
-	// } else {
-	// // month.clear();
-	// while (!month.isEmpty()) {
-	// int hold = month.remove(0);
-	// if (isDay(hold)) {
-	// day.add(hold);
-	// } else if (!confirmYear) {
-	// year = temp;
-	// confirmYear = true;
-	// } else {
-	// return null;
-	// }
-	// }
-	// month.add(temp);
-	// confirmMonth = true;
-	// }
-	// } else {
-	// return null;
-	// }
-	// }
-	// }
-	// return confirmDate(day, month, year, confirmMonth);
-	// }
 }

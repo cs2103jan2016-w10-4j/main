@@ -26,7 +26,9 @@ public class Edit implements Command {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
-			int recurCounter = fieldEditor(eachTask, task); // fieldEditor edits the element itself
+			int recurCounter = fieldEditor(eachTask, task); // fieldEditor edits
+															// the element
+															// itself
 			if (recurCounter != -1 && eachTask.getStartDate() == null) {
 				eachTask.resetRecursion();
 				return Constants.MESSAGE_RECUR_FAIL;
@@ -71,22 +73,22 @@ public class Edit implements Command {
 			action = task[i].trim();
 			switch (action) {
 			case Constants.MESSAGE_EDIT_ACTION_RENAME:
-				eachTask.setName(task[i + 1].trim());
+				eachTask.setName(task[i + 1]);
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_STARTDATE:
-				eachTask.setStartDate(task[i + 1].trim());
+				eachTask.setStartDate(task[i + 1]);
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_ENDDATE:
-				eachTask.setEndDate(task[i + 1].trim());
+				eachTask.setEndDate(task[i + 1]);
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_START:
-				eachTask.setStartTime(task[i + 1].trim());
+				eachTask.setStartTime(task[i + 1]);
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_END:
-				eachTask.setEndTime(task[i + 1].trim());
+				eachTask.setEndTime(task[i + 1]);
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_DETAILS:
-				eachTask.setDetails(task[i + 1].trim());
+				eachTask.setDetails(task[i + 1]);
 				break;
 			case Constants.MESSAGE_EDIT_ACTION_REPEAT:
 				String[] repeatArgument = task[i + 1].split(" ");
@@ -127,7 +129,8 @@ public class Edit implements Command {
 		result.setDay(task.getDay());
 		return result;
 	}
-	//@@author A0140114A
+
+	// @@author A0140114A
 	private boolean isDateAndTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
 		int endtime = task.getEndTimeInt();

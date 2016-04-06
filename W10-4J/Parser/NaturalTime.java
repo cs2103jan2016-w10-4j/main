@@ -2,6 +2,7 @@
 package Parser;
 
 import java.util.ArrayList;
+import main.Constants;
 
 public class NaturalTime {
 
@@ -36,13 +37,13 @@ public class NaturalTime {
 		} else {
 			return null;
 		}
-		return String.format("%02d:%02d", hour, minute);
+		return String.format(Constants.TIME_FORMAT, hour, minute);
 	}
 
 	public ArrayList<Integer> splitStringByInt(String input) {
 		char[] str = input.toCharArray();
 		ArrayList<Integer> list = new ArrayList<Integer>();
-		String hold = "";
+		String hold = Constants.EMPTY_STRING;
 		int holdType = -1;
 		int type;
 
@@ -55,13 +56,13 @@ public class NaturalTime {
 			}
 
 			if (type != holdType) {
-				if (!hold.equals("")) {
+				if (!hold.equals(Constants.EMPTY_STRING)) {
 					list.add(Integer.parseInt(hold));
 				}
 				if (type != 0) {
-					hold = "" + c;
+					hold = Constants.EMPTY_STRING + c;
 				} else {
-					hold = "";
+					hold = Constants.EMPTY_STRING;
 				}
 				holdType = type;
 			} else {

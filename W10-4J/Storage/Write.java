@@ -120,11 +120,11 @@ public class Write {
 		try {
 			tempFile = new File("temp.txt");
 			printPath = new PrintWriter(new FileWriter("temp.txt"));
-			reader = new BufferedReader(new FileReader(Constants.fileName));
+			reader = new BufferedReader(new FileReader(Constants.DEFAULT_FILENAME));
 			addPathAndCopyFileContent(filePathName, printPath, reader);
 
 			// Revert the copy back and delete the temp file
-			printPath = new PrintWriter(new FileWriter(Constants.fileName));
+			printPath = new PrintWriter(new FileWriter(Constants.DEFAULT_FILENAME));
 			reader = new BufferedReader(new FileReader("temp.txt"));
 			addPathAndCopyFileContent(filePathName, printPath, reader);
 			tempFile.delete();

@@ -1,12 +1,12 @@
 package main;
 
 public class Constants {
-	//@@author A0140114A
+	// @@author A0140114A
 	public enum COMMAND_TYPE {
 		ADD, DELETE, EDIT, DONE, DISPLAY, SEARCH, SETDIR, RETRIEVE, RECURRENCE, UNDO, EXIT, INVALID, HELP, ALIAS
 	};
 
-	public static final String fileName = "mytextfile.txt";
+	public static final String DEFAULT_FILENAME = "mytextfile.txt";
 	public static final String setDirFileName = "dirdefaultfile.txt";
 	public static final String[] addDefaultCommandList = { "add", "new", "+", "a" };
 	public static final String[] deleteDefaultCommandList = { "delete", "del", "remove", "rm", "bin", "thrash", "-" };
@@ -36,7 +36,7 @@ public class Constants {
 	public static final String[] endDateDefaultArgumentList = { "enddate", "by", "due" };
 	public static final String[] startTimeDefaultArgumentList = { "start", "starttime", "time" };
 	public static final String[] endTimeDefaultArgumentList = { "end", "endtime", "e" };
-	public static final String[] detailsDefaultArgumentList = { "details", "details"};
+	public static final String[] detailsDefaultArgumentList = { "details", "details" };
 	public static final String[] repeatDefaultArgumentList = { "repeat", "recur", "r", "recurrence" };
 	public static final String[] todayArgumentList = { "today", "later" };
 	public static final String[] tomorrowArgumentList = { "tomorrow", "tmr" };
@@ -47,11 +47,24 @@ public class Constants {
 	public static final String[] day = new String[] { "mon", "tues", "wed", "thurs", "fri", "sat", "sun", "m", "t", "w",
 			"f", "s", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
+	public static final char QUOTE_CHAR = '"';
+	public static final char EMPTY_CHAR = ' ';
+	public static final String WHITESPACE = " ";
+	public static final String COMMA = ",";
+	public static final String DASH = "-";
+	public static final String DATE_FORMAT = "%04d/%02d/%02d";
+	public static final String TIME_FORMAT = "%02d:%02d";
+	
+	public static final String ALIAS_FILENAME = ".\\alias.xml";
+	public static final String[] COMMAND_LIST = { "add", "delete", "edit", "done", "display", "search", "setdir",
+			"retrieve", "recurrence", "undo", "exit", "help" };
+
 	public static final String MESSAGE_UNRECOGNISED_COMMAND = ("2Unrecognized command type");
 	public static final String MESSAGE_INVALID_FORMAT = ("2Invalid command format");
 	public static final String MESSAGE_INVALID_DATE = ("2Invalid date format");
 	public static final String MESSAGE_INVALID_TIME = ("2Invalid time format");
-//@@author A0135779M
+
+	// @@author A0135779M
 	public static final String MESSAGE_ADD_PASS = ("1%1$s has been added.");
 	public static final String MESSAGE_DELETE_PASS = ("1%1$s has been deleted.");
 	public static final String MESSAGE_DELETE_FAIL = ("2Task cannot be deleted.");
@@ -218,28 +231,29 @@ public class Constants {
 	public static final String ASSERT_TASKNAME_EXISTENCE = ("Task name does not exist");
 	public static final String ASSERT_TASKDETAILS_EXISTENCE = ("Task details does not exist");
 
+	public static final String ASSERT_NULL_COMMAND = "Null command received";
 	public static final String ASSERT_VALID_TIME = "Invalid time returned by NaturalTime";
 	public static final String ASSERT_VALID_DATE = "Invalid date returned by NaturalDate";
-	
+
 	// These constants are used in UserInterface package.
 	public static final String EMPTY_STRING = "";
 	public static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";
 	public static final String COMMAND_LABEL_TEXT = " Command: ";
-	
+
 	public static final String GUI_PREFERENCES_TOOLTIP = "Gui Preferences";
 	public static final String HELP_TOOLTIP = "Help";
 	public static final String ALL_TASKS_TOOLTIP = "All Tasks";
 	public static final String DONE_TASKS_TOOLTIP = "Done Tasks";
 	public static final String OVERDUE_TASKS_TOOLTIP = "Overdue Tasks";
 	public static final String HOME_TOOLTIP = "Home";
-	
+
 	public static final String SETTINGS_ICON_PATH = "/main/icon/settings.png";
 	public static final String HELP_ICON_PATH = "/main/icon/help.png";
 	public static final String ALL_ICON_PATH = "/main/icon/all.png";
 	public static final String DONE_ICON_PATH = "/main/icon/done.png";
 	public static final String OVERDUE_ICON_PATH = "/main/icon/overdue.png";
 	public static final String HOME_ICON_PATH = "/main/icon/home.png";
-	
+
 	public static final String IS_DISPLAY_FLAG = "0";
 	public static final String CMD_DISPLAY_FLAG = "1";
 	public static final String INVALID_MESSAGE_FLAG = "2";
@@ -248,9 +262,9 @@ public class Constants {
 	public static final String DISPLAY_TODAY_COMMAND = "display today";
 	public static final String DISPLAY_DONE_COMMAND = "display done";
 	public static final String DISPLAY_COMMAND = "display";
-	
+
 	public static final String BLACK = "#000000 r:0, g:0, b:0";
-	
+
 	public static final String SETTINGS_TEXT = "Settings";
 	public static final String FONT_TEXT = "Font";
 	public static final String FONT_SIZE_TEXT = "Font Size";
@@ -264,7 +278,7 @@ public class Constants {
 	public static final String DEFAULT_COLOR_TEXT = "Default Colour";
 
 	public static final String PROPERTIES_FILE_NAME = ".\\properties.xml";
-	
+
 	public static final String BUTTONS_COLOR_KEY = "buttonsColor";
 	public static final String FONT_FAMILY_KEY = "fontFamily";
 	public static final String FONT_SIZE_KEY = "fontSize";
@@ -273,14 +287,14 @@ public class Constants {
 	public static final String BOTTOM_FONT_COLOR_KEY = "bottomFontColor";
 	public static final String TOP_FONT_COLOR_KEY = "topFontColor";
 	public static final String COLOR_OPTION_KEY = "colorOption";
-	
+
 	public static final String SET_1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
 	public static final String SET_2 = "button r:241, g:243, b:206 topBg r:206, g:223, b:243 bottomBg r:243, g:220, b:206";
 	public static final String SET_3 = "button r:176, g:176, b:176 topBg r:255, g:255, b:255 bottomBg r:255, g:198, b:30";
 	public static final String SET_4 = "button r:254, g:109, b:93  topBg r:254, g:216, b:93  bottomBg r:93, g:211, b:254";
 	public static final String SET_5 = "button r:217, g:206, b:178 topBg r:213, g:222, b:217 bottomBg r:148, g:140, b:117";
-	
-	//These are constants used in help.java
+
+	// These are constants used in help.java
 	public static final String HELP_FILE_PATH = "/resources/help.xml";
 	public static final String KEYBOARD_STRING = "keyboard";
 	public static final String NATURAL_STRING = "natural";

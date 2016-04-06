@@ -9,26 +9,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import main.Constants;
+
 public class IOxml {
-	private static final String filename = ".\\alias.xml";
-	private static final String[] commandlist = { "add", "delete", "edit", "done", "display", "search", "setdir",
-			"retrieve", "recurrence", "undo", "exit", "help" };
+
 	private ArrayList<String> alias_ = new ArrayList<>();
 
 	public IOxml() {
-		for (int i = 0; i < commandlist.length; i++) {
-			String s = commandlist[i];
-			String aliaslist = read(s, filename);
-			if (aliaslist == null) {
-				this.alias_.add("");
-			} else {
-				this.alias_.add(aliaslist);
+		try {
+			for (int i = 0; i < Constants.COMMAND_LIST.length; i++) {
+				String s = Constants.COMMAND_LIST[i];
+				String aliaslist = read(s, Constants.ALIAS_FILENAME);
+				if (aliaslist == null) {
+					this.alias_.add(Constants.EMPTY_STRING);
+				} else {
+					this.alias_.add(aliaslist);
+				}
+			}
+		} catch (NullPointerException e) {
+			for (int i = 0; i < Constants.COMMAND_LIST.length; i++) {
+				this.alias_.add(Constants.EMPTY_STRING);
 			}
 		}
 		write();
 	}
 
-	private String read(String action, String fileName) {
+	private String read(String action, String fileName) throws NullPointerException {
 		try {
 			File file = new File(fileName);
 			FileInputStream fileInput = new FileInputStream(file);
@@ -36,8 +42,8 @@ public class IOxml {
 			prop.loadFromXML(fileInput);
 			fileInput.close();
 			String details = prop.getProperty(action);
-			if (details.equals("")) {
-				return "";
+			if (details.equals(Constants.EMPTY_STRING)) {
+				return Constants.EMPTY_STRING;
 			} else {
 				return details;
 			}
@@ -51,11 +57,11 @@ public class IOxml {
 
 	private void write() {
 		Properties properties = new Properties();
-		for (int i = 0; i < commandlist.length; i++) {
-			properties.setProperty(commandlist[i], alias_.get(i));
+		for (int i = 0; i < Constants.COMMAND_LIST.length; i++) {
+			properties.setProperty(Constants.COMMAND_LIST[i], alias_.get(i));
 		}
 
-		File file = new File(filename);
+		File file = new File(Constants.ALIAS_FILENAME);
 		try {
 			FileOutputStream fileOut = new FileOutputStream(file);
 			properties.storeToXML(fileOut, "alias");
@@ -66,17 +72,17 @@ public class IOxml {
 
 	public void setAlias(int index, String argument) {
 		String current = alias_.get(index);
-		if (current == "") {
+		if (current == Constants.EMPTY_STRING) {
 			alias_.set(index, argument);
 		} else {
-			alias_.set(index, alias_.get(index) + "," + argument);
+			alias_.set(index, alias_.get(index) + Constants.COMMA + argument);
 		}
 		write();
 	}
 
 	public ArrayList<String> getSpecificAlias(int index) {
-		alias_.get(index).split(",");
-		String[] argument = alias_.get(index).split(",");
+		alias_.get(index).split(Constants.COMMA);
+		String[] argument = alias_.get(index).split(Constants.COMMA);
 		ArrayList<String> output = new ArrayList<>();
 		for (int i = 0; i < argument.length; i++) {
 			output.add(argument[i]);

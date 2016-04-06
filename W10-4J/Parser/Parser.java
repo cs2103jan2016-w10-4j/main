@@ -2,7 +2,6 @@
 package Parser;
 
 import java.util.ArrayList;
-
 import Handler.Handler;
 import main.Constants;
 import main.Constants.COMMAND_TYPE;
@@ -19,18 +18,13 @@ public class Parser {
 	}
 
 	public String parse(String command) {
-//		System.out.println("Command entered: " + command);
-		assert command != null;
+		assert command != null : Constants.ASSERT_NULL_COMMAND;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
-//		for (String s : arguments) {
-//			System.out.print(s + ",");
-//		}
-//		System.out.println("*");
 		if (!valid_.isValid(commandType, arguments)) {
 			return getInvalidReturnMessage();
 		}
@@ -38,10 +32,6 @@ public class Parser {
 			setAlias(arguments);
 			return Constants.MESSAGE_ALIAS_PASS;
 		}
-//		for (String s : arguments) {
-//			System.out.print(s +",");
-//		}
-//		System.out.println("*");
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
 			return handler_.executeCommand(commandType, arguments);
@@ -88,8 +78,8 @@ public class Parser {
 
 	public String[] getArguments(COMMAND_TYPE commandType, String command) {
 		if (commandType == COMMAND_TYPE.RETRIEVE || commandType == COMMAND_TYPE.SETDIR) {
-			if (command.contains(" ")) {
-				return new String[] { command.substring(command.indexOf(" ") + 1) };
+			if (command.contains(Constants.WHITESPACE)) {
+				return new String[] { command.substring(command.indexOf(Constants.WHITESPACE) + 1) };
 			} else {
 				return new String[] {};
 			}
@@ -100,9 +90,9 @@ public class Parser {
 		char[] c = command.toCharArray();
 
 		for (int i = 0; i < c.length; i++) {
-			if (c[i] == '"') {
+			if (c[i] == Constants.QUOTE_CHAR) {
 				insideQuote = !insideQuote;
-			} else if (c[i] == ' ' && !insideQuote) {
+			} else if (c[i] == Constants.EMPTY_CHAR && !insideQuote) {
 				if (sb.toString().trim().length() > 0) {
 					tokens.add(sb.toString());
 				}
@@ -130,11 +120,11 @@ public class Parser {
 
 	public String getInvalidReturnMessage() {
 		if (valid_.getInvalidDate()) {
-			return "1" + Constants.MESSAGE_INVALID_DATE;
+			return Constants.MESSAGE_INVALID_DATE;
 		} else if (valid_.getInvalidTime()) {
-			return "1" + Constants.MESSAGE_INVALID_TIME;
+			return Constants.MESSAGE_INVALID_TIME;
 		} else {
-			return "1" + Constants.MESSAGE_INVALID_FORMAT;
+			return Constants.MESSAGE_INVALID_FORMAT;
 		}
 	}
 

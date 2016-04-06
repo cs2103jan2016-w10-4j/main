@@ -107,7 +107,7 @@ public class WriteTest extends Write {
 		writeToFile(toDoTaskList, doneTaskList);
 
 		String testFile = "testFile.txt";
-		String actualFile = Constants.fileName;
+		String actualFile = Constants.DEFAULT_FILENAME;
 		byte[] digestTest = computeCheckSum(testFile);
 		byte[] digestActual = computeCheckSum(actualFile);
 
@@ -145,7 +145,7 @@ public class WriteTest extends Write {
 	}
 
 	String getPathContentFromDefaultFile() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(Constants.fileName));
+		BufferedReader reader = new BufferedReader(new FileReader(Constants.DEFAULT_FILENAME));
 		String content = reader.readLine();
 		String pathContent = null;
 		if (content != null) {

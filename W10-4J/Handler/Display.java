@@ -46,6 +46,6 @@ public class Display implements Command {
 				outputDisplay = arraylistStorage_.getDoneDisplayFormatByDefault();
 			}
 		}
-		return outputDisplay;
+		return "0" + outputDisplay;
 	}
 }
