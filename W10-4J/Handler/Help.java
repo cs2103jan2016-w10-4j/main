@@ -9,18 +9,6 @@ import java.util.Properties;
 import main.Constants;
 
 public class Help implements Command {
-	private static final String HELP_FILE_PATH = "/resources/help.xml";
-	private static final String KEYBOARD_STRING = "keyboard";
-	private static final String NATURAL_STRING = "natural";
-	private static final String UNDO_STRING = "undo";
-	private static final String STORE_STRING = "store";
-	private static final String SEARCH_STRING = "search";
-	private static final String DISPLAY_STRING = "display";
-	private static final String DONE_STRING = "done";
-	private static final String EDIT_STRING = "edit";
-	private static final String DELETE_STRING = "delete";
-	private static final String ADD_STRING = "add";
-	private static final String WELCOME_STRING = "welcome";
 	private static String help;
 	public Help() {
 	}
@@ -34,54 +22,54 @@ public class Help implements Command {
 	}
 
 	public String helpSpecific(String task) {
-		help = read(WELCOME_STRING);
+		help = read(Constants.WELCOME_STRING);
 		switch (task){
 		case Constants.MESSAGE_ACTION_ADD:
-			help += read(ADD_STRING);
+			help += read(Constants.ADD_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
-			help += read(DELETE_STRING);
+			help += read(Constants.DELETE_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
-			help += read(EDIT_STRING);
+			help += read(Constants.EDIT_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
-			help += read(DONE_STRING);
+			help += read(Constants.DONE_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_DISPLAY:
-			help += read(DISPLAY_STRING);
+			help += read(Constants.DISPLAY_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_SEARCH:
-			help += read(SEARCH_STRING);
+			help += read(Constants.SEARCH_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_STORAGE:
-			help += read(STORE_STRING);
+			help += read(Constants.STORE_STRING);
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
-			help += read(UNDO_STRING);
+			help += read(Constants.UNDO_STRING);
 			break;
 		}
 		return help;
 	}
 
 	public String helpFullString() {
-		help = read(WELCOME_STRING);
-		help += read("function");
-		help += read(ADD_STRING);
-		help += read(DELETE_STRING);
-		help += read(EDIT_STRING);
-		help += read(DONE_STRING);
-		help += read(DISPLAY_STRING);
-		help += read(SEARCH_STRING);
-		help += read(STORE_STRING);
-		help += read(UNDO_STRING);
-		help += read(NATURAL_STRING);
-		help += read(KEYBOARD_STRING);
+		help = read(Constants.WELCOME_STRING);
+		help += read(Constants.FUNCTION);
+		help += read(Constants.ADD_STRING);
+		help += read(Constants.DELETE_STRING);
+		help += read(Constants.EDIT_STRING);
+		help += read(Constants.DONE_STRING);
+		help += read(Constants.DISPLAY_STRING);
+		help += read(Constants.SEARCH_STRING);
+		help += read(Constants.STORE_STRING);
+		help += read(Constants.UNDO_STRING);
+		help += read(Constants.NATURAL_STRING);
+		help += read(Constants.KEYBOARD_STRING);
 		return help;
 	}
 	
 	public static String read(String action){
-		InputStream fileName = Help.class.getResourceAsStream(HELP_FILE_PATH);
+		InputStream fileName = Help.class.getResourceAsStream(Constants.HELP_FILE_PATH);
 		try{
 			Properties prop = new Properties();
 			prop.loadFromXML(fileName);

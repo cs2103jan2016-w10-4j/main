@@ -17,6 +17,9 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import main.Constants;
+
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,23 +33,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class SettingsUI {
-	private static final String SETTINGS_TEXT = "Settings";
-	private static final String FONT_TEXT = "Font";
-	private static final String FONT_SIZE_TEXT = "Font Size";
-	private static final String SAVE_BUTTON_TEXT = "Save";
-	private static final String CANCEL_BUTTON_TEXT = "Cancel";
-
-	private static final String OPTION_1_TEXT = "Option 1";
-	private static final String OPTION_2_TEXT = "Option 2";
-	private static final String OPTION_3_TEXT = "Option 3";
-	private static final String OPTION_4_TEXT = "Option 4";
-	private static final String DEFAULT_COLOR_TEXT = "Default Colour";
-
-	private static final String FILE_NAME = ".\\properties.xml";
 
 	private static final int COLOR_OPTION_INDEX = 0;
 	
-	static JFrame f = new JFrame(SETTINGS_TEXT);
+	static JFrame f = new JFrame(Constants.SETTINGS_TEXT);
     JPanel jPanel3 = new JPanel();
     JRadioButton defaultRadioButton = new JRadioButton();
     JRadioButton optionOneRadioButton = new JRadioButton();
@@ -206,33 +196,33 @@ public class SettingsUI {
 	}
 
 	private void cancelAndSaveButtonSettings() {
-		cancelButton.setLabel(CANCEL_BUTTON_TEXT);
-        saveButton.setLabel(SAVE_BUTTON_TEXT);
+		cancelButton.setLabel(Constants.CANCEL_BUTTON_TEXT);
+        saveButton.setLabel(Constants.SAVE_BUTTON_TEXT);
 	}
 
 	private void jLabelSettings() {
-		jLabel1.setText(FONT_SIZE_TEXT);
-        jLabel2.setText(FONT_TEXT);
+		jLabel1.setText(Constants.FONT_SIZE_TEXT);
+        jLabel2.setText(Constants.FONT_TEXT);
 	}
 
 	private void fontFamilyBoxSettings() {
 		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getAvailableFontFamilyNames();
 		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
-        fontFamilyBox.setSelectedItem(prop.read(ReadWriteXml.FONT_FAMILY_KEY, FILE_NAME));
+        fontFamilyBox.setSelectedItem(prop.read(Constants.FONT_FAMILY_KEY, Constants.PROPERTIES_FILE_NAME));
 	}
 
 	private void fontSizeBoxSettings() {
 		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
-        fontSizeBox.setSelectedItem(prop.read(ReadWriteXml.FONT_SIZE_KEY, FILE_NAME));
+        fontSizeBox.setSelectedItem(prop.read(Constants.FONT_SIZE_KEY, Constants.PROPERTIES_FILE_NAME));
 	}
 
 	private ButtonGroup radioButtonsSettings() {
-		defaultRadioButton.setText(DEFAULT_COLOR_TEXT);
-        optionOneRadioButton.setText(OPTION_1_TEXT);
-        optionTwoRadioButton.setText(OPTION_2_TEXT);
-        optionThreeRadioButton.setText(OPTION_3_TEXT);
-        optionFourRadioButton.setText(OPTION_4_TEXT);
+		defaultRadioButton.setText(Constants.DEFAULT_COLOR_TEXT);
+        optionOneRadioButton.setText(Constants.OPTION_1_TEXT);
+        optionTwoRadioButton.setText(Constants.OPTION_2_TEXT);
+        optionThreeRadioButton.setText(Constants.OPTION_3_TEXT);
+        optionFourRadioButton.setText(Constants.OPTION_4_TEXT);
         
         ButtonGroup button = new ButtonGroup();
         button.add(defaultRadioButton);

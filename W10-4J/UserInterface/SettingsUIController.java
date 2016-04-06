@@ -1,3 +1,9 @@
+/*
+ * This class is the controller for the settings UI. Generally it determines which options for colors, font size and font family that the user selected, and sets those preferences.
+ * The preferences are then saved into the properties.xml file.
+ * 
+ * @@author A0113761M
+ * */
 package UserInterface;
 
 import java.awt.Button;
@@ -15,19 +21,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import main.Constants;
+
 public class SettingsUIController {
-	private static int colorOptionIndex = 0;
-	private static int topFontColorIndex = 1;
-	private static int topBgIndex = 2;
-	private static int bottomBgIndex = 3;
-	private static int bottomFontColorIndex = 4;
-	private static int fontSizeIndex = 5;
-	private static int fontFamilyIndex = 6;
-	private static int buttonsColorIndex = 7;
-	
 	private static ColorsForSettings colors = new ColorsForSettings();
-	
-	private static String black = "#000000 r:0, g:0, b:0";
 	
     public void action(JFrame f, JRadioButton defaultRadioButton, JRadioButton seaRadioButton, JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2, Button save, Button cancel, ArrayList<String> properties, JTextPane outputDisplay, JTextArea cmdDisplay, JComboBox<String> fontSize, JComboBox<String> fontFamily, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings){
     	defaultRadioListener(defaultRadioButton, textPane1, textPane2);
@@ -48,20 +45,20 @@ public class SettingsUIController {
     		public void actionPerformed(ActionEvent e){
     			ReadWriteXml prop = new ReadWriteXml();
     			if (defaultRadioButton.isSelected()){
-    				setVariables(properties, prop, "default", colors.getTopBg(ColorsForSettings.set5), colors.getBottomBg(ColorsForSettings.set5), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set5));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set5);
+    				setVariables(properties, prop, "default", colors.getTopBg(Constants.SET_5), colors.getBottomBg(Constants.SET_5), Constants.BLACK, Constants.BLACK, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(Constants.SET_5));
+    				setButtonColors(home, overdue, all, done, help, settings, Constants.SET_5);
     			} else if (seaRadioButton.isSelected()){
-    				setVariables(properties, prop, "option1", colors.getTopBg(ColorsForSettings.set1), colors.getBottomBg(ColorsForSettings.set1), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set1));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set1);
+    				setVariables(properties, prop, "option1", colors.getTopBg(Constants.SET_1), colors.getBottomBg(Constants.SET_1), Constants.BLACK, Constants.BLACK, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(Constants.SET_1));
+    				setButtonColors(home, overdue, all, done, help, settings, Constants.SET_1);
     			} else if (sunsetRadioButton.isSelected()){
-    				setVariables(properties, prop, "option2", colors.getTopBg(ColorsForSettings.set2), colors.getBottomBg(ColorsForSettings.set2), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set2));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set2);
+    				setVariables(properties, prop, "option2", colors.getTopBg(Constants.SET_2), colors.getBottomBg(Constants.SET_2), Constants.BLACK, Constants.BLACK, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(Constants.SET_2));
+    				setButtonColors(home, overdue, all, done, help, settings, Constants.SET_2);
     			} else if (dawnRadioButton.isSelected()){
-    				setVariables(properties, prop, "option3", colors.getTopBg(ColorsForSettings.set3), colors.getBottomBg(ColorsForSettings.set3), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set3));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set3);
+    				setVariables(properties, prop, "option3", colors.getTopBg(Constants.SET_3), colors.getBottomBg(Constants.SET_3), Constants.BLACK, Constants.BLACK, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(Constants.SET_3));
+    				setButtonColors(home, overdue, all, done, help, settings, Constants.SET_3);
     			} else if (natureRadioButton.isSelected()){
-    				setVariables(properties, prop, "option4", colors.getTopBg(ColorsForSettings.set4), colors.getBottomBg(ColorsForSettings.set4), black, black, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(ColorsForSettings.set4));
-    				setButtonColors(home, overdue, all, done, help, settings, ColorsForSettings.set4);
+    				setVariables(properties, prop, "option4", colors.getTopBg(Constants.SET_4), colors.getBottomBg(Constants.SET_4), Constants.BLACK, Constants.BLACK, outputDisplay, cmdDisplay, commandText, cmdEntry, fontSizeBox, fontFamilyBox, colors.getButton(Constants.SET_4));
+    				setButtonColors(home, overdue, all, done, help, settings, Constants.SET_4);
     			} 
     			f.dispose();
     		}
@@ -168,13 +165,13 @@ public class SettingsUIController {
 	}
 	
 	private static void setProperties(ArrayList<String> properties, String colorOption, String topFont, String bottomFont, String topBg, String bottomBg, int fontSize, String fontFamily, String buttonsColor){
-		properties.set(colorOptionIndex, colorOption);
-		properties.set(topFontColorIndex, topFont);
-		properties.set(bottomFontColorIndex, bottomFont);
-		properties.set(topBgIndex, topBg);
-		properties.set(bottomBgIndex, bottomBg);
-		properties.set(fontSizeIndex, String.valueOf(fontSize));
-		properties.set(fontFamilyIndex, fontFamily);
-		properties.set(buttonsColorIndex, buttonsColor);
+		properties.set(ReadWriteXml.COLOR_OPTION_INDEX, colorOption);
+		properties.set(ReadWriteXml.TOP_FONT_COLOR_INDEX, topFont);
+		properties.set(ReadWriteXml.BOTTOM_FONT_COLOR_INDEX, bottomFont);
+		properties.set(ReadWriteXml.TOP_BG_INDEX, topBg);
+		properties.set(ReadWriteXml.BOTTOM_BG_INDEX, bottomBg);
+		properties.set(ReadWriteXml.FONT_SIZE_INDEX, String.valueOf(fontSize));
+		properties.set(ReadWriteXml.FONT_FAMILY_INDEX, fontFamily);
+		properties.set(ReadWriteXml.BUTTONS_COLOR_INDEX, buttonsColor);
 	}
 }

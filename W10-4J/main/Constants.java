@@ -220,4 +220,76 @@ public class Constants {
 
 	public static final String ASSERT_VALID_TIME = "Invalid time returned by NaturalTime";
 	public static final String ASSERT_VALID_DATE = "Invalid date returned by NaturalDate";
+	
+	// These constants are used in UserInterface package.
+	public static final String EMPTY_STRING = "";
+	public static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";
+	public static final String COMMAND_LABEL_TEXT = " Command: ";
+	
+	public static final String GUI_PREFERENCES_TOOLTIP = "Gui Preferences";
+	public static final String HELP_TOOLTIP = "Help";
+	public static final String ALL_TASKS_TOOLTIP = "All Tasks";
+	public static final String DONE_TASKS_TOOLTIP = "Done Tasks";
+	public static final String OVERDUE_TASKS_TOOLTIP = "Overdue Tasks";
+	public static final String HOME_TOOLTIP = "Home";
+	
+	public static final String SETTINGS_ICON_PATH = "/main/icon/settings.png";
+	public static final String HELP_ICON_PATH = "/main/icon/help.png";
+	public static final String ALL_ICON_PATH = "/main/icon/all.png";
+	public static final String DONE_ICON_PATH = "/main/icon/done.png";
+	public static final String OVERDUE_ICON_PATH = "/main/icon/overdue.png";
+	public static final String HOME_ICON_PATH = "/main/icon/home.png";
+	
+	public static final String IS_DISPLAY_FLAG = "0";
+	public static final String DISPLAY_OVERDUE_COMMAND = "display overdue";
+	public static final String HELP_COMMAND = "help";
+	public static final String DISPLAY_TODAY_COMMAND = "display today";
+	public static final String DISPLAY_DONE_COMMAND = "display done";
+	public static final String DISPLAY_COMMAND = "display";
+	
+	public static final String BLACK = "#000000 r:0, g:0, b:0";
+	
+	public static final String SETTINGS_TEXT = "Settings";
+	public static final String FONT_TEXT = "Font";
+	public static final String FONT_SIZE_TEXT = "Font Size";
+	public static final String SAVE_BUTTON_TEXT = "Save";
+	public static final String CANCEL_BUTTON_TEXT = "Cancel";
+
+	public static final String OPTION_1_TEXT = "Option 1";
+	public static final String OPTION_2_TEXT = "Option 2";
+	public static final String OPTION_3_TEXT = "Option 3";
+	public static final String OPTION_4_TEXT = "Option 4";
+	public static final String DEFAULT_COLOR_TEXT = "Default Colour";
+
+	public static final String PROPERTIES_FILE_NAME = ".\\properties.xml";
+	
+	public static final String BUTTONS_COLOR_KEY = "buttonsColor";
+	public static final String FONT_FAMILY_KEY = "fontFamily";
+	public static final String FONT_SIZE_KEY = "fontSize";
+	public static final String BOTTOM_BG_KEY = "bottomBg";
+	public static final String TOP_BG_KEY = "topBg";
+	public static final String BOTTOM_FONT_COLOR_KEY = "bottomFontColor";
+	public static final String TOP_FONT_COLOR_KEY = "topFontColor";
+	public static final String COLOR_OPTION_KEY = "colorOption";
+	
+	public static final String SET_1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
+	public static final String SET_2 = "button r:241, g:243, b:206 topBg r:206, g:223, b:243 bottomBg r:243, g:220, b:206";
+	public static final String SET_3 = "button r:176, g:176, b:176 topBg r:255, g:255, b:255 bottomBg r:255, g:198, b:30";
+	public static final String SET_4 = "button r:254, g:109, b:93  topBg r:254, g:216, b:93  bottomBg r:93, g:211, b:254";
+	public static final String SET_5 = "button r:217, g:206, b:178 topBg r:213, g:222, b:217 bottomBg r:148, g:140, b:117";
+	
+	//These are constants used in help.java
+	public static final String HELP_FILE_PATH = "/resources/help.xml";
+	public static final String KEYBOARD_STRING = "keyboard";
+	public static final String NATURAL_STRING = "natural";
+	public static final String UNDO_STRING = "undo";
+	public static final String STORE_STRING = "store";
+	public static final String SEARCH_STRING = "search";
+	public static final String DISPLAY_STRING = "display";
+	public static final String DONE_STRING = "done";
+	public static final String EDIT_STRING = "edit";
+	public static final String DELETE_STRING = "delete";
+	public static final String ADD_STRING = "add";
+	public static final String WELCOME_STRING = "welcome";
+	public static final String FUNCTION = "function";
 }

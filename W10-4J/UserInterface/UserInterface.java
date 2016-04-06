@@ -30,32 +30,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import Parser.Parser;
+import main.Constants;
 
 
 public class UserInterface{
 	
 	private static final Color BLACK_COLOR = Color.BLACK;
 	private static final Color WHITE_COLOR = Color.WHITE;
-	private static final String EMPTY_STRING = "";
-	private static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";
-	private static final String COMMAND_LABEL_TEXT = " Command: ";
 	private static final int CMD_DISPLAY_INDEX = 1;
 	private static final int OUTPUT_DISPLAY_INDEX = 0;
 	private static final int OUTPUT_SIZE = 2;
-	
-	private static final String GUI_PREFERENCES_TOOLTIP = "Gui Preferences";
-	private static final String HELP_TOOLTIP = "Help";
-	private static final String ALL_TASKS_TOOLTIP = "All Tasks";
-	private static final String DONE_TASKS_TOOLTIP = "Done Tasks";
-	private static final String OVERDUE_TASKS_TOOLTIP = "Overdue Tasks";
-	private static final String HOME_TOOLTIP = "Home";
-	
-	private static final String SETTINGS_ICON_PATH = "/main/icon/settings.png";
-	private static final String HELP_ICON_PATH = "/main/icon/help.png";
-	private static final String ALL_ICON_PATH = "/main/icon/all.png";
-	private static final String DONE_ICON_PATH = "/main/icon/done.png";
-	private static final String OVERDUE_ICON_PATH = "/main/icon/overdue.png";
-	private static final String HOME_ICON_PATH = "/main/icon/home.png";
 	
 	private static final Color GRAY_COLOR = Color.gray;
 	
@@ -75,7 +59,7 @@ public class UserInterface{
 	
 	private static Color placeholderForeground = new Color(160, 160, 160);
 	
-	private static String focusString = EMPTY_STRING;
+	private static String focusString = Constants.EMPTY_STRING;
 	
 	private static ColorsForSettings colors = new ColorsForSettings();
 	
@@ -188,7 +172,7 @@ public class UserInterface{
 	}
 	
 	private static void commandTextSettings(){
-		commandText.setText(COMMAND_LABEL_TEXT);
+		commandText.setText(Constants.COMMAND_LABEL_TEXT);
 		if (fontFamily == null || fontSize == null){
 			font = commandText.getFont();
 		} else {
@@ -250,7 +234,7 @@ public class UserInterface{
             public void focusLost(FocusEvent e) {
                 if (cmdEntry.getText().trim().length() == 0) {
                 	setPlaceholderFontColor();
-                	focusString = EMPTY_STRING;
+                	focusString = Constants.EMPTY_STRING;
                 } else {
                 	focusString = cmdEntry.getText();
                 }
@@ -260,12 +244,12 @@ public class UserInterface{
 	
 	private static void setPlaceholderFontColor(){
 		cmdEntry.setForeground(placeholderForeground);
-		cmdEntry.setText(CMD_ENTRY_PLACEHOLDER_TEXT);
+		cmdEntry.setText(Constants.CMD_ENTRY_PLACEHOLDER_TEXT);
 	}
 	
 	private static void setOriginalColor(){
 		cmdEntry.setForeground(BLACK_COLOR);
-        cmdEntry.setText(EMPTY_STRING);
+        cmdEntry.setText(Constants.EMPTY_STRING);
 	}
     
     private static void textPaneSettings(JTextPane outputDisplay){
@@ -316,12 +300,12 @@ public class UserInterface{
     }
 
 	private static void setIconsForButtons() {
-		getAndSetIconsForButtons(HOME_ICON_PATH, homeButton);
-		getAndSetIconsForButtons(OVERDUE_ICON_PATH, overdueButton);
-		getAndSetIconsForButtons(DONE_ICON_PATH, doneButton);
-		getAndSetIconsForButtons(ALL_ICON_PATH, allButton);
-		getAndSetIconsForButtons(HELP_ICON_PATH, helpButton);
-		getAndSetIconsForButtons(SETTINGS_ICON_PATH, settingsButton);
+		getAndSetIconsForButtons(Constants.HOME_ICON_PATH, homeButton);
+		getAndSetIconsForButtons(Constants.OVERDUE_ICON_PATH, overdueButton);
+		getAndSetIconsForButtons(Constants.DONE_ICON_PATH, doneButton);
+		getAndSetIconsForButtons(Constants.ALL_ICON_PATH, allButton);
+		getAndSetIconsForButtons(Constants.HELP_ICON_PATH, helpButton);
+		getAndSetIconsForButtons(Constants.SETTINGS_ICON_PATH, settingsButton);
 	}
 	
 	private static void getAndSetIconsForButtons(String path, JButton button){
@@ -330,12 +314,12 @@ public class UserInterface{
 	}
 
 	private static void setToolTipForButtons() {
-		homeButton.setToolTipText(HOME_TOOLTIP);
-    	overdueButton.setToolTipText(OVERDUE_TASKS_TOOLTIP);
-    	doneButton.setToolTipText(DONE_TASKS_TOOLTIP);
-    	allButton.setToolTipText(ALL_TASKS_TOOLTIP);
-    	helpButton.setToolTipText(HELP_TOOLTIP);
-    	settingsButton.setToolTipText(GUI_PREFERENCES_TOOLTIP);
+		homeButton.setToolTipText(Constants.HOME_TOOLTIP);
+    	overdueButton.setToolTipText(Constants.OVERDUE_TASKS_TOOLTIP);
+    	doneButton.setToolTipText(Constants.DONE_TASKS_TOOLTIP);
+    	allButton.setToolTipText(Constants.ALL_TASKS_TOOLTIP);
+    	helpButton.setToolTipText(Constants.HELP_TOOLTIP);
+    	settingsButton.setToolTipText(Constants.GUI_PREFERENCES_TOOLTIP);
 	}
     
     private static void setWelcomeMessage(JTextPane outputDisplay){
