@@ -53,7 +53,6 @@ public class Valid {
 		}
 		try {
 			for (int i = 1; i < arguments.length; i += 2) {
-				System.out.println(arguments[i]);
 				if (!commandList_.getAddArgumentList().contains(arguments[i])) {
 					return false;
 				} else {

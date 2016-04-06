@@ -3,6 +3,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import Parser.Parser;
@@ -19,7 +21,7 @@ public class ParserTest {
 		command = "add cs2103 details comment on code";
 		commandTypeString = p.getFirstWord(command);
 		commandType = p.getAction(commandTypeString);
-		assertArrayEquals(new String[] { "cs2103", "details", "comment", "endtime" ,"code"}, p.getArguments(commandType, command));
+		assertArrayEquals(new String[] { "cs2103", "details", "comment on code"}, p.getArguments(commandType, command));
 
 
 		command = " add     123    date    today    ";
@@ -111,5 +113,16 @@ public class ParserTest {
 		command = "change";
 		assertEquals(COMMAND_TYPE.EDIT, p.getAction(p.getFirstWord(command)));
 	}
-
+	@Test
+	public void testSpecial() {
+		Parser p = new Parser();
+		
+		String command = "cs2103 tmr 1700 24 apr 1900 meet earlier";
+		ArrayList<String> token = new ArrayList<>();
+		String[] commandSplit = command.split(" ");
+		for(String s : commandSplit){
+			token.add(s);
+		}
+		assertEquals(null,p.parserSpecial(token));
+	}
 }
