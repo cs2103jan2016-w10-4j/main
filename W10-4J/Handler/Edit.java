@@ -15,7 +15,7 @@ public class Edit implements Command {
 	public String execute(String[] task) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = arraylistStorage_.getTaskByIndex(taskID);
+		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		if (eachTask == null) {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else if (taskID <= 0) {
@@ -26,9 +26,7 @@ public class Edit implements Command {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
-			int recurCounter = fieldEditor(eachTask, task); // fieldEditor edits
-															// the element
-															// itself
+			int recurCounter = fieldEditor(eachTask, task); // fieldEditor edits the element itself
 			if (recurCounter != -1 && eachTask.getStartDate() == null) {
 				eachTask.resetRecursion();
 				return Constants.MESSAGE_RECUR_FAIL;
@@ -129,11 +127,11 @@ public class Edit implements Command {
 		result.setDay(task.getDay());
 		return result;
 	}
-
+	//@@author A0140114A
 	private boolean isDateAndTimeValid(Task task) {
 		int starttime = task.getStartTimeInt();
 		int endtime = task.getEndTimeInt();
-		switch(task.isDateValid()){
+		switch (task.isDateValid()) {
 		case 1:
 			return true;
 		case -1:

@@ -302,7 +302,11 @@ public class ArraylistStorage {
 	}
 	
 	public Task getTaskByIndex(int i){
-		return notDoneStorage.get(i);
+		try{
+			return notDoneStorage.get(i);
+		} catch(IndexOutOfBoundsException e){
+			return null;
+		}
 	}
 
 	// Helper functions for compareTo method
