@@ -1,3 +1,5 @@
+//@@author A0135779M
+
 package main;
 
 import java.util.Calendar;
@@ -219,7 +221,7 @@ public class Task {
 
 	public int isDateValid() {
 		if (startdate_ == null || enddate_ == null) {
-			return -1;
+			return 1;
 		}
 		int startYear = Integer.parseInt(startdate_.split("/")[0]);
 		int startMonth = Integer.parseInt(startdate_.split("/")[1]);

@@ -28,7 +28,7 @@ public class ArraylistStorage {
 		this.previousInputStorage = new ArrayList<PreviousInput>();
 		this.sort = new Sorting();
 	}
-	//@@author
+	//@@author A0135779M
 	public ArrayList<Task> getNotDoneStorage() {
 		return this.notDoneStorage;
 	}
@@ -164,7 +164,7 @@ public class ArraylistStorage {
 		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;	
 		//@@author A0149174Y
 		return ((eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase())) || ((eachTask.getDetails().toLowerCase().startsWith(task[0].trim().toLowerCase()))));
-		//@@author 
+		//@@author A0135779M
 	}
 
 	// Search helper for each individual task with only name
@@ -173,7 +173,7 @@ public class ArraylistStorage {
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 		//@@author A0149174Y
 			return (eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()));
-			//@@author 
+		//@@author A0135779M
 	}
 
 	// ** SET DIR METHOD **
