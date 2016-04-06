@@ -178,7 +178,14 @@ public class ArraylistStorage {
 
 	// ** SET DIR METHOD **
 	public boolean setDirectory(String filePathName) {
-		return this.mainStorage.setDirectory(filePathName);
+		ArrayList<ArrayList<Task>> taskList = this.mainStorage.setDirectory(filePathName);
+		if (taskList != null) {
+			this.notDoneStorage = taskList.get(0);
+			this.doneStorage = taskList.get(1); 
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void clearNotDoneStorage() {

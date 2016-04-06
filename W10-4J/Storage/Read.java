@@ -73,8 +73,10 @@ public class Read {
 					index = Constants.MESSAGE_WRITE_READ_TASKDONE;
 				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) && !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) && index.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
 					addTaskIntoArrayList(content, readToDoTaskList);
-				} else {
+				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) && !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) && index.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
 					addTaskIntoArrayList(content, readDoneTaskList);
+				} else {
+					return null;
 				}
 			}
 			
@@ -82,7 +84,7 @@ public class Read {
 			readTaskList.add(readDoneTaskList);
 			LOGGER.log(Level.INFO, "Read all tasks successfully");
 			return readTaskList;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.log(Level.WARNING, "Unable to read all tasks");
 			return null;
 		}

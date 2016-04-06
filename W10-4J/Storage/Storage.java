@@ -100,7 +100,7 @@ public class Storage {
 		return readTaskList;
 	}
 	
-	public boolean setDirectory(String filePathName) {
+	public ArrayList<ArrayList<Task>> setDirectory(String filePathName) {
 		/*
 		 * Check if user has input the filename,
 		 * If it does not, a default file will be created
@@ -111,12 +111,13 @@ public class Storage {
 			filePathName = filePathName.concat("/" + Constants.setDirFileName);
 		}
 		
-		if (taskSetDirectory.setDirectory(filePathName)) {
+		ArrayList<ArrayList<Task>> taskList = taskSetDirectory.setDirectory(filePathName);
+		if (taskList != null) {
 			filename = filePathName;
 			taskWriter.updatePathSentence(filePathName);
-			return true;
+			return taskList;
 		} else {
-			return false;
+			return null;
 		}
 	}
 	
@@ -164,5 +165,15 @@ public class Storage {
 	// Needed for Handler when undo setdir
 	public String getCurrentFilename() {
 		return filename;
+	}
+	
+	// Needed for Handler when setdir
+	public static boolean checkFileEmpty(String filename) {
+		File file = new File(filename);
+		if(file.length() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
