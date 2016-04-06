@@ -26,9 +26,7 @@ public class Edit implements Command {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
-			int recurCounter = fieldEditor(eachTask, task); // fieldEditor edits
-															// the element
-															// itself
+			int recurCounter = fieldEditor(eachTask, task);
 			if (recurCounter != -1 && eachTask.getStartDate() == null) {
 				eachTask.resetRecursion();
 				return Constants.MESSAGE_RECUR_FAIL;

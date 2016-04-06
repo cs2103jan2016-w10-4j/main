@@ -64,7 +64,7 @@ public class IOxml {
 		File file = new File(Constants.ALIAS_FILENAME);
 		try {
 			FileOutputStream fileOut = new FileOutputStream(file);
-			properties.storeToXML(fileOut, "alias");
+			properties.storeToXML(fileOut, Constants.ALIAS_COMMENT_TAG);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

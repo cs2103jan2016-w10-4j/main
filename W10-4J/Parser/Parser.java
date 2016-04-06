@@ -41,7 +41,7 @@ public class Parser {
 	}
 
 	public String getFirstWord(String command) {
-		return command.trim().split(" ")[0];
+		return command.trim().split(Constants.WHITESPACE)[0];
 	}
 
 	public COMMAND_TYPE getAction(String command) {
@@ -138,17 +138,17 @@ public class Parser {
 
 	public String[] compactArguments(ArrayList<String> token, ArrayList<String> argumentList) {
 		ArrayList<String> arguments = new ArrayList<>();
-		String temp = "";
+		String temp = Constants.EMPTY_STRING;
 		for (int i = 0; i < token.size(); i++) {
 			if (argumentList.contains(token.get(i))) {
 				if (temp.length() != 0) {
 					arguments.add(temp);
-					temp = "";
+					temp = Constants.EMPTY_STRING;
 				}
 				arguments.add(token.get(i));
 			} else {
 				if (temp.length() != 0) {
-					temp += " ";
+					temp += Constants.WHITESPACE;
 				}
 				temp += token.get(i);
 			}

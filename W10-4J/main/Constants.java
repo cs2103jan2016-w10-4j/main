@@ -52,6 +52,7 @@ public class Constants {
 	public static final String WHITESPACE = " ";
 	public static final String COMMA = ",";
 	public static final String DASH = "-";
+	public static final String ALIAS_COMMENT_TAG = "alias";
 	public static final String DATE_FORMAT = "%04d/%02d/%02d";
 	public static final String TIME_FORMAT = "%02d:%02d";
 	
