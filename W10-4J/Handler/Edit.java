@@ -15,7 +15,7 @@ public class Edit implements Command {
 	public String execute(String[] task) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = arraylistStorage_.findByTaskIDNotDoneStorage(taskID);
+		Task eachTask = arraylistStorage_.getTaskByIndex(taskID);
 		if (eachTask == null) {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else if (taskID <= 0) {

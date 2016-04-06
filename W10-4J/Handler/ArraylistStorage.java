@@ -300,6 +300,10 @@ public class ArraylistStorage {
 			isSame = false;
 		}
 	}
+	
+	public Task getTaskByIndex(int i){
+		return notDoneStorage.get(i);
+	}
 
 	// Helper functions for compareTo method
 	private boolean compareTo(Task task1, Task task2) {

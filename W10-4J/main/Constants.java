@@ -17,7 +17,7 @@ public class Constants {
 	public static final String[] setdirDefaultCommandList = { "setdir", "cd", "setdirectory", "set directory" };
 	public static final String[] retrieveDefaultCommandList = { "storage", "get", "open", "grab", "grep", "retrieve" };
 	public static final String[] recurrenceDefaultCommandList = { "recurrence", "recur", "repeat", "r" };
-	public static final String[] undoDefaultCommandList = { "undo", "whoops", "mb" };
+	public static final String[] undoDefaultCommandList = { "undo", "whoops", "mb", "redo" };
 	public static final String[] exitDefaultCommandList = { "exit", "quit", "q" };
 	public static final String[] helpDefaultCommandList = { "help", "h", "?" };
 	public static final String[] aliasDefaultCommandList = { "alias", "set" };
