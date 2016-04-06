@@ -24,7 +24,7 @@ public class Parser {
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
-			return "1" + Constants.MESSAGE_UNRECOGNISED_COMMAND;
+			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
 //		for (String s : arguments) {
@@ -36,7 +36,7 @@ public class Parser {
 		}
 		if (commandType == COMMAND_TYPE.ALIAS) {
 			setAlias(arguments);
-			return "1" + Constants.MESSAGE_ALIAS_PASS;
+			return Constants.MESSAGE_ALIAS_PASS;
 		}
 //		for (String s : arguments) {
 //			System.out.print(s +",");
@@ -44,9 +44,9 @@ public class Parser {
 //		System.out.println("*");
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
-			return "0" + handler_.executeCommand(commandType, arguments);
+			return handler_.executeCommand(commandType, arguments);
 		} else {
-			return "1" + handler_.executeCommand(commandType, arguments);
+			return handler_.executeCommand(commandType, arguments);
 		}
 	}
 

@@ -47,29 +47,29 @@ public class Constants {
 	public static final String[] day = new String[] { "mon", "tues", "wed", "thurs", "fri", "sat", "sun", "m", "t", "w",
 			"f", "s", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
-	public static final String MESSAGE_UNRECOGNISED_COMMAND = ("Unrecognized command type");
-	public static final String MESSAGE_INVALID_FORMAT = ("Invalid command format");
-	public static final String MESSAGE_INVALID_DATE = ("Invalid date format");
-	public static final String MESSAGE_INVALID_TIME = ("Invalid time format");
+	public static final String MESSAGE_UNRECOGNISED_COMMAND = ("2Unrecognized command type");
+	public static final String MESSAGE_INVALID_FORMAT = ("2Invalid command format");
+	public static final String MESSAGE_INVALID_DATE = ("2Invalid date format");
+	public static final String MESSAGE_INVALID_TIME = ("2Invalid time format");
 //@@author A0135779M
-	public static final String MESSAGE_ADD_PASS = ("%1$s has been added.");
-	public static final String MESSAGE_DELETE_PASS = ("%1$s has been deleted.");
-	public static final String MESSAGE_DELETE_FAIL = ("Task cannot be deleted.");
-	public static final String MESSAGE_EDIT_PASS = ("%1$s has been edited.");
-	public static final String MESSAGE_EDIT_FAIL = ("Task to be edited does not exist.");
-	public static final String MESSAGE_DONE_PASS = ("%1$s has been set to done.");
-	public static final String MESSAGE_DONE_FAIL = ("%1$s cannot be set to done.");
-	public static final String MESSAGE_SEARCH_PASS = ("Search successful.");
-	public static final String MESSAGE_SEARCH_FAIL = ("Search unsuccessful.");
-	public static final String MESSAGE_UNDO_PASS = ("Undo successful.");
-	public static final String MESSAGE_UNDO_FAIL = ("Nothing to undo");
-	public static final String MESSAGE_RETRIEVE_PASS = ("Retrieve successful.");
-	public static final String MESSAGE_RETRIEVE_FAIL = ("Retrieve unsuccessful.");
-	public static final String MESSAGE_SETDIR_PASS = ("Set directory successful.");
-	public static final String MESSAGE_SETDIR_FAIL = ("Set directory unsuccessful.");
-	public static final String MESSAGE_TIME_FAIL = ("Start time must be before end time.");
-	public static final String MESSAGE_RECUR_FAIL = ("Start date must exist for recurrance to occur.");
-	public static final String MESSAGE_ALIAS_PASS = ("Alias set successfully.");
+	public static final String MESSAGE_ADD_PASS = ("1%1$s has been added.");
+	public static final String MESSAGE_DELETE_PASS = ("1%1$s has been deleted.");
+	public static final String MESSAGE_DELETE_FAIL = ("2Task cannot be deleted.");
+	public static final String MESSAGE_EDIT_PASS = ("1%1$s has been edited.");
+	public static final String MESSAGE_EDIT_FAIL = ("2Task to be edited does not exist.");
+	public static final String MESSAGE_DONE_PASS = ("1%1$s has been set to done.");
+	public static final String MESSAGE_DONE_FAIL = ("2%1$s cannot be set to done.");
+	public static final String MESSAGE_SEARCH_PASS = ("1Search successful.");
+	public static final String MESSAGE_SEARCH_FAIL = ("2Search unsuccessful.");
+	public static final String MESSAGE_UNDO_PASS = ("1Undo successful.");
+	public static final String MESSAGE_UNDO_FAIL = ("2Nothing to undo");
+	public static final String MESSAGE_RETRIEVE_PASS = ("1Retrieve successful.");
+	public static final String MESSAGE_RETRIEVE_FAIL = ("2Retrieve unsuccessful.");
+	public static final String MESSAGE_SETDIR_PASS = ("1Set directory successful.");
+	public static final String MESSAGE_SETDIR_FAIL = ("2Set directory unsuccessful.");
+	public static final String MESSAGE_TIME_FAIL = ("2Start time must be before end time.");
+	public static final String MESSAGE_RECUR_FAIL = ("2Start date must exist for recurrance to occur.");
+	public static final String MESSAGE_ALIAS_PASS = ("1Alias set successfully.");
 
 	public static final String MESSAGE_ADD_ACTION_STARTDATE = ("startdate");
 	public static final String MESSAGE_ADD_ACTION_ENDDATE = ("enddate");

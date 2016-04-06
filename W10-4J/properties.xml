@@ -3,11 +3,11 @@
 <properties>
 <comment>colors</comment>
 <entry key="fontFamily">Times New Roman</entry>
-<entry key="colorOption">option4</entry>
-<entry key="buttonsColor"> r:254, g:109, b:93  </entry>
+<entry key="colorOption">default</entry>
+<entry key="buttonsColor"> r:217, g:206, b:178 </entry>
 <entry key="fontSize">14</entry>
 <entry key="bottomFontColor">#000000 r:0, g:0, b:0</entry>
-<entry key="bottomBg"> r:93, g:211, b:254</entry>
-<entry key="topBg"> r:254, g:216, b:93  </entry>
+<entry key="bottomBg"> r:148, g:140, b:117</entry>
+<entry key="topBg"> r:213, g:222, b:217 </entry>
 <entry key="topFontColor">#000000 r:0, g:0, b:0</entry>
 </properties>
