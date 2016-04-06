@@ -48,9 +48,13 @@ public class SetDirectory {
 				Path path = FileSystems.getDefault().getPath(filePathName);
 				createFile(file, path, filePathName);
 			}
+			
+			/* 
+			 * If the file contains information about the task, it will be read
+			 * and pass over to Handler, instead of overwriting the current data
+			 */
 			BufferedReader reader = new BufferedReader(new FileReader(filePathName));
 			taskList = taskReader.readFromFile(reader);
-			LOGGER.log(Level.INFO, "Set directory successfully");
 		} catch (IOException e) {
 			LOGGER.log(Level.WARNING, "Set directory unsuccessfully");
 			return null;

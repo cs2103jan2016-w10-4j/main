@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import main.Constants;
@@ -26,37 +26,33 @@ import main.Task;
 import Storage.Storage;
 import Storage.Write;
 
-public class WriteTest extends Write {
-	static ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
-	static ArrayList<Task> doneTaskList = new ArrayList<Task> ();
-	static ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+public class WriteTest {
+	ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
+	ArrayList<Task> doneTaskList = new ArrayList<Task> ();
+	ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
+	Write taskWriter = Write.getInstance();
+	
+	@Before
+	public void setUpBefore() throws Exception {
 		// Set up write class
 		Task a = new Task("A");
-		a.setTaskID(1);
 		a.setStartDate("1/4/2016");
 		
 		Task b = new Task("B");
-		b.setTaskID(2);
 		b.setStartDate("2/4/2016");
 		b.setEndDate("2/4/2016");
 		
 		Task c = new Task("C");		
-		c.setTaskID(3);
 		c.setStartDate("2/4/2016");
 		c.setEndDate("5/4/2016");
 		c.setStartTime("14:00");
 		c.setEndTime("18:00");
 		
 		Task d = new Task("D");
-		d.setTaskID(4);
 		d.setStartDate("2/4/2016");
 		d.setWeek(true);
 		
 		Task e = new Task("E");
-		e.setTaskID(5);
 		e.setStartDate("2/4/2016");
 		e.setEndDate("5/4/2016");
 		e.setStartTime("15:00");
@@ -88,7 +84,7 @@ public class WriteTest extends Write {
 		print.println("Start Date: 2/4/2016");
 		print.println("Week: true");
 		print.println("Tasks that are done:");
-		print.println("5. Event: E");
+		print.println("1. Event: E");
 		print.println("Start Date: 2/4/2016");
 		print.println("End Date: 5/4/2016");
 		print.println("Start Time: 15:00");
@@ -104,7 +100,7 @@ public class WriteTest extends Write {
 	}
 
 	public void testWriteToDefaultFile() throws NoSuchAlgorithmException, IOException {
-		writeToFile(toDoTaskList, doneTaskList);
+		taskWriter.writeToFile(toDoTaskList, doneTaskList);
 
 		String testFile = "testFile.txt";
 		String actualFile = Constants.DEFAULT_FILENAME;
@@ -116,16 +112,16 @@ public class WriteTest extends Write {
 
 	public void testWriteToOtherFileWithUpdatePath() throws NoSuchAlgorithmException, IOException {
 		boolean isSameFile = false;
-		Storage.filename = "list.txt";
-		writeToFile("list.txt", toDoTaskList, doneTaskList);
+		Storage.filename = "taskList.txt";
+		taskWriter.writeToFile("taskList.txt", toDoTaskList, doneTaskList);
 
 		String testFile = "testFile.txt";
-		String actualFile = "list.txt";
+		String actualFile = "taskList.txt";
 		byte[] digestTest = computeCheckSum(testFile);
 		byte[] digestActual = computeCheckSum(actualFile);
 
 		String pathContent = getPathContentFromDefaultFile();
-		if (checkSumEqual(digestTest, digestActual) && pathContent.equals("list.txt")) {
+		if (checkSumEqual(digestTest, digestActual) && pathContent.equals(actualFile)) {
 			isSameFile = true;
 		}
 		assertEquals(true, isSameFile);

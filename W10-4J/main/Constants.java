@@ -145,6 +145,7 @@ public class Constants {
 	public static final String MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG = ("<table width=\"100%\" style=\"margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
 	public static final String MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG = ("</table>");
 
+	public static final int MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST = (-1);
 	public static final String MESSAGE_COMMONFUNCTION_RETRIEVE = ("retrieve");
 	public static final String MESSAGE_COMMONFUNCTION_DONE = ("display done");
 	public static final String MESSAGE_COMMONFUNCTION_TABLE = ("display in table format");
@@ -234,7 +235,13 @@ public class Constants {
 	public static final String ASSERT_NULL_COMMAND = "Null command received";
 	public static final String ASSERT_VALID_TIME = "Invalid time returned by NaturalTime";
 	public static final String ASSERT_VALID_DATE = "Invalid date returned by NaturalDate";
+	
+	public static final String ASSERT_SETDIRECTORY_FILENAME_EMPTY = "Filename cannot be empty for set directory";
+	public static final String ASSERT_WRITE_ARRAYLISTS = "toDoTaskList and doneTaskList cannot be null";
+	public static final String ASSERT_READ_WRONGMETHOD_FILENAME_EMPTYNULL = "Method is not read or retrieve and Filename cannot be empty or null";
 
+	public static final String ASSERT_DISPLAY_ARRAYLISTS = "sortedList and previousInput cannot be null";
+	
 	// These constants are used in UserInterface package.
 	public static final String EMPTY_STRING = "";
 	public static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";

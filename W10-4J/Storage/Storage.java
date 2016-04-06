@@ -36,8 +36,8 @@ public class Storage {
 	}
 
 	/*
-	 * Check if file and directory exists before proceeding on to read
-	 * the content in the file
+	 * Check if file and directory exists before proceeding 
+	 * on to read the content in the file
 	 */
 	private void setEnvironment() {
 			createDefaultFile();
@@ -71,7 +71,10 @@ public class Storage {
 		}
 	}
 	
-	public void write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {		
+	public void write(ArrayList<Task> toDoTaskList, ArrayList<Task> doneTaskList) {	
+		assert toDoTaskList != null && doneTaskList != null 
+				: Constants.ASSERT_WRITE_ARRAYLISTS;
+		
 		if (filename.equals(Constants.DEFAULT_FILENAME)) {
 			taskWriter.writeToFile(toDoTaskList, doneTaskList);
 		} else {
@@ -81,8 +84,11 @@ public class Storage {
 	}
 
 	public ArrayList<ArrayList<Task>> read(String method, String nameOfTheFile) {
+		assert (method != Constants.MESSAGE_ACTION_RETRIEVE ||  method != Constants.MESSAGE_ACTION_READ) 
+		&& (nameOfTheFile != null && nameOfTheFile.length() != 0) 
+		: Constants.ASSERT_READ_WRONGMETHOD_FILENAME_EMPTYNULL;
+	
 		ArrayList<ArrayList<Task>> readTaskList = new ArrayList<ArrayList<Task>> ();
-		
 		if (method.equals(Constants.MESSAGE_ACTION_RETRIEVE)) {
 			// Called by Handler Retrieve
 			try {
@@ -92,22 +98,26 @@ public class Storage {
 				LOGGER.log(Level.WARNING, "File does not exist");
 				e.printStackTrace();
 			}
-		} else {
+		} else if (method.equals(Constants.MESSAGE_ACTION_READ)) {
 			// Normal reading from Storage.filename 
 			updateFilenameIfPathExists();
 			readTaskList = taskReader.readFromFile();
+		} else {
+			return null;
 		}
 		return readTaskList;
 	}
 	
 	public ArrayList<ArrayList<Task>> setDirectory(String filePathName) {
+		assert filePathName.length() != 0 : Constants.ASSERT_SETDIRECTORY_FILENAME_EMPTY;
+		
 		/*
 		 * Check if user has input the filename,
 		 * If it does not, a default file will be created
 		 */
 		int pathLength = filePathName.length();
 		String lastFourChar = filePathName.substring(pathLength - 4, pathLength);
-		if (!(lastFourChar.equalsIgnoreCase(Constants.MESSAGE_SETDIR_TEXTFILEEXT))){
+		if (!(lastFourChar.equalsIgnoreCase(Constants.MESSAGE_SETDIR_TEXTFILEEXT))) {
 			filePathName = filePathName.concat("/" + Constants.setDirFileName);
 		}
 		
@@ -115,10 +125,9 @@ public class Storage {
 		if (taskList != null) {
 			filename = filePathName;
 			taskWriter.updatePathSentence(filePathName);
-			return taskList;
-		} else {
-			return null;
+			LOGGER.log(Level.INFO, "Set directory successfully");
 		}
+		return taskList;
 	}
 	
 	/*
@@ -150,7 +159,7 @@ public class Storage {
 		filename = absolutePath;
 	}
 	
-	public static String checkFileExists(String filename) {		
+	private String checkFileExists(String filename) {		
 		String outcome;
 		File file = new File(filename);
 
@@ -165,15 +174,5 @@ public class Storage {
 	// Needed for Handler when undo setdir
 	public String getCurrentFilename() {
 		return filename;
-	}
-	
-	// Needed for Handler when setdir
-	public static boolean checkFileEmpty(String filename) {
-		File file = new File(filename);
-		if(file.length() == 0) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 }

@@ -18,6 +18,10 @@ public class Read {
 	private static Read read;
 	private Task task = null;
 	
+	// Build Empty Constructor
+	private Read() {
+	}
+	
 	// Show Singleton
 	public static Read getInstance() {
 		if (read == null) {
@@ -65,15 +69,20 @@ public class Read {
 				String path = content.substring(0, content.indexOf(" "));
 				if (path.equals(Constants.MESSAGE_WRITE_READ_PATH)) {
 					continue;
-				} else if (content.equals(Constants.MESSAGE_WRITE_READ_NOTASKDONE) || content.equals(Constants.MESSAGE_WRITE_READ_NOTASKONHAND)) {
+				} else if (content.equals(Constants.MESSAGE_WRITE_READ_NOTASKDONE) 
+						|| content.equals(Constants.MESSAGE_WRITE_READ_NOTASKONHAND)) {
 					continue;
 				} else if (content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
 					index = Constants.MESSAGE_WRITE_READ_TASKONHAND;
 				} else if (content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
 					index = Constants.MESSAGE_WRITE_READ_TASKDONE;
-				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) && !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) && index.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
+				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) 
+						&& !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) 
+						&& index.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
 					addTaskIntoArrayList(content, readToDoTaskList);
-				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) && !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) && index.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
+				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) 
+						&& !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) 
+						&& index.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
 					addTaskIntoArrayList(content, readDoneTaskList);
 				} else {
 					return null;
@@ -96,12 +105,8 @@ public class Read {
 		String lastThreeCharInEvent = "ent";
 		
 		if (lastThreeCharInTaskCategory.equals(lastThreeCharInEvent)) {
-			String numberingOnTask = content.substring(0, content.indexOf(".")).trim();
 			String taskName = content.substring(content.indexOf(": ") + 1).trim();
-			int taskID = Integer.parseInt(numberingOnTask);
-			
 			task = new Task(taskName);
-			task.setTaskID(taskID);
 			taskList.add(task);
 		} else {
 			setTaskDetails(taskList, content, task);

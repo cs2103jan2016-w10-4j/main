@@ -24,6 +24,10 @@ public class Write {
 	private BufferedReader reader;
 	private File tempFile;
 
+	// Build Empty Constructor
+	private Write() {
+	}
+	
 	// Show Singleton
 	public static Write getInstance() {
 		if (write == null) {
@@ -70,10 +74,9 @@ public class Write {
 	private void printTaskDetails(String taskCategory, ArrayList<Task> taskList) {		
 		print.println(taskCategory);
 		for (int i = 0; i < taskList.size(); i++) {
-			int taskID = taskList.get(i).getTaskID();
-			
+			int taskNumbering = i + 1;
 			if (!(taskList.get(i).getName() == null)) {
-				print.println(String.format(Constants.MESSAGE_WRITE_EVENT, taskID, taskList.get(i).getName()));
+				print.println(String.format(Constants.MESSAGE_WRITE_EVENT, taskNumbering, taskList.get(i).getName()));
 			}
 
 			if (!(taskList.get(i).getStartDate() == null)) {
