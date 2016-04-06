@@ -143,13 +143,22 @@ public class UIController {
 		printInCommandDisplay(cmdDisplay, command);
 		String output = p.parse(command);
 		assert output != null;
+		determiningDisplayToWhichDisplayOutput(cmdDisplay, displayOutput, p, output);
+		displayOutput.setCaretPosition(0);
+	}
+
+	private void determiningDisplayToWhichDisplayOutput(JTextArea cmdDisplay, JTextPane displayOutput, Parser p,
+			String output) {
 		if (isDisplay(output)) {
 			printInDisplayOutput(displayOutput, output.substring(1));
-		} else {
+		} else if (isCmdDisplay(output)){
 			printInCommandDisplay(cmdDisplay, output.substring(1));
 			printInDisplayOutput(displayOutput, p.parse(Constants.DISPLAY_COMMAND).substring(1));
+		} else if (isInvalidMessages(output)){
+			printInCommandDisplay(cmdDisplay, output.substring(1));
+		} else {
+			printInCommandDisplay(cmdDisplay, output.substring(1));
 		}
-		displayOutput.setCaretPosition(0);
 	}
 	
 	private static void stopTimer(Timer timer){
@@ -158,15 +167,16 @@ public class UIController {
 		}
 	}
 
-	private static boolean isInvalidMessages(String message) {
-		return message.equals(Constants.MESSAGE_INVALID_DATE) || message.equals(Constants.MESSAGE_INVALID_FORMAT)
-				|| message.equals(Constants.MESSAGE_INVALID_TIME)
-				|| message.equals(Constants.MESSAGE_UNRECOGNISED_COMMAND)
-				|| message.equals(Constants.MESSAGE_RECUR_FAIL);
-	}
-
 	public static boolean isDisplay(String s) {
 		return s.substring(0, 1).equals(Constants.IS_DISPLAY_FLAG);
+	}
+	
+	public static boolean isCmdDisplay(String s){
+		return s.substring(0, 1).equals(Constants.CMD_DISPLAY_FLAG);
+	}
+	
+	public static boolean isInvalidMessages(String s){
+		return s.substring(0, 1).equals(Constants.INVALID_MESSAGE_FLAG);
 	}
 
 	private static void printInCommandDisplay(JTextArea cmdDisplay, String content) {

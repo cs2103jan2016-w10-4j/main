@@ -241,6 +241,8 @@ public class Constants {
 	public static final String HOME_ICON_PATH = "/main/icon/home.png";
 	
 	public static final String IS_DISPLAY_FLAG = "0";
+	public static final String CMD_DISPLAY_FLAG = "1";
+	public static final String INVALID_MESSAGE_FLAG = "2";
 	public static final String DISPLAY_OVERDUE_COMMAND = "display overdue";
 	public static final String HELP_COMMAND = "help";
 	public static final String DISPLAY_TODAY_COMMAND = "display today";
