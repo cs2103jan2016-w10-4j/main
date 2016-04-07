@@ -12,11 +12,16 @@ import main.Constants;
 import main.Task;
  
 public class DisplayTableFormat {	
+	static ArrayList<Integer> taskIDForRecentTask;
 	public static String displayTableFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
 		
 		String output = "";
-		ArrayList<Integer> taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
+		if (previousInput.size()!= 0) {
+			taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
+		} else{
+			taskIDForRecentTask = new ArrayList<>();
+		}
 		
 		if (sortedList.size() == 0) {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTABLEFORMAT_NOTASKONHAND 
@@ -26,7 +31,7 @@ public class DisplayTableFormat {
 			
 			for (int i = 0; i < sortedList.size(); i++) {
 				Task task = sortedList.get(i);
-				output += getTask(i, task, taskIDForRecentTask);
+				output += getTask(i + 1, task, taskIDForRecentTask);
 			}
 			output += Constants.MESSAGE_DISPLAY_TABLECLOSETAG;
 		}
