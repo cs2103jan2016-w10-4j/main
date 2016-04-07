@@ -71,10 +71,8 @@ public class CommonFunctionInDisplay {
 		boolean isSameStartTime = compareStartTime(previousTask, currentTask);
 		boolean isSameEndTime = compareEndTime(previousTask, currentTask);
 		boolean isSameDetails = compareDetails(previousTask, currentTask);
-		boolean isSameTaskID = compareTaskID(previousTask, currentTask);
 
-		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails
-				&& isSameTaskID) {
+		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime && isSameEndTime && isSameDetails) {
 			return true;
 		}
 		return false;
@@ -195,10 +193,6 @@ public class CommonFunctionInDisplay {
 		}
 	}
 
-	private static boolean compareTaskID(Task previousTask, Task currentTask) {
-		return previousTask.getTaskID() == currentTask.getTaskID();
-	}
-
 	public static String determineColor(Task t) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -317,19 +311,29 @@ public class CommonFunctionInDisplay {
 				boolean found = false;
 				for (int j = 0; j < previousList.size(); j++) {
 					if (compareTasks(previousList.get(j), sortedList.get(i))) {
-//						System.out.println(previousList.get(j).getName() + sortedList.get(i).getName());
-//						System.out.println(previousList.get(j).getStartDate() + sortedList.get(i).getStartDate());
-//						System.out.println(previousList.get(j).getEndDate() + sortedList.get(i).getEndDate());
-//						System.out.println(previousList.get(j).getStartTime() + sortedList.get(i).getStartTime());
-//						System.out.println(previousList.get(j).getEndTime() + sortedList.get(i).getEndTime());
+						// System.out.println(previousList.get(j).getName() +
+						// sortedList.get(i).getName());
+						// System.out.println(previousList.get(j).getStartDate()
+						// + sortedList.get(i).getStartDate());
+						// System.out.println(previousList.get(j).getEndDate() +
+						// sortedList.get(i).getEndDate());
+						// System.out.println(previousList.get(j).getStartTime()
+						// + sortedList.get(i).getStartTime());
+						// System.out.println(previousList.get(j).getEndTime() +
+						// sortedList.get(i).getEndTime());
 						found = true;
 						continue;
 					} else {
-//						System.out.println(previousList.get(j).getName() + " " + sortedList.get(i).getName());
-//						System.out.println(previousList.get(j).getStartDate() + sortedList.get(i).getStartDate());
-//						System.out.println(previousList.get(j).getEndDate() + sortedList.get(i).getEndDate());
-//						System.out.println(previousList.get(j).getStartTime() + sortedList.get(i).getStartTime());
-//						System.out.println(previousList.get(j).getEndTime() + sortedList.get(i).getEndTime());
+						// System.out.println(previousList.get(j).getName() + "
+						// " + sortedList.get(i).getName());
+						// System.out.println(previousList.get(j).getStartDate()
+						// + sortedList.get(i).getStartDate());
+						// System.out.println(previousList.get(j).getEndDate() +
+						// sortedList.get(i).getEndDate());
+						// System.out.println(previousList.get(j).getStartTime()
+						// + sortedList.get(i).getStartTime());
+						// System.out.println(previousList.get(j).getEndTime() +
+						// sortedList.get(i).getEndTime());
 					}
 				}
 				if (!found) {

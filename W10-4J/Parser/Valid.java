@@ -48,7 +48,7 @@ public class Valid {
 	}
 
 	public boolean isAddValid(String[] arguments) {
-		if (arguments.length == 0) {
+		if (arguments == null || arguments.length == 0) {
 			return false;
 		}
 		try {

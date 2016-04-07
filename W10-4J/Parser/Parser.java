@@ -341,7 +341,7 @@ public class Parser {
 
 		// Build output
 		ArrayList<String> output = new ArrayList<>();
-		if (!name.equals("")) {
+		if (name != null) {
 			output.add(name);
 		} else {
 			return null;
@@ -374,7 +374,6 @@ public class Parser {
 		for (int i = 0; i < output.size(); i++) {
 			out[i] = output.get(i);
 		}
-		System.out.println(output);
 		return out;
 	}
 }
