@@ -116,9 +116,13 @@ public class Storage {
 		 * If it does not, a default file will be created
 		 */
 		int pathLength = filePathName.length();
-		String lastFourChar = filePathName.substring(pathLength - 4, pathLength);
-		if (!(lastFourChar.equalsIgnoreCase(Constants.MESSAGE_SETDIR_TEXTFILEEXT))) {
+		if(pathLength <= (Constants.MESSAGE_SETDIR_TEXTFILEEXT.length())) {
 			filePathName = filePathName.concat("/" + Constants.setDirFileName);
+		} else {
+			String lastFourChar = filePathName.substring(pathLength - 4, pathLength);
+			if (!(lastFourChar.equalsIgnoreCase(Constants.MESSAGE_SETDIR_TEXTFILEEXT))) {
+				filePathName = filePathName.concat("/" + Constants.setDirFileName);
+			}
 		}
 		
 		ArrayList<ArrayList<Task>> taskList = taskSetDirectory.setDirectory(filePathName);
