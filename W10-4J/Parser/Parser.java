@@ -10,11 +10,13 @@ public class Parser {
 	private Handler handler_;
 	private Valid valid_;
 	private CommandList commandList_;
+	private NaturalLanguage naturalLanguage_;
 
 	public Parser() {
 		commandList_ = CommandList.getInstance();
 		handler_ = new Handler();
 		valid_ = new Valid(commandList_);
+		naturalLanguage_ = new NaturalLanguage(commandList_);
 	}
 
 	public String parse(String command) {
@@ -107,10 +109,11 @@ public class Parser {
 			// replaceModifiers(tokens);
 			// return compactArguments(tokens,
 			// commandList_.getAddArgumentList());
-			return parserSpecial(tokens);
+			return naturalLanguage_.interpretAddArguments(tokens);
 		} else if (commandType == COMMAND_TYPE.EDIT) {
 			replaceModifiers(tokens);
 			return compactArguments(tokens, commandList_.getEditArgumentList());
+			//return naturalLanguage_.interpretEditArguments(tokens);
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
 			return compactArguments(tokens, commandList_.getDisplayArgumentList());
 		} else if (commandType == COMMAND_TYPE.SEARCH) {
@@ -204,176 +207,5 @@ public class Parser {
 
 	public int getNumberOfTaskDone() {
 		return handler_.getNumberOfTaskDone();
-	}
-
-	public String[] parserSpecial(ArrayList<String> token) {
-		NaturalDate ndate = new NaturalDate();
-		NaturalTime ntime = new NaturalTime();
-		String name = null, startdate = null, starttime = null, enddate = null, endtime = null, details = null;
-		String recurtype = null;
-		int recurCount = -1;
-
-		// Isolate Recurrence
-		for (int i = 0; i < token.size(); i++) {
-			String s = token.get(i);
-			if (commandList_.getRecurrenceArgumentList().contains(s)) {
-				try {
-					recurCount = Integer.parseInt(token.get(i + 1));
-					if (recurCount <= 1) {
-						throw new NumberFormatException();
-					} else {
-						recurtype = s;
-						token.set(i, null);
-						token.set(i + 1, null);
-					}
-				} catch (NumberFormatException e) {
-					recurCount = -1;
-					recurtype = null;
-				} catch (IndexOutOfBoundsException e) {
-					recurCount = -1;
-					recurtype = null;
-				}
-			}
-		}
-
-		// Isolate Date
-		for (int i = 1; i <= token.size(); i++) {
-			ArrayList<String> tempToken = new ArrayList<>();
-			for (int j = 0; j < token.size(); j++) {
-				String tempString = "";
-				for (int k = 0; k < i; k++) {
-					try {
-						if (tempString.equals("")) {
-							tempString += token.get(j + k);
-						} else {
-							tempString += " " + token.get(j + k);
-						}
-					} catch (Exception e) {
-						break;
-					}
-				}
-				tempToken.add(tempString);
-			}
-			for (String s : tempToken) {
-				String date = ndate.getDate(s);
-				if (date != null) {
-					if (startdate == null) {
-						startdate = date;
-						for (String str : s.split(" ")) {
-							token.set(token.indexOf(str), null);
-						}
-					} else if (enddate == null) {
-						enddate = date;
-						for (String str : s.split(" ")) {
-							token.set(token.indexOf(str), null);
-						}
-					}
-				}
-			}
-		}
-
-		// Isolate Time
-		for (int i = 1; i <= token.size(); i++) {
-			ArrayList<String> tempToken = new ArrayList<>();
-			for (int j = 0; j < token.size(); j++) {
-				String tempString = "";
-				for (int k = 0; k < i; k++) {
-					try {
-						String toAdd = token.get(j + k);
-						if (toAdd == null) {
-							break;
-						}
-						tempString += toAdd;
-					} catch (Exception e) {
-						break;
-					}
-				}
-				if (tempString != "") {
-					tempToken.add(tempString);
-				}
-			}
-			for (String s : tempToken) {
-				String time = ntime.getTime(s);
-				if (time != null) {
-					if (starttime == null) {
-						starttime = time;
-						for (String str : s.split(" ")) {
-							token.set(token.indexOf(str), null);
-						}
-					} else if (endtime == null) {
-						endtime = time;
-						for (String str : s.split(" ")) {
-							token.set(token.indexOf(str), null);
-						}
-					}
-				}
-			}
-		}
-
-		// Isolate Name and Details
-		ArrayList<String> tempToken = new ArrayList<>();
-		String tempString = "";
-		for (int i = 0; i < token.size(); i++) {
-			String s = token.get(i);
-			if (s == null) {
-				if (!tempString.equals("")) {
-					tempToken.add(tempString);
-					tempString = "";
-				}
-			} else {
-				if (tempString.equals("")) {
-					tempString += s;
-				} else {
-					tempString += " " + s;
-				}
-			}
-		}
-		if (!tempString.equals("")) {
-			tempToken.add(tempString);
-		}
-		switch (tempToken.size()) {
-		case 2:
-			details = tempToken.get(1);
-		case 1:
-			name = tempToken.get(0);
-			break;
-		}
-
-		// Build output
-		ArrayList<String> output = new ArrayList<>();
-		if (name != null) {
-			output.add(name);
-		} else {
-			return null;
-		}
-		if (startdate != null) {
-			output.add("startdate");
-			output.add(startdate);
-		}
-		if (enddate != null) {
-			output.add("enddate");
-			output.add(enddate);
-		}
-		if (starttime != null) {
-			output.add("starttime");
-			output.add(starttime);
-		}
-		if (endtime != null) {
-			output.add("endtime");
-			output.add(endtime);
-		}
-		if (details != null) {
-			output.add("details");
-			output.add(details);
-		}
-		if (recurCount > 1 && recurtype != null) {
-			output.add("repeat");
-			output.add(recurtype + " " + Integer.toString(recurCount));
-		}
-		String[] out = new String[output.size()];
-		for (int i = 0; i < output.size(); i++) {
-			out[i] = output.get(i);
-		}
-		return out;
 	}
 }
