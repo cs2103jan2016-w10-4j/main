@@ -17,7 +17,6 @@ public class PreviousInput {
 	// only for setdir method
 	private String fileName_;
 	//private String newFileName_;
-	private ArrayList<Integer> changes_;
 
 	public PreviousInput(String action, Task task) {
 		action_ = action;
@@ -90,15 +89,4 @@ public class PreviousInput {
 	public void setPreviousDoneStorage(ArrayList<Task> doneStorage){
 		previousDoneStorage_ = doneStorage;
 	}
-	
-//	public ArrayList<Integer> getChanges(){
-//		if(changes_!=null){
-//			ArrayList<Integer> output = new ArrayList<>();
-//			output.addAll(changes_);
-//			changes_.clear();
-//			return output;
-//		} else{
-//			return changes_;
-//		}
-//	}
 }

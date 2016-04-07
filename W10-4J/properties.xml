@@ -2,12 +2,12 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>colors</comment>
-<entry key="fontFamily">Arimo</entry>
-<entry key="colorOption">option2</entry>
-<entry key="buttonsColor"> r:241, g:243, b:206 </entry>
+<entry key="fontFamily">Lucida Sans Unicode</entry>
+<entry key="colorOption">option1</entry>
+<entry key="buttonsColor"> r:218, g:216, b:167 </entry>
 <entry key="fontSize">14</entry>
 <entry key="bottomFontColor">#000000 r:0, g:0, b:0</entry>
-<entry key="bottomBg"> r:243, g:220, b:206</entry>
-<entry key="topBg"> r:206, g:223, b:243 </entry>
+<entry key="bottomBg"> r:127, g:199, b:175</entry>
+<entry key="topBg"> r:255, g:158, b:157 </entry>
 <entry key="topFontColor">#000000 r:0, g:0, b:0</entry>
 </properties>
