@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- @@author A0113761M -->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="welcome"><![CDATA[
@@ -98,14 +99,10 @@ To keep track of all the tasks you have on hand, and to list tasks that you have
 <entry key="search"><![CDATA[
 <h2> Simple Search </h2>
 A simple text search for finding an item if the user remembers some keywords from the item description.
-To search for a keyword and excluding another, use this command: <br>
+To search for a keyword, use this command: <br>
 <span style="background-color:#E5E4E2;"><b>search</b> &#60keyword&#62 </span>
 	<ul><li>Examples:<br>
 		<span style="background-color:#E5E4E2;"><b>search</b> task</span></li></ul>
-To search for a keyword, use this command:<br>
-<span style="background-color:#E5E4E2;"><b>search</b> &#60keyword&#62</span>
-	<ul><li>Examples:<br>
-		<span style="background-color:#E5E4E2;"><b>search</b> task </span></li></ul>
 ]]></entry>
 
 <entry key="storage"><![CDATA[
