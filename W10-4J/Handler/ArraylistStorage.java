@@ -358,9 +358,6 @@ public class ArraylistStorage {
 	// ** DISPLAY METHOD **
 	public String getNotDoneDisplayFormatByStartDate() {
 		sortNotDoneStorageByStartDateAndName();
-		for (int i = 0; i < this.notDoneStorage.size(); i++){
-			System.out.println(this.notDoneStorage.get(i).getName());
-		}
 		return DisplayStartDate.displayFormat(sort, this.notDoneStorage, this.previousInputStorage);
 	}
 
