@@ -369,7 +369,7 @@ public class ArraylistStorage {
 	}
 
 	public String getDoneDisplayFormatByDefault() {
-		return DisplayDone.displayDoneFormat(this.doneStorage, this.previousInputStorage);
+		return DisplayDone.displayDoneFormat(this.doneStorage, this.previousInputStorage, getNotDoneStorageSize());
 	}
 
 	public String getNotDoneDisplayFormatByOverdue() {

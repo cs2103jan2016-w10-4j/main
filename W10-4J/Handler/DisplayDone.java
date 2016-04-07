@@ -12,12 +12,11 @@ import main.Constants;
 import main.Task;
 
 public class DisplayDone {
-	public static String displayDoneFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
+	public static String displayDoneFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput, int notDoneStorageSize) {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
 		
 		String output = "";
 		ArrayList<Integer> taskIDForRecentTask;
-		
 		if (previousInput.size() != 0) {
 			taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
 		} else {
@@ -34,7 +33,7 @@ public class DisplayDone {
 
 			for (int i = 0; i < sortedList.size(); i++) {
 				Task task = sortedList.get(i);
-				output += getTask(i, task, taskIDForRecentTask);
+				output += getTask(notDoneStorageSize + i + 1, task, taskIDForRecentTask);
 			}
 
 			output += Constants.MESSAGE_DISPLAY_TABLECLOSETAG;
