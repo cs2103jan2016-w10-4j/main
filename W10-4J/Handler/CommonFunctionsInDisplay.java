@@ -14,6 +14,10 @@ import main.Constants;
 import main.Task;
 
 public class CommonFunctionsInDisplay {
+	//@@author A0126129J-unused
+	/* This method is implemented previously for highlights when 
+	 * <PreviousInput> store task object instead of the state
+	 */
 	public static int checkRecentUpdatedTaskID(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
 		int taskID = Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST;
 
@@ -54,6 +58,7 @@ public class CommonFunctionsInDisplay {
 		return taskID;
 	}
 
+	//@@author A0126129J
 	private static boolean compareTasks(Task previousTask, Task currentTask) {
 		boolean isSameName = compareName(previousTask, currentTask);
 		boolean isSameStartDate = compareStartDate(previousTask, currentTask);
@@ -290,6 +295,7 @@ public class CommonFunctionsInDisplay {
 		ArrayList<Task> previousList = previousInput.get(0).getPreviousNotDoneStorage();
 		ArrayList<Integer> output = new ArrayList<>();
 		
+		// When user first add a task into the empty file
 		if (previousList.size() != 0) {
 			output = addNotFoundTaskToArraylist(sortedList, previousList);
 		} else {

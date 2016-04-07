@@ -17,6 +17,7 @@ public class DisplayDone {
 		
 		String output = "";
 		ArrayList<Integer> taskIDForRecentTask;
+		
 		if (previousInput.size() != 0) {
 			taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
 		} else {
@@ -31,16 +32,21 @@ public class DisplayDone {
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG + Constants.MESSAGE_DISPLAY_SPACING
 					+ Constants.MESSAGE_DISPLAY_TABLEANDHEADER;
 
-			for (int i = 0; i < sortedList.size(); i++) {
-				Task task = sortedList.get(i);
-				output += getTask(notDoneStorageSize + i + 1, task, taskIDForRecentTask);
-			}
-
+			output = displayToOutput(output, sortedList, taskIDForRecentTask, notDoneStorageSize);
 			output += Constants.MESSAGE_DISPLAY_TABLECLOSETAG;
 		}
 		return output;
 	}
 
+	private static String displayToOutput(String output, ArrayList<Task> sortedList, 
+			ArrayList<Integer> taskIDForRecentTask, int notDoneStorageSize) {
+		for (int i = 0; i < sortedList.size(); i++) {
+			Task task = sortedList.get(i);
+			output += getTask(notDoneStorageSize + i + 1, task, taskIDForRecentTask);
+		}
+		return output;
+	}
+	
 	private static String getTask(int index, Task task, ArrayList<Integer> taskIDForRecentTask) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		String repeat = CommonFunctionsInDisplay.assignRepeat(task);

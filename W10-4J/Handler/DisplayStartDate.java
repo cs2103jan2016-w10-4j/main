@@ -30,8 +30,8 @@ public class DisplayStartDate {
 	static ArrayList<Task> taskWithNoStartDateList;
 	static ArrayList<Task> taskWithStartDateList;
 	static ArrayList<Task> multiDayTaskList;
-	static ArrayList<String[]> currentDayTaskList;
 	static ArrayList<Task> sortedTaskList;
+	static ArrayList<String[]> currentDayTaskList;
 	static ArraylistStorage arraylistStorage_;
 	static HashMap <Task, Integer> multiDayTaskListIndex;
 	static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -39,8 +39,8 @@ public class DisplayStartDate {
 	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList, 
 			ArrayList<PreviousInput> previousInput) {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
-		initializeVariables();
 		
+		initializeVariables();
 		if (sortedList.size() == 0) {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND 
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
@@ -53,13 +53,11 @@ public class DisplayStartDate {
 			
 			separateToRespectiveArrayList(sortedList, sort);
 			while (!(taskWithStartDateList.isEmpty())) {
-				sort.sortByStartDateAndName(taskWithStartDateList);
 				displayStartDateTasks();
 				sort.sortByStartDateAndName(taskWithStartDateList);
 			}
 		
 			if (!(taskWithNoStartDateList.isEmpty())) {
-				sort.sortByName(taskWithNoStartDateList);
 				displayNoStartDateTasks();
 				sort.sortByName(taskWithNoStartDateList);
 			}
@@ -76,8 +74,8 @@ public class DisplayStartDate {
 		taskWithNoStartDateList = new ArrayList<Task>();
 		taskWithStartDateList = new ArrayList<Task>();
 		multiDayTaskList = new ArrayList<Task>();
-		currentDayTaskList = new ArrayList<String[]>();
 		sortedTaskList = new ArrayList<Task>();
+		currentDayTaskList = new ArrayList<String[]>();
 		multiDayTaskListIndex = new HashMap<Task, Integer>();
 	}
 	
@@ -255,16 +253,13 @@ public class DisplayStartDate {
 		String color = CommonFunctionsInDisplay.determineColor(task);
 		String repeat = CommonFunctionsInDisplay.assignRepeat(task);
 		
-		int index;
 		if(task.isMultiDay()) {
-			index = getMultiDayTaskIndex(task);
-			String[] out = {String.valueOf(index), CommonFunctionsInDisplay.getTaskDetails(index, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE)};
-			currentDayTaskList.add(out);
-			//currentDayTaskList.add(index + CommonFunctionsInDisplay.getTaskDetails(index, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE));
+			int multiDayIndex = getMultiDayTaskIndex(task);
+			String[] currentDayOutput = {String.valueOf(multiDayIndex), CommonFunctionsInDisplay.getTaskDetails(multiDayIndex, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE)};
+			currentDayTaskList.add(currentDayOutput);
 		} else {
-			String[] out = {String.valueOf(currentIndex), CommonFunctionsInDisplay.getTaskDetails(currentIndex, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE)};
-			currentDayTaskList.add(out);
-			//currentDayTaskList.add(currentIndex + CommonFunctionsInDisplay.getTaskDetails(currentIndex, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE));
+			String[] currentDayOutput = {String.valueOf(currentIndex), CommonFunctionsInDisplay.getTaskDetails(currentIndex, task, color, repeat, taskIDForRecentTask, Constants.MESSAGE_DISPLAYSTARTDATE_STARTDATE)};
+			currentDayTaskList.add(currentDayOutput);
 			currentIndex += 1;
 		}
 	}

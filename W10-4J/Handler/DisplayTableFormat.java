@@ -28,12 +28,18 @@ public class DisplayTableFormat {
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		} else {
 			output = Constants.MESSAGE_DISPLAY_TABLEANDHEADER;
-			
-			for (int i = 0; i < sortedList.size(); i++) {
-				Task task = sortedList.get(i);
-				output += getTask(i + 1, task, taskIDForRecentTask);
-			}
+			output = displayToOutput(output, sortedList, taskIDForRecentTask);
 			output += Constants.MESSAGE_DISPLAY_TABLECLOSETAG;
+		}
+		return output;
+	}
+	
+	private static String displayToOutput(String output, ArrayList<Task> sortedList, 
+			ArrayList<Integer> taskIDForRecentTask) {
+		
+		for (int i = 0; i < sortedList.size(); i++) {
+			Task task = sortedList.get(i);
+			output += getTask(i + 1, task, taskIDForRecentTask);
 		}
 		return output;
 	}
