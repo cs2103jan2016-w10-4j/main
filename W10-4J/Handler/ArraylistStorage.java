@@ -357,6 +357,10 @@ public class ArraylistStorage {
 
 	// ** DISPLAY METHOD **
 	public String getNotDoneDisplayFormatByStartDate() {
+		sortNotDoneStorageByStartDateAndName();
+		for (int i = 0; i < this.notDoneStorage.size(); i++){
+			System.out.println(this.notDoneStorage.get(i).getName());
+		}
 		return DisplayStartDate.displayFormat(sort, this.notDoneStorage, this.previousInputStorage);
 	}
 
@@ -383,5 +387,21 @@ public class ArraylistStorage {
 	public void sortNotDoneStorageByID() {
 		sort.sortByID(this.notDoneStorage);
 	}
-
+	
+	public void sortNotDoneStorageByStartDateAndName(){
+		ArrayList<Task> taskWithNoStartDateList = new ArrayList<Task>();
+		ArrayList<Task> taskWithStartDateList = new ArrayList<Task>();
+		for (int i = 0; i < this.notDoneStorage.size(); i++) {
+			Task task = this.notDoneStorage.get(i);
+			if (task.getStartDate() == null) {
+				taskWithNoStartDateList.add(task);
+			} else {
+				taskWithStartDateList.add(task);
+			}
+		}
+		sort.sortByStartDateAndName(taskWithStartDateList);
+		sort.sortByName(taskWithNoStartDateList);
+		taskWithStartDateList.addAll(taskWithNoStartDateList);
+		this.notDoneStorage = taskWithStartDateList;
+	}
 }

@@ -30,13 +30,14 @@ public class DisplayStartDate {
 	static ArrayList<Task> taskWithStartDateList;
 	static ArrayList<Task> multiDayTaskList;
 	static ArrayList<String> currentDayTaskList;
+	static ArrayList<Task> sortedTaskList;
+	static ArraylistStorage arraylistStorage_;
 	static HashMap <Task, Integer> multiDayTaskListIndex;
 	static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
 	public static String displayFormat(Sorting sort, ArrayList<Task> sortedList, 
 			ArrayList<PreviousInput> previousInput) {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
-		
 		initializeVariables();
 		
 		if (sortedList.size() == 0) {
@@ -49,7 +50,7 @@ public class DisplayStartDate {
 				taskIDForRecentTask = new ArrayList<>();
 			}
 			
-			separateToRespectiveArrayList(sortedList);
+			separateToRespectiveArrayList(sortedList, sort);
 			while (!(taskWithStartDateList.isEmpty())) {
 				sort.sortByStartDateAndName(taskWithStartDateList);
 				displayStartDateTasks();
@@ -75,10 +76,11 @@ public class DisplayStartDate {
 		taskWithStartDateList = new ArrayList<Task>();
 		multiDayTaskList = new ArrayList<Task>();
 		currentDayTaskList = new ArrayList<String>();
+		sortedTaskList = new ArrayList<Task>();
 		multiDayTaskListIndex = new HashMap<Task, Integer>();
 	}
 	
-	private static void separateToRespectiveArrayList(ArrayList<Task> taskList) {
+	private static void separateToRespectiveArrayList(ArrayList<Task> taskList, Sorting sort) {
 		for (int i = 0; i < taskList.size(); i++) {
 			Task task = taskList.get(i);
 			if (task.getStartDate() == null) {
