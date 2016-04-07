@@ -267,23 +267,38 @@ public class ArraylistStorage {
 	}
 
 	private void combineDoneStorages() {
-		mergeWithoutRepeat(this.doneStorage, this.additionalDoneStorage);
+		mergeWithoutRepeatDoneStorage(this.additionalDoneStorage);
 	}
 
 	private void combineNotDoneStorages() {
-		mergeWithoutRepeat(this.notDoneStorage, this.additionalNotDoneStorage);
+		mergeWithoutRepeatNotDoneStorage(this.additionalNotDoneStorage);
 	}
 
-	private void mergeWithoutRepeat(ArrayList<Task> originalArray, ArrayList<Task> additionalArray) {
+	private void mergeWithoutRepeatNotDoneStorage(ArrayList<Task> additionalArray) {
 		boolean isSame = false;
 		for (Task task1 : additionalArray) {
-			for (Task task2 : originalArray) {
+			for (Task task2 : this.notDoneStorage) {
 				if (compareTo(task1, task2) == true) {
 					isSame = true;
 				}
 			}
 			if (isSame == false) {
-				originalArray.add(task1);
+				addTaskToNotDoneStorage(task1);
+			}
+			isSame = false;
+		}
+	}
+	
+	private void mergeWithoutRepeatDoneStorage(ArrayList<Task> additionalArray) {
+		boolean isSame = false;
+		for (Task task1 : additionalArray) {
+			for (Task task2 : this.doneStorage) {
+				if (compareTo(task1, task2) == true) {
+					isSame = true;
+				}
+			}
+			if (isSame == false) {
+				addTaskToDoneStorage(task1);
 			}
 			isSame = false;
 		}

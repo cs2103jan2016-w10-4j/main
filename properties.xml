@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>colors</comment>
+<entry key="fontFamily">Cambria</entry>
+<entry key="colorOption">option3</entry>
+<entry key="buttonsColor"> r:176, g:176, b:176 </entry>
+<entry key="fontSize">10</entry>
+<entry key="bottomFontColor">#000000 r:0, g:0, b:0</entry>
+<entry key="bottomBg"> r:255, g:198, b:30</entry>
+<entry key="topBg"> r:255, g:255, b:255 </entry>
+<entry key="topFontColor">#000000 r:0, g:0, b:0</entry>
+</properties>
