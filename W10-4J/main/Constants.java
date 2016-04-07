@@ -30,7 +30,7 @@ public class Constants {
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
 	public static final String[] helpDefaultArgumentList = { "add", "delete", "edit", "done", "display", "search",
-			"storage", "undo" };
+			"storage", "undo", "alias" };
 
 	public static final String[] startDateDefaultArgumentList = { "startdate", "date" };
 	public static final String[] endDateDefaultArgumentList = { "enddate", "by", "due" };
@@ -179,6 +179,9 @@ public class Constants {
 	public static final String MESSAGE_ACTION_STORAGE = ("storage");
 	public static final String MESSAGE_ACTION_UNDO = ("undo");
 	public static final String MESSAGE_ACTION_READ = ("read");
+	public static final String MESSAGE_ACTION_NATURAL = ("natural");
+	public static final String MESSAGE_ACTION_KEYBOARD = ("keyboard");
+	public static final String MESSAGE_ACTION_ALIAS = ("alias");
 	public static final String MESSAGE_ACTION_RETRIEVE = ("retrieve");
 	public static final String MESSAGE_ACTION_UNRETRIEVE = ("unretrieve");
 	public static final String MESSAGE_ACTION_SETDIR = ("set directory");
@@ -304,16 +307,6 @@ public class Constants {
 
 	// These are constants used in help.java
 	public static final String HELP_FILE_PATH = "/resources/help.xml";
-	public static final String KEYBOARD_STRING = "keyboard";
-	public static final String NATURAL_STRING = "natural";
-	public static final String UNDO_STRING = "undo";
-	public static final String STORE_STRING = "store";
-	public static final String SEARCH_STRING = "search";
-	public static final String DISPLAY_STRING = "display";
-	public static final String DONE_STRING = "done";
-	public static final String EDIT_STRING = "edit";
-	public static final String DELETE_STRING = "delete";
-	public static final String ADD_STRING = "add";
 	public static final String WELCOME_STRING = "welcome";
 	public static final String FUNCTION = "function";
 }

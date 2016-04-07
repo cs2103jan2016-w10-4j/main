@@ -15,9 +15,9 @@ public class Help implements Command {
 
 	public String execute(String[] task) {
 		if (task.length == 0) {
-			return helpFullString();
+			return "0" + helpFullString();
 		} else {
-			return helpSpecific(task[0]);
+			return "0" + helpSpecific(task[0]);
 		}
 	}
 
@@ -25,28 +25,31 @@ public class Help implements Command {
 		help = read(Constants.WELCOME_STRING);
 		switch (task){
 		case Constants.MESSAGE_ACTION_ADD:
-			help += read(Constants.ADD_STRING);
+			help += read(Constants.MESSAGE_ACTION_ADD);
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
-			help += read(Constants.DELETE_STRING);
+			help += read(Constants.MESSAGE_ACTION_DELETE);
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
-			help += read(Constants.EDIT_STRING);
+			help += read(Constants.MESSAGE_ACTION_EDIT);
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
-			help += read(Constants.DONE_STRING);
+			help += read(Constants.MESSAGE_ACTION_DONE);
 			break;
 		case Constants.MESSAGE_ACTION_DISPLAY:
-			help += read(Constants.DISPLAY_STRING);
+			help += read(Constants.MESSAGE_ACTION_DISPLAY);
 			break;
 		case Constants.MESSAGE_ACTION_SEARCH:
-			help += read(Constants.SEARCH_STRING);
+			help += read(Constants.MESSAGE_ACTION_SEARCH);
 			break;
 		case Constants.MESSAGE_ACTION_STORAGE:
-			help += read(Constants.STORE_STRING);
+			help += read(Constants.MESSAGE_ACTION_STORAGE);
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
-			help += read(Constants.UNDO_STRING);
+			help += read(Constants.MESSAGE_ACTION_UNDO);
+			break;
+		case Constants.MESSAGE_ACTION_ALIAS:
+			help += read(Constants.MESSAGE_ACTION_ALIAS);
 			break;
 		}
 		return help;
@@ -55,16 +58,17 @@ public class Help implements Command {
 	public String helpFullString() {
 		help = read(Constants.WELCOME_STRING);
 		help += read(Constants.FUNCTION);
-		help += read(Constants.ADD_STRING);
-		help += read(Constants.DELETE_STRING);
-		help += read(Constants.EDIT_STRING);
-		help += read(Constants.DONE_STRING);
-		help += read(Constants.DISPLAY_STRING);
-		help += read(Constants.SEARCH_STRING);
-		help += read(Constants.STORE_STRING);
-		help += read(Constants.UNDO_STRING);
-		help += read(Constants.NATURAL_STRING);
-		help += read(Constants.KEYBOARD_STRING);
+		help += read(Constants.MESSAGE_ACTION_ADD);
+		help += read(Constants.MESSAGE_ACTION_DELETE);
+		help += read(Constants.MESSAGE_ACTION_EDIT);
+		help += read(Constants.MESSAGE_ACTION_DONE);
+		help += read(Constants.MESSAGE_ACTION_DISPLAY);
+		help += read(Constants.MESSAGE_ACTION_SEARCH);
+		help += read(Constants.MESSAGE_ACTION_STORAGE);
+		help += read(Constants.MESSAGE_ACTION_UNDO);
+		help += read(Constants.MESSAGE_ACTION_NATURAL);
+		help += read(Constants.MESSAGE_ACTION_KEYBOARD);
+		help += read(Constants.MESSAGE_ACTION_ALIAS);
 		return help;
 	}
 	

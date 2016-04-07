@@ -14,7 +14,8 @@ For help on specific commands, use the following commands:
 	<li> help display</li>
 	<li> help search</li>
 	<li> help storage (Functions retrieve and set directory is documented here)</li>
-	<li> help undo</li></ul>
+	<li> help undo</li>
+	<li> help alias</li></ul>
 ]]></entry>
 
 <entry key="add"><![CDATA[
@@ -107,7 +108,7 @@ To search for a keyword, use this command:<br>
 		<span style="background-color:#E5E4E2;"><b>search</b> task </span></li></ul>
 ]]></entry>
 
-<entry key="store"><![CDATA[
+<entry key="storage"><![CDATA[
 <h2> Storage </h2>
 To specify a particular path to the text file to retrieve the task list from, use this command:<br>
 <span style="background-color:#E5E4E2;"><b>retrieve</b> &#60datapath&#62 </span><br>
@@ -199,5 +200,13 @@ To help you use Docket more efficiently, some keyboard shortcuts have been imple
 		<td >Scrolls through the top white display</td>
 	</tr>
 </table>
+]]></entry>
+
+<entry key="alias"><![CDATA[
+<h2> Alias</h2>
+You can add your own modifiers into the program. For example, if you want to change the modifier "add", use this command:<br>
+<span style="background-color:#E5E4E2;"><b>alias</b> &#60previous modifier&#62 &#60your modifier&#62</span> <br>
+Example:
+<ul><li><span style="background-color:#E5E4E2;"> <b>alias</b> add myadd</span></li></ul>
 ]]></entry>
 </properties>
