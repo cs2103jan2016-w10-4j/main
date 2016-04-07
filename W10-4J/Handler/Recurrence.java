@@ -1,4 +1,4 @@
-
+//@@author A0140114A
 package Handler;
 
 import main.Constants;
@@ -16,7 +16,6 @@ public class Recurrence implements Command {
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		int recurCounter = Integer.parseInt((task[2]));
-		// Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {
 		case Constants.MESSAGE_REPEAT_DAY:
 			eachTask.setDay(true);
@@ -42,8 +41,6 @@ public class Recurrence implements Command {
 			arraylistStorage_.addTaskToNotDoneStorage(clone);
 		}
 		arraylistStorage_.writeToStorage();
-		// arraylistStorage_.addTaskToPreInputStorage(new
-		// PreviousInput(Constants.MESSAGE_ACTION_EDIT, oldTask, eachTask));
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}
 
