@@ -128,7 +128,7 @@ public class Constants {
 	public static final String MESSAGE_DISPLAYOVERDUE_HEADER = ("Overdue Tasks");
 	public static final String MESSAGE_DISPLAYOVERDUE_NOOVERDUETASK = ("There is no overdue task.");
 
-	public static final String MESSAGE_DISPLAYTODAY_HEADER = ("Today's Task");
+	public static final String MESSAGE_DISPLAYTODAY_HEADER = ("Today's Tasks");
 	public static final String MESSAGE_DISPLAYTODAY_NOTASK = ("There is no task today.");
 	public static final String MESSAGE_DISPLAYTODAY_TODAY = ("Today");
 
