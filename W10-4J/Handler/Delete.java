@@ -17,7 +17,11 @@ public class Delete implements Command {
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		if (eachTask == null) {
+<<<<<<< HEAD
 			eachTask = arraylistStorage_.getDoneTaskByIndex(taskID - 1);
+=======
+			eachTask = arraylistStorage_.findByTaskIDDoneStorage(taskID - 1 - arraylistStorage_.getNotDoneStorageSize());
+>>>>>>> origin/Seperate-Branch
 			if (eachTask == null) {
 				return Constants.MESSAGE_DELETE_FAIL;
 			} else {
