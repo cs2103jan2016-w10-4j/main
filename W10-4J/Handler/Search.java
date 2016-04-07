@@ -17,12 +17,7 @@ public class Search implements Command {
 	public String execute(String[] task) {
 		ArrayList<Task> results = new ArrayList<Task>();
 		// each task is certain to have a name
-		// check whether exclude field exists
-		if (task.length > 1) {
-			results = arraylistStorage_.searchNotDoneStorage(task, true);
-		} else {
-			results = arraylistStorage_.searchNotDoneStorage(task, false);
-		}
+		results = arraylistStorage_.searchNotDoneStorage(task);
 		if (results.size() != 0) {
 			return DisplayTableFormat.displayTableFormat(results, arraylistStorage_.getPreviousInputStorage());
 		}

@@ -6,7 +6,7 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 
-//@@author A0149174Y
+// @@author A0135779M
 public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
@@ -31,7 +31,6 @@ public class ArraylistStorage {
 		this.sort = new Sorting();
 	}
 
-	// @@author A0135779M
 	public ArrayList<Task> getNotDoneStorage() {
 		return this.notDoneStorage;
 	}
@@ -124,42 +123,64 @@ public class ArraylistStorage {
 	}
 
 	// ** SEARCH METHOD **
-	public ArrayList<Task> searchNotDoneStorage(String[] task, boolean hasExcludeField) {
+	public ArrayList<Task> searchNotDoneStorage(String[] task) {
 		ArrayList<Task> results = new ArrayList<Task>();
 		for (Task eachTask : this.notDoneStorage) {
 			if (eachTask.getDetails() == null) {
-				if (taskSearchName(eachTask, task, hasExcludeField)) {
+				if (taskSearchName(eachTask, task)) {
 					results.add(eachTask);
 				}
 			} else {
-				if (taskSearchNameAndDetails(eachTask, task, hasExcludeField)) {
+				if (taskSearchNameAndDetails(eachTask, task)) {
 					results.add(eachTask);
 				}
 			}
 		}
 		return results;
 	}
-
-	// Search helper for each individual task with both name and details
-	private boolean taskSearchNameAndDetails(Task eachTask, String[] task, boolean excludeField) {
-		// check whether exclude field exists
+	// @@author 
+	// @@author A0149174Y
+	private boolean taskSearchNameAndDetails(Task eachTask, String[] task) {
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;
-		// @@author A0149174Y
-		return ((eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()))
-				|| ((eachTask.getDetails().toLowerCase().startsWith(task[0].trim().toLowerCase()))));
-		// @@author A0135779M
+		boolean searchStringFound=false;
+		String[] splitName = eachTask.getName().toLowerCase().split("\\s+");
+		String[] splitDetails= eachTask.getDetails().toLowerCase().split("\\s+");
+		searchStringFound = searchInName(task, searchStringFound, splitName);
+		searchStringFound = searchInDetails(task, searchStringFound, splitDetails);
+		return searchStringFound;
 	}
 
-	// Search helper for each individual task with only name
-	private boolean taskSearchName(Task eachTask, String[] task, boolean excludeField) {
-		// check whether exclude field exists
+	private boolean searchInName(String[] task, boolean searchStringFound, String[] splitName) {
+		for(int i=0;i<splitName.length;i++) {
+		        searchStringFound = checkSplitStringForAMatch(task, searchStringFound, splitName, i);
+		    }
+		return searchStringFound;
+	}
+	
+	private boolean searchInDetails(String[] task, boolean searchStringFound, String[] splitDetails) {
+		for(int i=0;i<splitDetails.length;i++) {
+		        searchStringFound = checkSplitStringForAMatch(task, searchStringFound, splitDetails, i);
+		    }
+		return searchStringFound;
+	}
+
+	private boolean taskSearchName(Task eachTask, String[] task) {
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-		// @@author A0149174Y
-		return (eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()));
-		// @@author A0135779M
+		boolean searchStringFound=false;
+		String[] splitName = eachTask.getName().toLowerCase().split("\\s+");
+		searchStringFound = searchInName(task, searchStringFound, splitName);
+		return searchStringFound;
 	}
 
+	private boolean checkSplitStringForAMatch(String[] task, boolean searchStringFound, String[] split, int i) {
+		if(split[i].startsWith(task[0].trim().toLowerCase())) {
+			searchStringFound=true;
+		}
+		return searchStringFound;
+	}
+	// @@author 
+	// @@author A0135779M
 	// ** SET DIR METHOD **
 	public boolean setDirectory(String filePathName) {
 		ArrayList<ArrayList<Task>> taskList = this.mainStorage.setDirectory(filePathName);
