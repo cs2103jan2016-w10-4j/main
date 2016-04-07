@@ -5,6 +5,7 @@ import java.util.Collections;
 import Storage.Storage;
 import main.Constants;
 import main.Task;
+
 //@@author A0149174Y
 public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
@@ -22,13 +23,15 @@ public class ArraylistStorage {
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
-		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ, Constants.DEFAULT_FILENAME);
+		ArrayList<ArrayList<Task>> getFromStorage = mainStorage.read(Constants.MESSAGE_ACTION_READ,
+				Constants.DEFAULT_FILENAME);
 		this.notDoneStorage = getFromStorage.get(0);
 		this.doneStorage = getFromStorage.get(1);
 		this.previousInputStorage = new ArrayList<PreviousInput>();
 		this.sort = new Sorting();
 	}
-	//@@author A0135779M
+
+	// @@author A0135779M
 	public ArrayList<Task> getNotDoneStorage() {
 		return this.notDoneStorage;
 	}
@@ -108,26 +111,6 @@ public class ArraylistStorage {
 		this.notDoneStorage.remove(task);
 	}
 
-	// For finding tasks in notDoneStorage
-	public Task findByTaskIDNotDoneStorage(int taskID) {
-		for (Task task : this.notDoneStorage) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
-	}
-
-	// For finding tasks in doneStorage
-	public Task findByTaskIDDoneStorage(int taskID) {
-		for (Task task : this.doneStorage) {
-			if (task.getTaskID() == taskID) {
-				return task;
-			}
-		}
-		return null;
-	}
-
 	public void writeToStorage() {
 		this.mainStorage.write(notDoneStorage, doneStorage);
 	}
@@ -161,19 +144,20 @@ public class ArraylistStorage {
 	private boolean taskSearchNameAndDetails(Task eachTask, String[] task, boolean excludeField) {
 		// check whether exclude field exists
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;	
-		//@@author A0149174Y
-		return ((eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase())) || ((eachTask.getDetails().toLowerCase().startsWith(task[0].trim().toLowerCase()))));
-		//@@author A0135779M
+		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;
+		// @@author A0149174Y
+		return ((eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()))
+				|| ((eachTask.getDetails().toLowerCase().startsWith(task[0].trim().toLowerCase()))));
+		// @@author A0135779M
 	}
 
 	// Search helper for each individual task with only name
 	private boolean taskSearchName(Task eachTask, String[] task, boolean excludeField) {
 		// check whether exclude field exists
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-		//@@author A0149174Y
-			return (eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()));
-		//@@author A0135779M
+		// @@author A0149174Y
+		return (eachTask.getName().toLowerCase().startsWith(task[0].trim().toLowerCase()));
+		// @@author A0135779M
 	}
 
 	// ** SET DIR METHOD **
@@ -181,7 +165,7 @@ public class ArraylistStorage {
 		ArrayList<ArrayList<Task>> taskList = this.mainStorage.setDirectory(filePathName);
 		if (taskList != null) {
 			this.notDoneStorage = taskList.get(0);
-			this.doneStorage = taskList.get(1); 
+			this.doneStorage = taskList.get(1);
 			return true;
 		} else {
 			return false;
@@ -199,20 +183,22 @@ public class ArraylistStorage {
 	public void clearPreInputStorage() {
 		this.previousInputStorage.clear();
 	}
-	
-	public void addPreviousDirectory(String command){
+
+	public void addPreviousDirectory(String command) {
 		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
 		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
 		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName, cloneNotDoneStorage, cloneDoneStorage));
 	}
-	
-	public void rememberOldDirectory(){
+
+	public void rememberOldDirectory() {
 		this.oldFileName = mainStorage.getCurrentFilename();
 	}
-	public void getNewDirectory(){
+
+	public void getNewDirectory() {
 		this.newFileName = this.previousInputStorage.get(0).getFileName();
 	}
-	public void setNewDirectory(){
+
+	public void setNewDirectory() {
 		mainStorage.setDirectory(newFileName);
 	}
 
@@ -239,14 +225,16 @@ public class ArraylistStorage {
 		ArrayList<Task> cloneDoneStorage = cloneStorage(this.doneStorage);
 		addTaskToPreInputStorage(new PreviousInput(command, cloneNotDoneStorage, cloneDoneStorage));
 	}
+
 	// clones the arraylist to prevent referencing problems
-	private ArrayList<Task> cloneStorage(ArrayList<Task> storage){
+	private ArrayList<Task> cloneStorage(ArrayList<Task> storage) {
 		ArrayList<Task> clone = new ArrayList<Task>();
-		for (Task task: storage){
+		for (Task task : storage) {
 			clone.add(cloneTask(task));
 		}
 		return clone;
 	}
+
 	private Task cloneTask(Task task) {
 		Task result = new Task(task.getName());
 		result.setStartDate(task.getStartDate());
@@ -300,11 +288,19 @@ public class ArraylistStorage {
 			isSame = false;
 		}
 	}
-	
-	public Task getTaskByIndex(int i){
-		try{
+
+	public Task getTaskByIndex(int i) {
+		try {
 			return notDoneStorage.get(i);
-		} catch(IndexOutOfBoundsException e){
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+	}
+
+	public Task getDoneTaskByIndex(int i) {
+		try {
+			return doneStorage.get(i - notDoneStorage.size());
+		} catch (IndexOutOfBoundsException e) {
 			return null;
 		}
 	}
@@ -358,7 +354,7 @@ public class ArraylistStorage {
 	// ** DISPLAY METHOD **
 	public String getNotDoneDisplayFormatByStartDate() {
 		sortNotDoneStorageByStartDateAndName();
-		for (int i = 0; i < this.notDoneStorage.size(); i++){
+		for (int i = 0; i < this.notDoneStorage.size(); i++) {
 			System.out.println(this.notDoneStorage.get(i).getName());
 		}
 		return DisplayStartDate.displayFormat(sort, this.notDoneStorage, this.previousInputStorage);
@@ -387,8 +383,8 @@ public class ArraylistStorage {
 	public void sortNotDoneStorageByID() {
 		sort.sortByID(this.notDoneStorage);
 	}
-	
-	public void sortNotDoneStorageByStartDateAndName(){
+
+	public void sortNotDoneStorageByStartDateAndName() {
 		ArrayList<Task> taskWithNoStartDateList = new ArrayList<Task>();
 		ArrayList<Task> taskWithStartDateList = new ArrayList<Task>();
 		for (int i = 0; i < this.notDoneStorage.size(); i++) {

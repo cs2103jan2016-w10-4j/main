@@ -14,7 +14,7 @@ public class Recurrence implements Command {
 
 	public String execute(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = arraylistStorage_.findByTaskIDNotDoneStorage(taskID);
+		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		int recurCounter = Integer.parseInt((task[2]));
 		// Task oldTask = cloneTask(eachTask);
 		switch (task[1]) {

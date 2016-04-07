@@ -210,6 +210,31 @@ public class Parser {
 		NaturalDate ndate = new NaturalDate();
 		NaturalTime ntime = new NaturalTime();
 		String name = null, startdate = null, starttime = null, enddate = null, endtime = null, details = null;
+		String recurtype = null;
+		int recurCount = -1;
+
+		// Isolate Recurrence
+		for (int i = 0; i < token.size(); i++) {
+			String s = token.get(i);
+			if (commandList_.getRecurrenceArgumentList().contains(s)) {
+				try {
+					recurCount = Integer.parseInt(token.get(i + 1));
+					if (recurCount <= 1) {
+						throw new NumberFormatException();
+					} else {
+						recurtype = s;
+						token.set(i, null);
+						token.set(i + 1, null);
+					}
+				} catch (NumberFormatException e) {
+					recurCount = -1;
+					recurtype = null;
+				} catch (IndexOutOfBoundsException e) {
+					recurCount = -1;
+					recurtype = null;
+				}
+			}
+		}
 
 		// Isolate Date
 		for (int i = 1; i <= token.size(); i++) {
@@ -340,6 +365,10 @@ public class Parser {
 		if (details != null) {
 			output.add("details");
 			output.add(details);
+		}
+		if (recurCount > 1 && recurtype != null) {
+			output.add("repeat");
+			output.add(recurtype + " " + Integer.toString(recurCount));
 		}
 		String[] out = new String[output.size()];
 		for (int i = 0; i < output.size(); i++) {
