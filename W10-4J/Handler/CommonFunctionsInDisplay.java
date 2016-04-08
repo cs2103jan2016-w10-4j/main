@@ -58,7 +58,6 @@ public class CommonFunctionsInDisplay {
 		return taskID;
 	}
 
-	//@@author A0126129J
 	private static boolean compareTasks(Task previousTask, Task currentTask) {
 		boolean isSameName = compareName(previousTask, currentTask);
 		boolean isSameStartDate = compareStartDate(previousTask, currentTask);
@@ -182,21 +181,18 @@ public class CommonFunctionsInDisplay {
 		return previousTask.getTaskID() == currentTask.getTaskID();
 	}
 
+	//@@author A0126129J
 	public static String determineColor(Task t) {
 		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-		if (t.isMultiDay()) {
-			return Constants.MESSAGE_DISPLAY_COLOR_BROWN;
-		}
-
 		// Determine which color to display
-		if (t.getStartDate() != null && t.getEndTime() == null) {
+		if (t.getStartDate() != null && (t.getEndTime() == null || t.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH))) {
 			Date date = new Date();
 			if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
 				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
-			}
+			} 
 		} else if (t.getEndTime() != null && t.getStartDate() != null) {
 			Date time = new Date();
 			Date date = new Date();
@@ -206,7 +202,10 @@ public class CommonFunctionsInDisplay {
 					&& t.getStartDate().compareTo(dateFormat.format(date)) == 0) {
 				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
 			}
+		} else if (t.isMultiDay()) {
+			color = Constants.MESSAGE_DISPLAY_COLOR_BROWN;
 		}
+		
 		return color;
 	}
 
