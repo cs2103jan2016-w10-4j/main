@@ -192,7 +192,11 @@ public class CommonFunctionsInDisplay {
 			Date date = new Date();
 			if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
 				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
-			} 
+			} else if (t.isMultiDay()) {
+				color = Constants.MESSAGE_DISPLAY_COLOR_BLUE;
+			} else {
+				color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
+			}
 		} else if (t.getEndTime() != null && t.getStartDate() != null) {
 			Date time = new Date();
 			Date date = new Date();
@@ -201,9 +205,11 @@ public class CommonFunctionsInDisplay {
 			} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) < 0
 					&& t.getStartDate().compareTo(dateFormat.format(date)) == 0) {
 				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
+			} else if (t.isMultiDay()) {
+				color = Constants.MESSAGE_DISPLAY_COLOR_BLUE;
+			} else {
+				color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
 			}
-		} else if (t.isMultiDay()) {
-			color = Constants.MESSAGE_DISPLAY_COLOR_BROWN;
 		}
 		
 		return color;

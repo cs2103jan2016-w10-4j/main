@@ -103,9 +103,9 @@ public class Constants {
 	/*
 	 * Red - Exceed the stipulated date and endtime Black - Default color
 	 */
-	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#ff0000>");
+	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#E3170D>");
 	public static final String MESSAGE_DISPLAY_COLOR_BLACK = ("<font color=#000000>");
-	public static final String MESSAGE_DISPLAY_COLOR_BROWN = ("<font color=#B87333>");
+	public static final String MESSAGE_DISPLAY_COLOR_BLUE = ("<font color=#0000FF>");
 
 	// Use commonly throughout all types of Display
 	public static final String MESSAGE_DISPLAY_HEADER_OPENTAG = ("<style>#underline{border-bottom: 3px solid black;}</style><h1><b>");
