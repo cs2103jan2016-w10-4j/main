@@ -294,14 +294,14 @@ public class Constants {
 
 	public static final String PROPERTIES_FILE_NAME = ".\\properties.xml";
 
-	public static final String BUTTONS_COLOR_KEY = "buttonsColor";
-	public static final String FONT_FAMILY_KEY = "fontFamily";
-	public static final String FONT_SIZE_KEY = "fontSize";
-	public static final String BOTTOM_BG_KEY = "bottomBg";
-	public static final String TOP_BG_KEY = "topBg";
-	public static final String BOTTOM_FONT_COLOR_KEY = "bottomFontColor";
-	public static final String TOP_FONT_COLOR_KEY = "topFontColor";
 	public static final String COLOR_OPTION_KEY = "colorOption";
+	public static final String TOP_BG_KEY = "topBg";
+	public static final String BOTTOM_BG_KEY = "bottomBg";
+	public static final String FONT_SIZE_KEY = "fontSize";
+	public static final String FONT_FAMILY_KEY = "fontFamily";
+	public static final String BUTTONS_COLOR_KEY = "buttonsColor";
+	
+	public static final String[] PROPERTIES_KEYS = {COLOR_OPTION_KEY, TOP_BG_KEY, BOTTOM_BG_KEY, FONT_SIZE_KEY, FONT_FAMILY_KEY, BUTTONS_COLOR_KEY};
 
 	public static final String SET_1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
 	public static final String SET_2 = "button r:241, g:243, b:206 topBg r:206, g:223, b:243 bottomBg r:243, g:220, b:206";

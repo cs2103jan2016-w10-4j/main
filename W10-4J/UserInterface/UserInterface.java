@@ -207,7 +207,7 @@ public class UserInterface{
 		setFontSizeAndFontFamily();
 		cmdDisplay.setFont(font);
 		// If the background color obtained from the xml file is null, then default colors are used.
-    	if (bottomBg == null){
+    	if (bottomBg == null || bottomBg == ""){
     		cmdDisplay.setBackground(BLACK_COLOR);
     		cmdDisplay.setForeground(WHITE_COLOR);
     	} else {
@@ -249,7 +249,7 @@ public class UserInterface{
     
     private static void textPaneSettings(JTextPane outputDisplay){
 		// If the background color obtained from the xml file is null, then default colors are used.
-    	if (topBg == null){
+    	if (topBg == null || topBg == ""){
     		outputDisplay.setBackground(WHITE_COLOR);
     		outputDisplay.setForeground(BLACK_COLOR);
     	} else {
@@ -275,7 +275,7 @@ public class UserInterface{
 		allButton.setFocusable(false);
 		helpButton.setFocusable(false);
 		settingsButton.setFocusable(false);
-    	if (buttonColors == null){
+    	if (buttonColors == null || buttonColors == ""){
     		homeButton.setBackground(GRAY_COLOR);
     		overdueButton.setBackground(GRAY_COLOR);
     		doneButton.setBackground(GRAY_COLOR);
