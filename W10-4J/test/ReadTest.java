@@ -23,41 +23,41 @@ public class ReadTest {
 	ArrayList<Task> toDoTaskList = new ArrayList<Task> ();
 	ArrayList<Task> doneTaskList = new ArrayList<Task> ();
 	ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>> ();
+	CompareTask compareTask = new CompareTask();
 	Write taskWriter = Write.getInstance();
 	Read taskReader = Read.getInstance();
-	CompareTask compareTask = new CompareTask();
 	
 	@Before
 	public void setUpBefore() {
-		Task a = new Task("A");
-		a.setStartDate("1/4/2016");
+		Task taskOne = new Task("Task 1");
+		taskOne.setStartDate("1/4/2016");
 		
-		Task b = new Task("B");
-		b.setStartDate("2/4/2016");
-		b.setEndDate("2/4/2016");
+		Task taskTwo = new Task("Task 2");
+		taskTwo.setStartDate("2/4/2016");
+		taskTwo.setEndDate("2/4/2016");
 		
-		Task c = new Task("C");		
-		c.setStartDate("2/4/2016");
-		c.setEndDate("5/4/2016");
-		c.setStartTime("14:00");
-		c.setEndTime("18:00");
+		Task taskThree = new Task("Task 3");		
+		taskThree.setStartDate("2/4/2016");
+		taskThree.setEndDate("5/4/2016");
+		taskThree.setStartTime("14:00");
+		taskThree.setEndTime("18:00");
 		
-		Task d = new Task("D");
-		d.setStartDate("2/4/2016");
-		d.setWeek(true);
+		Task taskFour = new Task("Task 4");
+		taskFour.setStartDate("2/4/2016");
+		taskFour.setWeek(true);
 		
-		Task e = new Task("E");
-		e.setStartDate("2/4/2016");
-		e.setEndDate("5/4/2016");
-		e.setStartTime("15:00");
-		e.setEndTime("17:00");
-		e.setWeek(true);
+		Task taskFive = new Task("Task 5");
+		taskFive.setStartDate("2/4/2016");
+		taskFive.setEndDate("5/4/2016");
+		taskFive.setStartTime("15:00");
+		taskFive.setEndTime("17:00");
+		taskFive.setWeek(true);
 		
-		toDoTaskList.add(a);
-		toDoTaskList.add(b);
-		toDoTaskList.add(c);
-		toDoTaskList.add(d);
-		doneTaskList.add(e);
+		toDoTaskList.add(taskOne);
+		toDoTaskList.add(taskTwo);
+		toDoTaskList.add(taskThree);
+		toDoTaskList.add(taskFour);
+		doneTaskList.add(taskFive);
 		taskList.add(toDoTaskList);
 		taskList.add(doneTaskList);
 	}
@@ -77,6 +77,17 @@ public class ReadTest {
 		ArrayList<ArrayList<Task>> readFromFileTaskList = taskReader.readFromFile(reader);
 		boolean isSameTaskList = checkIfTaskListEquals(readFromFileTaskList);
 		assertEquals(true, isSameTaskList);
+	}
+	
+	@Test
+	public void testReadFromInvalidFile() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("doesNotExistFile.txt"));		
+			ArrayList<ArrayList<Task>> readFromFileTaskList = taskReader.readFromFile(reader);
+			assertEquals(null, readFromFileTaskList);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean checkIfTaskListEquals(ArrayList<ArrayList<Task>> readFromFileTaskList) {

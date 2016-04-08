@@ -18,9 +18,9 @@ import Storage.SetDirectory;
 import main.Task;
 
 public class SetDirectoryTest {
+	CompareTask compareTask = new CompareTask();
 	SetDirectory taskSetDirectory = SetDirectory.getInstance();
 	Read taskReader = Read.getInstance();
-	CompareTask compareTask = new CompareTask();
 
 	@Test
 	public void testDirectoryExists() throws FileNotFoundException {

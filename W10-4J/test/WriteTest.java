@@ -34,57 +34,56 @@ public class WriteTest {
 	
 	@Before
 	public void setUpBefore() throws Exception {
-		// Set up write class
-		Task a = new Task("A");
-		a.setStartDate("1/4/2016");
+		Task taskOne = new Task("Task 1");
+		taskOne.setStartDate("1/4/2016");
 		
-		Task b = new Task("B");
-		b.setStartDate("2/4/2016");
-		b.setEndDate("2/4/2016");
+		Task taskTwo = new Task("Task 2");
+		taskTwo.setStartDate("2/4/2016");
+		taskTwo.setEndDate("2/4/2016");
 		
-		Task c = new Task("C");		
-		c.setStartDate("2/4/2016");
-		c.setEndDate("5/4/2016");
-		c.setStartTime("14:00");
-		c.setEndTime("18:00");
+		Task taskThree = new Task("Task 3");		
+		taskThree.setStartDate("2/4/2016");
+		taskThree.setEndDate("5/4/2016");
+		taskThree.setStartTime("14:00");
+		taskThree.setEndTime("18:00");
 		
-		Task d = new Task("D");
-		d.setStartDate("2/4/2016");
-		d.setWeek(true);
+		Task taskFour = new Task("Task 4");
+		taskFour.setStartDate("2/4/2016");
+		taskFour.setWeek(true);
 		
-		Task e = new Task("E");
-		e.setStartDate("2/4/2016");
-		e.setEndDate("5/4/2016");
-		e.setStartTime("15:00");
-		e.setEndTime("17:00");
-		e.setWeek(true);
+		Task taskFive = new Task("Task 5");
+		taskFive.setStartDate("2/4/2016");
+		taskFive.setEndDate("5/4/2016");
+		taskFive.setStartTime("15:00");
+		taskFive.setEndTime("17:00");
+		taskFive.setWeek(true);
 		
-		toDoTaskList.add(a);
-		toDoTaskList.add(b);
-		toDoTaskList.add(c);
-		toDoTaskList.add(d);
-		doneTaskList.add(e);
+		toDoTaskList.add(taskOne);
+		toDoTaskList.add(taskTwo);
+		toDoTaskList.add(taskThree);
+		toDoTaskList.add(taskFour);
+		doneTaskList.add(taskFive);
 		taskList.add(toDoTaskList);
 		taskList.add(doneTaskList);
 
 		// Write to testFile.txt
 		PrintWriter print = new PrintWriter(new FileWriter("testFile.txt"));
 		print.println("Tasks on hand:");
-		print.println("1. Event: A");
+		print.println("1. Event: Task 1");
 		print.println("Start Date: 1/4/2016");
-		print.println("2. Event: B");
+		print.println("2. Event: Task 2");
 		print.println("Start Date: 2/4/2016");
 		print.println("End Date: 2/4/2016");
-		print.println("3. Event: C");
+		print.println("3. Event: Task 3");
 		print.println("Start Date: 2/4/2016");
 		print.println("End Date: 5/4/2016");
 		print.println("Start Time: 14:00");
 		print.println("End Time: 18:00");
-		print.println("4. Event: D");
+		print.println("4. Event: Task 4");
 		print.println("Start Date: 2/4/2016");
 		print.println("Week: true");
 		print.println("Tasks that are done:");
-		print.println("1. Event: E");
+		print.println("1. Event: Task 5");
 		print.println("Start Date: 2/4/2016");
 		print.println("End Date: 5/4/2016");
 		print.println("Start Time: 15:00");
