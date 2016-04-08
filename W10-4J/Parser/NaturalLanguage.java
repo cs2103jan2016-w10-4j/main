@@ -26,8 +26,11 @@ public class NaturalLanguage {
 		this.ntime_ = new NaturalTime();
 	}
 
-	public String[] interpretAddArguments(ArrayList<String> token) {
-		token_ = token;
+	public String[] interpretAddArguments(String[] token) {
+		token_ = new ArrayList<>();
+		for(String s : token){
+			token_.add(s);
+		}
 		taskID__ = null;
 		name_ = null;
 		startdate_ = null;
@@ -73,7 +76,7 @@ public class NaturalLanguage {
 	}
 
 	public void isolateRecurrance() {
-		for (int i = 0; i < token_.size(); i++) {
+		for (int i = 1; i < token_.size(); i++) {
 			String s = token_.get(i);
 			if (commandList_.getRecurrenceArgumentList().contains(s)) {
 				try {
@@ -99,7 +102,7 @@ public class NaturalLanguage {
 	public void isolateDate() {
 		for (int i = 1; i <= token_.size(); i++) {
 			ArrayList<String> temptoken_ = new ArrayList<>();
-			for (int j = 0; j < token_.size(); j++) {
+			for (int j = 1; j < token_.size(); j++) {
 				String tempString = Constants.EMPTY_STRING;
 				for (int k = 0; k < i; k++) {
 					try {
@@ -136,7 +139,7 @@ public class NaturalLanguage {
 	public void isolateTime() {
 		for (int i = 1; i <= token_.size(); i++) {
 			ArrayList<String> temptoken_ = new ArrayList<>();
-			for (int j = 0; j < token_.size(); j++) {
+			for (int j = 1; j < token_.size(); j++) {
 				String tempString = Constants.EMPTY_STRING;
 				for (int k = 0; k < i; k++) {
 					try {

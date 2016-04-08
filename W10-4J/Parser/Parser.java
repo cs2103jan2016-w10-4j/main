@@ -27,6 +27,9 @@ public class Parser {
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
+		if(commandType == COMMAND_TYPE.ADD && arguments.length==1){
+			arguments = naturalLanguage_.interpretAddArguments(arguments);
+		}
 		if (!valid_.isValid(commandType, arguments)) {
 			return getInvalidReturnMessage();
 		}
@@ -106,10 +109,8 @@ public class Parser {
 		tokens.add(sb.toString().trim());
 		tokens.remove(0);
 		if (commandType == COMMAND_TYPE.ADD) {
-			// replaceModifiers(tokens);
-			// return compactArguments(tokens,
-			// commandList_.getAddArgumentList());
-			return naturalLanguage_.interpretAddArguments(tokens);
+			replaceModifiers(tokens);
+			return compactArguments(tokens, commandList_.getAddArgumentList());
 		} else if (commandType == COMMAND_TYPE.EDIT) {
 			replaceModifiers(tokens);
 			return compactArguments(tokens, commandList_.getEditArgumentList());
