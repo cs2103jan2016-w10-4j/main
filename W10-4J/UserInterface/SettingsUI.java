@@ -247,22 +247,22 @@ public class SettingsUI {
 
 	private void radioButtonSelectionAndDisplayExample(ButtonGroup button) {
         String colorOption = properties.get(COLOR_OPTION_INDEX);
-		if (colorOption == null){
+		if (colorOption == null || colorOption == Constants.EMPTY_STRING){
         	button.setSelected(defaultRadioButton.getModel(), true);
         	colors.defaultColor(textPane1, textPane2);
-        } else if (colorOption.equals("default")){
+        } else if (colorOption.equals(Constants.DEFAULT_COLOR_TEXT)){
         	button.setSelected(defaultRadioButton.getModel(), true);
         	colors.defaultColor(textPane1, textPane2);
-        } else if (colorOption.equals("option1")){
+        } else if (colorOption.equals(Constants.OPTION_1_TEXT)){
         	button.setSelected(optionOneRadioButton.getModel(), true);
         	colors.optionOneColor(textPane1, textPane2);
-        } else if (colorOption.equals("option2")) {
+        } else if (colorOption.equals(Constants.OPTION_2_TEXT)) {
         	button.setSelected(optionTwoRadioButton.getModel(), true);
         	colors.optionTwoColor(textPane1, textPane2);
-        } else if (colorOption.equals("option3")) {
+        } else if (colorOption.equals(Constants.OPTION_3_TEXT)) {
         	button.setSelected(optionThreeRadioButton.getModel(), true);
         	colors.optionThreeColor(textPane1, textPane2);
-        } else if (colorOption.equals("option4")) {
+        } else if (colorOption.equals(Constants.OPTION_4_TEXT)) {
         	button.setSelected(optionFourRadioButton.getModel(), true);
         	colors.optionFourColor(textPane1, textPane2);
         }

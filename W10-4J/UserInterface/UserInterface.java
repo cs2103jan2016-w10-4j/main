@@ -34,7 +34,6 @@ import main.Constants;
 
 
 public class UserInterface{
-	
 	private static final Color BLACK_COLOR = Color.BLACK;
 	private static final Color WHITE_COLOR = Color.WHITE;
 	private static final int CMD_DISPLAY_INDEX = 1;
@@ -70,8 +69,12 @@ public class UserInterface{
 	private static String bottomBg = properties.get(ReadWriteXml.BOTTOM_BG_INDEX);
 	private static String topBg = properties.get(ReadWriteXml.TOP_BG_INDEX);
 	private static String buttonColors = properties.get(ReadWriteXml.BUTTONS_COLOR_INDEX);
-	private static Font defaultFont = new Font("Times New Roman", Font.PLAIN, 14);
+	private static Font defaultFont = new Font(Constants.DEFAULT_FONT_FAMILY, Font.PLAIN, 14);
 	private static Font font;
+	
+	private static Color defaultButtonColor = colors.rgbColor(colors.getButton(Constants.SET_5));
+	private static Color defaultTopBgColor = colors.rgbColor(colors.getTopBg(Constants.SET_5));
+	private static Color defaultBottomBgColor = colors.rgbColor(colors.getBottomBg(Constants.SET_5));
 	
 	public static void main(String[] args){
 		initComponents(null);
@@ -167,7 +170,7 @@ public class UserInterface{
 	}
     
 	private static void setIcon() {
-		String icon = "/main/icon/d.png";
+		String icon = Constants.DOCKET_ICON_PATH;
 		ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
 		f.setIconImage(img.getImage());
 	}
@@ -183,7 +186,7 @@ public class UserInterface{
 	}
 
 	private static void setFontSizeAndFontFamily() {
-		if (fontFamily == null || fontFamily == "" || fontSize == null || fontSize == ""){
+		if (fontFamily == null || fontFamily == Constants.EMPTY_STRING || fontSize == null || fontSize == Constants.EMPTY_STRING){
 			font = defaultFont;
 		} else {
 			font = new Font(fontFamily, Font.PLAIN, Integer.valueOf(fontSize));
@@ -207,9 +210,9 @@ public class UserInterface{
 		setFontSizeAndFontFamily();
 		cmdDisplay.setFont(font);
 		// If the background color obtained from the xml file is null, then default colors are used.
-    	if (bottomBg == null || bottomBg == ""){
-    		cmdDisplay.setBackground(BLACK_COLOR);
-    		cmdDisplay.setForeground(WHITE_COLOR);
+    	if (bottomBg == null || bottomBg == Constants.EMPTY_STRING){
+    		cmdDisplay.setBackground(defaultBottomBgColor);
+    		cmdDisplay.setForeground(BLACK_COLOR);
     	} else {
     		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
     	}
@@ -220,7 +223,7 @@ public class UserInterface{
             @Override
             public void focusGained(FocusEvent e) {
                 if (cmdEntry.getText().trim().length() != 0) {
-                	setOriginalColor();
+                	setCmdEntryOriginalColor();
                 }
                 cmdEntry.setText(focusString);
  
@@ -242,15 +245,15 @@ public class UserInterface{
 		cmdEntry.setText(Constants.CMD_ENTRY_PLACEHOLDER_TEXT);
 	}
 	
-	private static void setOriginalColor(){
+	private static void setCmdEntryOriginalColor(){
 		cmdEntry.setForeground(BLACK_COLOR);
         cmdEntry.setText(Constants.EMPTY_STRING);
 	}
     
     private static void textPaneSettings(JTextPane outputDisplay){
 		// If the background color obtained from the xml file is null, then default colors are used.
-    	if (topBg == null || topBg == ""){
-    		outputDisplay.setBackground(WHITE_COLOR);
+    	if (topBg == null || topBg == Constants.EMPTY_STRING){
+    		outputDisplay.setBackground(defaultTopBgColor);
     		outputDisplay.setForeground(BLACK_COLOR);
     	} else {
     		outputDisplay.setBackground(colors.rgbColor(topBg));
@@ -275,13 +278,13 @@ public class UserInterface{
 		allButton.setFocusable(false);
 		helpButton.setFocusable(false);
 		settingsButton.setFocusable(false);
-    	if (buttonColors == null || buttonColors == ""){
-    		homeButton.setBackground(GRAY_COLOR);
-    		overdueButton.setBackground(GRAY_COLOR);
-    		doneButton.setBackground(GRAY_COLOR);
-    		allButton.setBackground(GRAY_COLOR);
-    		helpButton.setBackground(GRAY_COLOR);
-    		settingsButton.setBackground(GRAY_COLOR);
+    	if (buttonColors == null || buttonColors == Constants.EMPTY_STRING){
+    		homeButton.setBackground(defaultButtonColor);
+    		overdueButton.setBackground(defaultButtonColor);
+    		doneButton.setBackground(defaultButtonColor);
+    		allButton.setBackground(defaultButtonColor);
+    		helpButton.setBackground(defaultButtonColor);
+    		settingsButton.setBackground(defaultButtonColor);
     	} else {
     		homeButton.setBackground(colors.rgbColor(buttonColors));
     		overdueButton.setBackground(colors.rgbColor(buttonColors));
@@ -344,7 +347,7 @@ public class UserInterface{
     }
 	
 	private static String displayToday(Parser p){
-		return p.parse("display today").substring(1);
+		return p.parse(Constants.DISPLAY_TODAY_COMMAND).substring(1);
 	}
 	
 	public static Timer setTodayTaskMessage(Parser p) {
