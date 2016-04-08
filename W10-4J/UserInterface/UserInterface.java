@@ -70,6 +70,7 @@ public class UserInterface{
 	private static String bottomBg = properties.get(ReadWriteXml.BOTTOM_BG_INDEX);
 	private static String topBg = properties.get(ReadWriteXml.TOP_BG_INDEX);
 	private static String buttonColors = properties.get(ReadWriteXml.BUTTONS_COLOR_INDEX);
+	private static Font defaultFont = new Font("Times New Roman", Font.PLAIN, 14);
 	private static Font font;
 	
 	public static void main(String[] args){
@@ -173,26 +174,24 @@ public class UserInterface{
 	
 	private static void commandTextSettings(){
 		commandText.setText(Constants.COMMAND_LABEL_TEXT);
-		if (fontFamily == null || fontSize == null){
-			font = commandText.getFont();
-		} else {
-			int fontStyle = commandText.getFont().getStyle();
-			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
-		}
+		setFontSizeAndFontFamily();
 		commandText.setOpaque(true);
         commandText.setBackground(WHITE_COLOR);
 		commandText.setFont(font);
         commandText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, WHITE_COLOR));
 		
 	}
+
+	private static void setFontSizeAndFontFamily() {
+		if (fontFamily == null || fontFamily == "" || fontSize == null || fontSize == ""){
+			font = defaultFont;
+		} else {
+			font = new Font(fontFamily, Font.PLAIN, Integer.valueOf(fontSize));
+		}
+	}
 	
 	private static void cmdEntrySettings(){
-		int fontStyle = cmdEntry.getFont().getStyle();
-		if (fontFamily == null || fontSize == null){
-			font = new Font(Font.MONOSPACED, Font.BOLD, 12);
-		} else {
-			font = new Font(fontFamily, fontStyle, Integer.valueOf(fontSize));
-		}
+		setFontSizeAndFontFamily();
 		cmdEntry.setFont(font);
         cmdEntry.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, WHITE_COLOR));
 		setPlaceholderFontColor();
@@ -205,18 +204,14 @@ public class UserInterface{
     	cmdDisplay.setWrapStyleWord(true);
     	cmdDisplay.setEditable(false);
     	cmdDisplay.setFocusable(false);
+		setFontSizeAndFontFamily();
+		cmdDisplay.setFont(font);
 		// If the background color obtained from the xml file is null, then default colors are used.
     	if (bottomBg == null){
     		cmdDisplay.setBackground(BLACK_COLOR);
     		cmdDisplay.setForeground(WHITE_COLOR);
-        	cmdDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
     	} else {
     		cmdDisplay.setBackground(colors.rgbColor(bottomBg));
-    		String fontFamily = cmdDisplay.getFont().getName();
-    		int fontStyle = cmdDisplay.getFont().getStyle();
-    		int fontSizeFromFile = Integer.valueOf(fontSize);
-    		font = new Font(fontFamily, fontStyle, fontSizeFromFile);
-    		cmdDisplay.setFont(font);
     	}
     }
 	
@@ -253,19 +248,17 @@ public class UserInterface{
 	}
     
     private static void textPaneSettings(JTextPane outputDisplay){
-    	outputDisplay.setEditable(false);
-    	outputDisplay.setFocusable(false);
 		// If the background color obtained from the xml file is null, then default colors are used.
     	if (topBg == null){
     		outputDisplay.setBackground(WHITE_COLOR);
     		outputDisplay.setForeground(BLACK_COLOR);
     	} else {
     		outputDisplay.setBackground(colors.rgbColor(topBg));
-    		int fontStyle = outputDisplay.getFont().getStyle();
-    		int fontSizeFromFile = Integer.valueOf(fontSize);
-    		font = new Font(fontFamily, fontStyle, fontSizeFromFile);
-    		outputDisplay.setFont(font);
     	}
+    	outputDisplay.setEditable(false);
+    	outputDisplay.setFocusable(false);
+		setFontSizeAndFontFamily();
+		outputDisplay.setFont(font);
     	outputDisplay.setContentType("text/html");
 		outputDisplay.putClientProperty(JTextPane.HONOR_DISPLAY_PROPERTIES, true);
     }
