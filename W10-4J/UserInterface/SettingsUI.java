@@ -8,6 +8,7 @@
 package UserInterface;
 
 import java.awt.Button;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
@@ -34,6 +35,8 @@ import javax.swing.JLabel;
 
 public class SettingsUI {
 
+
+
 	private static final int COLOR_OPTION_INDEX = 0;
 	
 	static JFrame f = new JFrame(Constants.SETTINGS_TEXT);
@@ -53,9 +56,10 @@ public class SettingsUI {
     JLabel jLabel1 = new JLabel();
     JLabel jLabel2 = new JLabel();
     Button saveButton = new Button();
-    ReadWriteXml prop = new ReadWriteXml();
-    
-    ArrayList<String> properties = prop.readToArrayList();
+    private static ReadWriteXml prop = new ReadWriteXml();
+    private static ArrayList<String> properties = prop.readToArrayList();
+	private static String fontFamily = properties.get(ReadWriteXml.FONT_FAMILY_INDEX);
+	private static String fontSize = properties.get(ReadWriteXml.FONT_SIZE_INDEX);
 	
 	private static ColorsForSettings colors = new ColorsForSettings();
 	
@@ -190,7 +194,7 @@ public class SettingsUI {
 	}
     
 	private static void setIcon() {
-		String icon = "/main/icon/d.png";
+		String icon = Constants.DOCKET_ICON_PATH;
 		ImageIcon img = new ImageIcon(UserInterface.class.getResource(icon));
 		f.setIconImage(img.getImage());
 	}
@@ -209,12 +213,20 @@ public class SettingsUI {
 		String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getAvailableFontFamilyNames();
 		fontFamilyBox.setModel(new DefaultComboBoxModel<String>(fonts));
-        fontFamilyBox.setSelectedItem(prop.read(Constants.FONT_FAMILY_KEY, Constants.PROPERTIES_FILE_NAME));
+		if (fontFamily == null || fontFamily == ""){
+	        fontFamilyBox.setSelectedItem(Constants.DEFAULT_FONT_FAMILY);
+		} else {
+			fontFamilyBox.setSelectedItem(prop.read(Constants.FONT_FAMILY_KEY, Constants.PROPERTIES_FILE_NAME));
+		}
 	}
 
 	private void fontSizeBoxSettings() {
 		fontSizeBox.setModel(new DefaultComboBoxModel<String>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
-        fontSizeBox.setSelectedItem(prop.read(Constants.FONT_SIZE_KEY, Constants.PROPERTIES_FILE_NAME));
+		if (fontSize == null || fontSize == ""){
+			fontSizeBox.setSelectedItem(Constants.DEFAULT_FONT_SIZE);
+		} else {
+			fontSizeBox.setSelectedItem(prop.read(Constants.FONT_SIZE_KEY, Constants.PROPERTIES_FILE_NAME));
+		}
 	}
 
 	private ButtonGroup radioButtonsSettings() {

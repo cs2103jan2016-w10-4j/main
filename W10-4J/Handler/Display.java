@@ -27,11 +27,6 @@ public class Display implements Command {
 				arraylistStorage_.writeToStorage();
 				outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByDefault();
 				break;
-			case Constants.MESSAGE_DISPLAY_FIELD_ID:
-				arraylistStorage_.sortNotDoneStorageByID();
-				arraylistStorage_.writeToStorage();
-				outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByDefault();
-				break;
 			case Constants.MESSAGE_DISPLAY_FIELD_OVERDUE:
 				arraylistStorage_.writeToStorage();
 				outputDisplay = arraylistStorage_.getNotDoneDisplayFormatByOverdue();

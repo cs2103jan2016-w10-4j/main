@@ -26,7 +26,7 @@ public class Constants {
 			"repeat" };
 	public static final String[] editDefaultArgumentList = { "rename", "startdate", "enddate", "starttime", "endtime",
 			"details", "repeat" };
-	public static final String[] displayDefaultArgumentList = { "overdue", "name", "done", "id", "today" };
+	public static final String[] displayDefaultArgumentList = { "overdue", "name", "done", "today" };
 	public static final String[] searchDefaultArgumentList = { "excl", "exclude" };
 	public static final String[] recurrenceDefaultArgumentList = { "day", "week", "month", "year" };
 	public static final String[] helpDefaultArgumentList = { "add", "delete", "edit", "done", "display", "search",
@@ -103,9 +103,9 @@ public class Constants {
 	/*
 	 * Red - Exceed the stipulated date and endtime Black - Default color
 	 */
-	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#ff0000>");
+	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#E3170D>");
 	public static final String MESSAGE_DISPLAY_COLOR_BLACK = ("<font color=#000000>");
-	public static final String MESSAGE_DISPLAY_COLOR_BROWN = ("<font color=#B87333>");
+	public static final String MESSAGE_DISPLAY_COLOR_BLUE = ("<font color=#0000FF>");
 
 	// Use commonly throughout all types of Display
 	public static final String MESSAGE_DISPLAY_HEADER_OPENTAG = ("<style>#underline{border-bottom: 3px solid black;}</style><h1><b>");
@@ -258,6 +258,7 @@ public class Constants {
 	public static final String OVERDUE_TASKS_TOOLTIP = "Overdue Tasks";
 	public static final String HOME_TOOLTIP = "Home";
 
+	public static final String DOCKET_ICON_PATH = "/main/icon/d.png";
 	public static final String SETTINGS_ICON_PATH = "/main/icon/settings.png";
 	public static final String HELP_ICON_PATH = "/main/icon/help.png";
 	public static final String ALL_ICON_PATH = "/main/icon/all.png";
@@ -275,6 +276,9 @@ public class Constants {
 	public static final String DISPLAY_COMMAND = "display";
 
 	public static final String BLACK = "#000000 r:0, g:0, b:0";
+	
+	public static final String DEFAULT_FONT_SIZE = "14";
+	public static final String DEFAULT_FONT_FAMILY = "Times New Roman";
 
 	public static final String SETTINGS_TEXT = "Settings";
 	public static final String FONT_TEXT = "Font";

@@ -413,10 +413,6 @@ public class ArraylistStorage {
 		sort.sortByName(this.notDoneStorage);
 	}
 
-	public void sortNotDoneStorageByID() {
-		sort.sortByID(this.notDoneStorage);
-	}
-
 	public void sortNotDoneStorageByStartDateAndName() {
 		ArrayList<Task> taskWithNoStartDateList = new ArrayList<Task>();
 		ArrayList<Task> taskWithStartDateList = new ArrayList<Task>();
