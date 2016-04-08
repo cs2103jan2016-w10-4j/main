@@ -91,6 +91,28 @@ public class NaturalDate {
 				return output;
 			}
 		}
+
+		for (int i = 0; i < Constants.day.length; i++) {
+			if (Constants.day[i].equals(input)) {
+				Calendar c = Calendar.getInstance();
+				int currentDayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+				int newDayOfWeek = i % 7 + 1;
+				System.out.println(newDayOfWeek);
+				if (currentDayOfWeek >= newDayOfWeek) {
+					newDayOfWeek += 7;
+				}
+				int daysToIncrease = newDayOfWeek - currentDayOfWeek;
+				int year = Calendar.getInstance().get(Calendar.YEAR);
+				int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+				int day = Calendar.getInstance().get(Calendar.DATE);
+				String output = String.format(Constants.DATE_FORMAT, year, month, day);
+				for (int j = 0; j < daysToIncrease; j++) {
+					output = Date.addDay(output);
+				}
+				return output;
+			}
+		}
+
 		return null;
 	}
 

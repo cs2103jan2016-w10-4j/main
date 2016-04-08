@@ -113,7 +113,7 @@ public class Parser {
 		} else if (commandType == COMMAND_TYPE.EDIT) {
 			replaceModifiers(tokens);
 			return compactArguments(tokens, commandList_.getEditArgumentList());
-			//return naturalLanguage_.interpretEditArguments(tokens);
+			// return naturalLanguage_.interpretEditArguments(tokens);
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
 			return compactArguments(tokens, commandList_.getDisplayArgumentList());
 		} else if (commandType == COMMAND_TYPE.SEARCH) {

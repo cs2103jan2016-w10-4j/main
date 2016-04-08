@@ -44,8 +44,8 @@ public class Constants {
 	public static final String[] month = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
 			"oct", "nov", "dec", "january", "february", "march", "april", "may", "june", "july", "august", "september",
 			"october", "november", "december" };
-	public static final String[] day = new String[] { "mon", "tues", "wed", "thurs", "fri", "sat", "sun", "m", "t", "w",
-			"f", "s", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
+	public static final String[] day = new String[] { "sun", "mon", "tues", "wed", "thurs", "fri", "sat", "sunday",
+			"monday", "tuesday", "wednesday", "thursday", "friday", "saturday" };
 
 	public static final char QUOTE_CHAR = '"';
 	public static final char EMPTY_CHAR = ' ';
@@ -55,7 +55,7 @@ public class Constants {
 	public static final String ALIAS_COMMENT_TAG = "alias";
 	public static final String DATE_FORMAT = "%04d/%02d/%02d";
 	public static final String TIME_FORMAT = "%02d:%02d";
-	
+
 	public static final String ALIAS_FILENAME = ".\\alias.xml";
 	public static final String[] COMMAND_LIST = { "add", "delete", "edit", "done", "display", "search", "setdir",
 			"retrieve", "recurrence", "undo", "exit", "help" };
@@ -239,13 +239,13 @@ public class Constants {
 	public static final String ASSERT_NULL_COMMAND = "Null command received";
 	public static final String ASSERT_VALID_TIME = "Invalid time returned by NaturalTime";
 	public static final String ASSERT_VALID_DATE = "Invalid date returned by NaturalDate";
-	
+
 	public static final String ASSERT_SETDIRECTORY_FILENAME_EMPTY = "Filename cannot be empty for set directory";
 	public static final String ASSERT_WRITE_ARRAYLISTS = "toDoTaskList and doneTaskList cannot be null";
 	public static final String ASSERT_READ_WRONGMETHOD_FILENAME_EMPTYNULL = "Method is not read or retrieve and Filename cannot be empty or null";
 
 	public static final String ASSERT_DISPLAY_ARRAYLISTS = "sortedList and previousInput cannot be null";
-	
+
 	// These constants are used in UserInterface package.
 	public static final String EMPTY_STRING = "";
 	public static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";

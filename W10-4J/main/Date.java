@@ -21,6 +21,7 @@ public class Date {
 		day = 1;
 		month = 1;
 		year++;
+		s = makeDate(year, month, day);
 		return s;
 	}
 
