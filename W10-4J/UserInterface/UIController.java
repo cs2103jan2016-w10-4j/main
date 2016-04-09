@@ -27,12 +27,18 @@ import Parser.Parser;
 import main.Constants;
 
 public class UIController {
+	private static final int SCROLL_AMOUNT = 200;
+
 	private static ArrayList<String> commands = new ArrayList<String>();
-	
+
 	private static int commandIndex = commands.size();
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
 
+	/*
+	 * This method implements the listeners which listens to the actions of the
+	 * user on the UI
+	 */
 	public void commandAction(Timer timer, String command, JButton overdue, JButton all, JButton done, JButton help,
 			JButton settings, JButton home, JTextField cmdEntry, JTextArea cmdDisplay, JTextPane displayOutput,
 			JLabel commandText) {
@@ -41,7 +47,8 @@ public class UIController {
 			commandEnteredAction(timer, command, cmdEntry, cmdDisplay, displayOutput, p);
 		} else {
 			cmdEntryListener(timer, p, cmdEntry, cmdDisplay, displayOutput);
-			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry, home, overdue, all, done, help);
+			settingsListener(timer, settings, cmdDisplay, displayOutput, commandText, cmdEntry, home, overdue, all,
+					done, help);
 			allListener(timer, all, p, displayOutput);
 			doneListener(timer, done, p, displayOutput);
 			helpListener(timer, help, p, displayOutput);
@@ -50,21 +57,14 @@ public class UIController {
 		}
 	}
 
-	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-			public boolean dispatchKeyEvent(KeyEvent e) {
-				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
-				return false;
-			}
-		});
-	}
-
-	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput, JLabel commandText,
-			JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done, JButton help) {
+	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput,
+			JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done,
+			JButton help) {
 		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help, settings);
+				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help,
+						settings);
 			}
 		});
 	}
@@ -147,35 +147,43 @@ public class UIController {
 		displayOutput.setCaretPosition(0);
 	}
 
+	/*
+	 * This stops the timer which changes the display on startup to today's
+	 * tasks
+	 */
+	private static void stopTimer(Timer timer) {
+		if (timer.isRunning()) {
+			timer.stop();
+		}
+	}
+
+	/*
+	 * These are the set of display methods. They display to either the top
+	 * display or the bottom display.
+	 */
 	private void determiningDisplayToWhichDisplayOutput(JTextArea cmdDisplay, JTextPane displayOutput, Parser p,
 			String output) {
 		if (isDisplay(output)) {
 			printInDisplayOutput(displayOutput, output.substring(1));
-		} else if (isCmdDisplay(output)){
+		} else if (isCmdDisplay(output)) {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
 			printInDisplayOutput(displayOutput, p.parse(Constants.DISPLAY_COMMAND).substring(1));
-		} else if (isInvalidMessages(output)){
+		} else if (isInvalidMessages(output)) {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
 		} else {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
-		}
-	}
-	
-	private static void stopTimer(Timer timer){
-		if (timer.isRunning()){
-			timer.stop();
 		}
 	}
 
 	public static boolean isDisplay(String s) {
 		return s.substring(0, 1).equals(Constants.IS_DISPLAY_FLAG);
 	}
-	
-	public static boolean isCmdDisplay(String s){
+
+	public static boolean isCmdDisplay(String s) {
 		return s.substring(0, 1).equals(Constants.CMD_DISPLAY_FLAG);
 	}
-	
-	public static boolean isInvalidMessages(String s){
+
+	public static boolean isInvalidMessages(String s) {
 		return s.substring(0, 1).equals(Constants.INVALID_MESSAGE_FLAG);
 	}
 
@@ -187,14 +195,24 @@ public class UIController {
 		displayOutput.setText(s);
 	}
 
+	/* This listens to the keyboard shortcuts that the user used in Docket */
+	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
+				return false;
+			}
+		});
+	}
+
 	private static void keyPressed(KeyEvent e, JTextPane outputDisplay, JTextField cmdEntry,
 			JScrollPane outputScrollpane) {
 		if (e.getID() == KeyEvent.KEY_PRESSED && e.isControlDown() && e.isShiftDown()
 				&& (e.getKeyCode() == KeyEvent.VK_EQUALS)) {
-			fontSizeChange(outputDisplay, "increase");
+			fontSizeChange(outputDisplay, Constants.FONT_SIZE_INCREASE_FLAG);
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.isControlDown() && e.isShiftDown()
 				&& (e.getKeyCode() == KeyEvent.VK_MINUS)) {
-			fontSizeChange(outputDisplay, "decrease");
+			fontSizeChange(outputDisplay, Constants.FONT_SIZE_DECREASE_FLAG);
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_DOWN) {
 			arrowDownPreviousInput(cmdEntry);
 		} else if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_UP) {
@@ -229,7 +247,7 @@ public class UIController {
 		String fontName = outputDisplay.getFont().getFontName();
 		int fontStyle = outputDisplay.getFont().getStyle();
 		Font font;
-		if (change.equals("increase")) {
+		if (change.equals(Constants.FONT_SIZE_INCREASE_FLAG)) {
 			font = new Font(fontName, fontStyle, fontSize + 1);
 		} else {
 			font = new Font(fontName, fontStyle, fontSize - 1);
@@ -260,7 +278,7 @@ public class UIController {
 	private static void pageUpChange(JScrollPane outputScrollpane) {
 		int minScroll = 0;
 		if (pageUpTrue(minScroll)) {
-			scroll -= 200;
+			scroll -= SCROLL_AMOUNT;
 		} else {
 			scroll = minScroll;
 		}
@@ -270,7 +288,7 @@ public class UIController {
 	private static void pageDownChange(JScrollPane outputScrollpane) {
 		int maxScroll = outputScrollpane.getVerticalScrollBar().getMaximum();
 		if (pageDownTrue(maxScroll)) {
-			scroll += 200;
+			scroll += SCROLL_AMOUNT;
 		} else {
 			scroll = maxScroll;
 		}

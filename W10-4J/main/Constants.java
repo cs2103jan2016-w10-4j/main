@@ -260,6 +260,14 @@ public class Constants {
 	public static final String ASSERT_DISPLAY_ARRAYLISTS = "sortedList and previousInput cannot be null";
 
 	// These constants are used in UserInterface package.
+	public static final String TIP_7 = "Natural Language is supported in Docket. See Natural Commands section of help for more info";
+	public static final String TIP_6 = "Enter <b>display</b> to view your tasks";
+	public static final String TIP_5 = "You can get <b>help</b> for specific commands by entering <b>help</b> &#60command&#62";
+	public static final String TIP_4 = "You can save your task file in any folder using <b> set directory</b> command";
+	public static final String TIP_3 = "Use PgUp or PgDown key to scroll through this display output";
+	public static final String TIP_2 = "Use Arrow Up or Arrow Down key to scroll through previous commands entered";
+	public static final String TIP_1 = "Use Ctrl + Shift + \"+\" or Ctrl + Shift + \"-\" to increase or decrease font size";
+	
 	public static final String EMPTY_STRING = "";
 	public static final String CMD_ENTRY_PLACEHOLDER_TEXT = "Enter commands here";
 	public static final String COMMAND_LABEL_TEXT = " Command: ";
@@ -289,6 +297,11 @@ public class Constants {
 	public static final String DISPLAY_COMMAND = "display";
 
 	public static final String BLACK = "#000000 r:0, g:0, b:0";
+	
+	public static final String FONT_SIZE_DECREASE_FLAG = "decrease";
+	public static final String FONT_SIZE_INCREASE_FLAG = "increase";
+
+	public static final String COLORS_COMMENT_FOR_XML = "colors";
 
 	public static final String DEFAULT_FONT_SIZE = "14";
 	public static final String DEFAULT_FONT_FAMILY = "Times New Roman";
