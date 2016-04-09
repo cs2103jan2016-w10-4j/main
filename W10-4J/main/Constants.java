@@ -258,6 +258,7 @@ public class Constants {
 	public static final String OVERDUE_TASKS_TOOLTIP = "Overdue Tasks";
 	public static final String HOME_TOOLTIP = "Home";
 
+	public static final String DOCKET_ICON_PATH = "/main/icon/d.png";
 	public static final String SETTINGS_ICON_PATH = "/main/icon/settings.png";
 	public static final String HELP_ICON_PATH = "/main/icon/help.png";
 	public static final String ALL_ICON_PATH = "/main/icon/all.png";
@@ -275,6 +276,9 @@ public class Constants {
 	public static final String DISPLAY_COMMAND = "display";
 
 	public static final String BLACK = "#000000 r:0, g:0, b:0";
+	
+	public static final String DEFAULT_FONT_SIZE = "14";
+	public static final String DEFAULT_FONT_FAMILY = "Times New Roman";
 
 	public static final String SETTINGS_TEXT = "Settings";
 	public static final String FONT_TEXT = "Font";

@@ -11,15 +11,15 @@ public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
-	private Storage mainStorage;
+	public Storage mainStorage;
 
 	private Sorting sort;
 	private ArrayList<Task> additionalNotDoneStorage;
 	private ArrayList<Task> additionalDoneStorage;
 	private ArrayList<Task> previousNotDoneStorage;
 	private ArrayList<Task> previousDoneStorage;
-	private String oldFileName;
-	private String newFileName;
+	public String oldFileName;
+	public String newFileName;
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
@@ -220,7 +220,11 @@ public class ArraylistStorage {
 	}
 
 	public void setNewDirectory() {
-		mainStorage.setDirectory(newFileName);
+		ArrayList<ArrayList<Task>> taskList = this.mainStorage.setDirectory(this.newFileName);
+		if (taskList != null) {
+			this.notDoneStorage = taskList.get(0);
+			this.doneStorage = taskList.get(1);
+		}
 	}
 
 	// ** RETRIEVE METHOD **
