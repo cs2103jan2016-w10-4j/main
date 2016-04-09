@@ -6,7 +6,7 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 
-// @@author A0135779M
+//@@author A0135779M
 public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
@@ -138,7 +138,6 @@ public class ArraylistStorage {
 		}
 		return results;
 	}
-	// @@author 
 	// @@author A0149174Y
 	private boolean taskSearchNameAndDetails(Task eachTask, String[] task) {
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
@@ -179,7 +178,6 @@ public class ArraylistStorage {
 		}
 		return searchStringFound;
 	}
-	// @@author 
 	// @@author A0135779M
 	// ** SET DIR METHOD **
 	public boolean setDirectory(String filePathName) {
