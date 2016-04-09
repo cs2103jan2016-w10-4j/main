@@ -315,7 +315,10 @@ public class Constants {
 	public static final String SET_3 = "button r:217, g:206, b:178 topBg r:213, g:222, b:217 bottomBg r:148, g:140, b:117";
 	public static final String SET_4 = "button r:254, g:109, b:93  topBg r:254, g:216, b:93  bottomBg r:93, g:211, b:254";
 	public static final String SET_5 = "button r:176, g:176, b:176 topBg r:255, g:255, b:255 bottomBg r:255, g:198, b:30";
-	//public static final String SET_5 = "button r:25, g:25, b:112 topBg r:123, g:104, b:238 bottomBg r:92, g:81, b:159";
+//a public static final String SET_5 = "button r:231, g:221, b:193 topBg r:255, g:241, b:225 bottomBg r:182, g:217, b:244";
+//b public static final String SET_5 = "button r:255, g:215, b:0 topBg r:255, g:255, b:255 bottomBg r:182, g:217, b:244";
+//c public static final String SET_5 = "button r:182, g:217, b:244 topBg r:250, g:250, b:250 bottomBg r:161, g:193, b:219";
+	
 	// These are constants used in help.java
 	public static final String HELP_FILE_PATH = "/resources/help.xml";
 	public static final String WELCOME_STRING = "welcome";

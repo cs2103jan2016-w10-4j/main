@@ -24,6 +24,7 @@ public class Parser {
 	}
 
 	public String parse(String command) {
+		command = command.trim();
 		assert command != null : Constants.ASSERT_NULL_COMMAND;
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);

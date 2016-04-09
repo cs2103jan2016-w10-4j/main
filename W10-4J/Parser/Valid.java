@@ -2,11 +2,14 @@
 package Parser;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.Constants;
 import main.Constants.COMMAND_TYPE;
 import main.Date;
 
 public class Valid {
+	private final Logger LOGGER = Logger.getLogger(Valid.class.getName());
 	private NaturalTime naturalTime_;
 	private NaturalDate naturalDate_;
 	private CommandList commandList_;
@@ -19,6 +22,11 @@ public class Valid {
 	}
 
 	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
+		String s = "";
+		for(int i = 0 ;i < arguments.length;i++){
+			s += arguments[i] + " ";
+		}
+		LOGGER.log(Level.INFO, "Arguments:"+ arguments.length+ ">" + s);
 		invalidDate = false;
 		invalidTime = false;
 		switch (commandType) {
