@@ -34,11 +34,11 @@ public class PreviousInput {
 		previousDoneStorage_ = previousDoneStorage;
 	}
 	
-	public PreviousInput(String action, String fileName) {
+	public PreviousInput(String action, String fileName, ArrayList<Task> previousNotDoneStorage, ArrayList<Task> previousDoneStorage) {
 		action_ = action;
 		fileName_ = fileName;
-//		previousNotDoneStorage_ = previousNotDoneStorage;
-//		previousDoneStorage_ = previousDoneStorage;
+		previousNotDoneStorage_ = previousNotDoneStorage;
+		previousDoneStorage_ = previousDoneStorage;
 	}
 
 	public String getAction() {

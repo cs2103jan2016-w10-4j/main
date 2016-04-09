@@ -11,15 +11,15 @@ public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
 	private ArrayList<PreviousInput> previousInputStorage;
-	private Storage mainStorage;
+	public Storage mainStorage;
 
 	private Sorting sort;
 	private ArrayList<Task> additionalNotDoneStorage;
 	private ArrayList<Task> additionalDoneStorage;
 	private ArrayList<Task> previousNotDoneStorage;
 	private ArrayList<Task> previousDoneStorage;
-	private String oldFileName;
-	private String newFileName;
+	public String oldFileName;
+	public String newFileName;
 
 	public ArraylistStorage() {
 		this.mainStorage = new Storage();
@@ -206,9 +206,9 @@ public class ArraylistStorage {
 	}
 
 	public void addPreviousDirectory(String command) {
-//		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
-//		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
-		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName));
+		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
+		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
+		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName, cloneNotDoneStorage, cloneDoneStorage));
 	}
 
 	public void rememberOldDirectory() {
