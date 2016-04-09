@@ -14,10 +14,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import main.Constants;
 
 public class ReadWriteXml {
+	private final Logger LOGGER = Logger.getLogger(ReadWriteXml.class.getName());
+	
 	public static final int COLOR_OPTION_INDEX = 0;
 	public static final int TOP_BG_INDEX = 1;
 	public static final int BOTTOM_BG_INDEX = 2;
@@ -64,10 +68,12 @@ public class ReadWriteXml {
 					properties.add(propertiesList);
 				}
 			}
+			LOGGER.log(Level.INFO, "Read from properties.xml file successfully");
 		} catch (NullPointerException e) {
 			for (int i = 0; i < Constants.PROPERTIES_KEYS.length; i++) {
 				properties.add(Constants.EMPTY_STRING);
 			}
+			LOGGER.log(Level.INFO, "Created properties.xml file successfully");
 		}
 		return properties;
 	}
@@ -85,5 +91,6 @@ public class ReadWriteXml {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		LOGGER.log(Level.INFO, "Written to properties.xml file successfully");
 	}
 }

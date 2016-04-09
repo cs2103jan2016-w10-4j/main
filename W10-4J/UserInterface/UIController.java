@@ -74,6 +74,7 @@ public class UIController {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
 				String output = p.parse(Constants.DISPLAY_COMMAND);
+				assert output != null || output == Constants.EMPTY_STRING;
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -85,6 +86,7 @@ public class UIController {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
 				String output = p.parse(Constants.DISPLAY_DONE_COMMAND);
+				assert output != null || output == Constants.EMPTY_STRING;
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -107,6 +109,7 @@ public class UIController {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
 				String output = p.parse(Constants.HELP_COMMAND);
+				assert output != null || output == Constants.EMPTY_STRING;
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -118,6 +121,7 @@ public class UIController {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
 				String output = p.parse(Constants.DISPLAY_OVERDUE_COMMAND);
+				assert output != null || output == Constants.EMPTY_STRING;
 				printInDisplayOutput(displayOutput, output.substring(1));
 				displayOutput.setCaretPosition(0);
 			}
@@ -142,7 +146,7 @@ public class UIController {
 		commandIndex = commands.size();
 		printInCommandDisplay(cmdDisplay, command);
 		String output = p.parse(command);
-		assert output != null;
+		assert output != null || output == Constants.EMPTY_STRING;
 		determiningDisplayToWhichDisplayOutput(cmdDisplay, displayOutput, p, output);
 		displayOutput.setCaretPosition(0);
 	}

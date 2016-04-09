@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,6 +26,7 @@ import javax.swing.JTextPane;
 import main.Constants;
 
 public class SettingsUIController {
+	private final static Logger LOGGER = Logger.getLogger(SettingsUIController.class.getName());
 	private static ColorsForSettings colors = new ColorsForSettings();
 	private static ReadWriteXml prop = new ReadWriteXml();
 
@@ -77,8 +80,11 @@ public class SettingsUIController {
 							colors.getBottomBg(Constants.SET_4), outputDisplay, cmdDisplay, commandText, cmdEntry,
 							fontSizeBox, fontFamilyBox, colors.getButton(Constants.SET_4));
 					setButtonColors(home, overdue, all, done, help, settings, Constants.SET_4);
+				} else {
+					LOGGER.log(Level.WARNING, "Radio buttons not selected");
 				}
 				f.dispose();
+				LOGGER.log(Level.INFO, "Settings saved successfully");
 			}
 		});
 	}
