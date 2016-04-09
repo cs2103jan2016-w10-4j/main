@@ -103,8 +103,8 @@ public class Read {
 		int colonIndex = fileContent.indexOf(Constants.READ_COLON);
 		String lastThreeCharInTaskCategory = fileContent.substring(colonIndex - 3, colonIndex);
 		
-		if (lastThreeCharInTaskCategory.equals(Constants.READ_LASTTHREECHARINEVENT)) {
-			String taskName = fileContent.substring(fileContent.indexOf(Constants.READ_COLONWITHSPACE) + 1).trim();
+		if (lastThreeCharInTaskCategory.equals(Constants.READ_LAST_THREE_CHAR_IN_EVENT)) {
+			String taskName = fileContent.substring(fileContent.indexOf(Constants.READ_COLON_WITH_SPACE) + 1).trim();
 			task = new Task(taskName);
 			taskList.add(task);
 		} else {
@@ -113,8 +113,8 @@ public class Read {
 	}
 	
 	private void setTaskDetails(ArrayList<Task> readTaskList, String taskContent, Task task) {
-		String taskCategory = taskContent.substring(0, taskContent.indexOf(Constants.READ_COLONWITHSPACE)).trim();
-		taskContent = taskContent.substring(taskContent.indexOf(Constants.READ_COLONWITHSPACE) + 1).trim();
+		String taskCategory = taskContent.substring(0, taskContent.indexOf(Constants.READ_COLON_WITH_SPACE)).trim();
+		taskContent = taskContent.substring(taskContent.indexOf(Constants.READ_COLON_WITH_SPACE) + 1).trim();
 		
 		if (taskCategory.equals(Constants.READ_STARTDATE)) {
 			String taskStartDate = taskContent;

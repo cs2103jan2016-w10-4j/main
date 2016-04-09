@@ -42,7 +42,7 @@ public class DisplayStartDate {
 		
 		initializeVariables();
 		if (sortedList.size() == 0) {
-			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYSTARTDATE_NOTASKONHAND 
+			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYSTARTDATE_NO_TASK_ON_HAND 
 					+ Constants.DISPLAY_HEADER_CLOSETAG;
 		} else {
 			if (previousInput.size() != 0) {
@@ -129,7 +129,7 @@ public class DisplayStartDate {
 			if (currentDate != null) {
 				displayAppropriateDay();
 			} else {
-				output += Constants.DISPLAYSTARTDATE_FLOATINGTASKS;
+				output += Constants.DISPLAYSTARTDATE_FLOATING_TASKS;
 			}
 		}
 		output += Constants.DISPLAY_HEADERTABLE_CLOSETAG;
@@ -255,10 +255,14 @@ public class DisplayStartDate {
 		
 		if (task.isMultiDay()) {
 			int multiDayIndex = getMultiDayTaskIndex(task);
-			String[] currentDayOutput = {String.valueOf(multiDayIndex), CommonFunctionsInDisplay.getTaskDetails(multiDayIndex, task, color, repeat, taskIDForRecentTask, Constants.DISPLAYSTARTDATE_STARTDATE)};
+			String[] currentDayOutput = {String.valueOf(multiDayIndex), 
+					CommonFunctionsInDisplay.getTaskDetails(multiDayIndex, task, color, repeat, 
+							taskIDForRecentTask, Constants.DISPLAYSTARTDATE_STARTDATE)};
 			currentDayTaskList.add(currentDayOutput);
 		} else {
-			String[] currentDayOutput = {String.valueOf(currentIndex), CommonFunctionsInDisplay.getTaskDetails(currentIndex, task, color, repeat, taskIDForRecentTask, Constants.DISPLAYSTARTDATE_STARTDATE)};
+			String[] currentDayOutput = {String.valueOf(currentIndex), 
+					CommonFunctionsInDisplay.getTaskDetails(currentIndex, task, color, repeat, 
+							taskIDForRecentTask, Constants.DISPLAYSTARTDATE_STARTDATE)};
 			currentDayTaskList.add(currentDayOutput);
 			currentIndex += 1;
 		}
@@ -321,7 +325,8 @@ public class DisplayStartDate {
 		return newTask;
 	}
 	
-	private static ArrayList<Task> createMiddleTasks(Date startDate, Date endDate, ArrayList<Task> taskList, Task task) throws ParseException {
+	private static ArrayList<Task> createMiddleTasks(Date startDate, Date endDate, 
+			ArrayList<Task> taskList, Task task) throws ParseException {
         String taskEndDate = dateFormat.format(endDate);
 
         Calendar calendar = Calendar.getInstance();

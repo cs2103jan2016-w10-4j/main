@@ -126,20 +126,20 @@ public class Constants {
 	public static final String DISPLAY_HEADERTABLE_OPENTAG = ("<table id=\"underline\"><th style=\"font-size:120%\">");
 	public static final String DISPLAY_HEADERTABLE_CLOSETAG = ("</th></table>");
 
-	public static final String DISPLAYTABLEFORMAT_NOTASKONHAND = ("No tasks on hand!");
+	public static final String DISPLAYTABLEFORMAT_NO_TASK_ON_HAND = ("No tasks on hand!");
 	public static final String DISPLAYTABLEFORMAT_TABLE = ("display in table format");
 	public static final String DISPLAYTABLEFORMAT_EMPTY_STRING = ("");
 
 	public static final String DISPLAYOVERDUE_HEADER = ("Overdue Tasks");
-	public static final String DISPLAYOVERDUE_NOOVERDUETASK = ("There is no overdue task.");
+	public static final String DISPLAYOVERDUE_NO_OVERDUE_TASK = ("There is no overdue task.");
 
 	public static final String DISPLAYTODAY_HEADER = ("Today's Tasks");
-	public static final String DISPLAYTODAY_NOTASK = ("There is no task today.");
+	public static final String DISPLAYTODAY_NO_TASK = ("There is no task today.");
 	public static final String DISPLAYTODAY_TODAY = ("Today");
 	public static final String DISPLAYTODAY_COMMA_AND_SPACE = (", ");
 
 	public static final String DISPLAYDONE_HEADER = ("Done Tasks");
-	public static final String DISPLAYDONE_NOTASKDONE = ("No tasks are done!");
+	public static final String DISPLAYDONE_NO_TASK_DONE = ("No tasks are done!");
 	public static final String DISPLAYDONE_DONE = ("display done");
 	public static final String DISPLAYDONE_EMPTY_STRING = ("");
 
@@ -147,8 +147,8 @@ public class Constants {
 	public static final String DISPLAYSTARTDATE_TODAY = ("Today");
 	public static final String DISPLAYSTARTDATE_YESTERDAY = ("Yesterday");
 	public static final String DISPLAYSTARTDATE_TOMORROW = ("Tomorrow");
-	public static final String DISPLAYSTARTDATE_FLOATINGTASKS = ("Floating Tasks");
-	public static final String DISPLAYSTARTDATE_NOTASKONHAND = ("No tasks on hand!");
+	public static final String DISPLAYSTARTDATE_FLOATING_TASKS = ("Floating Tasks");
+	public static final String DISPLAYSTARTDATE_NO_TASK_ON_HAND = ("No tasks on hand!");
 	public static final String DISPLAYSTARTDATE_STARTDATE = ("display with startdate");
 	public static final String DISPLAYSTARTDATE_TABLE_OPENTAG = ("<table width=\"100%\" style=\"margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
 	public static final String DISPLAYSTARTDATE_TABLE_CLOSETAG = ("</table>");
@@ -207,7 +207,7 @@ public class Constants {
 	public static final String STORAGE_PATH = ("PATH:");
 	public static final String STORAGE_SLASH = ("/");
 
-	public static final String SETDIR_TEXTFILEEXT = (".txt");
+	public static final String SETDIR_TEXTFILE_EXTENSION = (".txt");
 	public static final String SETDIR_SLASH = ("/");
 
 	public static final String READ_EVENT = ("Event");
@@ -219,9 +219,9 @@ public class Constants {
 	public static final String READ_DAY = ("Day");
 	public static final String READ_WEEK = ("Week");
 	public static final String READ_MONTH = ("Month");
-	public static final String READ_LASTTHREECHARINEVENT = ("ent");
+	public static final String READ_LAST_THREE_CHAR_IN_EVENT = ("ent");
 	public static final String READ_COLON = (":");
-	public static final String READ_COLONWITHSPACE = (": ");
+	public static final String READ_COLON_WITH_SPACE = (": ");
 	public static final String READ_SPACE = (" ");
 
 	public static final String WRITE_TEMPFILE = ("temp.txt");

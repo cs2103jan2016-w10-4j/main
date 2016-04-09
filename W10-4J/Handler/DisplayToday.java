@@ -26,7 +26,7 @@ public class DisplayToday {
 		String output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYTODAY_HEADER + Constants.DISPLAY_SPACING;
 		
 		if (todayOutput == null) {
-			output += Constants.DISPLAYTODAY_NOTASK;
+			output += Constants.DISPLAYTODAY_NO_TASK;
 		} else {
 			// Remove "Today, " from the return value
 			todayOutput = todayOutput.substring(beforeTheDateDisplay.length(), todayOutput.length());

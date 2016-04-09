@@ -26,7 +26,7 @@ public class DisplayOverdue {
 				+ Constants.DISPLAY_SPACING;
 		
 		if (overdueOutput == null) {
-			output += Constants.DISPLAYOVERDUE_NOOVERDUETASK;
+			output += Constants.DISPLAYOVERDUE_NO_OVERDUE_TASK;
 		} else {
 			output += overdueOutput;
 		}

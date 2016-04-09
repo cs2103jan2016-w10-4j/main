@@ -24,7 +24,7 @@ public class DisplayTableFormat {
 		}
 		
 		if (sortedList.size() == 0) {
-			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYTABLEFORMAT_NOTASKONHAND 
+			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYTABLEFORMAT_NO_TASK_ON_HAND 
 					+ Constants.DISPLAY_HEADER_CLOSETAG;
 		} else {
 			output = Constants.DISPLAY_TABLE_AND_HEADER;

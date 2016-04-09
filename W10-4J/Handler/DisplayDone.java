@@ -25,7 +25,7 @@ public class DisplayDone {
 		}
 		
 		if (sortedList.size() == 0) {
-			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYDONE_NOTASKDONE
+			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYDONE_NO_TASK_DONE
 					+ Constants.DISPLAY_HEADER_CLOSETAG;
 		} else {
 			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYDONE_HEADER

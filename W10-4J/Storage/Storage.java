@@ -168,11 +168,11 @@ public class Storage {
 	 */
 	private String setFileName(String filename) {
 		int pathLength = filename.length();
-		if(pathLength <= (Constants.SETDIR_TEXTFILEEXT.length())) {
+		if(pathLength <= (Constants.SETDIR_TEXTFILE_EXTENSION.length())) {
 			filename = filename.concat(Constants.STORAGE_SLASH + Constants.setDirFileName);
 		} else {
 			String lastFourChar = filename.substring(pathLength - 4, pathLength);
-			if (!(lastFourChar.equalsIgnoreCase(Constants.SETDIR_TEXTFILEEXT))) {
+			if (!(lastFourChar.equalsIgnoreCase(Constants.SETDIR_TEXTFILE_EXTENSION))) {
 				filename = filename.concat(Constants.STORAGE_SLASH + Constants.setDirFileName);
 			}
 		}
