@@ -1,9 +1,29 @@
 //@@author A0135779M
 package Handler;
 
+import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
+import main.Task;
 
 public class Retrieve implements Command{
+///////UNUSED////////
+	private COMMAND_STATE commandState;
+	private Task forEachTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+
+	public Task returnEachTask() {
+		return forEachTask;
+	}
+
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+
+	public Task returnOldTask() {
+		return forOldTask;
+	}
+///////UNUSED////////
 	ArraylistStorage arraylistStorage_;
 	
 	public Retrieve(ArraylistStorage arraylistStorage) {

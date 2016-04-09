@@ -1,11 +1,57 @@
-//@@ A0135779M
-
 package Handler;
 
 import main.Task;
+import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 
 public class Edit implements Command {
+///////UNUSED////////
+	//@@author A0149174Y-unused
+	private COMMAND_STATE commandState;
+	private Task forEachTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+
+	public Task returnEachTask() {
+		return forEachTask;
+	}
+
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+
+	public Task returnOldTask() {
+		return forOldTask;
+	}
+
+	public String execute_OLD(String[] task, int notUsedInThisCommand) {
+		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
+		int taskID = Integer.parseInt(task[0].trim());
+		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (eachTask == null) {
+			commandState = COMMAND_STATE.FAILED;
+			return Constants.MESSAGE_EDIT_FAIL;
+		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
+			commandState = COMMAND_STATE.FAILED;
+			return Constants.MESSAGE_EDIT_FAIL;
+		} else {
+			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
+			Task oldTask = cloneTask(eachTask);
+			fieldEditor(eachTask, task);
+
+			if (isDateAndTimeValid(eachTask)) {
+				forEachTask = eachTask;
+				forOldTask = oldTask;
+				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+			} else {
+				commandState = COMMAND_STATE.FAILED;
+				return Constants.MESSAGE_TIME_FAIL;
+			}
+		}
+	}
+	//@@author
+  ///////UNUSED////////
+	//@@ A0135779M
 	ArraylistStorage arraylistStorage_;
 
 	public Edit(ArraylistStorage arraylistStorage) {

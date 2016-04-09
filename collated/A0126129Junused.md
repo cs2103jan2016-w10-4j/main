@@ -44,4 +44,127 @@
 		return taskID;
 	}
 
+	private static boolean compareTasks(Task previousTask, Task currentTask) {
+		boolean isSameName = compareName(previousTask, currentTask);
+		boolean isSameStartDate = compareStartDate(previousTask, currentTask);
+		boolean isSameEndDate = compareEndDate(previousTask, currentTask);
+		boolean isSameStartTime = compareStartTime(previousTask, currentTask);
+		boolean isSameEndTime = compareEndTime(previousTask, currentTask);
+		boolean isSameDetails = compareDetails(previousTask, currentTask);
+		boolean isSameTaskID = compareTaskID(previousTask, currentTask);
+
+		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime 
+				&& isSameEndTime && isSameDetails && isSameTaskID) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareName(Task previousTask, Task currentTask) {
+		if (previousTask.getName() == null && currentTask.getName() == null) {
+			return true;
+		} else if (previousTask.getName() != null && currentTask.getName() == null) {
+			return false;
+		} else if (previousTask.getName() == null && currentTask.getName() != null) {
+			return false;
+		} else if (previousTask.getName().equals(currentTask.getName())) { 
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareStartDate(Task previousTask, Task currentTask) {
+		if (previousTask.getStartDate() == null && currentTask.getStartDate() == null) {
+			return true;
+		} else if (previousTask.getStartDate() == null && currentTask.getStartDate() != null) {
+			return false;
+		} else if (previousTask.getStartDate() != null && currentTask.getStartDate() == null) {
+			return false;
+		} else if (previousTask.getStartDate().equals(currentTask.getStartDate())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareEndDate(Task previousTask, Task currentTask) {
+		if (previousTask.getEndDate() == null && currentTask.getEndDate() == null) {
+			return true;
+		} else if (previousTask.getEndDate() == null && currentTask.getEndDate() != null) {
+			return false;
+		} else if (previousTask.getEndDate() != null && currentTask.getEndDate() == null) {
+			return false;
+		} else if (previousTask.getEndDate().equals(currentTask.getEndDate())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareStartTime(Task previousTask, Task currentTask) {
+		if (previousTask.getStartTime() == null && currentTask.getStartTime() == null) {
+			return true;
+		} else if (previousTask.getStartTime() == null && currentTask.getStartTime() != null) {
+			return false;
+		} else if (previousTask.getStartTime() != null && currentTask.getStartTime() == null) {
+			return false;
+		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)
+				&& currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return true;
+		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) 
+				&& !(currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH))) {
+			return false;
+		} else if (!(previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) 
+				&& currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return false;
+		} else if (previousTask.getStartTime().equals(currentTask.getStartTime())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareEndTime(Task previousTask, Task currentTask) {
+		if (previousTask.getEndTime() == null && currentTask.getEndTime() == null) {
+			return true;
+		} else if (previousTask.getEndTime() == null && currentTask.getEndTime() != null) {
+			return false;
+		} else if (previousTask.getEndTime() != null && currentTask.getEndTime() == null) {
+			return false;
+		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)
+				&& currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return true;
+		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) 
+				&& !(currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH))) {
+			return false;
+		} else if (!(previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) 
+				&& currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+			return false;
+		} else if (previousTask.getEndTime().equals(currentTask.getEndTime())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareDetails(Task previousTask, Task currentTask) {
+		if (previousTask.getDetails() == null && currentTask.getDetails() == null) {
+			return true;
+		} else if (previousTask.getDetails() == null && currentTask.getDetails() != null) {
+			return false;
+		} else if (previousTask.getDetails() != null && currentTask.getDetails() == null) {
+			return false;
+		} else if (previousTask.getDetails().equals(currentTask.getDetails())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean compareTaskID(Task previousTask, Task currentTask) {
+		return previousTask.getTaskID() == currentTask.getTaskID();
+	}
+
 ```
