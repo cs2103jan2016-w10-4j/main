@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.Timer;
+import javax.swing.text.BadLocationException;
 
 import Parser.Parser;
 import main.Constants;
@@ -148,7 +149,28 @@ public class UIController {
 		String output = p.parse(command);
 		assert output != null || output == Constants.EMPTY_STRING;
 		determiningDisplayToWhichDisplayOutput(cmdDisplay, displayOutput, p, output);
-		displayOutput.setCaretPosition(0);
+		setCaretPositionForHighlightedTasks(displayOutput);
+	}
+
+	private void setCaretPositionForHighlightedTasks(JTextPane displayOutput) {
+		int indexOfHighlight = displayOutput.getText().indexOf("FFFF00");
+		int caretPositionToBeSet = 0;
+		int indexOfHighlightedPoint;
+		if (indexOfHighlight > 0){
+			indexOfHighlightedPoint = displayOutput.getText().indexOf("000000", indexOfHighlight) + 8;
+			int endOfIndexOfHighlightedPoint = displayOutput.getText().indexOf("<", indexOfHighlightedPoint);
+			if (endOfIndexOfHighlightedPoint > 0){
+				String highlightedPoint = displayOutput.getText().substring(indexOfHighlightedPoint, endOfIndexOfHighlightedPoint);
+				int lengthOfDisplayOutputDocument = displayOutput.getDocument().getLength();
+				try {
+					caretPositionToBeSet = displayOutput.getDocument().getText(0, lengthOfDisplayOutputDocument).indexOf(highlightedPoint);
+				} catch (BadLocationException e) {
+					caretPositionToBeSet = 0;
+					e.printStackTrace();
+				}
+			}
+		}
+		displayOutput.setCaretPosition(caretPositionToBeSet);
 	}
 
 	/*
