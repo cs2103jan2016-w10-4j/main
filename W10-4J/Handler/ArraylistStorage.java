@@ -206,9 +206,9 @@ public class ArraylistStorage {
 	}
 
 	public void addPreviousDirectory(String command) {
-		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
-		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
-		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName, cloneNotDoneStorage, cloneDoneStorage));
+//		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
+//		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
+		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName));
 	}
 
 	public void rememberOldDirectory() {
@@ -220,7 +220,11 @@ public class ArraylistStorage {
 	}
 
 	public void setNewDirectory() {
-		mainStorage.setDirectory(newFileName);
+		ArrayList<ArrayList<Task>> taskList = this.mainStorage.setDirectory(this.newFileName);
+		if (taskList != null) {
+			this.notDoneStorage = taskList.get(0);
+			this.doneStorage = taskList.get(1);
+		}
 	}
 
 	// ** RETRIEVE METHOD **

@@ -72,11 +72,11 @@ public class Undo implements Command{
 			
 		case Constants.MESSAGE_ACTION_SETDIR:
 			arraylistStorage_.rememberOldDirectory();
-			arraylistStorage_.getNewDirectory();
-			arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
+			arraylistStorage_.getNewDirectory();
+			//arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.setNewDirectory();
-			arraylistStorage_.setNewStorages();
+			//arraylistStorage_.setNewStorages();
 			break;
 			
 //		case Constants.MESSAGE_ACTION_UNSETDIR:
