@@ -15,25 +15,25 @@ public class DisplayDone {
 	public static String displayDoneFormat(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput, int notDoneStorageSize) {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
 		
-		String output = "";
+		String output = Constants.DISPLAYDONE_EMPTY_STRING;
 		ArrayList<Integer> taskIDForRecentTask;
 		
 		if (previousInput.size() != 0) {
-			taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
+			taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput);
 		} else {
 			taskIDForRecentTask = new ArrayList<>();
 		}
 		
 		if (sortedList.size() == 0) {
-			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_NOTASKDONE
-					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
+			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYDONE_NOTASKDONE
+					+ Constants.DISPLAY_HEADER_CLOSETAG;
 		} else {
-			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYDONE_HEADER
-					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG + Constants.MESSAGE_DISPLAY_SPACING
-					+ Constants.MESSAGE_DISPLAY_TABLEANDHEADER;
+			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYDONE_HEADER
+					+ Constants.DISPLAY_HEADER_CLOSETAG + Constants.DISPLAY_SPACING
+					+ Constants.DISPLAY_TABLE_AND_HEADER;
 
 			output = displayToOutput(output, sortedList, taskIDForRecentTask, notDoneStorageSize);
-			output += Constants.MESSAGE_DISPLAY_TABLECLOSETAG;
+			output += Constants.DISPLAY_TABLE_CLOSETAG;
 		}
 		return output;
 	}
@@ -41,16 +41,17 @@ public class DisplayDone {
 	private static String displayToOutput(String output, ArrayList<Task> sortedList, 
 			ArrayList<Integer> taskIDForRecentTask, int notDoneStorageSize) {
 		for (int i = 0; i < sortedList.size(); i++) {
+			int displayIndex = notDoneStorageSize + i + 1;
 			Task task = sortedList.get(i);
-			output += getTask(notDoneStorageSize + i + 1, task, taskIDForRecentTask);
+			output += getTask(displayIndex, task, taskIDForRecentTask);
 		}
 		return output;
 	}
 	
 	private static String getTask(int index, Task task, ArrayList<Integer> taskIDForRecentTask) {
-		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
+		String color = Constants.DISPLAY_COLOR_BLACK;
 		String repeat = CommonFunctionsInDisplay.assignRepeat(task);
 		return CommonFunctionsInDisplay.getTaskDetails(index, task, color, repeat, taskIDForRecentTask,
-				Constants.MESSAGE_DISPLAYDONE_DONE);
+				Constants.DISPLAYDONE_DONE);
 	}
 }

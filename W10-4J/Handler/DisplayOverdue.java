@@ -22,15 +22,15 @@ public class DisplayOverdue {
 		
 		// Within DisplayStartDate, there will be returnOutputToTheCorrectClass() method that will return overdue tasks
 		DisplayStartDate.displayFormat(sort, sortedList, previousInput);
-		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER 
-				+ Constants.MESSAGE_DISPLAY_SPACING;
+		String output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYOVERDUE_HEADER 
+				+ Constants.DISPLAY_SPACING;
 		
 		if (overdueOutput == null) {
-			output += Constants.MESSAGE_DISPLAYOVERDUE_NOOVERDUETASK;
+			output += Constants.DISPLAYOVERDUE_NOOVERDUETASK;
 		} else {
 			output += overdueOutput;
 		}
-		output += Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
+		output += Constants.DISPLAY_HEADER_CLOSETAG;
 		return output;
 	}
 	

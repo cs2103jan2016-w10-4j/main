@@ -103,70 +103,79 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
 
 	/*
-	 * Red - Exceed the stipulated date and endtime Black - Default color
+	 * Red - Exceed the stipulated start date and endtime 
+	 * Black - Default color for normal tasks
+	 * Blue - Default color for multiday tasks
 	 */
-	public static final String MESSAGE_DISPLAY_COLOR_RED = ("<font color=#E3170D>");
-	public static final String MESSAGE_DISPLAY_COLOR_BLACK = ("<font color=#000000>");
-	public static final String MESSAGE_DISPLAY_COLOR_BLUE = ("<font color=#0000FF>");
+	public static final String DISPLAY_COLOR_RED = ("<font color=#E3170D>");
+	public static final String DISPLAY_COLOR_BLACK = ("<font color=#000000>");
+	public static final String DISPLAY_COLOR_BLUE = ("<font color=#0000FF>");
 
 	// Use commonly throughout all types of Display
-	public static final String MESSAGE_DISPLAY_HEADER_OPENTAG = ("<style>#underline{border-bottom: 3px solid black;}</style><h1><b>");
-	public static final String MESSAGE_DISPLAY_HEADER_CLOSETAG = ("</b></h1>");
+	public static final String DISPLAY_HEADER_OPENTAG = ("<style>#underline{border-bottom: 3px solid black;}</style><h1><b>");
+	public static final String DISPLAY_HEADER_CLOSETAG = ("</b></h1>");
 
-	// Use only by DisplayDone and DisplayTableFormat
-	public static final String MESSAGE_DISPLAY_TABLEANDHEADER = ("<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\">Start Date </th><th style=\"width:15%;\" align=\"left\">End Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr>");
-	public static final String MESSAGE_DISPLAY_TABLECLOSETAG = ("</table>");
+	// Use by DisplayDone and DisplayTableFormat
+	public static final String DISPLAY_TABLE_AND_HEADER = ("<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\">Start Date </th><th style=\"width:15%;\" align=\"left\">End Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr>");
+	public static final String DISPLAY_TABLE_CLOSETAG = ("</table>");
 
 	// Use by DisplayToday and DisplayOverdue
-	public static final String MESSAGE_DISPLAY_SPACING = ("<br><br>");
+	public static final String DISPLAY_SPACING = ("<br><br>");
 
 	// Use by DisplayStart and DisplayToday
-	public static final String MESSAGE_DISPLAY_HEADERTABLE_OPENTAG = ("<table id=\"underline\"><th style=\"font-size:120%\">");
-	public static final String MESSAGE_DISPLAY_HEADERTABLE_CLOSETAG = ("</th></table>");
+	public static final String DISPLAY_HEADERTABLE_OPENTAG = ("<table id=\"underline\"><th style=\"font-size:120%\">");
+	public static final String DISPLAY_HEADERTABLE_CLOSETAG = ("</th></table>");
 
-	public static final String MESSAGE_DISPLAYTABLEFORMAT_NOTASKONHAND = ("No tasks on hand!");
-	public static final String MESSAGE_DISPLAYTABLEFORMAT_TABLE = ("display in table format");
+	public static final String DISPLAYTABLEFORMAT_NOTASKONHAND = ("No tasks on hand!");
+	public static final String DISPLAYTABLEFORMAT_TABLE = ("display in table format");
+	public static final String DISPLAYTABLEFORMAT_EMPTY_STRING = ("");
 
-	public static final String MESSAGE_DISPLAYOVERDUE_HEADER = ("Overdue Tasks");
-	public static final String MESSAGE_DISPLAYOVERDUE_NOOVERDUETASK = ("There is no overdue task.");
+	public static final String DISPLAYOVERDUE_HEADER = ("Overdue Tasks");
+	public static final String DISPLAYOVERDUE_NOOVERDUETASK = ("There is no overdue task.");
 
-	public static final String MESSAGE_DISPLAYTODAY_HEADER = ("Today's Tasks");
-	public static final String MESSAGE_DISPLAYTODAY_NOTASK = ("There is no task today.");
-	public static final String MESSAGE_DISPLAYTODAY_TODAY = ("Today");
+	public static final String DISPLAYTODAY_HEADER = ("Today's Tasks");
+	public static final String DISPLAYTODAY_NOTASK = ("There is no task today.");
+	public static final String DISPLAYTODAY_TODAY = ("Today");
+	public static final String DISPLAYTODAY_COMMA_AND_SPACE = (", ");
 
-	public static final String MESSAGE_DISPLAYDONE_HEADER = ("Done Tasks");
-	public static final String MESSAGE_DISPLAYDONE_NOTASKDONE = ("No tasks are done!");
-	public static final String MESSAGE_DISPLAYDONE_DONE = ("display done");
+	public static final String DISPLAYDONE_HEADER = ("Done Tasks");
+	public static final String DISPLAYDONE_NOTASKDONE = ("No tasks are done!");
+	public static final String DISPLAYDONE_DONE = ("display done");
+	public static final String DISPLAYDONE_EMPTY_STRING = ("");
 
-	public static final String MESSAGE_DISPLAYSTARTDATE_OVERDUE = ("Overdue");
-	public static final String MESSAGE_DISPLAYSTARTDATE_TODAY = ("Today");
-	public static final String MESSAGE_DISPLAYSTARTDATE_YESTERDAY = ("Yesterday");
-	public static final String MESSAGE_DISPLAYSTARTDATE_TOMORROW = ("Tomorrow");
-	public static final String MESSAGE_DISPLAYSTARTDATE_FLOATINGTASKS = ("Floating Tasks");
-	public static final String MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND = ("No tasks on hand!");
-	public static final String MESSAGE_DISPLAYSTARTDATE_STARTDATE = ("display with startdate");
-	public static final String MESSAGE_DISPLAYSTARTDATE_TABLEOPENTAG = ("<table width=\"100%\" style=\"margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
-	public static final String MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG = ("</table>");
+	public static final String DISPLAYSTARTDATE_OVERDUE = ("Overdue");
+	public static final String DISPLAYSTARTDATE_TODAY = ("Today");
+	public static final String DISPLAYSTARTDATE_YESTERDAY = ("Yesterday");
+	public static final String DISPLAYSTARTDATE_TOMORROW = ("Tomorrow");
+	public static final String DISPLAYSTARTDATE_FLOATINGTASKS = ("Floating Tasks");
+	public static final String DISPLAYSTARTDATE_NOTASKONHAND = ("No tasks on hand!");
+	public static final String DISPLAYSTARTDATE_STARTDATE = ("display with startdate");
+	public static final String DISPLAYSTARTDATE_TABLE_OPENTAG = ("<table width=\"100%\" style=\"margin-bottom:10px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"><h2><b> Event <b></h2></th><th style=\"width:15%;\" align=\"left\"><h2><b> Start Time </h2><b></th><th style=\"width:15%;\" align=\"left\"><h2><b> End Time </h2><b></th><th style=\"width:25%;\" align=\"left\"><h2><b> Details </h2></b></th><th style=\"width:15%;\" align=\"left\"><h2><b> Repeat </h2><b></th></ltr>");
+	public static final String DISPLAYSTARTDATE_TABLE_CLOSETAG = ("</table>");
+	public static final String DISPLAYSTARTDATE_TODAY_AND_COMMA = ("Today, ");
+	public static final String DISPLAYSTARTDATE_EMPTY_STRING = ("");
+	public static final String DISPLAYSTARTDATE_COMMA_AND_SPACE = (", ");
+	public static final String DISPLAYSTARTDATE_DASH = ("-");
 
-	public static final int MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST = (-1);
-	public static final String MESSAGE_COMMONFUNCTION_REPEATDAY = ("Every Day");
-	public static final String MESSAGE_COMMONFUNCTION_REPEATMONTH = ("Every Month");
-	public static final String MESSAGE_COMMONFUNCTION_REPEATWEEK = ("Every Week");
-	public static final String MESSAGE_COMMONFUNCTION_REPEATYEAR = ("Every Year");
-	public static final String MESSAGE_COMMONFUNCTION_RETRIEVE = ("retrieve");
-	public static final String MESSAGE_COMMONFUNCTION_DONE = ("display done");
-	public static final String MESSAGE_COMMONFUNCTION_TABLE = ("display in table format");
-	public static final String MESSAGE_COMMONFUNCTION_STARTDATE = ("display with startdate");
-	public static final String MESSAGE_COMMONFUNCTION_DASH = ("-");
-	public static final String MESSAGE_COMMONFUNCTION_TD_OPENTAG = ("<td>");
-	public static final String MESSAGE_COMMONFUNCTION_TD_CLOSETAG = ("</td>");
-	public static final String MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG = ("<td></td>");
-	public static final String MESSAGE_COMMONFUNCTION_TD_ALIGN = ("<td align=\"right\">");
-	public static final String MESSAGE_COMMONFUNCTION_TR_OPENTAG = ("<tr style=\"border-bottom:1px solid #E5E4E2\">");
-	public static final String MESSAGE_COMMONFUNCTION_TRHIGHLIGHT_OPENTAG = ("<tr style=\"border-bottom:1px solid #E5E4E2\" bgcolor= #FFFF00>");
-	public static final String MESSAGE_COMMONFUNCTION_TR_CLOSETAG = ("</tr>");
-	public static final String MESSAGE_COMMONFUNCTION_HEADER_OPENTAG = ("<h3>");
-	public static final String MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG = ("</h3>");
+	public static final int COMMONFUNCTIONS_NOT_IN_ARRAYLIST = (-1);
+	public static final String COMMONFUNCTIONS_REPEAT_DAY = ("Every Day");
+	public static final String COMMONFUNCTIONS_REPEAT_MONTH = ("Every Month");
+	public static final String COMMONFUNCTIONS_REPEAT_WEEK = ("Every Week");
+	public static final String COMMONFUNCTIONS_REPEAT_YEAR = ("Every Year");
+	public static final String COMMONFUNCTIONS_RETRIEVE = ("retrieve");
+	public static final String COMMONFUNCTIONS_DONE = ("display done");
+	public static final String COMMONFUNCTIONS_TABLE = ("display in table format");
+	public static final String COMMONFUNCTIONS_STARTDATE = ("display with startdate");
+	public static final String COMMONFUNCTIONS_DASH = ("-");
+	public static final String COMMONFUNCTIONS_TD_OPENTAG = ("<td>");
+	public static final String COMMONFUNCTIONS_TD_CLOSETAG = ("</td>");
+	public static final String COMMONFUNCTIONS_TD_OPENCLOSETAG = ("<td></td>");
+	public static final String COMMONFUNCTIONS_TD_ALIGN = ("<td align=\"right\">");
+	public static final String COMMONFUNCTIONS_TR_OPENTAG = ("<tr style=\"border-bottom:1px solid #E5E4E2\">");
+	public static final String COMMONFUNCTIONS_TRHIGHLIGHT_OPENTAG = ("<tr style=\"border-bottom:1px solid #E5E4E2\" bgcolor= #FFFF00>");
+	public static final String COMMONFUNCTIONS_TR_CLOSETAG = ("</tr>");
+	public static final String COMMONFUNCTIONS_HEADER_OPENTAG = ("<h3>");
+	public static final String COMMONFUNCTIONS_HEADER_CLOSETAG = ("</h3>");
 
 	public static final String MESSAGE_EDIT_ACTION_RENAME = ("rename");
 	public static final String MESSAGE_EDIT_ACTION_START = ("starttime");
@@ -297,12 +306,12 @@ public class Constants {
 	public static final String DISPLAY_COMMAND = "display";
 
 	public static final String BLACK = "#000000 r:0, g:0, b:0";
-	
+
 	public static final String FONT_SIZE_DECREASE_FLAG = "decrease";
 	public static final String FONT_SIZE_INCREASE_FLAG = "increase";
 
 	public static final String COLORS_COMMENT_FOR_XML = "colors";
-
+	
 	public static final String DEFAULT_FONT_SIZE = "14";
 	public static final String DEFAULT_FONT_FAMILY = "Times New Roman";
 

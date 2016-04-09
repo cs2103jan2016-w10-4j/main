@@ -19,12 +19,12 @@ public class CommonFunctionsInDisplay {
 	 * <PreviousInput> store task object instead of the state
 	 */
 	public static int checkRecentUpdatedTaskID(ArrayList<Task> currentList, ArrayList<PreviousInput> previousList) {
-		int taskID = Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST;
+		int taskID = Constants.COMMONFUNCTIONS_NOT_IN_ARRAYLIST;
 
 		// Applicable if user calls retrieve method
 		if (previousList.size() == 1
-				&& previousList.get(0).getAction().equals(Constants.MESSAGE_COMMONFUNCTION_RETRIEVE)) {
-			return Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST;
+				&& previousList.get(0).getAction().equals(Constants.COMMONFUNCTIONS_RETRIEVE)) {
+			return Constants.COMMONFUNCTIONS_NOT_IN_ARRAYLIST;
 		}
 
 		// When user first add a task into the empty file
@@ -51,7 +51,7 @@ public class CommonFunctionsInDisplay {
 				}
 			}
 
-			if (taskID != Constants.MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST) {
+			if (taskID != Constants.COMMONFUNCTIONS_NOT_IN_ARRAYLIST) {
 				return taskID;
 			}
 		}
@@ -124,14 +124,14 @@ public class CommonFunctionsInDisplay {
 			return false;
 		} else if (previousTask.getStartTime() != null && currentTask.getStartTime() == null) {
 			return false;
-		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)
-				&& currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+		} else if (previousTask.getStartTime().equals(Constants.COMMONFUNCTIONS_DASH)
+				&& currentTask.getStartTime().equals(Constants.COMMONFUNCTIONS_DASH)) {
 			return true;
-		} else if (previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) 
-				&& !(currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH))) {
+		} else if (previousTask.getStartTime().equals(Constants.COMMONFUNCTIONS_DASH) 
+				&& !(currentTask.getStartTime().equals(Constants.COMMONFUNCTIONS_DASH))) {
 			return false;
-		} else if (!(previousTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) 
-				&& currentTask.getStartTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+		} else if (!(previousTask.getStartTime().equals(Constants.COMMONFUNCTIONS_DASH)) 
+				&& currentTask.getStartTime().equals(Constants.COMMONFUNCTIONS_DASH)) {
 			return false;
 		} else if (previousTask.getStartTime().equals(currentTask.getStartTime())) {
 			return true;
@@ -147,14 +147,14 @@ public class CommonFunctionsInDisplay {
 			return false;
 		} else if (previousTask.getEndTime() != null && currentTask.getEndTime() == null) {
 			return false;
-		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)
-				&& currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+		} else if (previousTask.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH)
+				&& currentTask.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH)) {
 			return true;
-		} else if (previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH) 
-				&& !(currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH))) {
+		} else if (previousTask.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH) 
+				&& !(currentTask.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH))) {
 			return false;
-		} else if (!(previousTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) 
-				&& currentTask.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH)) {
+		} else if (!(previousTask.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH)) 
+				&& currentTask.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH)) {
 			return false;
 		} else if (previousTask.getEndTime().equals(currentTask.getEndTime())) {
 			return true;
@@ -183,32 +183,32 @@ public class CommonFunctionsInDisplay {
 
 	//@@author A0126129J
 	public static String determineColor(Task t) {
-		String color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
+		String color = Constants.DISPLAY_COLOR_BLACK;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
 		// Determine which color to display
-		if (t.getStartDate() != null && (t.getEndTime() == null || t.getEndTime().equals(Constants.MESSAGE_COMMONFUNCTION_DASH))) {
+		if (t.getStartDate() != null && (t.getEndTime() == null || t.getEndTime().equals(Constants.COMMONFUNCTIONS_DASH))) {
 			Date date = new Date();
 			if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
-				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
+				color = Constants.DISPLAY_COLOR_RED;
 			} else if (t.isMultiDay()) {
-				color = Constants.MESSAGE_DISPLAY_COLOR_BLUE;
+				color = Constants.DISPLAY_COLOR_BLUE;
 			} else {
-				color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
+				color = Constants.DISPLAY_COLOR_BLACK;
 			}
 		} else if (t.getEndTime() != null && t.getStartDate() != null) {
 			Date time = new Date();
 			Date date = new Date();
 			if (t.getStartDate().trim().compareTo(dateFormat.format(date)) < 0) {
-				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
+				color = Constants.DISPLAY_COLOR_RED;
 			} else if (t.getEndTime().trim().compareTo(timeFormat.format(time)) < 0
 					&& t.getStartDate().compareTo(dateFormat.format(date)) == 0) {
-				color = Constants.MESSAGE_DISPLAY_COLOR_RED;
+				color = Constants.DISPLAY_COLOR_RED;
 			} else if (t.isMultiDay()) {
-				color = Constants.MESSAGE_DISPLAY_COLOR_BLUE;
+				color = Constants.DISPLAY_COLOR_BLUE;
 			} else {
-				color = Constants.MESSAGE_DISPLAY_COLOR_BLACK;
+				color = Constants.DISPLAY_COLOR_BLACK;
 			}
 		}
 		
@@ -218,13 +218,13 @@ public class CommonFunctionsInDisplay {
 	public static String assignRepeat(Task t) {
 		String repeat;
 		if (t.getDay()) {
-			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATDAY;
+			repeat = Constants.COMMONFUNCTIONS_REPEAT_DAY;
 		} else if (t.getMonth()) {
-			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATMONTH;
+			repeat = Constants.COMMONFUNCTIONS_REPEAT_MONTH;
 		} else if (t.getWeek()) {
-			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATWEEK;
+			repeat = Constants.COMMONFUNCTIONS_REPEAT_WEEK;
 		} else if (t.getYear()) {
-			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATYEAR;
+			repeat = Constants.COMMONFUNCTIONS_REPEAT_YEAR;
 		} else {
 			repeat = null;
 		}
@@ -237,94 +237,95 @@ public class CommonFunctionsInDisplay {
 
 		// Highlight the row if its the recent task
 		if (taskIDForRecentTask != null && taskIDForRecentTask.contains(t.getTaskID())) {
-			output = Constants.MESSAGE_COMMONFUNCTION_TRHIGHLIGHT_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN
-					+ Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + index + ")"
-					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color
-					+ t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output = Constants.COMMONFUNCTIONS_TRHIGHLIGHT_OPENTAG + Constants.COMMONFUNCTIONS_TD_ALIGN
+					+ Constants.COMMONFUNCTIONS_HEADER_OPENTAG + color + index + ")"
+					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG + Constants.COMMONFUNCTIONS_TD_OPENTAG + color
+					+ t.getName() + Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
-			output = Constants.MESSAGE_COMMONFUNCTION_TR_OPENTAG + Constants.MESSAGE_COMMONFUNCTION_TD_ALIGN
-					+ Constants.MESSAGE_COMMONFUNCTION_HEADER_OPENTAG + color + index + ")"
-					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color
-					+ t.getName() + Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output = Constants.COMMONFUNCTIONS_TR_OPENTAG + Constants.COMMONFUNCTIONS_TD_ALIGN
+					+ Constants.COMMONFUNCTIONS_HEADER_OPENTAG + color + index + ")"
+					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG + Constants.COMMONFUNCTIONS_TD_OPENTAG + color
+					+ t.getName() + Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		}
 
 		// Check if its called from DisplayDone, DisplayTableFormat
-		if (action.equals(Constants.MESSAGE_COMMONFUNCTION_DONE)
-				|| action.equals(Constants.MESSAGE_COMMONFUNCTION_TABLE)) {
+		if (action.equals(Constants.COMMONFUNCTIONS_DONE)
+				|| action.equals(Constants.COMMONFUNCTIONS_TABLE)) {
 			if (t.getStartDate() != null) {
-				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartDate()
-						+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+				output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getStartDate()
+						+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 			} else {
-				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+				output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 			}
 
 			if (t.getEndDate() != null) {
-				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndDate()
-						+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+				output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getEndDate()
+						+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 			} else {
-				output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+				output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 			}
 		}
 
 		if (t.getStartTime() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getStartTime()
-					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getStartTime()
+					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 		}
 
 		if (t.getEndTime() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getEndTime()
-					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getEndTime()
+					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 		}
 
 		if (t.getDetails() != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + t.getDetails()
-					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getDetails()
+					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENCLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 		}
 
 		if (repeat != null) {
-			output += Constants.MESSAGE_COMMONFUNCTION_TD_OPENTAG + color + repeat
-					+ Constants.MESSAGE_COMMONFUNCTION_TD_CLOSETAG;
+			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + repeat 
+					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		}
 
-		output += Constants.MESSAGE_COMMONFUNCTION_HEADER_CLOSETAG + Constants.MESSAGE_COMMONFUNCTION_TR_CLOSETAG;
+		output += Constants.COMMONFUNCTIONS_HEADER_CLOSETAG + Constants.COMMONFUNCTIONS_TR_CLOSETAG;
 		return output;
 	}
 
-	public static ArrayList<Integer> generateChanges(ArrayList<Task> sortedList, ArrayList<PreviousInput> previousInput) {
+	// Determine which task is not in the previousList when comparing with currentList
+	public static ArrayList<Integer> checkRecentUpdatedTask(ArrayList<Task> currentList, ArrayList<PreviousInput> previousInput) {
 		ArrayList<Task> previousList = previousInput.get(0).getPreviousNotDoneStorage();
 		ArrayList<Integer> output = new ArrayList<>();
 		
-		// When user first add a task into the empty file
 		if (previousList.size() != 0) {
-			output = addNotFoundTaskToArraylist(sortedList, previousList);
+			output = addNotFoundTaskIDToArraylist(currentList, previousList);
 		} else {
-			for (int i = 0; i < sortedList.size(); i++) {
-				output.add(sortedList.get(i).getTaskID());
+			// When user first add a task into the empty file
+			for (int i = 0; i < currentList.size(); i++) {
+				output.add(currentList.get(i).getTaskID());
 			}
 		}
 		return output;
 	}
 
-	private static ArrayList<Integer> addNotFoundTaskToArraylist(ArrayList<Task> sortedList, ArrayList<Task> previousList) {
+	private static ArrayList<Integer> addNotFoundTaskIDToArraylist(ArrayList<Task> currentList, ArrayList<Task> previousList) {
 		ArrayList<Integer> output = new ArrayList<>();
 		
-		for (int i = 0; i < sortedList.size(); i++) {
+		for (int i = 0; i < currentList.size(); i++) {
 			boolean found = false;
 			for (int j = 0; j < previousList.size(); j++) {
-				if (compareTasks(previousList.get(j), sortedList.get(i))) {
+				if (compareTasks(previousList.get(j), currentList.get(i))) {
 					found = true;
 					continue;
 				}
 			}
 			
 			if (!found) {
-				output.add(sortedList.get(i).getTaskID());
+				output.add(currentList.get(i).getTaskID());
 			}
 		}
 		return output;

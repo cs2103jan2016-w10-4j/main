@@ -19,21 +19,21 @@ public class DisplayToday {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
 		
 		todayOutput = null;
-		String beforeTheDateDisplay = Constants.MESSAGE_DISPLAYTODAY_TODAY + ", ";
+		String beforeTheDateDisplay = Constants.DISPLAYTODAY_TODAY + Constants.DISPLAYTODAY_COMMA_AND_SPACE;
 
 		// Within DisplayStartDate, there will be returnOutputToTheCorrectClass() method that will return today's tasks
 		DisplayStartDate.displayFormat(sort, sortedList, previousInput);
-		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
+		String output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYTODAY_HEADER + Constants.DISPLAY_SPACING;
 		
 		if (todayOutput == null) {
-			output += Constants.MESSAGE_DISPLAYTODAY_NOTASK;
+			output += Constants.DISPLAYTODAY_NOTASK;
 		} else {
 			// Remove "Today, " from the return value
 			todayOutput = todayOutput.substring(beforeTheDateDisplay.length(), todayOutput.length());
-			output += Constants.MESSAGE_DISPLAY_HEADERTABLE_OPENTAG + todayOutput + Constants.MESSAGE_DISPLAY_HEADERTABLE_CLOSETAG;
+			output += Constants.DISPLAY_HEADERTABLE_OPENTAG + todayOutput + Constants.DISPLAY_HEADERTABLE_CLOSETAG;
 		}
 		
-		output += Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
+		output += Constants.DISPLAY_HEADER_CLOSETAG;
 		return output;
 	}
 	
