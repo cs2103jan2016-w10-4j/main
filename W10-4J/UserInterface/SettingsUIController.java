@@ -3,7 +3,7 @@
  * The preferences are then saved into the properties.xml file.
  * 
  * @@author A0113761M
- * */
+ */
 package UserInterface;
 
 import java.awt.Button;
