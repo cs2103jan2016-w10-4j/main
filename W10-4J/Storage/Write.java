@@ -56,15 +56,15 @@ public class Write {
 		}	
 		
 		if (toDoTaskList.isEmpty()) {
-			print.println(Constants.MESSAGE_WRITE_READ_NOTASKONHAND);
+			print.println(Constants.WRITE_READ_NOTASKONHAND);
 		} else {
-			printTaskDetails(Constants.MESSAGE_WRITE_READ_TASKONHAND, toDoTaskList);
+			printTaskDetails(Constants.WRITE_READ_TASKONHAND, toDoTaskList);
 		}
 		
 		if (doneTaskList.isEmpty()) {
-			print.println(Constants.MESSAGE_WRITE_READ_NOTASKDONE);
+			print.println(Constants.WRITE_READ_NOTASKDONE);
 		} else {
-			printTaskDetails(Constants.MESSAGE_WRITE_READ_TASKDONE, doneTaskList);
+			printTaskDetails(Constants.WRITE_READ_TASKDONE, doneTaskList);
 		}
 		
 		LOGGER.log(Level.INFO, "Write to file successfully");
@@ -121,14 +121,14 @@ public class Write {
 	
 	public void updatePathSentence(String filePathName) {		
 		try {
-			tempFile = new File("temp.txt");
-			printPath = new PrintWriter(new FileWriter("temp.txt"));
+			tempFile = new File(Constants.WRITE_TEMPFILE);
+			printPath = new PrintWriter(new FileWriter(Constants.WRITE_TEMPFILE));
 			reader = new BufferedReader(new FileReader(Constants.DEFAULT_FILENAME));
 			addPathAndCopyFileContent(filePathName, printPath, reader);
 
 			// Revert the copy back and delete the temp file
 			printPath = new PrintWriter(new FileWriter(Constants.DEFAULT_FILENAME));
-			reader = new BufferedReader(new FileReader("temp.txt"));
+			reader = new BufferedReader(new FileReader(Constants.WRITE_TEMPFILE));
 			addPathAndCopyFileContent(filePathName, printPath, reader);
 			tempFile.delete();
 			LOGGER.log(Level.INFO, "Update PATH: sentence to mytextfile.txt successfully");
@@ -142,12 +142,12 @@ public class Write {
 	private void addPathAndCopyFileContent(String filePathName, PrintWriter printPath, BufferedReader read) {
 		try {
 			String content;
-			String firstSentence = "PATH: " + filePathName;
+			String firstSentence = Constants.WRITE_PATH + filePathName;
 			printPath.println(firstSentence);
 
 			while ((content = read.readLine()) != null) {
-				String path = content.substring(0, content.indexOf(" "));
-				if(!(path.equals(Constants.MESSAGE_WRITE_READ_PATH))) {
+				String path = content.substring(0, content.indexOf(Constants.WRITE_SPACE));
+				if(!(path.equals(Constants.WRITE_READ_PATH))) {
 					printPath.println(content);
 				} 
 			}

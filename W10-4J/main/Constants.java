@@ -195,20 +195,29 @@ public class Constants {
 	public static final String MESSAGE_ACTION_WRITE = ("write");
 	public static final String MESSAGE_ACTION_BASICOP = ("basic operations");
 
-	public static final String MESSAGE_STORAGE_SUCCESS = ("Success");
-	public static final String MESSAGE_STORAGE_FAILURE = ("Failure");
-	public static final String MESSAGE_STORAGE_PATH = ("PATH:");
+	public static final String STORAGE_PATH = ("PATH:");
+	public static final String STORAGE_SLASH = ("/");
 
-	public static final String MESSAGE_READ_EVENT = ("Event");
-	public static final String MESSAGE_READ_STARTDATE = ("Start Date");
-	public static final String MESSAGE_READ_ENDDATE = ("End Date");
-	public static final String MESSAGE_READ_STARTTIME = ("Start Time");
-	public static final String MESSAGE_READ_ENDTIME = ("End Time");
-	public static final String MESSAGE_READ_DETAILS = ("Details");
-	public static final String MESSAGE_READ_DAY = ("Day");
-	public static final String MESSAGE_READ_WEEK = ("Week");
-	public static final String MESSAGE_READ_MONTH = ("Month");
+	public static final String SETDIR_TEXTFILEEXT = (".txt");
+	public static final String SETDIR_SLASH = ("/");
 
+	public static final String READ_EVENT = ("Event");
+	public static final String READ_STARTDATE = ("Start Date");
+	public static final String READ_ENDDATE = ("End Date");
+	public static final String READ_STARTTIME = ("Start Time");
+	public static final String READ_ENDTIME = ("End Time");
+	public static final String READ_DETAILS = ("Details");
+	public static final String READ_DAY = ("Day");
+	public static final String READ_WEEK = ("Week");
+	public static final String READ_MONTH = ("Month");
+	public static final String READ_LASTTHREECHARINEVENT = ("ent");
+	public static final String READ_COLON = (":");
+	public static final String READ_COLONWITHSPACE = (": ");
+	public static final String READ_SPACE = (" ");
+
+	public static final String WRITE_TEMPFILE = ("temp.txt");
+	public static final String WRITE_PATH = ("PATH: ");
+	public static final String WRITE_SPACE = (" ");
 	public static final String MESSAGE_WRITE_EVENT = ("%d. Event: %s");
 	public static final String MESSAGE_WRITE_STARTDATE = ("Start Date: %s");
 	public static final String MESSAGE_WRITE_ENDDATE = ("End Date: %s");
@@ -226,13 +235,11 @@ public class Constants {
 	public static final String MESSAGE_REPEAT_YEAR = ("year");
 
 	// Use in both Write and Read class
-	public static final String MESSAGE_WRITE_READ_PATH = ("PATH:");
-	public static final String MESSAGE_WRITE_READ_TASKONHAND = ("Tasks on hand:");
-	public static final String MESSAGE_WRITE_READ_TASKDONE = ("Tasks that are done:");
-	public static final String MESSAGE_WRITE_READ_NOTASKONHAND = ("No tasks on hand!");
-	public static final String MESSAGE_WRITE_READ_NOTASKDONE = ("No tasks are done!");
-
-	public static final String MESSAGE_SETDIR_TEXTFILEEXT = (".txt");
+	public static final String WRITE_READ_PATH = ("PATH:");
+	public static final String WRITE_READ_TASKONHAND = ("Tasks on hand:");
+	public static final String WRITE_READ_TASKDONE = ("Tasks that are done:");
+	public static final String WRITE_READ_NOTASKONHAND = ("No tasks on hand!");
+	public static final String WRITE_READ_NOTASKDONE = ("No tasks are done!");
 
 	public static final String ASSERT_TASK_EXISTENCE = ("Task does not exist");
 	public static final String ASSERT_TASKLIST_EXISTENCE = ("Task List does not exist");

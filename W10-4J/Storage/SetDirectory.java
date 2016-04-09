@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.Constants;
 import main.Task;
 
 import java.nio.file.FileSystems;
@@ -50,8 +51,8 @@ public class SetDirectory {
 			}
 			
 			/* 
-			 * If the file contains information about the task, it will be read
-			 * and pass over to Handler, instead of overwriting the current data
+			 * If the file contains information about the tasks, 
+			 * it will be read and pass over to Handler
 			 */
 			BufferedReader reader = new BufferedReader(new FileReader(filePathName));
 			taskList = taskReader.readFromFile(reader);
@@ -73,7 +74,7 @@ public class SetDirectory {
 	}
 	
 	private void createFile(File file, Path path, String filePathName) throws IOException {
-		String excludeFileName = filePathName.substring(0, filePathName.lastIndexOf("/") + 1);
+		String excludeFileName = filePathName.substring(0, filePathName.lastIndexOf(Constants.SETDIR_SLASH) + 1);
 		Path pathWithoutFileName = Paths.get(excludeFileName);
 		Files.createDirectories(pathWithoutFileName);
 		Files.createFile(path);

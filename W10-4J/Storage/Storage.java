@@ -45,8 +45,7 @@ public class Storage {
 	
 	private void createDefaultFile() {
 		try {
-			String outcome = checkFileExists(filename);
-			if (outcome.equals(Constants.MESSAGE_STORAGE_FAILURE)) {
+			if (!(isFileExists(filename))) {
 				LOGGER.log(Level.INFO, "Creating file in progress");
 				creatingFile(filename);
 				LOGGER.log(Level.INFO, "File is successfully created");
@@ -111,20 +110,7 @@ public class Storage {
 	public ArrayList<ArrayList<Task>> setDirectory(String filePathName) {
 		assert filePathName.length() != 0 : Constants.ASSERT_SETDIRECTORY_FILENAME_EMPTY;
 		
-		/*
-		 * Check if user has input the filename,
-		 * If it does not, a default file will be created
-		 */
-		int pathLength = filePathName.length();
-		if(pathLength <= (Constants.MESSAGE_SETDIR_TEXTFILEEXT.length())) {
-			filePathName = filePathName.concat("/" + Constants.setDirFileName);
-		} else {
-			String lastFourChar = filePathName.substring(pathLength - 4, pathLength);
-			if (!(lastFourChar.equalsIgnoreCase(Constants.MESSAGE_SETDIR_TEXTFILEEXT))) {
-				filePathName = filePathName.concat("/" + Constants.setDirFileName);
-			}
-		}
-		
+		filePathName = setFileName(filePathName);
 		ArrayList<ArrayList<Task>> taskList = taskSetDirectory.setDirectory(filePathName);
 		if (taskList != null) {
 			filename = filePathName;
@@ -141,13 +127,13 @@ public class Storage {
 	private void updateFilenameIfPathExists() {
 		try {
 			BufferedReader read = new BufferedReader(new FileReader(Constants.DEFAULT_FILENAME));
-			String content = read.readLine();
+			String fileContent = read.readLine();
 			
-			if (content != null) {
-				String path = content.substring(0, content.indexOf(" "));
-				if (path.equals(Constants.MESSAGE_STORAGE_PATH)) {
-					String absolutePath = content.substring(content.indexOf(" ") + 1, content.length());
-					if (checkFileExists(absolutePath).equals(Constants.MESSAGE_STORAGE_SUCCESS)) {
+			if (fileContent != null) {
+				String path = fileContent.substring(0, fileContent.indexOf(" "));
+				if (path.equals(Constants.STORAGE_PATH)) {
+					String absolutePath = fileContent.substring(fileContent.indexOf(" ") + 1, fileContent.length());
+					if (isFileExists(absolutePath)) {
 						updateFilenameVariable(absolutePath);
 					}
 				} 
@@ -163,19 +149,37 @@ public class Storage {
 		filename = absolutePath;
 	}
 	
-	private String checkFileExists(String filename) {		
-		String outcome;
+	private boolean isFileExists(String filename) {		
 		File file = new File(filename);
 
 		if (file.exists()) {
-			outcome = Constants.MESSAGE_STORAGE_SUCCESS;
+			LOGGER.log(Level.INFO, "File exist");
+			return true;
 		} else {
-			outcome = Constants.MESSAGE_STORAGE_FAILURE;
+			LOGGER.log(Level.INFO, "File does not exist");
+			return false;
 		}
-		return outcome;
 	}
 	
-	// Needed for Handler when undo setdir
+	/*
+	 * Check if user has input the filename.
+	 * If it does not, the filename will be assigned with a default name [dirdefaultfile.txt]
+	 * Else, the filename will be assigned based on the name indicated by user
+	 */
+	private String setFileName(String filename) {
+		int pathLength = filename.length();
+		if(pathLength <= (Constants.SETDIR_TEXTFILEEXT.length())) {
+			filename = filename.concat(Constants.STORAGE_SLASH + Constants.setDirFileName);
+		} else {
+			String lastFourChar = filename.substring(pathLength - 4, pathLength);
+			if (!(lastFourChar.equalsIgnoreCase(Constants.SETDIR_TEXTFILEEXT))) {
+				filename = filename.concat(Constants.STORAGE_SLASH + Constants.setDirFileName);
+			}
+		}
+		return filename;
+	}
+	
+	// Needed for Handler undo setdir
 	public String getCurrentFilename() {
 		return filename;
 	}

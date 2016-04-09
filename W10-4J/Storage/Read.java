@@ -59,31 +59,31 @@ public class Read {
 	
 	private ArrayList<ArrayList<Task>> readTask(BufferedReader read) {
 		try {
-			String content;
+			String fileContent;
 			String index = null;
 			ArrayList<Task> readToDoTaskList = new ArrayList<Task>();
 			ArrayList<Task> readDoneTaskList = new ArrayList<Task>();
 			ArrayList<ArrayList<Task>> readTaskList = new ArrayList<ArrayList<Task>>();
 
-			while ((content = read.readLine()) != null) {
-				String path = content.substring(0, content.indexOf(" "));
-				if (path.equals(Constants.MESSAGE_WRITE_READ_PATH)) {
+			while ((fileContent = read.readLine()) != null) {
+				String path = fileContent.substring(0, fileContent.indexOf(Constants.READ_SPACE));
+				if (path.equals(Constants.WRITE_READ_PATH)) {
 					continue;
-				} else if (content.equals(Constants.MESSAGE_WRITE_READ_NOTASKDONE) 
-						|| content.equals(Constants.MESSAGE_WRITE_READ_NOTASKONHAND)) {
+				} else if (fileContent.equals(Constants.WRITE_READ_NOTASKDONE) 
+						|| fileContent.equals(Constants.WRITE_READ_NOTASKONHAND)) {
 					continue;
-				} else if (content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
-					index = Constants.MESSAGE_WRITE_READ_TASKONHAND;
-				} else if (content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
-					index = Constants.MESSAGE_WRITE_READ_TASKDONE;
-				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) 
-						&& !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) 
-						&& index.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND)) {
-					addTaskIntoArrayList(content, readToDoTaskList);
-				} else if (!content.equals(Constants.MESSAGE_WRITE_READ_TASKONHAND) 
-						&& !content.equals(Constants.MESSAGE_WRITE_READ_TASKDONE) 
-						&& index.equals(Constants.MESSAGE_WRITE_READ_TASKDONE)) {
-					addTaskIntoArrayList(content, readDoneTaskList);
+				} else if (fileContent.equals(Constants.WRITE_READ_TASKONHAND)) {
+					index = Constants.WRITE_READ_TASKONHAND;
+				} else if (fileContent.equals(Constants.WRITE_READ_TASKDONE)) {
+					index = Constants.WRITE_READ_TASKDONE;
+				} else if (!fileContent.equals(Constants.WRITE_READ_TASKONHAND) 
+						&& !fileContent.equals(Constants.WRITE_READ_TASKDONE) 
+						&& index.equals(Constants.WRITE_READ_TASKONHAND)) {
+					addTaskIntoArrayList(fileContent, readToDoTaskList);
+				} else if (!fileContent.equals(Constants.WRITE_READ_TASKONHAND) 
+						&& !fileContent.equals(Constants.WRITE_READ_TASKDONE) 
+						&& index.equals(Constants.WRITE_READ_TASKDONE)) {
+					addTaskIntoArrayList(fileContent, readDoneTaskList);
 				} else {
 					return null;
 				}
@@ -99,48 +99,47 @@ public class Read {
 		}
 	}
 	
-	private void addTaskIntoArrayList(String content, ArrayList<Task> taskList) {
-		int colonIndex = content.indexOf(":");
-		String lastThreeCharInTaskCategory = content.substring(colonIndex - 3, colonIndex);
-		String lastThreeCharInEvent = "ent";
+	private void addTaskIntoArrayList(String fileContent, ArrayList<Task> taskList) {
+		int colonIndex = fileContent.indexOf(Constants.READ_COLON);
+		String lastThreeCharInTaskCategory = fileContent.substring(colonIndex - 3, colonIndex);
 		
-		if (lastThreeCharInTaskCategory.equals(lastThreeCharInEvent)) {
-			String taskName = content.substring(content.indexOf(": ") + 1).trim();
+		if (lastThreeCharInTaskCategory.equals(Constants.READ_LASTTHREECHARINEVENT)) {
+			String taskName = fileContent.substring(fileContent.indexOf(Constants.READ_COLONWITHSPACE) + 1).trim();
 			task = new Task(taskName);
 			taskList.add(task);
 		} else {
-			setTaskDetails(taskList, content, task);
+			setTaskDetails(taskList, fileContent, task);
 		}
 	}
 	
 	private void setTaskDetails(ArrayList<Task> readTaskList, String taskContent, Task task) {
-		String taskHeader = taskContent.substring(0, taskContent.indexOf(": ")).trim();
-		taskContent = taskContent.substring(taskContent.indexOf(": ") + 1).trim();
+		String taskCategory = taskContent.substring(0, taskContent.indexOf(Constants.READ_COLONWITHSPACE)).trim();
+		taskContent = taskContent.substring(taskContent.indexOf(Constants.READ_COLONWITHSPACE) + 1).trim();
 		
-		if (taskHeader.equals(Constants.MESSAGE_READ_STARTDATE)) {
+		if (taskCategory.equals(Constants.READ_STARTDATE)) {
 			String taskStartDate = taskContent;
 			task.setStartDate(taskStartDate);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_ENDDATE)) {
+		} else if (taskCategory.equals(Constants.READ_ENDDATE)) {
 			String taskEndDate = taskContent;
 			task.setEndDate(taskEndDate);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_STARTTIME)) {
+		} else if (taskCategory.equals(Constants.READ_STARTTIME)) {
 			String taskStartTime = taskContent;
 			task.setStartTime(taskStartTime);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_ENDTIME)) {
+		} else if (taskCategory.equals(Constants.READ_ENDTIME)) {
 			String taskEndTime = taskContent;
 			task.setEndTime(taskEndTime);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_DETAILS)) {
+		} else if (taskCategory.equals(Constants.READ_DETAILS)) {
 			String taskDetails = taskContent;
 			task.setDetails(taskDetails);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_DAY)) {
+		} else if (taskCategory.equals(Constants.READ_DAY)) {
 			String taskDay = taskContent;
 			boolean dayValue = Boolean.parseBoolean(taskDay);
 			task.setDay(dayValue);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_WEEK)) {
+		} else if (taskCategory.equals(Constants.READ_WEEK)) {
 			String taskWeek = taskContent;
 			boolean weekValue = Boolean.parseBoolean(taskWeek);
 			task.setWeek(weekValue);
-		} else if (taskHeader.equals(Constants.MESSAGE_READ_MONTH)) {
+		} else if (taskCategory.equals(Constants.READ_MONTH)) {
 			String taskMonth = taskContent;
 			boolean monthValue = Boolean.parseBoolean(taskMonth);
 			task.setMonth(monthValue);
