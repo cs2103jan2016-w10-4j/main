@@ -18,7 +18,6 @@ public class NaturalTime {
 		minute = -1;
 		input_ = input.trim();
 		containsAmOrPm();
-		System.out.println(input_);
 		ArrayList<Integer> result;
 		try {
 			result = splitStringByInt(input_);
@@ -31,10 +30,10 @@ public class NaturalTime {
 	private void containsAmOrPm() {
 		try {
 			String lastTwoChar = input_.substring(input_.length() - 2);
-			if (lastTwoChar.equals("am")) {
+			if (lastTwoChar.equals(Constants.TIME_AM)) {
 				isAm = true;
 				input_ = input_.substring(0, input_.length() - 2);
-			} else if (lastTwoChar.equals("pm")) {
+			} else if (lastTwoChar.equals(Constants.TIME_PM)) {
 				isPm = true;
 				input_ = input_.substring(0, input_.length() - 2);
 			}

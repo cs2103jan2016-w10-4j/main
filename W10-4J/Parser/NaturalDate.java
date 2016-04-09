@@ -97,7 +97,6 @@ public class NaturalDate {
 				Calendar c = Calendar.getInstance();
 				int currentDayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 				int newDayOfWeek = i % 7 + 1;
-				System.out.println(newDayOfWeek);
 				if (currentDayOfWeek >= newDayOfWeek) {
 					newDayOfWeek += 7;
 				}

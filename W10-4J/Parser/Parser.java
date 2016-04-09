@@ -27,8 +27,6 @@ public class Parser {
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
-
-		System.out.println("!"+arguments.length);
 		if(commandType == COMMAND_TYPE.ADD && arguments.length==1){
 			arguments = this.naturalLanguage_.interpretAddArguments(arguments);
 		}
@@ -39,12 +37,7 @@ public class Parser {
 			setAlias(arguments);
 			return Constants.MESSAGE_ALIAS_PASS;
 		}
-		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
-				|| commandType == COMMAND_TYPE.HELP) {
-			return this.handler_.executeCommand(commandType, arguments);
-		} else {
-			return this.handler_.executeCommand(commandType, arguments);
-		}
+		return this.handler_.executeCommand(commandType, arguments);
 	}
 
 	public String getFirstWord(String command) {
@@ -95,7 +88,6 @@ public class Parser {
 		StringBuilder sb = new StringBuilder();
 		boolean insideQuote = false;
 		char[] c = command.toCharArray();
-
 		for (int i = 0; i < c.length; i++) {
 			if (c[i] == Constants.QUOTE_CHAR) {
 				insideQuote = !insideQuote;
@@ -116,7 +108,6 @@ public class Parser {
 		} else if (commandType == COMMAND_TYPE.EDIT) {
 			replaceModifiers(tokens);
 			return compactArguments(tokens, this.commandList_.getEditArgumentList());
-			// return this.naturalLanguage_.interpretEditArguments(tokens);
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
 			return compactArguments(tokens, this.commandList_.getDisplayArgumentList());
 		} else if (commandType == COMMAND_TYPE.SEARCH) {

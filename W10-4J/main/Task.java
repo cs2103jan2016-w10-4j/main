@@ -103,7 +103,11 @@ public class Task {
 	}
 
 	// @@author A0140114A
-	public void nextDate() {
+	public Task(String name) {
+		name_ = name;
+	}
+
+	public void nextStartDate() {
 		if (startdate_ != null) {
 			if (day_) {
 				startdate_ = Date.addDay(startdate_);
@@ -119,8 +123,28 @@ public class Task {
 		}
 	}
 
-	public Task(String name) {
-		name_ = name;
+	public void nextEndDate() {
+		if (enddate_ != null) {
+			if (day_) {
+				enddate_ = Date.addDay(enddate_);
+			} else if (week_) {
+				for (int i = 0; i < 7; i++) {
+					enddate_ = Date.addDay(enddate_);
+				}
+			} else if (month_) {
+				enddate_ = Date.addMonth(enddate_);
+			} else if (year_) {
+				enddate_ = Date.addYear(enddate_);
+			}
+		}
+	}
+
+	public void resetRecursion() {
+		recurring_ = false;
+		day_ = false;
+		week_ = false;
+		month_ = false;
+		year_ = false;
 	}
 
 	public void setName(String name) {
@@ -199,14 +223,6 @@ public class Task {
 		}
 	}
 
-	public void resetRecursion() {
-		recurring_ = false;
-		day_ = false;
-		week_ = false;
-		month_ = false;
-		year_ = false;
-	}
-
 	public void setMultiDay(boolean multiDay) {
 		multiday_ = multiDay;
 	}
@@ -217,41 +233,6 @@ public class Task {
 
 	public String getStartDate() {
 		return startdate_;
-	}
-
-	public int isDateValid() {
-		if (startdate_ == null || enddate_ == null) {
-			return 1;
-		}
-		int startYear = Integer.parseInt(startdate_.split("/")[0]);
-		int startMonth = Integer.parseInt(startdate_.split("/")[1]);
-		int startDay = Integer.parseInt(startdate_.split("/")[2]);
-		int endYear = Integer.parseInt(enddate_.split("/")[0]);
-		int endMonth = Integer.parseInt(enddate_.split("/")[1]);
-		int endDay = Integer.parseInt(enddate_.split("/")[2]);
-		if (startYear > endYear) {
-			return -1;
-		} else if (startYear < endYear) {
-			return 1;
-		} else {
-			if (startMonth > endMonth) {
-				return -1;
-			} else if (startMonth < endMonth) {
-				return 1;
-			} else {
-				if (startMonth > endMonth) {
-					return -1;
-				} else {
-					if (startDay > endDay) {
-						return -1;
-					} else if (startDay < endDay) {
-						return 1;
-					} else {
-						return 0;
-					}
-				}
-			}
-		}
 	}
 
 	public String getEndDate() {
@@ -314,5 +295,40 @@ public class Task {
 
 	public boolean isMultiDay() {
 		return multiday_;
+	}
+
+	public int isDateValid() {
+		if (startdate_ == null || enddate_ == null) {
+			return 1;
+		}
+		int startYear = Integer.parseInt(startdate_.split("/")[0]);
+		int startMonth = Integer.parseInt(startdate_.split("/")[1]);
+		int startDay = Integer.parseInt(startdate_.split("/")[2]);
+		int endYear = Integer.parseInt(enddate_.split("/")[0]);
+		int endMonth = Integer.parseInt(enddate_.split("/")[1]);
+		int endDay = Integer.parseInt(enddate_.split("/")[2]);
+		if (startYear > endYear) {
+			return -1;
+		} else if (startYear < endYear) {
+			return 1;
+		} else {
+			if (startMonth > endMonth) {
+				return -1;
+			} else if (startMonth < endMonth) {
+				return 1;
+			} else {
+				if (startMonth > endMonth) {
+					return -1;
+				} else {
+					if (startDay > endDay) {
+						return -1;
+					} else if (startDay < endDay) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
+			}
+		}
 	}
 }

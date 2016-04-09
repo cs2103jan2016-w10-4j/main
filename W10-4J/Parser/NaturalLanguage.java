@@ -2,7 +2,6 @@
 package Parser;
 
 import java.util.ArrayList;
-
 import main.Constants;
 
 public class NaturalLanguage {
@@ -49,7 +48,7 @@ public class NaturalLanguage {
 		this.token_ = new ArrayList<>();
 		for (int i = 0; i < token.length; i++) {
 			String s = token[i];
-			String[] split = s.split(" ");
+			String[] split = s.split(Constants.WHITESPACE);
 			for (int j = 0; j < split.length; j++) {
 				String str = split[j];
 				this.token_.add(str);

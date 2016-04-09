@@ -53,6 +53,8 @@ public class Constants {
 	public static final String COMMA = ",";
 	public static final String DASH = "-";
 	public static final String ALIAS_COMMENT_TAG = "alias";
+	public static final String TIME_AM = "am";
+	public static final String TIME_PM = "pm";
 	public static final String DATE_FORMAT = "%04d/%02d/%02d";
 	public static final String TIME_FORMAT = "%02d:%02d";
 
@@ -280,7 +282,7 @@ public class Constants {
 	public static final String DISPLAY_COMMAND = "display";
 
 	public static final String BLACK = "#000000 r:0, g:0, b:0";
-	
+
 	public static final String DEFAULT_FONT_SIZE = "14";
 	public static final String DEFAULT_FONT_FAMILY = "Times New Roman";
 
@@ -304,8 +306,9 @@ public class Constants {
 	public static final String FONT_SIZE_KEY = "fontSize";
 	public static final String FONT_FAMILY_KEY = "fontFamily";
 	public static final String BUTTONS_COLOR_KEY = "buttonsColor";
-	
-	public static final String[] PROPERTIES_KEYS = {COLOR_OPTION_KEY, TOP_BG_KEY, BOTTOM_BG_KEY, FONT_SIZE_KEY, FONT_FAMILY_KEY, BUTTONS_COLOR_KEY};
+
+	public static final String[] PROPERTIES_KEYS = { COLOR_OPTION_KEY, TOP_BG_KEY, BOTTOM_BG_KEY, FONT_SIZE_KEY,
+			FONT_FAMILY_KEY, BUTTONS_COLOR_KEY };
 
 	public static final String SET_1 = "button r:218, g:216, b:167 topBg r:255, g:158, b:157 bottomBg r:127, g:199, b:175";
 	public static final String SET_2 = "button r:241, g:243, b:206 topBg r:206, g:223, b:243 bottomBg r:243, g:220, b:206";
