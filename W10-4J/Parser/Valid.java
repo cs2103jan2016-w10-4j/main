@@ -58,35 +58,27 @@ public class Valid {
 				} else {
 					if (i + 1 == arguments.length) {
 						return false;
-					} else if (arguments[i].equals(Constants.MESSAGE_ADD_ACTION_STARTDATE)
-							|| arguments[i].equals(Constants.MESSAGE_ADD_ACTION_ENDDATE)) {
-						String date = naturalDate_.getDate(arguments[i + 1]);
-						if (date == null) {
-							invalidDate = true;
-							return false;
-						} else {
-							assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
-							arguments[i + 1] = date;
-						}
-					} else if (arguments[i].equals(Constants.MESSAGE_ADD_ACTION_START)
-							|| arguments[i].equals(Constants.MESSAGE_ADD_ACTION_END)) {
-						String time = naturalTime_.getTime(arguments[i + 1]);
-						if (time == null) {
-							invalidTime = true;
-							return false;
-						} else {
-							arguments[i + 1] = time;
-						}
-					} else if (arguments[i].equals(Constants.MESSAGE_ADD_ACTION_REPEAT)) {
-						String[] repeatArgument = arguments[i + 1].split(Constants.WHITESPACE);
-						try {
-							if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
-									|| !isInteger(repeatArgument[1])) {
-								return false;
-							}
-						} catch (ArrayIndexOutOfBoundsException e) {
+					}
+					switch (arguments[i]) {
+					case Constants.MESSAGE_ADD_ACTION_STARTDATE:
+					case Constants.MESSAGE_ADD_ACTION_ENDDATE:
+						if (!checkDate(arguments, i)) {
 							return false;
 						}
+						break;
+					case Constants.MESSAGE_ADD_ACTION_START:
+					case Constants.MESSAGE_ADD_ACTION_END:
+						if (!checkTime(arguments, i)) {
+							return false;
+						}
+						break;
+					case Constants.MESSAGE_ADD_ACTION_REPEAT:
+						if (!checkRecur(arguments, i)) {
+							return false;
+						}
+						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -123,35 +115,26 @@ public class Valid {
 					arguments[i + 1] = null;
 					continue;
 				}
-				if (arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_STARTDATE)
-						|| arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_ENDDATE)) {
-					String date = naturalDate_.getDate(arguments[i + 1]);
-					if (date == null) {
-						invalidDate = true;
-						return false;
-					} else {
-						assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
-						arguments[i + 1] = date;
-					}
-				} else if (arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_START)
-						|| arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_END)) {
-					String time = naturalTime_.getTime(arguments[i + 1]);
-					if (time == null) {
-						invalidTime = true;
-						return false;
-					} else {
-						arguments[i + 1] = time;
-					}
-				} else if (arguments[i].equals(Constants.MESSAGE_EDIT_ACTION_REPEAT)) {
-					String[] repeatArgument = arguments[i + 1].split(Constants.WHITESPACE);
-					try {
-						if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
-								|| !isInteger(repeatArgument[1])) {
-							return false;
-						}
-					} catch (ArrayIndexOutOfBoundsException e) {
+				switch (arguments[i]) {
+				case Constants.MESSAGE_ADD_ACTION_STARTDATE:
+				case Constants.MESSAGE_ADD_ACTION_ENDDATE:
+					if (!checkDate(arguments, i)) {
 						return false;
 					}
+					break;
+				case Constants.MESSAGE_ADD_ACTION_START:
+				case Constants.MESSAGE_ADD_ACTION_END:
+					if (!checkTime(arguments, i)) {
+						return false;
+					}
+					break;
+				case Constants.MESSAGE_ADD_ACTION_REPEAT:
+					if (!checkRecur(arguments, i)) {
+						return false;
+					}
+					break;
+				default:
+					break;
 				}
 			}
 		}
@@ -227,6 +210,42 @@ public class Valid {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean checkDate(String[] arguments, int i) throws IndexOutOfBoundsException {
+		String date = naturalDate_.getDate(arguments[i + 1]);
+		if (date == null) {
+			invalidDate = true;
+			return false;
+		} else {
+			assert Date.isLegalDate(date) : Constants.ASSERT_VALID_DATE;
+			arguments[i + 1] = date;
+		}
+		return true;
+	}
+
+	public boolean checkTime(String[] arguments, int i) throws IndexOutOfBoundsException {
+		String time = this.naturalTime_.getTime(arguments[i + 1]);
+		if (time == null) {
+			this.invalidTime = true;
+			return false;
+		} else {
+			arguments[i + 1] = time;
+		}
+		return true;
+	}
+
+	public boolean checkRecur(String[] arguments, int i) throws IndexOutOfBoundsException {
+		String[] repeatArgument = arguments[i + 1].split(Constants.WHITESPACE);
+		try {
+			if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
+					|| !isInteger(repeatArgument[1])) {
+				return false;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return false;
+		}
+		return true;
 	}
 
 	public COMMAND_TYPE getAction(String command) {

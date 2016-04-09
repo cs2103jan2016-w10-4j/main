@@ -27,20 +27,7 @@ public class NaturalLanguage {
 	}
 
 	public String[] interpretAddArguments(String[] token) {
-		token_ = new ArrayList<>();
-		for(String s : token){
-			token_.add(s);
-		}
-		taskID__ = null;
-		name_ = null;
-		startdate_ = null;
-		starttime_ = null;
-		enddate_ = null;
-		endtime_ = null;
-		details_ = null;
-		recurtype_ = null;
-		recurCount_ = -1;
-
+		resetVariables(token);
 		isolateRecurrance();
 		isolateDate();
 		isolateTime();
@@ -48,23 +35,34 @@ public class NaturalLanguage {
 		return generateOutputAdd();
 	}
 
-	public String[] interpretEditArguments(ArrayList<String> token) {
-		token_ = token;
-		name_ = null;
-		startdate_ = null;
-		starttime_ = null;
-		enddate_ = null;
-		endtime_ = null;
-		details_ = null;
-		recurtype_ = null;
-		recurCount_ = -1;
-
+	public String[] interpretEditArguments(String[] token) {
+		resetVariables(token);
 		isolateTaskID();
 		isolateRecurrance();
 		isolateDate();
 		isolateTime();
 		isolateNameAndDetails();
 		return generateOutputEdit();
+	}
+
+	public void resetVariables(String[] token) {
+		this.token_ = new ArrayList<>();
+		for (int i = 0; i < token.length; i++) {
+			String s = token[i];
+			String[] split = s.split(" ");
+			for (int j = 0; j < split.length; j++) {
+				String str = split[j];
+				this.token_.add(str);
+			}
+		}
+		this.name_ = null;
+		this.startdate_ = null;
+		this.starttime_ = null;
+		this.enddate_ = null;
+		this.endtime_ = null;
+		this.details_ = null;
+		this.recurtype_ = null;
+		this.recurCount_ = -1;
 	}
 
 	public void isolateTaskID() {

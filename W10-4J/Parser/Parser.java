@@ -13,10 +13,10 @@ public class Parser {
 	private NaturalLanguage naturalLanguage_;
 
 	public Parser() {
-		commandList_ = CommandList.getInstance();
-		handler_ = new Handler();
-		valid_ = new Valid(commandList_);
-		naturalLanguage_ = new NaturalLanguage(commandList_);
+		this.commandList_ = CommandList.getInstance();
+		this.handler_ = new Handler();
+		this.valid_ = new Valid(this.commandList_);
+		this.naturalLanguage_ = new NaturalLanguage(this.commandList_);
 	}
 
 	public String parse(String command) {
@@ -27,10 +27,12 @@ public class Parser {
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 		String[] arguments = getArguments(commandType, command);
+
+		System.out.println("!"+arguments.length);
 		if(commandType == COMMAND_TYPE.ADD && arguments.length==1){
-			arguments = naturalLanguage_.interpretAddArguments(arguments);
+			arguments = this.naturalLanguage_.interpretAddArguments(arguments);
 		}
-		if (!valid_.isValid(commandType, arguments)) {
+		if (!this.valid_.isValid(commandType, arguments)) {
 			return getInvalidReturnMessage();
 		}
 		if (commandType == COMMAND_TYPE.ALIAS) {
@@ -39,9 +41,9 @@ public class Parser {
 		}
 		if (commandType == COMMAND_TYPE.DISPLAY || commandType == COMMAND_TYPE.SEARCH
 				|| commandType == COMMAND_TYPE.HELP) {
-			return handler_.executeCommand(commandType, arguments);
+			return this.handler_.executeCommand(commandType, arguments);
 		} else {
-			return handler_.executeCommand(commandType, arguments);
+			return this.handler_.executeCommand(commandType, arguments);
 		}
 	}
 
@@ -50,31 +52,31 @@ public class Parser {
 	}
 
 	public COMMAND_TYPE getAction(String command) {
-		if (isCommandType(command, commandList_.getAddCommandList())) {
+		if (isCommandType(command, this.commandList_.getAddCommandList())) {
 			return COMMAND_TYPE.ADD;
-		} else if (isCommandType(command, commandList_.getDeleteCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getDeleteCommandList())) {
 			return COMMAND_TYPE.DELETE;
-		} else if (isCommandType(command, commandList_.getEditCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getEditCommandList())) {
 			return COMMAND_TYPE.EDIT;
-		} else if (isCommandType(command, commandList_.getDoneCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getDoneCommandList())) {
 			return COMMAND_TYPE.DONE;
-		} else if (isCommandType(command, commandList_.getDisplayCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getDisplayCommandList())) {
 			return COMMAND_TYPE.DISPLAY;
-		} else if (isCommandType(command, commandList_.getSearchCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getSearchCommandList())) {
 			return COMMAND_TYPE.SEARCH;
-		} else if (isCommandType(command, commandList_.getSetdirCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getSetdirCommandList())) {
 			return COMMAND_TYPE.SETDIR;
-		} else if (isCommandType(command, commandList_.getRetrieveCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getRetrieveCommandList())) {
 			return COMMAND_TYPE.RETRIEVE;
-		} else if (isCommandType(command, commandList_.getRecurrenceCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getRecurrenceCommandList())) {
 			return COMMAND_TYPE.RECURRENCE;
-		} else if (isCommandType(command, commandList_.getUndoCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getUndoCommandList())) {
 			return COMMAND_TYPE.UNDO;
-		} else if (isCommandType(command, commandList_.getExitCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getExitCommandList())) {
 			return COMMAND_TYPE.EXIT;
-		} else if (isCommandType(command, commandList_.getHelpCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getHelpCommandList())) {
 			return COMMAND_TYPE.HELP;
-		} else if (isCommandType(command, commandList_.getAliasCommandList())) {
+		} else if (isCommandType(command, this.commandList_.getAliasCommandList())) {
 			return COMMAND_TYPE.ALIAS;
 		} else {
 			return COMMAND_TYPE.INVALID;
@@ -110,24 +112,24 @@ public class Parser {
 		tokens.remove(0);
 		if (commandType == COMMAND_TYPE.ADD) {
 			replaceModifiers(tokens);
-			return compactArguments(tokens, commandList_.getAddArgumentList());
+			return compactArguments(tokens, this.commandList_.getAddArgumentList());
 		} else if (commandType == COMMAND_TYPE.EDIT) {
 			replaceModifiers(tokens);
-			return compactArguments(tokens, commandList_.getEditArgumentList());
-			// return naturalLanguage_.interpretEditArguments(tokens);
+			return compactArguments(tokens, this.commandList_.getEditArgumentList());
+			// return this.naturalLanguage_.interpretEditArguments(tokens);
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
-			return compactArguments(tokens, commandList_.getDisplayArgumentList());
+			return compactArguments(tokens, this.commandList_.getDisplayArgumentList());
 		} else if (commandType == COMMAND_TYPE.SEARCH) {
-			return compactArguments(tokens, commandList_.getSearchArgumentList());
+			return compactArguments(tokens, this.commandList_.getSearchArgumentList());
 		} else {
 			return tokens.toArray(new String[0]);
 		}
 	}
 
 	public String getInvalidReturnMessage() {
-		if (valid_.getInvalidDate()) {
+		if (this.valid_.getInvalidDate()) {
 			return Constants.MESSAGE_INVALID_DATE;
-		} else if (valid_.getInvalidTime()) {
+		} else if (this.valid_.getInvalidTime()) {
 			return Constants.MESSAGE_INVALID_TIME;
 		} else {
 			return Constants.MESSAGE_INVALID_FORMAT;
@@ -167,22 +169,22 @@ public class Parser {
 
 	public void replaceModifiers(ArrayList<String> token) {
 		for (int i = 0; i < token.size(); i++) {
-			if (commandList_.getStartDateArgumentList().contains(token.get(i))) {
+			if (this.commandList_.getStartDateArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_STARTDATE);
 			}
-			if (commandList_.getEndDateArgumentList().contains(token.get(i))) {
+			if (this.commandList_.getEndDateArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_ENDDATE);
 			}
-			if (commandList_.getStartArgumentList().contains(token.get(i))) {
+			if (this.commandList_.getStartArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_START);
 			}
-			if (commandList_.getEndArgumentList().contains(token.get(i))) {
+			if (this.commandList_.getEndArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_END);
 			}
-			if (commandList_.getDetailsArgumentList().contains(token.get(i))) {
+			if (this.commandList_.getDetailsArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_DETAILS);
 			}
-			if (commandList_.getRepeatArgumentList().contains(token.get(i))) {
+			if (this.commandList_.getRepeatArgumentList().contains(token.get(i))) {
 				token.set(i, Constants.MESSAGE_ADD_ACTION_REPEAT);
 			}
 		}
@@ -191,22 +193,6 @@ public class Parser {
 	private void setAlias(String[] arguments) {
 		COMMAND_TYPE commandType = getAction(arguments[0]);
 		String alias = arguments[1];
-		commandList_.setAlias(commandType, alias);
-	}
-
-	public int getNumberOfTaskTotal() {
-		return handler_.getNumberOfTaskTotal();
-	}
-
-	public int getNumberOfTaskToday() {
-		return handler_.getNumberOfTaskToday();
-	}
-
-	public int getNumberOfTaskOverdue() {
-		return handler_.getNumberOfTaskOverdue();
-	}
-
-	public int getNumberOfTaskDone() {
-		return handler_.getNumberOfTaskDone();
+		this.commandList_.setAlias(commandType, alias);
 	}
 }

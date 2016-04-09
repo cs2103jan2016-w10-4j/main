@@ -20,7 +20,7 @@ public class Constants {
 	public static final String[] undoDefaultCommandList = { "undo", "whoops", "mb", "redo" };
 	public static final String[] exitDefaultCommandList = { "exit", "quit", "q" };
 	public static final String[] helpDefaultCommandList = { "help", "h", "?" };
-	public static final String[] aliasDefaultCommandList = { "alias", "set" };
+	public static final String[] aliasDefaultCommandList = { "alias", "set", "bind", "link" };
 
 	public static final String[] addDefaultArgumentList = { "startdate", "enddate", "starttime", "endtime", "details",
 			"repeat" };
