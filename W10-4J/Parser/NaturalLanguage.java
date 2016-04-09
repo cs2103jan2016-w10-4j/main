@@ -2,7 +2,6 @@
 package Parser;
 
 import java.util.ArrayList;
-
 import main.Constants;
 
 public class NaturalLanguage {
@@ -26,18 +25,8 @@ public class NaturalLanguage {
 		this.ntime_ = new NaturalTime();
 	}
 
-	public String[] interpretAddArguments(ArrayList<String> token) {
-		token_ = token;
-		taskID__ = null;
-		name_ = null;
-		startdate_ = null;
-		starttime_ = null;
-		enddate_ = null;
-		endtime_ = null;
-		details_ = null;
-		recurtype_ = null;
-		recurCount_ = -1;
-
+	public String[] interpretAddArguments(String[] token) {
+		resetVariables(token);
 		isolateRecurrance();
 		isolateDate();
 		isolateTime();
@@ -45,23 +34,34 @@ public class NaturalLanguage {
 		return generateOutputAdd();
 	}
 
-	public String[] interpretEditArguments(ArrayList<String> token) {
-		token_ = token;
-		name_ = null;
-		startdate_ = null;
-		starttime_ = null;
-		enddate_ = null;
-		endtime_ = null;
-		details_ = null;
-		recurtype_ = null;
-		recurCount_ = -1;
-
+	public String[] interpretEditArguments(String[] token) {
+		resetVariables(token);
 		isolateTaskID();
 		isolateRecurrance();
 		isolateDate();
 		isolateTime();
 		isolateNameAndDetails();
 		return generateOutputEdit();
+	}
+
+	public void resetVariables(String[] token) {
+		this.token_ = new ArrayList<>();
+		for (int i = 0; i < token.length; i++) {
+			String s = token[i];
+			String[] split = s.split(Constants.WHITESPACE);
+			for (int j = 0; j < split.length; j++) {
+				String str = split[j];
+				this.token_.add(str);
+			}
+		}
+		this.name_ = null;
+		this.startdate_ = null;
+		this.starttime_ = null;
+		this.enddate_ = null;
+		this.endtime_ = null;
+		this.details_ = null;
+		this.recurtype_ = null;
+		this.recurCount_ = -1;
 	}
 
 	public void isolateTaskID() {
@@ -73,7 +73,7 @@ public class NaturalLanguage {
 	}
 
 	public void isolateRecurrance() {
-		for (int i = 0; i < token_.size(); i++) {
+		for (int i = 1; i < token_.size(); i++) {
 			String s = token_.get(i);
 			if (commandList_.getRecurrenceArgumentList().contains(s)) {
 				try {
@@ -99,7 +99,7 @@ public class NaturalLanguage {
 	public void isolateDate() {
 		for (int i = 1; i <= token_.size(); i++) {
 			ArrayList<String> temptoken_ = new ArrayList<>();
-			for (int j = 0; j < token_.size(); j++) {
+			for (int j = 1; j < token_.size(); j++) {
 				String tempString = Constants.EMPTY_STRING;
 				for (int k = 0; k < i; k++) {
 					try {
@@ -136,7 +136,7 @@ public class NaturalLanguage {
 	public void isolateTime() {
 		for (int i = 1; i <= token_.size(); i++) {
 			ArrayList<String> temptoken_ = new ArrayList<>();
-			for (int j = 0; j < token_.size(); j++) {
+			for (int j = 1; j < token_.size(); j++) {
 				String tempString = Constants.EMPTY_STRING;
 				for (int k = 0; k < i; k++) {
 					try {

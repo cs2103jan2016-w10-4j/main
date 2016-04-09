@@ -218,13 +218,13 @@ public class CommonFunctionsInDisplay {
 	public static String assignRepeat(Task t) {
 		String repeat;
 		if (t.getDay()) {
-			repeat = "Every Day";
+			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATDAY;
 		} else if (t.getMonth()) {
-			repeat = "Every Month";
+			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATMONTH;
 		} else if (t.getWeek()) {
-			repeat = "Every Week";
+			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATWEEK;
 		} else if (t.getYear()) {
-			repeat = "Every Year";
+			repeat = Constants.MESSAGE_COMMONFUNCTION_REPEATYEAR;
 		} else {
 			repeat = null;
 		}

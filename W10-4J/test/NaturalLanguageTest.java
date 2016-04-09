@@ -14,7 +14,7 @@ import Parser.NaturalTime;
 
 public class NaturalLanguageTest {
 	@Test
-	public void testSpecial() {
+	public void testinterpretAddArguments() {
 		NaturalLanguage p = new NaturalLanguage(CommandList.getInstance());
 
 		String command = "cs2103 tmr 1700 24 apr 1900 meet earlier";
@@ -23,8 +23,8 @@ public class NaturalLanguageTest {
 		for (String s : commandSplit) {
 			token.add(s);
 		}
-		assertEquals(new String[] { "cs2103", "startdate", "2016/04/09", "enddate", "2016/04/24", "starttime", "17:00",
-				"endtime", "19:00", "details", "meet earlier" }, p.interpretAddArguments(token));
+		assertEquals(new String[] { "cs2103", "startdate", "2016/04/10", "enddate", "2016/04/24", "starttime", "17:00",
+				"endtime", "19:00", "details", "meet earlier" }, p.interpretAddArguments(commandSplit));
 	}
 
 	@Test

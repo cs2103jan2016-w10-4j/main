@@ -34,7 +34,8 @@ public class Edit implements Command {
 			Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());
 			for (int i = 0; i < recurCounter - 1; i++) {
 				clone = cloneTask(clone, arraylistStorage_.getTaskID());
-				clone.nextDate();
+				clone.nextStartDate();
+				clone.nextEndDate();
 				arraylistStorage_.addTaskToNotDoneStorage(clone);
 			}
 			if (isDateAndTimeValid(eachTask)) {

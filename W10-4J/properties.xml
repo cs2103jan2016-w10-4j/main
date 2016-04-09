@@ -2,12 +2,10 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>colors</comment>
-<entry key="fontFamily">Lucida Sans Unicode</entry>
-<entry key="colorOption">option1</entry>
-<entry key="buttonsColor"> r:218, g:216, b:167 </entry>
+<entry key="fontFamily">Times New Roman</entry>
+<entry key="colorOption">Option 3</entry>
+<entry key="buttonsColor"> r:176, g:176, b:176 </entry>
 <entry key="fontSize">14</entry>
-<entry key="bottomFontColor">#000000 r:0, g:0, b:0</entry>
-<entry key="bottomBg"> r:127, g:199, b:175</entry>
-<entry key="topBg"> r:255, g:158, b:157 </entry>
-<entry key="topFontColor">#000000 r:0, g:0, b:0</entry>
+<entry key="bottomBg"> r:255, g:198, b:30</entry>
+<entry key="topBg"> r:255, g:255, b:255 </entry>
 </properties>

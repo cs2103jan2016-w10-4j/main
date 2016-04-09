@@ -20,13 +20,18 @@ import main.Constants;
 public class ReadWriteXml {
 	
 	public static final int COLOR_OPTION_INDEX = 0;
-	public static final int TOP_FONT_COLOR_INDEX = 1;
-	public static final int TOP_BG_INDEX = 2;
-	public static final int BOTTOM_BG_INDEX = 3;
-	public static final int BOTTOM_FONT_COLOR_INDEX = 4;
-	public static final int FONT_SIZE_INDEX = 5;
-	public static final int FONT_FAMILY_INDEX = 6;
-	public static final int BUTTONS_COLOR_INDEX = 7;
+	public static final int TOP_BG_INDEX = 1;
+	public static final int BOTTOM_BG_INDEX = 2;
+	public static final int FONT_SIZE_INDEX = 3;
+	public static final int FONT_FAMILY_INDEX = 4;
+	public static final int BUTTONS_COLOR_INDEX = 5;
+	
+	ArrayList<String> properties = new ArrayList<String>();
+	
+	public ReadWriteXml(){
+		properties = readToArrayList();
+		setProperties(properties);
+	}
 	
 	public String read(String action, String fileName){
 		try{
@@ -50,37 +55,30 @@ public class ReadWriteXml {
 	}
 	
 	public ArrayList<String> readToArrayList(){
-		ArrayList<String> properties = new ArrayList<String>();
-		String colorOption = read(Constants.COLOR_OPTION_KEY, Constants.PROPERTIES_FILE_NAME);
-		String topFontColor = read(Constants.TOP_FONT_COLOR_KEY, Constants.PROPERTIES_FILE_NAME);
-		String bottomFontColor = read(Constants.BOTTOM_FONT_COLOR_KEY, Constants.PROPERTIES_FILE_NAME);
-		String topBg = read(Constants.TOP_BG_KEY, Constants.PROPERTIES_FILE_NAME);
-		String bottomBg = read(Constants.BOTTOM_BG_KEY, Constants.PROPERTIES_FILE_NAME);
-		String fontSize = read(Constants.FONT_SIZE_KEY, Constants.PROPERTIES_FILE_NAME);
-		String fontFamily = read(Constants.FONT_FAMILY_KEY, Constants.PROPERTIES_FILE_NAME);
-		String buttonsColor = read(Constants.BUTTONS_COLOR_KEY, Constants.PROPERTIES_FILE_NAME);
-		properties.add(COLOR_OPTION_INDEX, colorOption);
-		properties.add(TOP_FONT_COLOR_INDEX, topFontColor);
-		properties.add(TOP_BG_INDEX, topBg);
-		properties.add(BOTTOM_BG_INDEX, bottomBg);
-		properties.add(BOTTOM_FONT_COLOR_INDEX, bottomFontColor);
-		properties.add(FONT_SIZE_INDEX, fontSize);
-		properties.add(FONT_FAMILY_INDEX, fontFamily);
-		properties.add(BUTTONS_COLOR_INDEX, buttonsColor);
+		try {
+			for (int i = 0; i < Constants.PROPERTIES_KEYS.length; i++) {
+				String keys = Constants.PROPERTIES_KEYS[i];
+				String propertiesList = read(keys, Constants.PROPERTIES_FILE_NAME);
+				if (propertiesList == null) {
+					properties.add(Constants.EMPTY_STRING);
+				} else {
+					properties.add(propertiesList);
+				}
+			}
+		} catch (NullPointerException e) {
+			for (int i = 0; i < Constants.PROPERTIES_KEYS.length; i++) {
+				properties.add(Constants.EMPTY_STRING);
+			}
+		}
 		return properties;
 	}
 	
 	public void setProperties(ArrayList<String> prop){
 		Properties properties = new Properties();
-		properties.setProperty(Constants.COLOR_OPTION_KEY, prop.get(COLOR_OPTION_INDEX));
-		properties.setProperty(Constants.TOP_BG_KEY, prop.get(TOP_BG_INDEX));
-		properties.setProperty(Constants.BOTTOM_BG_KEY, prop.get(BOTTOM_BG_INDEX));
-		properties.setProperty(Constants.TOP_FONT_COLOR_KEY, prop.get(TOP_FONT_COLOR_INDEX));
-		properties.setProperty(Constants.BOTTOM_FONT_COLOR_KEY, prop.get(BOTTOM_FONT_COLOR_INDEX));
-		properties.setProperty(Constants.FONT_SIZE_KEY, prop.get(FONT_SIZE_INDEX));
-		properties.setProperty(Constants.FONT_FAMILY_KEY, prop.get(FONT_FAMILY_INDEX));
-		properties.setProperty(Constants.BUTTONS_COLOR_KEY, prop.get(BUTTONS_COLOR_INDEX));
-		
+		for (int i = 0; i < Constants.PROPERTIES_KEYS.length; i++) {
+			properties.setProperty(Constants.PROPERTIES_KEYS[i], prop.get(i));
+		}
+
 		File file = new File(Constants.PROPERTIES_FILE_NAME);
 		try {
 			FileOutputStream fileOut = new FileOutputStream(file);
