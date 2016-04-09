@@ -1,3 +1,13 @@
+//@@author A0149174Y-unused
+/**
+ * @author A0149174Y
+ *The idea to handle all the sequential storage in the handler through a separate class called HandlerMemory was proposed by me before V0.3.
+ *I implemented all the unused codes present under the name for A0149174Y-unused until V0.3.
+ *Basically it stores all the arraylists and updates all of them after each command operation. 
+ *Rather than updating the memory in each execute function, the command just stores it's end state after it's executed.
+ *According to which state the command ended in (forexample in FAIL state) the updateMemory function decides how to update the memory accordingly.
+ *After V0.3 this design was decided to be changed by my teammates. Now the class ArrayListStorage handles the job of HandlerMemory.
+ */
 package Handler;
 
 import java.util.ArrayList;
@@ -7,7 +17,6 @@ import main.Constants;
 import main.Constants.COMMAND_TYPE;
 import main.Task;
 
-//@@author A0149174Y-unused
 public class HandlerMemory {
 
 	public enum COMMAND_STATE {

@@ -40,6 +40,12 @@ public class Handler {
 	//@@author A0149174Y
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
+			////@@author A0149174Y-unused
+			/*Command cmd = createCommand(command, task);
+			 * String toBeReturned=cmd.execute(task);
+			 * HandlerMemory.updateMemory(cmd,command);
+			return toBeReturned;*/
+			//@@author A0149174Y
 			Command cmd = createCommand(command, task);
 			return cmd.execute(task);
 		} catch (IllegalArgumentException invalidCommandFormat) {
