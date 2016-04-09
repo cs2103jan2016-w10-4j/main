@@ -3,6 +3,11 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="welcome"><![CDATA[
+<style>
+	table#command{
+	border: 1px solid black;
+	}
+</style>
 <h1> Welcome to the Docket Help Manual </h1>
 ]]></entry>
 
@@ -11,6 +16,7 @@ For help on specific commands, use the following commands:
 	<ul><li> help add</li>
 	<li> help delete</li>
 	<li> help edit</li>
+	<li> help recurrence</li>
 	<li> help done</li>
 	<li> help display</li>
 	<li> help search</li>
@@ -21,102 +27,139 @@ For help on specific commands, use the following commands:
 
 <entry key="add"><![CDATA[
 <h2> Add Task </h2>
-Different types of tasks can be added into Task Manager, for example, events and deadlines. <br>
-To add events with date, start time and end time into Task Manager, use this command: <br>
-<span style="background-color:#E5E4E2"><b>add</b> &#60your task&#62 <b>date</b> &#60date&#62 <b>start</b> &#60start time&#62 <b>end</b> &#60end time&#62 <b>details</b> &#60task details&#62</span><br>
-<ul><li>
-	<p>Example:</p>
-	<span style="background-color:#E5E4E2;"><b>add</b> Meeting <b>date</b> 12/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0</span></li></ul>
-
-To add events that last for days into Task Manager, use this command: <br>
-<span style="background-color:#E5E4E2"><b>add</b> &#60your task&#62 <b>startdate</b> &#60date&#62 <b>enddate</b> &#60date&#62 <b>start</b> &#60start time&#62 <b>end</b> &#60end time&#62 <b>details</b> &#60task details&#62</span><br>
-<ul><li>
-	<p>Example:</p>
-	<span style="background-color:#E5E4E2;"><b>add</b> Multi date <b>startdate</b> 12/2/16 <b>enddate</b> 13/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0</span></li></ul>
-
-To add tasks that recurs into Task Manager, use this command: <br>
-<span style="background-color:#E5E4E2"><b>add</b> &#60your task&#62 <b>date</b> &#60date&#62 <b>start</b> &#60start time&#62 <b>end</b> &#60end time&#62 <b>details</b> &#60task details&#62 <b>repeat</b> &#60day, week, month, or year&#62 </span><br>
-<ul><li>
-	<p>Example:</p>
-	<span style="background-color:#E5E4E2;"><b>add</b> Tutorial <b>date</b> 12/2/16 <b>start</b> 12am <b>end</b> 1am <b>details</b> Meeting to complete V0.0 <b>repeat</b> week</span></li></ul>
-
-<p>To add deadlines with date and time into Task Manager, use this command:</p>
-<span style="background-color:#E5E4E2"><b>add</b> &#60deadline&#62 <b>date</b> &#60date&#62 <b>time</b> &#60time&#62<b>details</b> &#60task details&#62</span><br>
-<ul><li>
-	<p>Example:</p>
-	<span style="background-color:#E5E4E2"><b>add</b> V0.0 <b>date</b> 14/2/16 <b>time</b> 23.59pm <b>details</b> Project Manual</span><br></ul></li>
-<p>To add a floating task without specific times, simply omit the date or time.</p>
-<span style="background-color:#E5E4E2"><b>add</b> floating task</span><br>
+<p>Different types of tasks can be added into Task Manager, for example, events and deadlines.</p>
+<p>To add events with date, start time and end time into Task Manager, use this command: </p>
+<table id="command">
+<b>add</b> &#60your task&#62 <b>startdate</b> &#60start date&#62 <b>enddate</b> &#60end date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>details</b> &#60task details&#62 <b>recur</b> &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
+<b>add</b> Holiday trip to Japan<b>startdate</b> 5/5/16 <b>enddate</b> 10/5/16 <b>starttime</b> 0530 <b>endtime</b> 1200 <b>details</b> Remind Esther!
+</table>
+<p>To add deadlines with date and time into Task Manager, use this command: </p>
+<table id="command">
+<b>add</b> &#60deadline&#62 <b>startdate</b> &#60date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>details</b> &#60task details&#62<br><br>
+<b>add</b>Project Deadline<b>startdate</b> 5/5/16 <b>starttime</b> 0530 <b>endtime</b> 2359 <b>details</b>Meet with group mates soon!
+</table>
+<p>To add a task that will recur a set number of times, simply add in how the recurrence should be and how many times it is required:</p>
+<table id="command">
+<b>add</b> &#60deadline&#62 <b>startdate</b> &#60date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>recur</b> &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
+<b>add</b>Weekly tutorial<b>startdate</b> 14 Feb <b>starttime</b> 1000 <b>endtime</b> 1100 <b>recur</b> week 12
+</table>
+<p>To add a task without any other information, simply omit the remaining modifiers</p>
+<table id="command">
+<b>add</b> &#60Floating Task&#62<br><br>
+<b>add</b> Clean my room...
+</table>
 ]]></entry>
 
 <entry key="delete"><![CDATA[
 <h2> Delete Task </h2>
-If there is a task on hand that you wish to remove from Task Manager, simply enter the following command: 
-<span style="background-color:#E5E4E2">delete &#60taskID&#62</span>. 
-Once user press enter, all task related information will be erased.
+<p>If there is a task on hand that you wish to remove from Task Manager, simply enter the following command: </p>
+<table id="command">
+<b>delete</b> &#60TaskID&#62<br><br>
+<b>delete</b> 2
+</table>
+Once you press enter, all task related information will be erased.
+]]></entry>
+
+<entry key="recurrence"><![CDATA[
+<h2> Recurrence</h2>
+<p>To convert a task into a recurring task and set it to recur a set number of times, use this command:</p>
+<table id="command">
+<b>recur</b> &#60TaskID&#62 &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
+<b>recur</b> 1 week 4
+</table>
+Once you press enter, all task related information will be erased.
 ]]></entry>
 
 <entry key="edit"><![CDATA[
 <h2>Edit Task</h2>
-Details of the tasks added to the Task Manager can be edited. 
-Features of each task that can be edited includes the event name, its date, its start and end times as well as its details.<br>
-<span style="background-color:#E5E4E2"><b>edit</b> &#60taskID&#62 <b>rename</b> &#60new name&#62 <b>date</b> &#60new date&#62 <b>start</b> &#60new start time&#62 <b>end</b> &#60new end time&#62 <b>details</b> &#60new details&#62 </span><br>
-Examples:
-	<ul><li>To change an event name in the Task Manager, use the following command:<br>
-		<span style="background-color:#E5E4E2;"><b>edit</b> &#60taskID&#62 <b>rename</b> &#60new name&#62</span></li>
-	<li>To change an event date in the Task Manager, use the following command:<br>
-		<span style="background-color:#E5E4E2;"><b>edit</b> &#60taskID&#62 <b>date</b> &#60new date&#62</span></li>
-	<li>To change an event start time in the Task Manager, use the following command:<br>
-		<span style="background-color:#E5E4E2;"><b>edit</b> &#60taskID&#62 <b>start</b> &#60new start time&#62</span></li>
-	<li>To change an event end time in the Task Manager, use the following command:<br>
-		<span style="background-color:#E5E4E2;"><b>edit</b> &#60taskID&#62 <b>end</b> &#60new end time&#62</span></li>
-	<li>To change an event details in the Task Manager, use the following command:<br>
-		<span style="background-color:#E5E4E2;"><b>edit</b> &#60taskID&#62 <b>details</b> &#60new details&#62</span></li></ul>
+<p>Details of the tasks added to the Task Manager can be edited. Features of each task that can be edited includes the event name, its date, its start and end times as well as its details.</p>
+<p>To change an event start date in the Docket:</p>
+<table id="command">
+<b>edit</b> &#60taskID&#62 <b>rename</b> &#60new name&#62<br><br>
+<b>edit</b> 1 <b>rename</b> Holiday trip to Korea
+</table>
+<p>To change an event start time and end time in the Docket:</p>
+<table id="command">
+<b>edit</b> &#60taskID&#62 <b>starttime</b> &#60new start time&#62 <b>endtime</b> &#60new end time&#62<br><br>
+<b>edit</b> 1 <b>starttime</b> 0500 <b>endtime</b> 2300
+</table>
+<p>To change an event details in the Docket:</p>
+<table id="command">
+<b>edit</b> &#60taskID&#62 <b>details</b> &#60new details&#62<br><br>
+<b>edit</b> 1 <b>details</b> Remind Esther and Joe
+</table>
+<p>To change an event recurrence in the Docket:</p>
+<table id="command">
+<b>edit</b> &#60taskID&#62 <b>recur</b> &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
+<b>edit</b> 1 <b>recur</b> week 4
+</table>
 ]]></entry>
 
 <entry key="done"><![CDATA[
 <h2> Done Task</h2>
-To specify a task is done, use this command:<br>
-<span style="background-color:#E5E4E2;"><b>done</b> &#60taskID&#62</span>
+<p>To specify a task is done, use this command:</p>
+<table id="command">
+<b>done</b> &#60taskID&#62<br><br>
+<b>done</b> 1
+</table>
 ]]></entry>
 
 <entry key="display"><![CDATA[
 <h2>Display Task</h2>
-To keep track of all the tasks you have on hand, and to list tasks that you have done, use this command:<br>
-<span style="background-color:#E5E4E2;"><b>display by</b> &#60sorting term&#62</span>
-	<ul><li>To display tasks alphabetically based on the name of the task, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> name</span></li>
-	<li>To display tasks that are overdue, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> overdue</span></li>
-	<li>To display tasks based on the task ID, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> id</span></li>
-	<li>To keep track of only the tasks that you have today, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> today</span></li>
-	<li>To keep track of tasks that you have done, use this command:<br>
-		<span style="background-color:#E5E4E2;"><b>display</b> done</span></li></ul>
+<p>To keep track of all the tasks you have on hand, and to list tasks that you have done, use this command:</p>
+<table id="command">
+<b>display</b> &#60sorting term&#62
+</table>
+<p>To see what you have on a particular day, simply enter the following command:</p>
+<table id="command">
+<b>display</b> today
+</table>
+<p>To see what tasks are overdue, simply enter the following command.</p>
+<table id="command">
+<b>display</b> overdue
+</table>
+<p>To see what tasks you have, simply enter the following command.</p>
+<table id="command">
+<b>display</b>
+</table>
+<p>To see what tasks you have done, simply enter the following command.</p>
+<table id="command">
+<b>display</b> done
+</table>
+<p><b>Coloring Display</b></p>
+Red - Tasks that are overdue<br>
+Black - Normal tasks<br>
+Blue - Tasks spanning multiple days<br>
 ]]></entry>
 
 <entry key="search"><![CDATA[
 <h2> Simple Search </h2>
-A simple text search for finding an item if the user remembers some keywords from the item description.
-To search for a keyword, use this command: <br>
-<span style="background-color:#E5E4E2;"><b>search</b> &#60keyword&#62 </span>
-	<ul><li>Examples:<br>
-		<span style="background-color:#E5E4E2;"><b>search</b> task</span></li></ul>
+<p>A simple text search for finding an item if the user remembers some keywords from the item description.
+To search for a keyword, use this command: </p>
+<table id="command">
+<b>search</b> &#60keyword&#62<br><br>
+<b>search</b> holiday trip
+</table>
 ]]></entry>
 
 <entry key="storage"><![CDATA[
 <h2> Storage </h2>
-To specify a particular path to the text file to retrieve the task list from, use this command:<br>
-<span style="background-color:#E5E4E2;"><b>retrieve</b> &#60datapath&#62 </span><br>
-This will add the tasks in the text file specified to the default file in Docket.
-	<ul><li>Examples:<br>
-		<span style="background-color:#E5E4E2;"><b>retrieve</b> C:\Users\User\Desktop\mytextfile.txt </span></li></ul>
-To specify a particular folder to store the task list in, use this command:<br>
-<span style="background-color:#E5E4E2;"><b>set directory</b> &#60datapath&#62</span><br>
-In using this command, future uses of Docket will be on this new datapath. If the file does not exist, a new empty text file will be created. To move the tasks from the default text file in Docket to the new path, use <b>retrieve</b>.
-	<ul><li>Examples:<br>
-	<span style="background-color:#E5E4E2;"><b>setdir</b> C:\Users\User\Desktop\file.txt</span></li></ul>
+<p>To specify a particular path to the text file to retrieve the task list from, use this command:</p>
+<table id="command">
+<b>get</b> &#60absolute file path&#62<br><br>
+<b>get</b> C:\Users\Documents\retrieveFile.txt
+</table>
+<p>To set the directory to an existing file, simply specify the absolute file path by entering the following command.</p>
+<table id="command">
+<b>setdir</b> &#60absolute file path&#62<br><br>
+<b>setdir</b> D:/file.txt
+</table>
+<p>To set the directory to a non-existing file, simply specify the path without a filename by entering the following command. Docket will generate a file called “dirdefaultfile.txt” at the specific path you have mentioned. With reference to the example given below, directory will be set to “D:/ dirdefaultfile.txt”
+</p>
+<table id="command">
+<b>setdir</b> &#60path without filename&#62<br><br>
+<b>setdir</b> D:/
+</table>
 ]]></entry>
 
 <entry key="natural"><![CDATA[
@@ -169,7 +212,18 @@ Valid Natural Commands:<br>
 
 <entry key="undo"><![CDATA[
 <h2> Undo Operations </h2>
-User can enter the <span style="background-color:#E5E4E2;"><b>undo</b></span> command and the program will undo the most recent action command entered by the user, such as add, delete, edit, done.
+<p>User can enter the undo command and the program will undo the most recent action command entered by the user, such as add, delete, edit, done.</p>
+<table id="command">
+<b>undo</b>
+</table>
+]]></entry>
+
+<entry key="alias"><![CDATA[
+<h2> Alias</h2>
+<p>You can enter an alias for any of the available commands above. The new alias term can then be used in place of the original name for the command. For example, you can set an alias “myadd” for the “add” command:</p>
+<table id="command">
+<b>alias</b> add myadd
+</table>
 ]]></entry>
 
 <entry key="keyboard"><![CDATA[
@@ -199,11 +253,4 @@ To help you use Docket more efficiently, some keyboard shortcuts have been imple
 </table>
 ]]></entry>
 
-<entry key="alias"><![CDATA[
-<h2> Alias</h2>
-You can add your own modifiers into the program. For example, if you want to change the modifier "add", use this command:<br>
-<span style="background-color:#E5E4E2;"><b>alias</b> &#60previous modifier&#62 &#60your modifier&#62</span> <br>
-Example:
-<ul><li><span style="background-color:#E5E4E2;"> <b>alias</b> add myadd</span></li></ul>
-]]></entry>
 </properties>

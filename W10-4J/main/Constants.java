@@ -188,6 +188,7 @@ public class Constants {
 	public static final String MESSAGE_ACTION_ADD = ("add");
 	public static final String MESSAGE_ACTION_DELETE = ("delete");
 	public static final String MESSAGE_ACTION_EDIT = ("edit");
+	public static final String MESSAGE_ACTION_RECURRENCE = ("recurrence");
 	public static final String MESSAGE_ACTION_DONE = ("done");
 	public static final String MESSAGE_ACTION_DISPLAY = ("display");
 	public static final String MESSAGE_ACTION_SEARCH = ("search");

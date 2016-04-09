@@ -1,4 +1,7 @@
-/* This is the help class for Docket. It reads from help.xml and displays it to the display output.*/
+/* This is the help class for Docket. It reads from help.xml and displays it to the display output.
+ *
+ * @@author A0113761M
+ */
 package Handler;
 
 import java.io.FileNotFoundException;
@@ -71,6 +74,9 @@ public class Help implements Command {
 		case Constants.MESSAGE_ACTION_ALIAS:
 			help += read(Constants.MESSAGE_ACTION_ALIAS);
 			break;
+		case Constants.MESSAGE_ACTION_RECURRENCE:
+			help += read(Constants.MESSAGE_ACTION_RECURRENCE);
+			break;
 		}
 		return help;
 	}
@@ -81,14 +87,15 @@ public class Help implements Command {
 		help += read(Constants.MESSAGE_ACTION_ADD);
 		help += read(Constants.MESSAGE_ACTION_DELETE);
 		help += read(Constants.MESSAGE_ACTION_EDIT);
+		help += read(Constants.MESSAGE_ACTION_RECURRENCE);
 		help += read(Constants.MESSAGE_ACTION_DONE);
 		help += read(Constants.MESSAGE_ACTION_DISPLAY);
 		help += read(Constants.MESSAGE_ACTION_SEARCH);
 		help += read(Constants.MESSAGE_ACTION_STORAGE);
 		help += read(Constants.MESSAGE_ACTION_UNDO);
+		help += read(Constants.MESSAGE_ACTION_ALIAS);
 		help += read(Constants.MESSAGE_ACTION_NATURAL);
 		help += read(Constants.MESSAGE_ACTION_KEYBOARD);
-		help += read(Constants.MESSAGE_ACTION_ALIAS);
 		return help;
 	}
 	
