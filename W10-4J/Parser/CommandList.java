@@ -2,9 +2,15 @@
 package Parser;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Storage.Read;
 import main.Constants;
 
 public class CommandList {
+	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
+	
 	private ArrayList<String> addCommandList = new ArrayList<>();
 	private ArrayList<String> deleteCommandList = new ArrayList<>();
 	private ArrayList<String> editCommandList = new ArrayList<>();
@@ -230,6 +236,8 @@ public class CommandList {
 			repeatArgumentList.add(Constants.repeatDefaultArgumentList[i]);
 		}
 		assert repeatArgumentList.size() >= 1;
+		
+		LOGGER.log(Level.INFO, "Successfully generated command lists");
 	}
 
 	public ArrayList<String> getAddCommandList() {

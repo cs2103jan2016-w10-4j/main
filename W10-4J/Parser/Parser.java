@@ -2,11 +2,16 @@
 package Parser;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.Handler;
+import Storage.Read;
 import main.Constants;
 import main.Constants.COMMAND_TYPE;
 
 public class Parser {
+	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
 	private Handler handler_;
 	private Valid valid_;
 	private CommandList commandList_;
@@ -24,23 +29,29 @@ public class Parser {
 		String commandTypeString = getFirstWord(command);
 		COMMAND_TYPE commandType = getAction(commandTypeString);
 		if (commandType == COMMAND_TYPE.INVALID) {
+			LOGGER.log(Level.WARNING, "Invalid mesage: " + Constants.MESSAGE_UNRECOGNISED_COMMAND);
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
+		LOGGER.log(Level.INFO, "Command type: " + commandType.toString());
 		String[] arguments = getArguments(commandType, command);
-		if(commandType == COMMAND_TYPE.ADD && arguments.length==1){
-			arguments = this.naturalLanguage_.interpretAddArguments(arguments);
+		if (arguments.length == 1) {
+			arguments = naturalInterpretation(commandType, arguments);
 		}
 		if (!this.valid_.isValid(commandType, arguments)) {
-			return getInvalidReturnMessage();
+			String invalidMessage = getInvalidReturnMessage();
+			LOGGER.log(Level.WARNING, "Invalid mesage: " + invalidMessage);
+			return invalidMessage;
 		}
 		if (commandType == COMMAND_TYPE.ALIAS) {
 			setAlias(arguments);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_ALIAS_PASS);
 			return Constants.MESSAGE_ALIAS_PASS;
 		}
 		return this.handler_.executeCommand(commandType, arguments);
 	}
 
 	public String getFirstWord(String command) {
+		assert command != null : Constants.ASSERT_NULL_COMMAND;
 		return command.trim().split(Constants.WHITESPACE)[0];
 	}
 
@@ -115,6 +126,20 @@ public class Parser {
 		} else {
 			return tokens.toArray(new String[0]);
 		}
+	}
+
+	public String[] naturalInterpretation(COMMAND_TYPE commandType, String[] arguments) {
+		if (commandType == COMMAND_TYPE.ADD) {
+			arguments = this.naturalLanguage_.interpretAddArguments(arguments);
+			String s = "";
+			for(int i = 0 ;i < arguments.length;i++){
+				s += arguments[i] + " ";
+			}
+			LOGGER.log(Level.INFO, "Natural Arguments:" + s);
+		} else if (commandType == COMMAND_TYPE.EDIT) {
+			arguments = this.naturalLanguage_.interpretEditArguments(arguments);
+		}
+		return arguments;
 	}
 
 	public String getInvalidReturnMessage() {

@@ -3,10 +3,16 @@ package Parser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Storage.Read;
 import main.Constants;
 import main.Date;
 
 public class NaturalDate {
+	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
+
 	public String getDate(String input) {
 		input = input.trim();
 		String special = specialDate(input);
@@ -124,8 +130,10 @@ public class NaturalDate {
 		}
 		String output = String.format(Constants.DATE_FORMAT, year, month, day);
 		if (Date.isLegalDate(output)) {
+			LOGGER.log(Level.INFO, "Natural Date: " + output);
 			return output;
 		} else {
+			LOGGER.log(Level.INFO, "Date cannot be interpreted");
 			return null;
 		}
 	}

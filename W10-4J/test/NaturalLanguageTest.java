@@ -125,6 +125,9 @@ public class NaturalLanguageTest {
 
 		input = "1230";
 		assertEquals(input, "12:30", n.getTime(input));
+		
+		input = "123";
+		assertEquals(input, "01:23", n.getTime(input));
 	}
 
 }

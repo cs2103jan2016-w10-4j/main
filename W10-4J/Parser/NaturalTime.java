@@ -2,9 +2,14 @@
 package Parser;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Storage.Read;
 import main.Constants;
 
 public class NaturalTime {
+	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
 	private boolean isAm;
 	private boolean isPm;
 	private int hour;
@@ -65,8 +70,10 @@ public class NaturalTime {
 			return null;
 		}
 		if (isTimeValid()) {
+			LOGGER.log(Level.INFO, "Natural Time: " + String.format(Constants.TIME_FORMAT, hour, minute));
 			return String.format(Constants.TIME_FORMAT, hour, minute);
 		} else {
+			LOGGER.log(Level.INFO, "Time cannot be interpreted: " + input_);
 			return null;
 		}
 	}
