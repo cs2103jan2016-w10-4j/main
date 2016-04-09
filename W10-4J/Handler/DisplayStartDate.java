@@ -45,9 +45,9 @@ public class DisplayStartDate {
 			output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYSTARTDATE_NOTASKONHAND 
 					+ Constants.MESSAGE_DISPLAY_HEADER_CLOSETAG;
 		} else {
-			if (previousInput.size()!= 0) {
+			if (previousInput.size() != 0) {
 				taskIDForRecentTask = CommonFunctionsInDisplay.generateChanges(sortedList, previousInput);
-			} else{
+			} else {
 				taskIDForRecentTask = new ArrayList<>();
 			}
 			
@@ -126,7 +126,7 @@ public class DisplayStartDate {
 		output += Constants.MESSAGE_DISPLAY_HEADERTABLE_OPENTAG;
 		if (taskList.size() != 0) {
 			currentDate = taskList.get(0).getStartDate();
-			if(currentDate != null) {
+			if (currentDate != null) {
 				displayAppropriateDay();
 			} else {
 				output += Constants.MESSAGE_DISPLAYSTARTDATE_FLOATINGTASKS;

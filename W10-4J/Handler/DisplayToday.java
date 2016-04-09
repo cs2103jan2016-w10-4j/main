@@ -25,7 +25,7 @@ public class DisplayToday {
 		DisplayStartDate.displayFormat(sort, sortedList, previousInput);
 		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYTODAY_HEADER + Constants.MESSAGE_DISPLAY_SPACING;
 		
-		if(todayOutput == null) {
+		if (todayOutput == null) {
 			output += Constants.MESSAGE_DISPLAYTODAY_NOTASK;
 		} else {
 			// Remove "Today, " from the return value

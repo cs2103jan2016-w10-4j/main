@@ -25,7 +25,7 @@ public class DisplayOverdue {
 		String output = Constants.MESSAGE_DISPLAY_HEADER_OPENTAG + Constants.MESSAGE_DISPLAYOVERDUE_HEADER 
 				+ Constants.MESSAGE_DISPLAY_SPACING;
 		
-		if(overdueOutput == null) {
+		if (overdueOutput == null) {
 			output += Constants.MESSAGE_DISPLAYOVERDUE_NOOVERDUETASK;
 		} else {
 			output += overdueOutput;

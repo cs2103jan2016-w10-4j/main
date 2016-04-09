@@ -147,6 +147,10 @@ public class Constants {
 	public static final String MESSAGE_DISPLAYSTARTDATE_TABLECLOSETAG = ("</table>");
 
 	public static final int MESSAGE_COMMONFUNCTION_NOTINARRAYLLIST = (-1);
+	public static final String MESSAGE_COMMONFUNCTION_REPEATDAY = ("Every Day");
+	public static final String MESSAGE_COMMONFUNCTION_REPEATMONTH = ("Every Month");
+	public static final String MESSAGE_COMMONFUNCTION_REPEATWEEK = ("Every Week");
+	public static final String MESSAGE_COMMONFUNCTION_REPEATYEAR = ("Every Year");
 	public static final String MESSAGE_COMMONFUNCTION_RETRIEVE = ("retrieve");
 	public static final String MESSAGE_COMMONFUNCTION_DONE = ("display done");
 	public static final String MESSAGE_COMMONFUNCTION_TABLE = ("display in table format");
