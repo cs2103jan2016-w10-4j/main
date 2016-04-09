@@ -4,12 +4,10 @@ package Parser;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import Storage.Read;
 import main.Constants;
 
 public class CommandList {
-	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
+	private final Logger LOGGER = Logger.getLogger(CommandList.class.getName());
 	
 	private ArrayList<String> addCommandList = new ArrayList<>();
 	private ArrayList<String> deleteCommandList = new ArrayList<>();

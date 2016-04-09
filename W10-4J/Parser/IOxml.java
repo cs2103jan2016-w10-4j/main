@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import Storage.Read;
 import main.Constants;
 
 public class IOxml {
-	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
+	private final Logger LOGGER = Logger.getLogger(IOxml.class.getName());
 	private ArrayList<String> alias_ = new ArrayList<>();
 
 	public IOxml() {

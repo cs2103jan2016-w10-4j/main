@@ -6,12 +6,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Handler.Handler;
-import Storage.Read;
 import main.Constants;
 import main.Constants.COMMAND_TYPE;
 
 public class Parser {
-	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
+	private final Logger LOGGER = Logger.getLogger(Parser.class.getName());
 	private Handler handler_;
 	private Valid valid_;
 	private CommandList commandList_;

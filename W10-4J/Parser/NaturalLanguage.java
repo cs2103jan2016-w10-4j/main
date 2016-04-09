@@ -44,7 +44,7 @@ public class NaturalLanguage {
 		return generateOutputEdit();
 	}
 
-	public void resetVariables(String[] token) {
+	private void resetVariables(String[] token) {
 		this.token_ = new ArrayList<>();
 		for (int i = 0; i < token.length; i++) {
 			String s = token[i];
@@ -64,7 +64,7 @@ public class NaturalLanguage {
 		this.recurCount_ = -1;
 	}
 
-	public void isolateTaskID() {
+	private void isolateTaskID() {
 		String taskid = token_.get(0);
 		if (isInteger(taskid)) {
 			taskID__ = taskid;
@@ -72,7 +72,7 @@ public class NaturalLanguage {
 		}
 	}
 
-	public void isolateRecurrance() {
+	private void isolateRecurrance() {
 		for (int i = 1; i < token_.size(); i++) {
 			String s = token_.get(i);
 			if (commandList_.getRecurrenceArgumentList().contains(s)) {
@@ -96,7 +96,7 @@ public class NaturalLanguage {
 		}
 	}
 
-	public void isolateDate() {
+	private void isolateDate() {
 		for (int i = 1; i <= token_.size(); i++) {
 			ArrayList<String> temptoken_ = new ArrayList<>();
 			for (int j = 1; j < token_.size(); j++) {
@@ -133,7 +133,7 @@ public class NaturalLanguage {
 		}
 	}
 
-	public void isolateTime() {
+	private void isolateTime() {
 		for (int i = 1; i <= token_.size(); i++) {
 			ArrayList<String> temptoken_ = new ArrayList<>();
 			for (int j = 1; j < token_.size(); j++) {
@@ -172,7 +172,7 @@ public class NaturalLanguage {
 		}
 	}
 
-	public void isolateNameAndDetails() {
+	private void isolateNameAndDetails() {
 		ArrayList<String> temptoken_ = new ArrayList<>();
 		String tempString = Constants.EMPTY_STRING;
 		for (int i = 0; i < token_.size(); i++) {
@@ -202,7 +202,7 @@ public class NaturalLanguage {
 		}
 	}
 
-	public String[] generateOutputAdd() {
+	private String[] generateOutputAdd() {
 		ArrayList<String> output = new ArrayList<>();
 		if (name_ != null) {
 			output.add(name_);
@@ -240,7 +240,7 @@ public class NaturalLanguage {
 		return out;
 	}
 
-	public String[] generateOutputEdit() {
+	private String[] generateOutputEdit() {
 		ArrayList<String> output = new ArrayList<>();
 
 		if (taskID__ != null) {

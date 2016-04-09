@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import Storage.Read;
 import main.Constants;
 import main.Date;
 
 public class NaturalDate {
-	private final Logger LOGGER = Logger.getLogger(Read.class.getName());
+	private final Logger LOGGER = Logger.getLogger(NaturalDate.class.getName());
 
 	public String getDate(String input) {
 		input = input.trim();
