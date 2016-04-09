@@ -47,14 +47,6 @@ public class ArraylistStorage {
 		return this.previousInputStorage.get(0).getAction();
 	}
 
-	public Task getPreviousInputTask() {
-		return this.previousInputStorage.get(0).getTask();
-	}
-
-	public Task getPreviousInputEditedTask() {
-		return this.previousInputStorage.get(0).getEditedTask();
-	}
-
 	// Only for Retrieve method
 	public ArrayList<Task> getPreviousInputNotDoneStorage() {
 		return this.previousInputStorage.get(0).getPreviousNotDoneStorage();
