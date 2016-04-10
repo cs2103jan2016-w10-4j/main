@@ -1,8 +1,9 @@
+//@@author A0135779M
 package Handler;
 
 import main.*;
 import main.Constants.COMMAND_TYPE;
-//@@author A0149174Y
+
 public class Handler {
 	private ArraylistStorage arraylistStorage;
 	private Add addTask;
@@ -21,8 +22,7 @@ public class Handler {
 		arraylistStorage = new ArraylistStorage();
 		initialiseAllArrays(arraylistStorage);
 	}
-	//@@author 
-	//@@author A0135779M
+	
 	public void initialiseAllArrays(ArraylistStorage arraylistStorage){
 		addTask = new Add(arraylistStorage);
 		deleteTask = new Delete(arraylistStorage);

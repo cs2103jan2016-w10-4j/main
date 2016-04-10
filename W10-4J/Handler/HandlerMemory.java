@@ -8,6 +8,9 @@
  *According to which state the command ended in (forexample in FAIL state) the updateMemory function decides how to update the memory accordingly.
  *After V0.3 this design was decided to be changed by my teammates. Now the class ArrayListStorage handles the job of HandlerMemory.
  */
+
+///////UNUSED////////
+
 package Handler;
 
 import java.util.ArrayList;
@@ -198,7 +201,7 @@ public class HandlerMemory {
 	}
 	//@@author
 
-
+	//@@author A0135779M
 
 	private static void clearAndAdd(ArrayList<PreviousInput> taskArray, PreviousInput task) {
 		taskArray.clear();
@@ -273,4 +276,7 @@ public class HandlerMemory {
 		this.mainStorage_OLD = mainStorage_OLD;
 	}
 }
+//@@author
+
+///////UNUSED////////
 
