@@ -71,6 +71,10 @@ public class PreviousInput {
 	public void setAction(String action) {
 		action_ = action;
 	}
+	
+	public void setFileName(String fileName) {
+		fileName_ = fileName;
+	}
 
 /////UNUSED//////
 	public void setTask(Task task) {
