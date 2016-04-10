@@ -157,7 +157,7 @@ public class UIController {
 		int caretPositionToBeSet = 0;
 		int indexOfHighlightedPoint;
 		if (indexOfHighlight > 0){
-			indexOfHighlightedPoint = displayOutput.getText().indexOf("000000", indexOfHighlight) + 8;
+			indexOfHighlightedPoint = displayOutput.getText().indexOf("font color", indexOfHighlight) + 21;
 			int endOfIndexOfHighlightedPoint = displayOutput.getText().indexOf("<", indexOfHighlightedPoint);
 			if (endOfIndexOfHighlightedPoint > 0){
 				String highlightedPoint = displayOutput.getText().substring(indexOfHighlightedPoint, endOfIndexOfHighlightedPoint);
