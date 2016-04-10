@@ -218,7 +218,11 @@ public class ArraylistStorage {
 	}
 
 	public void setNewDirectory() {
-		mainStorage.setDirectory(newFileName);
+		ArrayList<ArrayList<Task>> taskList = this.mainStorage.setDirectory(this.newFileName);
+		if (taskList != null) {
+			this.notDoneStorage = taskList.get(0);
+			this.doneStorage = taskList.get(1);
+		}
 	}
 
 	// ** RETRIEVE METHOD **
