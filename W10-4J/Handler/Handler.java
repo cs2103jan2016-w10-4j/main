@@ -20,10 +20,10 @@ public class Handler {
 
 	public Handler() {
 		arraylistStorage = new ArraylistStorage();
-		initialiseAllArrays(arraylistStorage);
+		createAllFunctions(arraylistStorage);
 	}
 	
-	public void initialiseAllArrays(ArraylistStorage arraylistStorage){
+	public void createAllFunctions(ArraylistStorage arraylistStorage){
 		addTask = new Add(arraylistStorage);
 		deleteTask = new Delete(arraylistStorage);
 		displayTask = new Display(arraylistStorage);
@@ -46,7 +46,7 @@ public class Handler {
 			 * HandlerMemory.updateMemory(cmd,command);
 			return toBeReturned;*/
 			//@@author A0149174Y
-			Command cmd = createCommand(command, task);
+			Command cmd = getCommand(command, task);
 			return cmd.execute(task);
 		} catch (IllegalArgumentException invalidCommandFormat) {
 			return Constants.MESSAGE_INVALID_FORMAT;
@@ -55,7 +55,7 @@ public class Handler {
 		}
 	}
 
-	private Command createCommand(COMMAND_TYPE command, String[] task)
+	private Command getCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
 		switch (command) {
 		case ADD:

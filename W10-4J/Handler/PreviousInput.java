@@ -8,16 +8,18 @@ import main.Task;
 
 public class PreviousInput {
 	private String action_;
+/////UNUSED//////
 	private Task task_;
 	// only for edit method in handler
 	private Task editedTask_;
-	// only for retrieve method
+/////UNUSED//////
 	private ArrayList<Task> previousNotDoneStorage_;
 	private ArrayList<Task> previousDoneStorage_;
 	// only for setdir method
 	private String fileName_;
 	//private String newFileName_;
 
+/////UNUSED//////
 	public PreviousInput(String action, Task task) {
 		action_ = action;
 		task_ = task;
@@ -28,6 +30,7 @@ public class PreviousInput {
 		task_ = task;
 		editedTask_ = editedTask;
 	}
+/////UNUSED//////
 	
 	public PreviousInput(String action, ArrayList<Task> previousNotDoneStorage, ArrayList<Task> previousDoneStorage) {
 		action_ = action;
@@ -35,17 +38,16 @@ public class PreviousInput {
 		previousDoneStorage_ = previousDoneStorage;
 	}
 	
-	public PreviousInput(String action, String fileName, ArrayList<Task> previousNotDoneStorage, ArrayList<Task> previousDoneStorage) {
+	public PreviousInput(String action, String fileName) {
 		action_ = action;
 		fileName_ = fileName;
-		previousNotDoneStorage_ = previousNotDoneStorage;
-		previousDoneStorage_ = previousDoneStorage;
 	}
 
 	public String getAction() {
 		return action_;
 	}
 
+/////UNUSED//////
 	public Task getTask() {
 		return task_;
 	}
@@ -53,6 +55,7 @@ public class PreviousInput {
 	public Task getEditedTask() {
 		return editedTask_;
 	}
+/////UNUSED//////
 	
 	public ArrayList<Task> getPreviousNotDoneStorage(){
 		return previousNotDoneStorage_;
@@ -70,6 +73,7 @@ public class PreviousInput {
 		action_ = action;
 	}
 
+/////UNUSED//////
 	public void setTask(Task task) {
 		task_ = task;
 	}
@@ -77,6 +81,7 @@ public class PreviousInput {
 	public void setEditedTask(Task editedTask) {
 		editedTask_ = editedTask;
 	}
+/////UNUSED//////
 	
 	public void setPreviousStorages(ArrayList<Task> notDoneStorage, ArrayList<Task> doneStorage){
 		setPreviousNotDoneStorage(notDoneStorage);

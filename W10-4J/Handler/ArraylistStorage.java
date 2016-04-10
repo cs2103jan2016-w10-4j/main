@@ -205,9 +205,7 @@ public class ArraylistStorage {
 	}
 
 	public void addPreviousDirectory(String command) {
-		ArrayList<Task> cloneNotDoneStorage = (ArrayList<Task>) this.notDoneStorage.clone();
-		ArrayList<Task> cloneDoneStorage = (ArrayList<Task>) this.doneStorage.clone();
-		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName, cloneNotDoneStorage, cloneDoneStorage));
+		addTaskToPreInputStorage(new PreviousInput(command, this.oldFileName));
 	}
 
 	public void rememberOldDirectory() {
