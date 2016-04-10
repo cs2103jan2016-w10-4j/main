@@ -7,10 +7,8 @@
  *Rather than updating the memory in each execute function, the command just stores it's end state after it's executed.
  *According to which state the command ended in (forexample in FAIL state) the updateMemory function decides how to update the memory accordingly.
  *After V0.3 this design was decided to be changed by my teammates. Now the class ArrayListStorage handles the job of HandlerMemory.
+ *Now I changed my execute functions as execute_OLD and change all the ArrayList names as _OLD as well so that it wont collide with the new version.
  */
-
-///////UNUSED////////
-
 package Handler;
 
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ import main.Task;
 public class HandlerMemory {
 
 	public enum COMMAND_STATE {
-		FAILED,UNDOADD,UNDODELETE,UNDOUNDO,UNDODONE,UNDOEDIT,DELETEDONETASK,RECURRINGDONE,NONRECURRINGDONE,DELETEUNDONETASK
+		FAILED,UNDOADD,UNDODELETE,UNDOUNDO,UNDODONE,UNDOEDIT,DELETEDONETASK,DELETEUNDONETASK,RECURRINGDONE,NONRECURRINGDONE
 	};
 	
 	private static ArrayList<Task> notDoneYetStorage_OLD;
@@ -277,6 +275,3 @@ public class HandlerMemory {
 	}
 }
 //@@author
-
-///////UNUSED////////
-

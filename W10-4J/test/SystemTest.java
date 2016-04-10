@@ -16,7 +16,19 @@ public class SystemTest {	@Test
 	System.out.println(output[0]);
 	System.out.println(output[1]);
 }
+
+@Test
+public void test1() {
+	String command;
 	
+	command="add V0.5";
+	Parser parser = new Parser();
+	assertEquals("1V0.5 has been added.", parser.parse(command));
+	
+	command="ls";
+	assertEquals(UserInterface.initComponents(command),new String[]{"<html><head><style type="text/css"><!--#underline{border-bottom-color:black;border-bottom-style:solid;border-bottom-width:3px}--></style></head><body><h1><b>V0.5</b></h1></body></html>"}{"display"});
+}
+	/*
 	@Test
 	public void testParse() {
 		Parser p = new Parser();
@@ -70,4 +82,5 @@ public class SystemTest {	@Test
 		command = "";
 		assertEquals("Invalid command format",p.parse(command));
 	}
+	*/
 }
