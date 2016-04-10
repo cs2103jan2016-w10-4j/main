@@ -23,10 +23,10 @@ public class Valid {
 
 	public boolean isValid(COMMAND_TYPE commandType, String[] arguments) {
 		String s = "";
-		for(int i = 0 ;i < arguments.length;i++){
+		for (int i = 0; i < arguments.length; i++) {
 			s += arguments[i] + " ";
 		}
-		LOGGER.log(Level.INFO, "Arguments:"+ arguments.length+ ">" + s);
+		LOGGER.log(Level.INFO, "Arguments:" + arguments.length + ">" + s);
 		invalidDate = false;
 		invalidTime = false;
 		switch (commandType) {
@@ -196,11 +196,9 @@ public class Valid {
 	}
 
 	public boolean isRecurrenceValid(String[] arguments) {
-		if (arguments.length != 3) {
+		if (arguments.length != 2) {
 			return false;
-		} else if (!isInteger(arguments[0]) || !isInteger(arguments[2])) {
-			return false;
-		} else if (Integer.parseInt(arguments[2]) <= 1) {
+		} else if (!isInteger(arguments[0])) {
 			return false;
 		} else {
 			return commandList_.getRecurrenceArgumentList().contains(arguments[1]);
@@ -244,16 +242,8 @@ public class Valid {
 	}
 
 	public boolean checkRecur(String[] arguments, int i) throws IndexOutOfBoundsException {
-		String[] repeatArgument = arguments[i + 1].split(Constants.WHITESPACE);
-		try {
-			if (!commandList_.getRecurrenceArgumentList().contains(repeatArgument[0])
-					|| !isInteger(repeatArgument[1])) {
-				return false;
-			}
-		} catch (ArrayIndexOutOfBoundsException e) {
-			return false;
-		}
-		return true;
+		String recur = arguments[i + 1];
+		return commandList_.getRecurrenceArgumentList().contains(recur);
 	}
 
 	public COMMAND_TYPE getAction(String command) {

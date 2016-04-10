@@ -6,9 +6,9 @@ import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 
 public class Done implements Command {
-	
-///////UNUSED////////
-	//@@author A0149174Y-unused
+
+	/////// UNUSED////////
+	// @@author A0149174Y-unused
 	private COMMAND_STATE commandState;
 	private Task forEachTask;
 	private Task forOldTask;
@@ -25,6 +25,7 @@ public class Done implements Command {
 	public Task returnOldTask() {
 		return forOldTask;
 	}
+
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
@@ -34,7 +35,8 @@ public class Done implements Command {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			if (eachTask.isRecurring() && eachTask.getEndDate() != null) {
-				//eachTask.done(); //done() function was implemented in the previous version.
+				// eachTask.done(); //done() function was implemented in the
+				// previous version.
 				forEachTask = eachTask;
 				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 				commandState = COMMAND_STATE.RECURRINGDONE;
@@ -48,10 +50,10 @@ public class Done implements Command {
 			}
 		}
 	}
-	//@@author
-  ///////UNUSED////////
-	
-	//@@author A0135779M
+	// @@author
+	/////// UNUSED////////
+
+	// @@author A0135779M
 	ArraylistStorage arraylistStorage_;
 
 	public Done(ArraylistStorage arraylistStorage) {
@@ -64,6 +66,13 @@ public class Done implements Command {
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		if (eachTask == null) {
 			return Constants.MESSAGE_DONE_FAIL;
+		} else if (eachTask.isRecurring()) {
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
+			eachTask.nextStartDate();
+			eachTask.nextEndDate();
+			arraylistStorage_.writeToStorage();
+			assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
+			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			// remember previous state

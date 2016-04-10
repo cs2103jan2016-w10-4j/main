@@ -16,7 +16,6 @@ public class NaturalLanguage {
 	private String endtime_;
 	private String details_;
 	private String recurtype_;
-	private int recurCount_;
 	private ArrayList<String> token_;
 
 	public NaturalLanguage(CommandList commandList) {
@@ -61,7 +60,6 @@ public class NaturalLanguage {
 		this.endtime_ = null;
 		this.details_ = null;
 		this.recurtype_ = null;
-		this.recurCount_ = -1;
 	}
 
 	private void isolateTaskID() {
@@ -76,22 +74,8 @@ public class NaturalLanguage {
 		for (int i = 1; i < token_.size(); i++) {
 			String s = token_.get(i);
 			if (commandList_.getRecurrenceArgumentList().contains(s)) {
-				try {
-					recurCount_ = Integer.parseInt(token_.get(i + 1));
-					if (recurCount_ <= 1) {
-						throw new NumberFormatException();
-					} else {
-						recurtype_ = s;
-						token_.set(i, null);
-						token_.set(i + 1, null);
-					}
-				} catch (NumberFormatException e) {
-					recurCount_ = -1;
-					recurtype_ = null;
-				} catch (IndexOutOfBoundsException e) {
-					recurCount_ = -1;
-					recurtype_ = null;
-				}
+				recurtype_ = s;
+				token_.set(i, null);
 			}
 		}
 	}
@@ -225,13 +209,13 @@ public class NaturalLanguage {
 			output.add(Constants.MESSAGE_ADD_ACTION_END);
 			output.add(endtime_);
 		}
+		if (recurtype_ != null) {
+			output.add(Constants.MESSAGE_EDIT_ACTION_REPEAT);
+			output.add(recurtype_);
+		}
 		if (details_ != null) {
 			output.add(Constants.MESSAGE_ADD_ACTION_DETAILS);
 			output.add(details_);
-		}
-		if (recurCount_ > 1 && recurtype_ != null) {
-			output.add(Constants.MESSAGE_ADD_ACTION_REPEAT);
-			output.add(recurtype_ + Constants.WHITESPACE + Integer.toString(recurCount_));
 		}
 		String[] out = new String[output.size()];
 		for (int i = 0; i < output.size(); i++) {
@@ -272,9 +256,9 @@ public class NaturalLanguage {
 			output.add(Constants.MESSAGE_EDIT_ACTION_DETAILS);
 			output.add(details_);
 		}
-		if (recurCount_ > 1 && recurtype_ != null) {
+		if (recurtype_ != null) {
 			output.add(Constants.MESSAGE_EDIT_ACTION_REPEAT);
-			output.add(recurtype_ + Constants.WHITESPACE + Integer.toString(recurCount_));
+			output.add(recurtype_);
 		}
 		String[] out = new String[output.size()];
 		for (int i = 0; i < output.size(); i++) {

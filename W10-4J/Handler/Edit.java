@@ -75,18 +75,7 @@ public class Edit implements Command {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
-			int recurCounter = fieldEditor(eachTask, task);
-			if (recurCounter != -1 && eachTask.getStartDate() == null) {
-				eachTask.resetRecursion();
-				return Constants.MESSAGE_RECUR_FAIL;
-			}
-			Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());
-			for (int i = 0; i < recurCounter - 1; i++) {
-				clone = cloneTask(clone, arraylistStorage_.getTaskID());
-				clone.nextStartDate();
-				clone.nextEndDate();
-				arraylistStorage_.addTaskToNotDoneStorage(clone);
-			}
+			fieldEditor(eachTask, task);
 			if (isDateAndTimeValid(eachTask)) {
 				// write to mainStorage
 				arraylistStorage_.writeToStorage();
@@ -114,9 +103,8 @@ public class Edit implements Command {
 		return result;
 	}
 
-	private int fieldEditor(Task eachTask, String[] task) {
+	private void fieldEditor(Task eachTask, String[] task) {
 		String action;
-		int recurCounter = -1;
 		for (int i = 1; i < task.length; i += 2) {
 			action = task[i].trim();
 			switch (action) {
@@ -156,11 +144,9 @@ public class Edit implements Command {
 				default:
 					assert false;
 				}
-				recurCounter = Integer.parseInt(repeatArgument[1]);
 				break;
 			}
 		}
-		return recurCounter;
 	}
 
 	public Task cloneTask(Task task, int taskID) {

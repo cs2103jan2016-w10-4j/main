@@ -34,7 +34,7 @@ public class Recurrence implements Command {
 			commandState = COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_RECUR_FAIL;
 		} else {
-			Task oldTask = cloneTask(eachTask,taskID);
+//			Task oldTask = cloneTask(eachTask,taskID);
 			switch (task[1]) {
 			case "day":
 				eachTask.setDay(true);
@@ -50,7 +50,7 @@ public class Recurrence implements Command {
 				break;
 			}
 			forEachTask = eachTask;
-			forOldTask = oldTask;
+//			forOldTask = oldTask;
 			return String.format(Constants.MESSAGE_RECUR_FAIL, eachTask.getName());
 		}
 	}
@@ -68,7 +68,6 @@ public class Recurrence implements Command {
 	public String execute(String[] task) {
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
-		int recurCounter = Integer.parseInt((task[2]));
 		switch (task[1]) {
 		case Constants.MESSAGE_REPEAT_DAY:
 			eachTask.setDay(true);
@@ -83,33 +82,7 @@ public class Recurrence implements Command {
 			eachTask.setYear(true);
 			break;
 		}
-		if (recurCounter != 0 && eachTask.getStartDate() == null) {
-			eachTask.resetRecursion();
-			return Constants.MESSAGE_RECUR_FAIL;
-		}
-		Task clone = cloneTask(eachTask, arraylistStorage_.getTaskID());
-		for (int i = 0; i < recurCounter - 1; i++) {
-			clone = cloneTask(clone, arraylistStorage_.getTaskID());
-			clone.nextStartDate();
-			clone.nextEndDate();
-			arraylistStorage_.addTaskToNotDoneStorage(clone);
-		}
 		arraylistStorage_.writeToStorage();
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
-	}
-
-	public Task cloneTask(Task task, int taskID) {
-		Task result = new Task(task.getName());
-		result.setStartDate(task.getStartDate());
-		result.setEndDate(task.getEndDate());
-		result.setStartTime(task.getStartTime());
-		result.setEndTime(task.getEndTime());
-		result.setDetails(task.getDetails());
-		result.setTaskID(taskID);
-		result.setYear(task.getYear());
-		result.setMonth(task.getMonth());
-		result.setWeek(task.getWeek());
-		result.setDay(task.getDay());
-		return result;
 	}
 }
