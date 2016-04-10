@@ -19,7 +19,7 @@ public class DisplayDone {
 		ArrayList<Integer> taskIDForRecentTask;
 		
 		if (previousInput.size() != 0) {
-			taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput);
+			taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput, Constants.DISPLAY_DISPLAYDONE);
 		} else {
 			taskIDForRecentTask = new ArrayList<>();
 		}

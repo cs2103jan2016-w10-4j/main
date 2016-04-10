@@ -57,7 +57,51 @@ public class CommonFunctionsInDisplay {
 		}
 		return taskID;
 	}
+	//@@author A0126129J
+	// Determine which task is not in the previousList when comparing with currentList
+	public static ArrayList<Integer> checkRecentUpdatedTask(ArrayList<Task> currentList, ArrayList<PreviousInput> previousInput, String status) {
+		ArrayList<Task> previousList = new ArrayList<Task>();
+		ArrayList<Integer> output = new ArrayList<Integer>();
+		
+		if(status.equals(Constants.DISPLAY_NOT_DISPLAYDONE)) {
+			previousList = previousInput.get(0).getPreviousNotDoneStorage();
+		} else {
+			previousList = previousInput.get(0).getPreviousDoneStorage();
+		}
+		
+		if (previousList.size() != 0) {
+			output = addNotFoundTaskIDToArraylist(currentList, previousList);
+		} else {
+			// When user first add a task into the empty file
+			for (int i = 0; i < currentList.size(); i++) {
+				output.add(currentList.get(i).getTaskID());
+			}
+		}
+		return output;
+	}
 
+	private static ArrayList<Integer> addNotFoundTaskIDToArraylist(ArrayList<Task> currentList, ArrayList<Task> previousList) {
+		ArrayList<Integer> output = new ArrayList<Integer>();
+
+		for (int i = 0; i < currentList.size(); i++) {
+			boolean isTwoTasksTheSame = false;
+			Task currentTask = currentList.get(i);
+			for (int j = 0; j < previousList.size(); j++) {
+				Task previousTask = previousList.get(j);
+				isTwoTasksTheSame = compareTasks(previousTask, currentTask);	
+				if(isTwoTasksTheSame) {
+					break;
+				}
+			}
+			
+			if (!(isTwoTasksTheSame)) {
+				output.add(currentTask.getTaskID());
+				break;
+			} 
+		}
+		return output;
+	}
+	
 	private static boolean compareTasks(Task previousTask, Task currentTask) {
 		boolean isSameName = compareName(previousTask, currentTask);
 		boolean isSameStartDate = compareStartDate(previousTask, currentTask);
@@ -181,7 +225,6 @@ public class CommonFunctionsInDisplay {
 		return previousTask.getTaskID() == currentTask.getTaskID();
 	}
 
-	//@@author A0126129J
 	public static String determineColor(Task t) {
 		String color = Constants.DISPLAY_COLOR_BLACK;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -211,7 +254,7 @@ public class CommonFunctionsInDisplay {
 				color = Constants.DISPLAY_COLOR_BLACK;
 			}
 		}
-		
+
 		return color;
 	}
 
@@ -233,7 +276,7 @@ public class CommonFunctionsInDisplay {
 
 	public static String getTaskDetails(int index, Task t, String color, String repeat, 
 			ArrayList<Integer> taskIDForRecentTask, String action) {
-		String output = "";
+		String output = Constants.COMMONFUNCTIONS_EMPTY_STRING;
 
 		// Highlight the row if its the recent task
 		if (taskIDForRecentTask != null && taskIDForRecentTask.contains(t.getTaskID())) {
@@ -253,14 +296,14 @@ public class CommonFunctionsInDisplay {
 				|| action.equals(Constants.COMMONFUNCTIONS_TABLE)) {
 			if (t.getStartDate() != null) {
 				output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getStartDate()
-						+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
+				+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 			} else {
 				output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 			}
 
 			if (t.getEndDate() != null) {
 				output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getEndDate()
-						+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
+				+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 			} else {
 				output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 			}
@@ -268,21 +311,21 @@ public class CommonFunctionsInDisplay {
 
 		if (t.getStartTime() != null) {
 			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getStartTime()
-					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
+			+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
 			output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 		}
 
 		if (t.getEndTime() != null) {
 			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getEndTime()
-					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
+			+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
 			output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 		}
 
 		if (t.getDetails() != null) {
 			output += Constants.COMMONFUNCTIONS_TD_OPENTAG + color + t.getDetails()
-					+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
+			+ Constants.COMMONFUNCTIONS_TD_CLOSETAG;
 		} else {
 			output += Constants.COMMONFUNCTIONS_TD_OPENCLOSETAG;
 		}
@@ -293,41 +336,6 @@ public class CommonFunctionsInDisplay {
 		}
 
 		output += Constants.COMMONFUNCTIONS_HEADER_CLOSETAG + Constants.COMMONFUNCTIONS_TR_CLOSETAG;
-		return output;
-	}
-
-	// Determine which task is not in the previousList when comparing with currentList
-	public static ArrayList<Integer> checkRecentUpdatedTask(ArrayList<Task> currentList, ArrayList<PreviousInput> previousInput) {
-		ArrayList<Task> previousList = previousInput.get(0).getPreviousNotDoneStorage();
-		ArrayList<Integer> output = new ArrayList<>();
-		
-		if (previousList.size() != 0) {
-			output = addNotFoundTaskIDToArraylist(currentList, previousList);
-		} else {
-			// When user first add a task into the empty file
-			for (int i = 0; i < currentList.size(); i++) {
-				output.add(currentList.get(i).getTaskID());
-			}
-		}
-		return output;
-	}
-
-	private static ArrayList<Integer> addNotFoundTaskIDToArraylist(ArrayList<Task> currentList, ArrayList<Task> previousList) {
-		ArrayList<Integer> output = new ArrayList<>();
-		
-		for (int i = 0; i < currentList.size(); i++) {
-			boolean found = false;
-			for (int j = 0; j < previousList.size(); j++) {
-				if (compareTasks(previousList.get(j), currentList.get(i))) {
-					found = true;
-					continue;
-				}
-			}
-			
-			if (!found) {
-				output.add(currentList.get(i).getTaskID());
-			}
-		}
 		return output;
 	}
 }
