@@ -329,6 +329,17 @@ public class DisplayStartDate {
 		newTask.setEndTime(Constants.DISPLAYSTARTDATE_DASH);
 		newTask.setDetails(task.getDetails());
 		newTask.setMultiDay(true);
+		
+		if (task.isRecurring()){
+			boolean isDay = task.getDay();
+			boolean isWeek = task.getWeek();
+			boolean isMonth = task.getMonth();
+			boolean isYear = task.getYear();
+			newTask.setDay(isDay);
+			newTask.setWeek(isWeek);
+			newTask.setMonth(isMonth);
+			newTask.setYear(isYear);
+		}
 
 		if (taskStartTime != null) {
 			newTask.setStartTime(taskStartTime);
@@ -375,6 +386,17 @@ public class DisplayStartDate {
         newTask.setEndTime(Constants.DISPLAYSTARTDATE_DASH);
         newTask.setDetails(task.getDetails());
         newTask.setMultiDay(true);
+		
+		if (task.isRecurring()){
+			boolean isDay = task.getDay();
+			boolean isWeek = task.getWeek();
+			boolean isMonth = task.getMonth();
+			boolean isYear = task.getYear();
+			newTask.setDay(isDay);
+			newTask.setWeek(isWeek);
+			newTask.setMonth(isMonth);
+			newTask.setYear(isYear);
+		}
 		return newTask;
 	}
 	
@@ -398,6 +420,17 @@ public class DisplayStartDate {
         newTask.setStartTime(Constants.DISPLAYSTARTDATE_DASH);
         newTask.setDetails(task.getDetails());
         newTask.setMultiDay(true);
+		
+		if (task.isRecurring()){
+			boolean isDay = task.getDay();
+			boolean isWeek = task.getWeek();
+			boolean isMonth = task.getMonth();
+			boolean isYear = task.getYear();
+			newTask.setDay(isDay);
+			newTask.setWeek(isWeek);
+			newTask.setMonth(isMonth);
+			newTask.setYear(isYear);
+		}
         
         if (taskEndTime != null) {
             newTask.setEndTime(taskEndTime);
