@@ -8,23 +8,23 @@ import main.Task;
 
 public class PreviousInput {
 	private String action_;
+	
 /////UNUSED//////
 	private Task task_;
 	// only for edit method in handler
 	private Task editedTask_;
 /////UNUSED//////
+	
 	private ArrayList<Task> previousNotDoneStorage_;
 	private ArrayList<Task> previousDoneStorage_;
 	// only for setdir method
 	private String fileName_;
-	//private String newFileName_;
 
 /////UNUSED//////
 	public PreviousInput(String action, Task task) {
 		action_ = action;
 		task_ = task;
 	}
-
 	public PreviousInput(String action, Task task, Task editedTask) {
 		action_ = action;
 		task_ = task;
@@ -51,7 +51,6 @@ public class PreviousInput {
 	public Task getTask() {
 		return task_;
 	}
-
 	public Task getEditedTask() {
 		return editedTask_;
 	}
@@ -77,7 +76,6 @@ public class PreviousInput {
 	public void setTask(Task task) {
 		task_ = task;
 	}
-
 	public void setEditedTask(Task editedTask) {
 		editedTask_ = editedTask;
 	}
