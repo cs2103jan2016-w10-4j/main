@@ -57,6 +57,7 @@ public class Handler {
 
 	private Command createCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
+
 		switch (command) {
 		case ADD:
 			return addTask;
@@ -89,21 +90,4 @@ public class Handler {
 		}
 	}
 	//@@author 
-	public int getNumberOfTaskTotal() {
-		return arraylistStorage.getNotDoneStorage().size();
-	}
-
-	// Not implemented yet, waiting for handlerMemory to finish
-	public int getNumberOfTaskToday() {
-		return -1;
-	}
-
-	// Not implemented yet, waiting for handlerMemory to finish
-	public int getNumberOfTaskOverdue() {
-		return -1;
-	}
-
-	public int getNumberOfTaskDone() {
-		return arraylistStorage.getDoneStorage().size();
-	}
 }

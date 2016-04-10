@@ -7,7 +7,6 @@ import Storage.Storage;
 import main.Constants;
 import main.Task;
 
-
 public class ArraylistStorage {
 	private ArrayList<Task> notDoneStorage;
 	private ArrayList<Task> doneStorage;
@@ -28,6 +27,14 @@ public class ArraylistStorage {
 				Constants.DEFAULT_FILENAME);
 		this.notDoneStorage = getFromStorage.get(0);
 		this.doneStorage = getFromStorage.get(1);
+		for (int i = 0; i < notDoneStorage.size(); i++) {
+			Task t = notDoneStorage.get(i);
+			t.setTaskID(this.getTaskID());
+		}
+		for (int i = 0; i < doneStorage.size(); i++) {
+			Task t = doneStorage.get(i);
+			t.setTaskID(this.getTaskID());
+		}
 		this.previousInputStorage = new ArrayList<PreviousInput>();
 		this.sort = new Sorting();
 	}
@@ -78,9 +85,9 @@ public class ArraylistStorage {
 			usedID.add(this.notDoneStorage.get(i).getTaskID());
 		}
 		Collections.sort(usedID);
-		for (int i = 0; i < usedID.size(); i++) {
-			if (usedID.get(i) != i + 1) {
-				return i + 1;
+		for (int i = 1; i <= usedID.size(); i++) {
+			if (!usedID.contains(i)) {
+				return i;
 			}
 		}
 		return usedID.size() + 1;
@@ -139,46 +146,48 @@ public class ArraylistStorage {
 		}
 		return results;
 	}
+
 	// @@author A0149174Y
 	private boolean taskSearchNameAndDetails(Task eachTask, String[] task) {
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 		assert eachTask.getDetails() != null : Constants.ASSERT_TASKDETAILS_EXISTENCE;
-		boolean searchStringFound=false;
+		boolean searchStringFound = false;
 		String[] splitName = eachTask.getName().toLowerCase().split("\\s+");
-		String[] splitDetails= eachTask.getDetails().toLowerCase().split("\\s+");
+		String[] splitDetails = eachTask.getDetails().toLowerCase().split("\\s+");
 		searchStringFound = searchInName(task, searchStringFound, splitName);
 		searchStringFound = searchInDetails(task, searchStringFound, splitDetails);
 		return searchStringFound;
 	}
 
 	private boolean searchInName(String[] task, boolean searchStringFound, String[] splitName) {
-		for(int i=0;i<splitName.length;i++) {
-		        searchStringFound = checkSplitStringForAMatch(task, searchStringFound, splitName, i);
-		    }
+		for (int i = 0; i < splitName.length; i++) {
+			searchStringFound = checkSplitStringForAMatch(task, searchStringFound, splitName, i);
+		}
 		return searchStringFound;
 	}
-	
+
 	private boolean searchInDetails(String[] task, boolean searchStringFound, String[] splitDetails) {
-		for(int i=0;i<splitDetails.length;i++) {
-		        searchStringFound = checkSplitStringForAMatch(task, searchStringFound, splitDetails, i);
-		    }
+		for (int i = 0; i < splitDetails.length; i++) {
+			searchStringFound = checkSplitStringForAMatch(task, searchStringFound, splitDetails, i);
+		}
 		return searchStringFound;
 	}
 
 	private boolean taskSearchName(Task eachTask, String[] task) {
 		assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-		boolean searchStringFound=false;
+		boolean searchStringFound = false;
 		String[] splitName = eachTask.getName().toLowerCase().split("\\s+");
 		searchStringFound = searchInName(task, searchStringFound, splitName);
 		return searchStringFound;
 	}
 
 	private boolean checkSplitStringForAMatch(String[] task, boolean searchStringFound, String[] split, int i) {
-		if(split[i].startsWith(task[0].trim().toLowerCase())) {
-			searchStringFound=true;
+		if (split[i].startsWith(task[0].trim().toLowerCase())) {
+			searchStringFound = true;
 		}
 		return searchStringFound;
 	}
+
 	// @@author A0135779M
 	// ** SET DIR METHOD **
 	public boolean setDirectory(String filePathName) {
@@ -312,7 +321,7 @@ public class ArraylistStorage {
 			isSame = false;
 		}
 	}
-	
+
 	private void mergeWithoutRepeatDoneStorage(ArrayList<Task> additionalArray) {
 		boolean isSame = false;
 		for (Task task1 : additionalArray) {
