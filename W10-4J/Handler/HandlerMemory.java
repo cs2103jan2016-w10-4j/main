@@ -137,7 +137,7 @@ public class HandlerMemory {
 
 	private static void recurrenceUpdateMemory(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput("edit", cmd.returnOldTask(), cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
 	}
 
 	private static void setdirUpdateMemory() {

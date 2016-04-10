@@ -38,7 +38,6 @@ public class Delete implements Command {
 			} else {
 				forEachTask = eachTask;
 				commandState = HandlerMemory.COMMAND_STATE.DELETEDONETASK;
-
 				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
 			}
 		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {

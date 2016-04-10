@@ -35,8 +35,6 @@ public class Done implements Command {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			if (eachTask.isRecurring() && eachTask.getEndDate() != null) {
-				// eachTask.done(); //done() function was implemented in the
-				// previous version.
 				forEachTask = eachTask;
 				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 				commandState = COMMAND_STATE.RECURRINGDONE;

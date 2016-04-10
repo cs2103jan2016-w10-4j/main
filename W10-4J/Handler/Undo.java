@@ -36,6 +36,11 @@ public class Undo implements Command{
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
 		assert previousTask != null : Constants.ASSERT_TASK_EXISTENCE;
 		Task eachTask = null;
+		undoTheAction(actionToBeUndone, previousTask, eachTask);
+		return Constants.MESSAGE_UNDO_PASS;
+	}
+	
+	private void undoTheAction(String actionToBeUndone, Task previousTask, Task eachTask) {
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
 			commandState = COMMAND_STATE.UNDOADD;
@@ -59,7 +64,6 @@ public class Undo implements Command{
 			forEachTask = previousTask;
 			break;
 		}
-		return Constants.MESSAGE_UNDO_PASS;
 	}
 	//@@author
   ///////UNUSED////////

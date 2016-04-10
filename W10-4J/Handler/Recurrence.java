@@ -34,27 +34,45 @@ public class Recurrence implements Command {
 			commandState = COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_RECUR_FAIL;
 		} else {
-//			Task oldTask = cloneTask(eachTask,taskID);
-			switch (task[1]) {
-			case "day":
-				eachTask.setDay(true);
-				break;
-			case "week":
-				eachTask.setWeek(true);
-				break;
-			case "month":
-				eachTask.setMonth(true);
-				break;
-			case "year":
-				eachTask.setYear(true);
-				break;
-			}
+			Task oldTask = cloneTask(eachTask,taskID); //oldTask will be stored as PreviousInput later.
+			setRecurringDurationForEachTask(task, eachTask);
 			forEachTask = eachTask;
-//			forOldTask = oldTask;
-			return String.format(Constants.MESSAGE_RECUR_FAIL, eachTask.getName());
+			forOldTask = oldTask;
+			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+		}
+	}
+
+	private void setRecurringDurationForEachTask(String[] task, Task eachTask) {
+		switch (task[1]) {
+		case "day":
+			eachTask.setDay(true);
+			break;
+		case "week":
+			eachTask.setWeek(true);
+			break;
+		case "month":
+			eachTask.setMonth(true);
+			break;
+		case "year":
+			eachTask.setYear(true);
+			break;
 		}
 	}
 	//@@author
+	private Task cloneTask(Task task,int taskID) {
+		Task result = new Task(task.getName());
+		result.setStartDate(task.getStartDate());
+		result.setEndDate(task.getEndDate());
+		result.setStartTime(task.getStartTime());
+		result.setEndTime(task.getEndTime());
+		result.setDetails(task.getDetails());
+		result.setTaskID(task.getTaskID());
+		result.setYear(task.getYear());
+		result.setMonth(task.getMonth());
+		result.setWeek(task.getWeek());
+		result.setDay(task.getDay());
+		return result;
+	}
     ///////UNUSED////////
 	
 	

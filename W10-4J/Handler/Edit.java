@@ -39,16 +39,19 @@ public class Edit implements Command {
 		} else {
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
-			fieldEditor(eachTask, task);
-
-			if (isDateAndTimeValid(eachTask)) {
-				forEachTask = eachTask;
-				forOldTask = oldTask;
-				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
-			} else {
-				commandState = COMMAND_STATE.FAILED;
-				return Constants.MESSAGE_TIME_FAIL;
-			}
+			fieldEditor(eachTask, task); //edits the task.
+			return checkWhetherDateAndTimeValidAndReturnMessage(eachTask, oldTask);
+		}
+	}
+	
+	private String checkWhetherDateAndTimeValidAndReturnMessage(Task eachTask, Task oldTask) {
+		if (isDateAndTimeValid(eachTask)) {
+			forEachTask = eachTask;
+			forOldTask = oldTask;
+			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+		} else {
+			commandState = COMMAND_STATE.FAILED;
+			return Constants.MESSAGE_TIME_FAIL;
 		}
 	}
 	//@@author

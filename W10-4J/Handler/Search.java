@@ -29,23 +29,25 @@ public class Search implements Command {
 		return forOldTask;
 	}
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
-		ArrayList<Task> searchNotDoneYetStorage_OLD = new ArrayList<Task>();
+		ArrayList<Task> searchNotDoneYetStorage = new ArrayList<Task>();
 		if (task.length > 1) {
 			for (Task eachTask : HandlerMemory.getNotDoneYetStorage_OLD()) {
 				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-				//inclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support thism function.
+				//inclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support this method.
 			}
 		} else {
 			for (Task eachTask : HandlerMemory.getNotDoneYetStorage_OLD()) {
 				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-				//exclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support thism function.
+				//exclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support this method.
 			}
 		}
-		if (searchNotDoneYetStorage_OLD.size() != 0) {
-			return DisplayFormat.displayFormat(searchNotDoneYetStorage_OLD);
+		if (searchNotDoneYetStorage.size() != 0) {
+			return DisplayFormat.displayFormat(searchNotDoneYetStorage);
 		}
+		else {
 		commandState = COMMAND_STATE.FAILED;
 		return Constants.MESSAGE_SEARCH_FAIL;
+		}
 	}
 	//@@author
 ///////UNUSED////////
