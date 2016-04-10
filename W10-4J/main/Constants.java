@@ -317,7 +317,7 @@ public class Constants {
 	public static final String COLORS_COMMENT_FOR_XML = "colors";
 	
 	public static final String DEFAULT_FONT_SIZE = "14";
-	public static final String DEFAULT_FONT_FAMILY = "Times New Roman";
+	public static final String DEFAULT_FONT_FAMILY = "SansSerif";
 
 	public static final String SETTINGS_TEXT = "Settings";
 	public static final String FONT_TEXT = "Font";
