@@ -30,18 +30,18 @@ For help on specific commands, use the following commands:
 <p>Different types of tasks can be added into Task Manager, for example, events and deadlines.</p>
 <p>To add events with date, start time and end time into Task Manager, use this command: </p>
 <table id="command">
-<b>add</b> &#60your task&#62 <b>startdate</b> &#60start date&#62 <b>enddate</b> &#60end date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>details</b> &#60task details&#62 <b>recur</b> &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
-<b>add</b> Holiday trip to Japan<b>startdate</b> 5/5/16 <b>enddate</b> 10/5/16 <b>starttime</b> 0530 <b>endtime</b> 1200 <b>details</b> Remind Esther!
+<b>add</b> &#60your task&#62 <b>startdate</b> &#60start date&#62 <b>enddate</b> &#60end date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>details</b> &#60task details&#62 <b>recur</b> &#60type of recurrence&#62<br><br>
+<b>add</b> Holiday trip to Japan <b>startdate</b> 5/5/16 <b>enddate</b> 10/5/16 <b>starttime</b> 0530 <b>endtime</b> 1200 <b>details</b> Remind Esther!
 </table>
 <p>To add deadlines with date and time into Task Manager, use this command: </p>
 <table id="command">
 <b>add</b> &#60deadline&#62 <b>startdate</b> &#60date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>details</b> &#60task details&#62<br><br>
-<b>add</b>Project Deadline<b>startdate</b> 5/5/16 <b>starttime</b> 0530 <b>endtime</b> 2359 <b>details</b>Meet with group mates soon!
+<b>add</b> Project Deadline<b>startdate</b> 5/5/16 <b>starttime</b> 0530 <b>endtime</b> 2359 <b>details</b> Meet with group mates soon!
 </table>
 <p>To add a task that will recur a set number of times, simply add in how the recurrence should be and how many times it is required:</p>
 <table id="command">
-<b>add</b> &#60deadline&#62 <b>startdate</b> &#60date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>recur</b> &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
-<b>add</b>Weekly tutorial<b>startdate</b> 14 Feb <b>starttime</b> 1000 <b>endtime</b> 1100 <b>recur</b> week 12
+<b>add</b> &#60deadline&#62 <b>startdate</b> &#60date&#62 <b>starttime</b> &#60start time&#62 <b>endtime</b> &#60end time&#62 <b>recur</b> &#60type of recurrence&#62<br><br>
+<b>add</b> Weekly tutorial <b>startdate</b> 14 Feb <b>starttime</b> 1000 <b>endtime</b> 1100 <b>recur</b> week
 </table>
 <p>To add a task without any other information, simply omit the remaining modifiers</p>
 <table id="command">
@@ -90,8 +90,8 @@ Once you press enter, all task related information will be erased.
 </table>
 <p>To change an event recurrence in the Docket:</p>
 <table id="command">
-<b>edit</b> &#60taskID&#62 <b>recur</b> &#60type of recurrence&#62 &#60number of recurrence&#62<br><br>
-<b>edit</b> 1 <b>recur</b> week 4
+<b>edit</b> &#60taskID&#62 <b>recur</b> &#60type of recurrence&#62<br><br>
+<b>edit</b> 1 <b>recur</b> week
 </table>
 ]]></entry>
 
