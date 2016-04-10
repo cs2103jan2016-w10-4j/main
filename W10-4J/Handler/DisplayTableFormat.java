@@ -18,7 +18,7 @@ public class DisplayTableFormat {
 		
 		String output = Constants.DISPLAYTABLEFORMAT_EMPTY_STRING;
 		if (previousInput.size() != 0) {
-			taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput);
+			taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput, Constants.DISPLAY_NOT_DISPLAYDONE);
 		} else{
 			taskIDForRecentTask = new ArrayList<>();
 		}

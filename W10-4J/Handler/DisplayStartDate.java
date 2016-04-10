@@ -46,7 +46,7 @@ public class DisplayStartDate {
 					+ Constants.DISPLAY_HEADER_CLOSETAG;
 		} else {
 			if (previousInput.size() != 0) {
-				taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput);
+				taskIDForRecentTask = CommonFunctionsInDisplay.checkRecentUpdatedTask(sortedList, previousInput, Constants.DISPLAY_NOT_DISPLAYDONE);
 			} else {
 				taskIDForRecentTask = new ArrayList<>();
 			}
@@ -309,11 +309,13 @@ public class DisplayStartDate {
 	}
 	
 	private static Task setStartingTaskDetails(Task task) {
+		int taskID = task.getTaskID();
 		String taskName = task.getName();
         String taskStartDate = task.getStartDate();
         String taskStartTime = task.getStartTime();
         
 		Task newTask = new Task(taskName);
+		newTask.setTaskID(taskID);
 		newTask.setStartDate(taskStartDate);
 		newTask.setEndTime(Constants.DISPLAYSTARTDATE_DASH);
 		newTask.setDetails(task.getDetails());
@@ -354,9 +356,11 @@ public class DisplayStartDate {
 	}
 
 	private static Task setMiddleTaskDetails(Task task, String dateValue) {
+		int taskID = task.getTaskID();
 		String taskName = task.getName();
 		
 		Task newTask = new Task(taskName);
+		newTask.setTaskID(taskID);
         newTask.setStartDate(dateValue);
         newTask.setStartTime(Constants.DISPLAYSTARTDATE_DASH);
         newTask.setEndTime(Constants.DISPLAYSTARTDATE_DASH);
@@ -373,11 +377,13 @@ public class DisplayStartDate {
 	}
 	
 	private static Task setEndingTaskDetails(Task task) {
+		int taskID = task.getTaskID();
 		String taskName = task.getName();
         String taskEndDate = task.getEndDate();
         String taskEndTime = task.getEndTime();
  
         Task newTask = new Task(taskName);
+		newTask.setTaskID(taskID);
         newTask.setStartDate(taskEndDate);
         newTask.setEndDate(taskEndDate);
         newTask.setStartTime(Constants.DISPLAYSTARTDATE_DASH);
