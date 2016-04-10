@@ -40,12 +40,6 @@ public class DisplayStartDate {
 			ArrayList<PreviousInput> previousInput) {
 		assert sortedList != null && previousInput != null : Constants.ASSERT_DISPLAY_ARRAYLISTS;
 		
-		for(int i = 0; i < sortedList.size(); i++) {
-			Task task = sortedList.get(i);
-			if(task.getEndDate() != null) {
-				System.out.println(task.getName() + task.getEndDate());
-			}
-		}
 		initializeVariables();
 		if (sortedList.size() == 0) {
 			output = Constants.DISPLAY_HEADER_OPENTAG + Constants.DISPLAYSTARTDATE_NO_TASK_ON_HAND 
@@ -208,7 +202,8 @@ public class DisplayStartDate {
 	
 	private static void addIntoMultiDayTaskList(ArrayList<Task> taskList) {
 		for(int i = 0; i < taskList.size(); i++) {
-			multiDayTaskList.add(taskList.get(i));
+			Task multiDayTask = taskList.get(i);
+			multiDayTaskList.add(multiDayTask);
 		}
 	}
 	
