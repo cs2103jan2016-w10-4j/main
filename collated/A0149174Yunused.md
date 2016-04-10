@@ -18,59 +18,71 @@
 		return forOldTask;
 	}
 
-	public String execute_OLD(String[] task, int taskID) {
-		assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
-		Task eachTask = new Task(task[0].trim());
+	public String execute_OLD(String[] allInputInfoRelatedToTask, int taskID) {
+		assert allInputInfoRelatedToTask[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
 		assert taskID > 0 : Constants.ASSERT_TASKID_EXISTENCE;
-		eachTask.setTaskID(taskID);
-		String action;
-		for (int i = 1; i < task.length; i += 2) {
-			action = task[i].trim();
-			assert action != null : Constants.ASSERT_ACTION_EXISTENCE;
-			switch (action) {
-			case Constants.MESSAGE_ADD_ACTION_STARTDATE:
-				eachTask.setStartDate(task[i + 1].trim());
-				break;
-			case Constants.MESSAGE_ADD_ACTION_ENDDATE:
-				eachTask.setEndDate(task[i + 1].trim());
-				break;
-			case Constants.MESSAGE_ADD_ACTION_START:
-				eachTask.setStartTime(task[i + 1].trim());
-				break;
-			case Constants.MESSAGE_ADD_ACTION_END:
-				eachTask.setEndTime(task[i + 1].trim());
-				break;
-			case Constants.MESSAGE_ADD_ACTION_DETAILS:
-				eachTask.setDetails(task[i + 1].trim());
-				break;
-			case Constants.MESSAGE_ADD_ACTION_REPEAT:
-				switch (task[i + 1].trim()) {
-				case Constants.MESSAGE_REPEAT_DAY:
-					eachTask.setDay(true);
-					break;
-				case Constants.MESSAGE_REPEAT_WEEK:
-					eachTask.setWeek(true);
-					break;
-				case Constants.MESSAGE_REPEAT_MONTH:
-					eachTask.setMonth(true);
-					break;
-				case Constants.MESSAGE_REPEAT_YEAR:
-					eachTask.setYear(true);
-					break;
-				default:
-					assert false;
-				}
-				break;
-			default:
-				assert false;
-			}
+		
+		Task newTask = new Task(allInputInfoRelatedToTask[0].trim()); //creates the new task to be added by the name of the task.
+		newTask.setTaskID(taskID);
+		for (int i = 1; i < allInputInfoRelatedToTask.length; i += 2) {
+			String taskInfo = allInputInfoRelatedToTask[i].trim();
+			assert taskInfo != null : Constants.ASSERT_ACTION_EXISTENCE;
+			setTaskInfoToNewTask(allInputInfoRelatedToTask, newTask, i, taskInfo);
 		}
+		return checkWhetherDateAndTimeValidAndReturnMessage(newTask);
+	}
+	
+	private String checkWhetherDateAndTimeValidAndReturnMessage(Task eachTask) {
 		if (isDateAndTimeValid(eachTask)) {
 			forEachTask = eachTask;
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
 			commandState = HandlerMemory.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_TIME_FAIL;
+		}
+	}
+
+	private void setTaskInfoToNewTask(String[] task, Task newTask, int i, String taskInfo) {
+		switch (taskInfo) {
+		case Constants.MESSAGE_ADD_ACTION_STARTDATE:
+			newTask.setStartDate(task[i + 1].trim());
+			break;
+		case Constants.MESSAGE_ADD_ACTION_ENDDATE:
+			newTask.setEndDate(task[i + 1].trim());
+			break;
+		case Constants.MESSAGE_ADD_ACTION_START:
+			newTask.setStartTime(task[i + 1].trim());
+			break;
+		case Constants.MESSAGE_ADD_ACTION_END:
+			newTask.setEndTime(task[i + 1].trim());
+			break;
+		case Constants.MESSAGE_ADD_ACTION_DETAILS:
+			newTask.setDetails(task[i + 1].trim());
+			break;
+		case Constants.MESSAGE_ADD_ACTION_REPEAT:
+			setDurationForRecurringTasks(task, newTask, i);
+			break;
+		default:
+			assert false;
+		}
+	}
+
+	private void setDurationForRecurringTasks(String[] task, Task newTask, int i) {
+		switch (task[i + 1].trim()) {
+		case Constants.MESSAGE_REPEAT_DAY:
+			newTask.setDay(true);
+			break;
+		case Constants.MESSAGE_REPEAT_WEEK:
+			newTask.setWeek(true);
+			break;
+		case Constants.MESSAGE_REPEAT_MONTH:
+			newTask.setMonth(true);
+			break;
+		case Constants.MESSAGE_REPEAT_YEAR:
+			newTask.setYear(true);
+			break;
+		default:
+			assert false;
 		}
 	}
 ```
@@ -145,6 +157,7 @@
 	public Task returnOldTask() {
 		return forOldTask;
 	}
+
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
@@ -154,7 +167,8 @@
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
 			if (eachTask.isRecurring() && eachTask.getEndDate() != null) {
-				//eachTask.done(); //done() function was implemented in the previous version.
+				// eachTask.done(); //done() function was implemented in the
+				// previous version.
 				forEachTask = eachTask;
 				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 				commandState = COMMAND_STATE.RECURRINGDONE;
@@ -216,10 +230,18 @@
 ```
 ###### W10-4J\Handler\Handler.java
 ``` java
-			/*Command cmd = createCommand(command, task);
-			 * String toBeReturned=cmd.execute(task);
-			 * HandlerMemory.updateMemory(cmd,command);
-			return toBeReturned;*/
+	public String executeCommand_OLD(COMMAND_TYPE command, String[] task) {
+		try {
+			Command cmd = getCommand(command, task);
+			String toBeReturned=cmd.execute(task);
+			HandlerMemory.updateMemory(cmd,command);
+			return toBeReturned;
+		} catch (IllegalArgumentException invalidCommandFormat) {
+			return Constants.MESSAGE_INVALID_FORMAT;
+		} catch (IllegalStateException unrecognizedCommand) {
+			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
+		}
+	}
 ```
 ###### W10-4J\Handler\HandlerMemory.java
 ``` java
@@ -231,6 +253,7 @@
  *Rather than updating the memory in each execute function, the command just stores it's end state after it's executed.
  *According to which state the command ended in (forexample in FAIL state) the updateMemory function decides how to update the memory accordingly.
  *After V0.3 this design was decided to be changed by my teammates. Now the class ArrayListStorage handles the job of HandlerMemory.
+ *Now I changed my execute functions as execute_OLD and change all the ArrayList names as _OLD as well so that it wont collide with the new version.
  */
 package Handler;
 
@@ -244,7 +267,7 @@ import main.Task;
 public class HandlerMemory {
 
 	public enum COMMAND_STATE {
-		FAILED,UNDOADD,UNDODELETE,UNDOUNDO,UNDODONE,UNDOEDIT,DELETEDONETASK,RECURRINGDONE,NONRECURRINGDONE,DELETEUNDONETASK
+		FAILED,UNDOADD,UNDODELETE,UNDOUNDO,UNDODONE,UNDOEDIT,DELETEDONETASK,DELETEUNDONETASK,RECURRINGDONE,NONRECURRINGDONE
 	};
 	
 	private static ArrayList<Task> notDoneYetStorage_OLD;
@@ -447,7 +470,7 @@ public class HandlerMemory {
 			commandState = COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_RECUR_FAIL;
 		} else {
-			Task oldTask = cloneTask(eachTask,taskID);
+//			Task oldTask = cloneTask(eachTask,taskID);
 			switch (task[1]) {
 			case "day":
 				eachTask.setDay(true);
@@ -463,7 +486,7 @@ public class HandlerMemory {
 				break;
 			}
 			forEachTask = eachTask;
-			forOldTask = oldTask;
+//			forOldTask = oldTask;
 			return String.format(Constants.MESSAGE_RECUR_FAIL, eachTask.getName());
 		}
 	}

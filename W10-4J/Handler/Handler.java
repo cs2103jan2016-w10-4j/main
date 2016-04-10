@@ -37,15 +37,22 @@ public class Handler {
 		helpTask = new Help();
 	}
 	//@@author 
+	//@@author A0149174Y-unused
+	public String executeCommand_OLD(COMMAND_TYPE command, String[] task) {
+		try {
+			Command cmd = getCommand(command, task);
+			String toBeReturned=cmd.execute(task);
+			HandlerMemory.updateMemory(cmd,command);
+			return toBeReturned;
+		} catch (IllegalArgumentException invalidCommandFormat) {
+			return Constants.MESSAGE_INVALID_FORMAT;
+		} catch (IllegalStateException unrecognizedCommand) {
+			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
+		}
+	}
 	//@@author A0149174Y
 	public String executeCommand(COMMAND_TYPE command, String[] task) {
 		try {
-			////@@author A0149174Y-unused
-			/*Command cmd = createCommand(command, task);
-			 * String toBeReturned=cmd.execute(task);
-			 * HandlerMemory.updateMemory(cmd,command);
-			return toBeReturned;*/
-			//@@author A0149174Y
 			Command cmd = getCommand(command, task);
 			return cmd.execute(task);
 		} catch (IllegalArgumentException invalidCommandFormat) {

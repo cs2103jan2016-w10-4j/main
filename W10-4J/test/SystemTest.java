@@ -5,82 +5,164 @@ import static org.junit.Assert.*;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
 
 import org.junit.Test;
 import Parser.Parser;
 import UserInterface.UserInterface;
-
-public class SystemTest {	@Test
+//@@author A0149174Y
+public class SystemTest {	
+	
+	@Test
 	public void testRobot(){
-	String[] output = UserInterface.initComponents("display");
+		String []output;
+		String userInput;
+		
+		userInput="setdir C:\\";
+		output=UserInterface.initComponents(userInput);
+		
+		userInput = "";
+		output=UserInterface.initComponents(userInput);
+	
 	System.out.println(output[0]);
 	System.out.println(output[1]);
+	
 }
 
 @Test
 public void test1() {
-	String command;
+	String userInput;
+	String []output;
 	
-	command="add V0.5";
-	Parser parser = new Parser();
-	assertEquals("1V0.5 has been added.", parser.parse(command));
+	userInput="setdir C:\\";
+	output=UserInterface.initComponents(userInput);
+	assertEquals(output[0],"<html>\n  <head>\n    <style type=\"text/css\">\n      <!--\n        #underline { border-bottom-color: black; border-bottom-style: solid; border-bottom-width: 3px }\n      -->\n    </style>\n    \n  </head>\n  <body>\n    <h1>\n      <b>No tasks on hand!</b>\n    </h1>\n  </body>\n</html>\n");
+	assertEquals(output[1],"> setdir C:\\\n> Set directory successful.\n");
 	
-	command="ls";
-	assertEquals(UserInterface.initComponents(command),new String[]{"<html><head><style type="text/css"><!--#underline{border-bottom-color:black;border-bottom-style:solid;border-bottom-width:3px}--></style></head><body><h1><b>V0.5</b></h1></body></html>"}{"display"});
-}
-	/*
-	@Test
-	public void testParse() {
-		Parser p = new Parser();
-		String command;
-		
-		command = "add";
-		assertEquals("Invalid command format",p.parse(command));
-		
-		command = "add a";
-		assertEquals("1a has been added.",p.parse(command));
-		
-		command = "ls";
-		assertEquals("0<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\"> Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr><tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font color=#000000>1)</font></td><td><font color=#000000>a</font></td><td></td><td></td><td></td><td></td>",p.parse(command));
-		
-		command = "rm 1";
-		assertEquals("1a has been deleted.",p.parse(command));
-		
-		command = "ls";
-		assertEquals("0<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\"> Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr>",p.parse(command));
-		
-		command = "undo";
-		assertEquals("1Undo successful.",p.parse(command));
-		
-		command = "ls";
-		assertEquals("0<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\"> Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr><tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font color=#000000>1)</font></td><td><font color=#000000>a</font></td><td></td><td></td><td></td><td></td>",p.parse(command));
-		
-		command = "add b date 30/3 start 1930";
-		assertEquals("1b has been added.",p.parse(command));
-		
-		command = "ls";
-		assertEquals("0<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\"> Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr><tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font color=#000000>1)</font></td><td><font color=#000000>a</font></td><td></td><td></td><td></td><td></td><tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font color=#000000>2)</font></td><td><font color=#000000>b</font></td><td><font color=#000000>2016/03/30</font></td><td><font color=#000000>19:30</font></td><td></td><td></td>",p.parse(command));
-		
-		command = "rm 2";
-		assertEquals("1b has been deleted.",p.parse(command));
-		
-		command = "ls";
-		assertEquals("0<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\"> Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr><tr style=\"border-bottom:1px solid #E5E4E2\"><td align=\"right\"><font color=#000000>1)</font></td><td><font color=#000000>a</font></td><td></td><td></td><td></td><td></td>",p.parse(command));
-		
-		command = "rm 1";
-		assertEquals("1a has been deleted.",p.parse(command));
-		
-		command = "ls";
-		assertEquals("0<table width=\"100%\" style=\"margin:0px;\"><tr style=\"border-bottom:1px solid #B6B6B4\"><th style=\"width:3%;\"></th><th style=\"width:20%;\" align=\"left\"> Event </th><th style=\"width:15%;\" align=\"left\"> Date </th><th style=\"width:12%;\" align=\"left\"> Start Time </th><th style=\"width:12%;\" align=\"left\"> End Time </th><th style=\"width:25%;\" align=\"left\"> Details </th><th style=\"width:13%;\" align=\"left\"> Repeat </th></tr>",p.parse(command));
-		
-		command = "setdir";
-		assertEquals("Invalid command format",p.parse(command));
-		
-		command = "retrieve";
-		assertEquals("Invalid command format",p.parse(command));
-		
-		command = "";
-		assertEquals("Invalid command format",p.parse(command));
-	}
-	*/
+	userInput = "";
+	output=UserInterface.initComponents(userInput);
+	assertEquals(output[0],"<html>\n  <head>\n    <style type=\"text/css\">\n      <!--\n        #underline { border-bottom-color: black; border-bottom-style: solid; border-bottom-width: 3px }\n      -->\n    </style>\n    \n  </head>\n  <body>\n    <center>\n      <b>Welcome to Docket! </b>\n    </center>\n    <br>\n    \n\n    <center>\n      To start, enter a task in the command field below.\n    </center>\n    <br>\n    \n\n    <center>\n      For help, enter <b>help</b> in the command field below.\n    </center>\n    <br>\n    \n\n    <center>\n      <b>Tips</b>\n    </center>\n    <br>\n    \n\n    <center>\n      Use Arrow Up or Arrow Down key to scroll through previous commands \n      entered\n    </center>\n  </body>\n</html>\n");
+	assertEquals(output[1],"> setdir C:\\\n> Set directory successful.\n\n> Invalid command format\n");
+	
+	userInput = "add";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput="add V0.44";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="delete 10";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="delete 1";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="add V0.4";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="add V0.5 Manual date 11.04.2016 endtime 23:59";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="add V0.5 Demo date 13.04.2016 starttime 10";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="search v";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+			//assertEquals(output[1],);
+	
+	userInput="search demo";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+			//assertEquals(output[1],);
+	
+	userInput="add overdue task date 11.04.2015";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+			//assertEquals(output[1],);
+	
+	userInput = "display overdue";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput="done 1";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput = "display done";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput = "display today";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput = "display";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput = "edit";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput="edit 2 details wear smart casual";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	userInput="undo";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="help";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="alias add a";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="a check mail repeat day";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="setdir D:\\";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput="get C:\\dirdefaultfile.txt";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+		//assertEquals(output[1],);
+	
+	userInput = "ls";
+	output=UserInterface.initComponents(userInput);
+	//assertEquals(output[0],);
+	//assertEquals(output[1],);
+	
+	} 
 }
