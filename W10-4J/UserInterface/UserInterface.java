@@ -95,7 +95,7 @@ public class UserInterface {
 		Timer timer = setTodayTaskMessage(p);
 
 		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+		
 		jScrollPane1.setViewportView(outputDisplay);
 		jScrollPane2.setViewportView(cmdDisplay);
 
