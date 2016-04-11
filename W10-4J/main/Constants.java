@@ -67,7 +67,7 @@ public class Constants {
 	public static final String MESSAGE_INVALID_DATE = ("2Invalid date format");
 	public static final String MESSAGE_INVALID_TIME = ("2Invalid time format");
 
-	// @@author A0135779M
+	//@@author A0135779M
 	public static final String MESSAGE_ADD_PASS = ("1%1$s has been added.");
 	public static final String MESSAGE_DELETE_PASS = ("1%1$s has been deleted.");
 	public static final String MESSAGE_DELETE_FAIL = ("2Task cannot be deleted.");
