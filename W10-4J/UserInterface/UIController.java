@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,12 +31,12 @@ import main.Constants;
 
 public class UIController {
 	private static final int SCROLL_AMOUNT = 200;
-
 	private static ArrayList<String> commands = new ArrayList<String>();
-
 	private static int commandIndex = commands.size();
 	private static int scroll = 0;
 	private static int minCommandIndex = 0;
+	
+	private final static Logger LOGGER = Logger.getLogger(UIController.class.getName());
 
 	/*
 	 * This method implements the listeners which listens to the actions of the
@@ -146,6 +148,7 @@ public class UIController {
 		commands.add(command);
 		commandIndex = commands.size();
 		printInCommandDisplay(cmdDisplay, command);
+		LOGGER.log(Level.INFO, "Command entered: " + command);
 		String output = p.parse(command);
 		assert output != null || output == Constants.EMPTY_STRING;
 		determiningDisplayToWhichDisplayOutput(cmdDisplay, displayOutput, p, output);
@@ -153,12 +156,12 @@ public class UIController {
 	}
 
 	private void setCaretPositionForHighlightedTasks(JTextPane displayOutput) {
-		int indexOfHighlight = displayOutput.getText().indexOf("FFFF00");
+		int indexOfHighlight = displayOutput.getText().indexOf(Constants.HIGHLIGHT_HEX);
 		int caretPositionToBeSet = 0;
 		int indexOfHighlightedPoint;
 		if (indexOfHighlight > 0){
-			indexOfHighlightedPoint = displayOutput.getText().indexOf("font color", indexOfHighlight) + 21;
-			int endOfIndexOfHighlightedPoint = displayOutput.getText().indexOf("<", indexOfHighlightedPoint);
+			indexOfHighlightedPoint = displayOutput.getText().indexOf(Constants.FONT_COLOR_STRING, indexOfHighlight) + 21;
+			int endOfIndexOfHighlightedPoint = displayOutput.getText().indexOf(Constants.ANGLE_BRACKET_LESS, indexOfHighlightedPoint);
 			if (endOfIndexOfHighlightedPoint > 0){
 				String highlightedPoint = displayOutput.getText().substring(indexOfHighlightedPoint, endOfIndexOfHighlightedPoint);
 				int lengthOfDisplayOutputDocument = displayOutput.getDocument().getLength();
@@ -170,6 +173,7 @@ public class UIController {
 				}
 			}
 		}
+		LOGGER.log(Level.INFO, "Caret position: " + caretPositionToBeSet);
 		displayOutput.setCaretPosition(caretPositionToBeSet);
 	}
 
@@ -180,6 +184,7 @@ public class UIController {
 	private static void stopTimer(Timer timer) {
 		if (timer.isRunning()) {
 			timer.stop();
+			LOGGER.log(Level.INFO, "Timer stopped");
 		}
 	}
 
@@ -191,13 +196,17 @@ public class UIController {
 			String output) {
 		if (isDisplay(output)) {
 			printInDisplayOutput(displayOutput, output.substring(1));
+			LOGGER.log(Level.INFO, "Set text to display output");
 		} else if (isCmdDisplay(output)) {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
 			printInDisplayOutput(displayOutput, p.parse(Constants.DISPLAY_COMMAND).substring(1));
+			LOGGER.log(Level.INFO, "Set text to display output and command display");
 		} else if (isInvalidMessages(output)) {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
+			LOGGER.log(Level.INFO, "Set text to command display");
 		} else {
 			printInCommandDisplay(cmdDisplay, output.substring(1));
+			LOGGER.log(Level.WARNING, "Unable to determine where to set text. Include flag");
 		}
 	}
 

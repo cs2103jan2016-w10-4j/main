@@ -13,6 +13,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -72,6 +74,8 @@ public class UserInterface {
 	private static Color defaultButtonColor = colors.rgbColor(colors.getButton(Constants.SET_5));
 	private static Color defaultTopBgColor = colors.rgbColor(colors.getTopBg(Constants.SET_5));
 	private static Color defaultBottomBgColor = colors.rgbColor(colors.getBottomBg(Constants.SET_5));
+	
+	private final static Logger LOGGER = Logger.getLogger(UIController.class.getName());
 
 	public static void main(String[] args) {
 		initComponents(null);
@@ -105,7 +109,8 @@ public class UserInterface {
 		jScrollPane1.setViewportView(outputDisplay);
 		jScrollPane2.setViewportView(cmdDisplay);
 		setLayoutForUI();
-
+		LOGGER.log(Level.INFO, "UI components initialized successfully");
+		
 		uiControl.keyboardActions(outputDisplay, cmdEntry, jScrollPane1);
 
 		uiControl.commandAction(timer, command, overdueButton, allButton, doneButton, helpButton, settingsButton,

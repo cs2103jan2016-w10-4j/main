@@ -10,6 +10,8 @@ package UserInterface;
 import java.awt.Button;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -59,6 +61,8 @@ public class SettingsUI {
 	private static String fontSize = properties.get(ReadWriteXml.FONT_SIZE_INDEX);
 
 	private static ColorsForSettings colors = new ColorsForSettings();
+	
+	private final static Logger LOGGER = Logger.getLogger(UIController.class.getName());
 
 	public SettingsUI(JTextPane outputDisplay, JTextArea cmdDisplay, JLabel commandText, JTextField cmdEntry,
 			JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings) {
@@ -80,6 +84,7 @@ public class SettingsUI {
 		radioButtonSelectionAndDisplayExample(button);
 
 		setLayoutForSettingsUI();
+		LOGGER.log(Level.INFO, "Settings UI components initialized successfully");
 
 		SettingsUIController controller = new SettingsUIController();
 		controller.action(f, defaultRadioButton, optionOneRadioButton, optionTwoRadioButton, optionThreeRadioButton,

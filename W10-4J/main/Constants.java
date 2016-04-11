@@ -379,4 +379,7 @@ public class Constants {
 	public static final String HELP_FILE_PATH = "/resources/help.xml";
 	public static final String WELCOME_STRING = "welcome";
 	public static final String FUNCTION = "function";
+	public static final String ANGLE_BRACKET_LESS = "<";
+	public static final String FONT_COLOR_STRING = "font color";
+	public static final String HIGHLIGHT_HEX = "FFFF00";
 }
