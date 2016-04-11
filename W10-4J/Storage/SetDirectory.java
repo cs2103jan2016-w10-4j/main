@@ -1,6 +1,4 @@
-/*
- * @@author A0126129J
- */
+// @@author A0126129J
 package Storage;
 
 import java.io.BufferedReader;
@@ -39,7 +37,7 @@ public class SetDirectory {
 	/*
 	 * Set the directory based on the absolute file path given by user
 	 * This function will check if its a directory, if the absolute file path is a 
-	 * directory but there is no such file, it will create the text file for user
+	 * directory but there is no such file, it will create a text file for user
 	 */
 	public ArrayList<ArrayList<Task>> setDirectory(String filePathName) {
 		ArrayList<ArrayList<Task>> taskList = new ArrayList<ArrayList<Task>>();

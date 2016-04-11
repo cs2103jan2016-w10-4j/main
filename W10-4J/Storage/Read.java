@@ -1,6 +1,4 @@
-/*
- * @@author A0126129J
- */
+// @@author A0126129J
 package Storage;
 
 import java.io.BufferedReader;
