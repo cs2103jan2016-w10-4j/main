@@ -1,10 +1,14 @@
 //@@author A0135779M
 package Handler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import main.*;
 import main.Constants.COMMAND_TYPE;
 
 public class Handler {
+	private final Logger LOGGER = Logger.getLogger(Handler.class.getName());
 	private ArraylistStorage arraylistStorage;
 	private Add addTask;
 	private Delete deleteTask;
@@ -45,8 +49,10 @@ public class Handler {
 			HandlerMemory.updateMemory(cmd,command);
 			return toBeReturned;
 		} catch (IllegalArgumentException invalidCommandFormat) {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_INVALID_FORMAT);
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_UNRECOGNISED_COMMAND);
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 	}
@@ -56,15 +62,16 @@ public class Handler {
 			Command cmd = getCommand(command, task);
 			return cmd.execute(task);
 		} catch (IllegalArgumentException invalidCommandFormat) {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_INVALID_FORMAT);
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_UNRECOGNISED_COMMAND);
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 	}
 
 	private Command getCommand(COMMAND_TYPE command, String[] task)
 			throws IllegalArgumentException, IllegalStateException {
-
 		switch (command) {
 		case ADD:
 			return addTask;

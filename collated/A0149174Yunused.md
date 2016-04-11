@@ -2,12 +2,12 @@
 ###### W10-4J\Handler\Add.java
 ``` java
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -32,10 +32,10 @@
 		return checkWhetherDateAndTimeValidAndReturnMessage(newTask);
 	}
 	
-	private String checkWhetherDateAndTimeValidAndReturnMessage(Task eachTask) {
-		if (isDateAndTimeValid(eachTask)) {
-			forEachTask = eachTask;
-			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
+	private String checkWhetherDateAndTimeValidAndReturnMessage(Task newTask) {
+		if (isDateAndTimeValid(newTask)) {
+			forCurrentTask = newTask;
+			return String.format(Constants.MESSAGE_ADD_PASS, newTask.getName());
 		} else {
 			commandState = HandlerMemory.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_TIME_FAIL;
@@ -88,20 +88,20 @@
 ```
 ###### W10-4J\Handler\Command.java
 ``` java
-	Task returnEachTask();
-	COMMAND_STATE returnCommandState();
-	Task returnOldTask();
+	Task returnCurrentTask(); //The task the command is currently editing.
+	COMMAND_STATE returnCommandState(); //Current state of the command execute function.
+	Task returnOldTask(); //The old Task the command is editing or reaching.
 }
 ```
 ###### W10-4J\Handler\Delete.java
 ``` java
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -115,39 +115,37 @@
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
-			eachTask = handlerMemory.findByTaskID(HandlerMemory.getDoneStorage_OLD(), taskID);
-			if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
+			currentTask = handlerMemory.findByTaskID(HandlerMemory.getDoneStorage_OLD(), taskID);
+			if (currentTask == null) {
 				commandState = HandlerMemory.COMMAND_STATE.FAILED;
 				return Constants.MESSAGE_DELETE_FAIL;
 			} else {
-				forEachTask = eachTask;
+				forCurrentTask = currentTask;
 				commandState = HandlerMemory.COMMAND_STATE.DELETEDONETASK;
-
-				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
+				return String.format(Constants.MESSAGE_DELETE_PASS, currentTask.getName());
 			}
 		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
 			commandState = HandlerMemory.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
-			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-			forEachTask = eachTask;
+			assert currentTask != null : Constants.ASSERT_TASK_EXISTENCE;
+			forCurrentTask = currentTask;
 			commandState = HandlerMemory.COMMAND_STATE.DELETEUNDONETASK;
-
-			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
+			return String.format(Constants.MESSAGE_DELETE_PASS, currentTask.getName());
 		}
 	}
 ```
 ###### W10-4J\Handler\Done.java
 ``` java
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -161,37 +159,36 @@
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
 			commandState = COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
-			if (eachTask.isRecurring() && eachTask.getEndDate() != null) {
-				// eachTask.done(); //done() function was implemented in the
-				// previous version.
-				forEachTask = eachTask;
-				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
+			if (currentTask.isRecurring() && currentTask.getEndDate() != null) {
+				forCurrentTask = currentTask;
+				assert currentTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 				commandState = COMMAND_STATE.RECURRINGDONE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+				return String.format(Constants.MESSAGE_DONE_PASS, currentTask.getName());
 			} else {
-				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-				forEachTask = eachTask;
+				assert currentTask != null : Constants.ASSERT_TASK_EXISTENCE;
+				assert currentTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
+				forCurrentTask = currentTask;
 				commandState = COMMAND_STATE.NONRECURRINGDONE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+				return String.format(Constants.MESSAGE_DONE_PASS, currentTask.getName());
 			}
 		}
 	}
 ```
 ###### W10-4J\Handler\Edit.java
 ``` java
+	private final Logger LOGGER = Logger.getLogger(Edit.class.getName());
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -205,26 +202,32 @@
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
 			commandState = COMMAND_STATE.FAILED;
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_EDIT_FAIL);
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
 			commandState = COMMAND_STATE.FAILED;
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_EDIT_FAIL);
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
-			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-			Task oldTask = cloneTask(eachTask);
-			fieldEditor(eachTask, task);
-
-			if (isDateAndTimeValid(eachTask)) {
-				forEachTask = eachTask;
-				forOldTask = oldTask;
-				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
-			} else {
-				commandState = COMMAND_STATE.FAILED;
-				return Constants.MESSAGE_TIME_FAIL;
-			}
+			assert currentTask != null : Constants.ASSERT_TASK_EXISTENCE;
+			Task oldTask = cloneTask(currentTask);
+			fieldEditor(currentTask, task); //edits the task.
+			LOGGER.log(Level.INFO, Constants.MESSAGE_EDIT_PASS);
+			return checkWhetherDateAndTimeValidAndReturnMessage(currentTask, oldTask);
+		}
+	}
+	
+	private String checkWhetherDateAndTimeValidAndReturnMessage(Task eachTask, Task oldTask) {
+		if (isDateAndTimeValid(eachTask)) {
+			forCurrentTask = eachTask;
+			forOldTask = oldTask;
+			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+		} else {
+			commandState = COMMAND_STATE.FAILED;
+			return Constants.MESSAGE_TIME_FAIL;
 		}
 	}
 ```
@@ -237,8 +240,10 @@
 			HandlerMemory.updateMemory(cmd,command);
 			return toBeReturned;
 		} catch (IllegalArgumentException invalidCommandFormat) {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_INVALID_FORMAT);
 			return Constants.MESSAGE_INVALID_FORMAT;
 		} catch (IllegalStateException unrecognizedCommand) {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_UNRECOGNISED_COMMAND);
 			return Constants.MESSAGE_UNRECOGNISED_COMMAND;
 		}
 	}
@@ -249,15 +254,18 @@
  * @author A0149174Y
  *The idea to handle all the sequential storage in the handler through a separate class called HandlerMemory was proposed by me before V0.3.
  *I implemented all the unused codes present under the name for A0149174Y-unused until V0.3.
- *Basically it stores all the arraylists and updates all of them after each command operation. 
- *Rather than updating the memory in each execute function, the command just stores it's end state after it's executed.
- *According to which state the command ended in (forexample in FAIL state) the updateMemory function decides how to update the memory accordingly.
- *After V0.3 this design was decided to be changed by my teammates. Now the class ArrayListStorage handles the job of HandlerMemory.
- *Now I changed my execute functions as execute_OLD and change all the ArrayList names as _OLD as well so that it wont collide with the new version.
+ *Basically it stores all the ArrayLists and updates all of them after each command operation. 
+ *Rather than updating the memory in each execute function, the command just remembers it's end state after it's executed.
+ *It also remembers the current task and the old task it is asked by the user to work on as a static object. 
+ *According to which state the command ended in (for example in FAIL state) the updateMemory function decides how to update the memory accordingly by using the currentTask and oldTask.
+ *After V0.3 this design was decided to be changed by my team mates. Now the class ArrayListStorage handles the job of HandlerMemory.
+ *Now I changed my execute functions as execute_OLD and changed all the ArrayList names as _OLD as well so that it wont collide with the new version.
  */
 package Handler;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Storage.Storage;
 import main.Constants;
@@ -269,7 +277,7 @@ public class HandlerMemory {
 	public enum COMMAND_STATE {
 		FAILED,UNDOADD,UNDODELETE,UNDOUNDO,UNDODONE,UNDOEDIT,DELETEDONETASK,DELETEUNDONETASK,RECURRINGDONE,NONRECURRINGDONE
 	};
-	
+	private final static Logger LOGGER = Logger.getLogger(HandlerMemory.class.getName());
 	private static ArrayList<Task> notDoneYetStorage_OLD;
 	private static ArrayList<Task> doneStorage_OLD;
 	private static ArrayList<PreviousInput> previousInputStorage_OLD;
@@ -343,47 +351,47 @@ public class HandlerMemory {
 		case UNDOUNDO:
 			updateMemoryUndoUndo(cmd);
 		default:
-			System.out.println(cmd.returnCommandState());
+			LOGGER.log(Level.INFO, Constants.MESSAGE_ACTION_UNDO+cmd.returnCommandState());
 			break;
 		}
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
 	}
 
 	private static void updateMemoryUndoUndo(Command cmd) {
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
-		doneStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
+		doneStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoDone(Command cmd) {
-		doneStorage_OLD.remove(cmd.returnEachTask());
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnEachTask()));
+		doneStorage_OLD.remove(cmd.returnCurrentTask());
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoEdit(Command cmd) {
 		// to restore the previous state, must edit again
 		Task eachTask = previousInputStorage_OLD.get(0).getEditedTask();
 		notDoneYetStorage_OLD.remove(eachTask);
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnEachTask()));
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoDelete(Command cmd) {
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoAdd(Command cmd) {
 		// to restore to previous state, must unadd the task
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
 		// remember previous state
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnCurrentTask()));
 	}
 
 	private static void recurrenceUpdateMemory(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput("edit", cmd.returnOldTask(), cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnCurrentTask()));
 	}
 
 	private static void setdirUpdateMemory() {
@@ -402,14 +410,14 @@ public class HandlerMemory {
 
 	private static void updateMemoryForNonReccurringTask(Command cmd) {
 		assert cmd.returnCommandState() == COMMAND_STATE.NONRECURRINGDONE;
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
-		doneStorage_OLD.add(cmd.returnEachTask());
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
+		doneStorage_OLD.add(cmd.returnCurrentTask());
 		updateMemoryForReccurringTask(cmd);
 	}
 
 	private static void updateMemoryForReccurringTask(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnCurrentTask()));
 	}
 
 	private static void deleteUpdateMemory(Command cmd) {
@@ -422,37 +430,38 @@ public class HandlerMemory {
 
 	private static void updateMemoryForDeletedNotYetDoneTask(Command cmd) {
 		assert cmd.returnCommandState() == COMMAND_STATE.DELETEUNDONETASK;
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryForDeletedDoneTask(Command cmd) {
-		doneStorage_OLD.remove(cmd.returnEachTask());
+		doneStorage_OLD.remove(cmd.returnCurrentTask());
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnCurrentTask()));
 	}
 
 	private static void editUpdateMemory(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnCurrentTask()));
 	}
 
 	private static void addUpdateMemory(Command cmd) {
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnCurrentTask()));
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
 	}
 ```
 ###### W10-4J\Handler\Recurrence.java
 ``` java
+	private final Logger LOGGER = Logger.getLogger(Recurrence.class.getName());
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -465,41 +474,66 @@ public class HandlerMemory {
 
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
 			commandState = COMMAND_STATE.FAILED;
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_RECUR_FAIL);
 			return Constants.MESSAGE_RECUR_FAIL;
 		} else {
-//			Task oldTask = cloneTask(eachTask,taskID);
-			switch (task[1]) {
-			case "day":
-				eachTask.setDay(true);
-				break;
-			case "week":
-				eachTask.setWeek(true);
-				break;
-			case "month":
-				eachTask.setMonth(true);
-				break;
-			case "year":
-				eachTask.setYear(true);
-				break;
-			}
-			forEachTask = eachTask;
-//			forOldTask = oldTask;
-			return String.format(Constants.MESSAGE_RECUR_FAIL, eachTask.getName());
+			Task oldTask = cloneTask(currentTask,taskID); //oldTask will be stored as PreviousInput later.
+			setRecurringDurationForCurrentTask(task, currentTask);
+			forCurrentTask = currentTask;
+			forOldTask = oldTask;
+			LOGGER.log(Level.INFO, Constants.MESSAGE_RECUR_PASS);
+			return String.format(Constants.MESSAGE_RECUR_PASS, currentTask.getName());
 		}
+	}
+
+	private void setRecurringDurationForCurrentTask(String[] task, Task currentTask) {
+		switch (task[1]) {
+		case "day":
+			currentTask.setDay(true);
+			break;
+		case "week":
+			currentTask.setWeek(true);
+			break;
+		case "month":
+			currentTask.setMonth(true);
+			break;
+		case "year":
+			currentTask.setYear(true);
+			break;
+		}
+	}
+```
+###### W10-4J\Handler\Retrieve.java
+``` java
+	private COMMAND_STATE commandState;
+	private Task forCurrentTask;
+	private Task forOldTask;
+	private HandlerMemory handlerMemory;
+
+	public Task returnCurrentTask() {
+		return forCurrentTask;
+	}
+
+	public COMMAND_STATE returnCommandState() {
+		return commandState;
+	}
+
+	public Task returnOldTask() {
+		return forOldTask;
 	}
 ```
 ###### W10-4J\Handler\Search.java
 ``` java
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -510,34 +544,36 @@ public class HandlerMemory {
 		return forOldTask;
 	}
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
-		ArrayList<Task> searchNotDoneYetStorage_OLD = new ArrayList<Task>();
+		ArrayList<Task> searchNotDoneYetStorage = new ArrayList<Task>();
 		if (task.length > 1) {
 			for (Task eachTask : HandlerMemory.getNotDoneYetStorage_OLD()) {
 				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-				//inclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support thism function.
+				//inclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support this method.
 			}
 		} else {
 			for (Task eachTask : HandlerMemory.getNotDoneYetStorage_OLD()) {
 				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-				//exclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support thism function.
+				//exclusiveSearch(eachTask, task, searchNotDoneYetStorage_OLD);//new version does not support this method.
 			}
 		}
-		if (searchNotDoneYetStorage_OLD.size() != 0) {
-			return DisplayFormat.displayFormat(searchNotDoneYetStorage_OLD);
+		if (searchNotDoneYetStorage.size() != 0) {
+			return DisplayFormat.displayFormat(searchNotDoneYetStorage);
 		}
+		else {
 		commandState = COMMAND_STATE.FAILED;
 		return Constants.MESSAGE_SEARCH_FAIL;
+		}
 	}
 ```
 ###### W10-4J\Handler\Undo.java
 ``` java
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -557,30 +593,32 @@ public class HandlerMemory {
 		Task previousTask = HandlerMemory.getPreviousInputStorage_OLD().get(0).getTask();
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
 		assert previousTask != null : Constants.ASSERT_TASK_EXISTENCE;
-		Task eachTask = null;
+		undoTheAction(actionToBeUndone, previousTask);
+		return Constants.MESSAGE_UNDO_PASS;
+	}
+	
+	private void undoTheAction(String actionToBeUndone, Task previousTask) {
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
 			commandState = COMMAND_STATE.UNDOADD;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
 			commandState = COMMAND_STATE.UNDODELETE;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
 			commandState = COMMAND_STATE.UNDOEDIT;
-			forEachTask = previousTask;
-			forOldTask = eachTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
 			commandState = COMMAND_STATE.UNDODONE;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
 			commandState = COMMAND_STATE.UNDOUNDO;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		}
-		return Constants.MESSAGE_UNDO_PASS;
 	}
 ```

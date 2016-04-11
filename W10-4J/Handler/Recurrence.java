@@ -2,6 +2,9 @@
 
 package Handler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 import main.Task;
@@ -10,13 +13,14 @@ public class Recurrence implements Command {
 	
 	///////UNUSED////////
 	//@@author A0149174Y-unused
+	private final Logger LOGGER = Logger.getLogger(Recurrence.class.getName());
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -29,32 +33,34 @@ public class Recurrence implements Command {
 
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
 			commandState = COMMAND_STATE.FAILED;
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_RECUR_FAIL);
 			return Constants.MESSAGE_RECUR_FAIL;
 		} else {
-			Task oldTask = cloneTask(eachTask,taskID); //oldTask will be stored as PreviousInput later.
-			setRecurringDurationForEachTask(task, eachTask);
-			forEachTask = eachTask;
+			Task oldTask = cloneTask(currentTask,taskID); //oldTask will be stored as PreviousInput later.
+			setRecurringDurationForCurrentTask(task, currentTask);
+			forCurrentTask = currentTask;
 			forOldTask = oldTask;
-			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
+			LOGGER.log(Level.INFO, Constants.MESSAGE_RECUR_PASS);
+			return String.format(Constants.MESSAGE_RECUR_PASS, currentTask.getName());
 		}
 	}
 
-	private void setRecurringDurationForEachTask(String[] task, Task eachTask) {
+	private void setRecurringDurationForCurrentTask(String[] task, Task currentTask) {
 		switch (task[1]) {
 		case "day":
-			eachTask.setDay(true);
+			currentTask.setDay(true);
 			break;
 		case "week":
-			eachTask.setWeek(true);
+			currentTask.setWeek(true);
 			break;
 		case "month":
-			eachTask.setMonth(true);
+			currentTask.setMonth(true);
 			break;
 		case "year":
-			eachTask.setYear(true);
+			currentTask.setYear(true);
 			break;
 		}
 	}
