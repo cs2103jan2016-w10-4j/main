@@ -1,0 +1,21 @@
+Tasks on hand:
+1. Event: Task 1
+Start Date: 1/4/2016
+2. Event: Task 2
+Start Date: 2/4/2016
+End Date: 2/4/2016
+3. Event: Task 3
+Start Date: 2/4/2016
+End Date: 5/4/2016
+Start Time: 14:00
+End Time: 18:00
+4. Event: Task 4
+Start Date: 2/4/2016
+Week: true
+Tasks that are done:
+1. Event: Task 5
+Start Date: 2/4/2016
+End Date: 5/4/2016
+Start Time: 15:00
+End Time: 17:00
+Week: true
