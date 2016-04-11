@@ -57,6 +57,7 @@ public class CommonFunctionsInDisplay {
 		}
 		return taskID;
 	}
+	
 	//@@author A0126129J
 	// Determine which task is not in the previousList when comparing with currentList
 	public static ArrayList<Integer> checkRecentUpdatedTask(ArrayList<Task> currentList, ArrayList<PreviousInput> previousInput, String status) {
@@ -69,7 +70,7 @@ public class CommonFunctionsInDisplay {
 			previousList = previousInput.get(0).getPreviousDoneStorage();
 		}
 		
-		if (previousList.size() != 0) {
+		if (previousList != null && previousList.size() != 0) {
 			output = addNotFoundTaskIDToArraylist(currentList, previousList);
 		} else {
 			// When user first add a task into the empty file

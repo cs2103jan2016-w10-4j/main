@@ -329,21 +329,11 @@ public class DisplayStartDate {
 		newTask.setEndTime(Constants.DISPLAYSTARTDATE_DASH);
 		newTask.setDetails(task.getDetails());
 		newTask.setMultiDay(true);
-		
-		if (task.isRecurring()){
-			boolean isDay = task.getDay();
-			boolean isWeek = task.getWeek();
-			boolean isMonth = task.getMonth();
-			boolean isYear = task.getYear();
-			newTask.setDay(isDay);
-			newTask.setWeek(isWeek);
-			newTask.setMonth(isMonth);
-			newTask.setYear(isYear);
-		}
 
 		if (taskStartTime != null) {
 			newTask.setStartTime(taskStartTime);
 		}
+        newTask = setRecurringTaskDetails(newTask, task);
 		return newTask;
 	}
 	
@@ -386,17 +376,8 @@ public class DisplayStartDate {
         newTask.setEndTime(Constants.DISPLAYSTARTDATE_DASH);
         newTask.setDetails(task.getDetails());
         newTask.setMultiDay(true);
-		
-		if (task.isRecurring()){
-			boolean isDay = task.getDay();
-			boolean isWeek = task.getWeek();
-			boolean isMonth = task.getMonth();
-			boolean isYear = task.getYear();
-			newTask.setDay(isDay);
-			newTask.setWeek(isWeek);
-			newTask.setMonth(isMonth);
-			newTask.setYear(isYear);
-		}
+	
+        newTask = setRecurringTaskDetails(newTask, task);
 		return newTask;
 	}
 	
@@ -420,8 +401,17 @@ public class DisplayStartDate {
         newTask.setStartTime(Constants.DISPLAYSTARTDATE_DASH);
         newTask.setDetails(task.getDetails());
         newTask.setMultiDay(true);
-		
-		if (task.isRecurring()){
+		        
+        if (taskEndTime != null) {
+            newTask.setEndTime(taskEndTime);
+        }
+        
+        newTask = setRecurringTaskDetails(newTask, task);
+		return newTask;
+	}
+	
+	private static Task setRecurringTaskDetails(Task newTask, Task task) {
+		if (task.isRecurring()) {
 			boolean isDay = task.getDay();
 			boolean isWeek = task.getWeek();
 			boolean isMonth = task.getMonth();
@@ -431,10 +421,6 @@ public class DisplayStartDate {
 			newTask.setMonth(isMonth);
 			newTask.setYear(isYear);
 		}
-        
-        if (taskEndTime != null) {
-            newTask.setEndTime(taskEndTime);
-        }
 		return newTask;
 	}
 }
