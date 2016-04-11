@@ -24,6 +24,7 @@ public class Parser {
 	}
 
 	public String parse(String command) {
+		LOGGER.log(Level.INFO, "Command: " + command);
 		command = command.trim();
 		assert command != null : Constants.ASSERT_NULL_COMMAND;
 		String commandTypeString = getFirstWord(command);
@@ -47,7 +48,9 @@ public class Parser {
 			LOGGER.log(Level.INFO, Constants.MESSAGE_ALIAS_PASS);
 			return Constants.MESSAGE_ALIAS_PASS;
 		}
-		return this.handler_.executeCommand(commandType, arguments);
+		String output = this.handler_.executeCommand(commandType, arguments);
+		LOGGER.log(Level.INFO, "Output: " + output);
+		return output;
 	}
 
 	public String getFirstWord(String command) {
@@ -132,7 +135,7 @@ public class Parser {
 		if (commandType == COMMAND_TYPE.ADD) {
 			arguments = this.naturalLanguage_.interpretAddArguments(arguments);
 			String s = "";
-			for(int i = 0 ;i < arguments.length;i++){
+			for (int i = 0; i < arguments.length; i++) {
 				s += arguments[i] + " ";
 			}
 			LOGGER.log(Level.INFO, "Natural Arguments:" + s);
