@@ -71,7 +71,7 @@ public class Delete implements Command {
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_EXISTENCE_CHECK);
 		if (eachTask == null) {
-			eachTask = arraylistStorage_.getDoneTaskByIndex(taskID - 1 - arraylistStorage_.getNotDoneStorageSize());
+			eachTask = arraylistStorage_.getDoneTaskByIndex(taskID - 1);
 			if (eachTask == null) {
 				return Constants.MESSAGE_DELETE_FAIL;
 			} else {

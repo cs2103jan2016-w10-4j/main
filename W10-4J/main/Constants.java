@@ -74,7 +74,7 @@ public class Constants {
 	public static final String MESSAGE_EDIT_PASS = ("1%1$s has been edited.");
 	public static final String MESSAGE_EDIT_FAIL = ("2Task to be edited does not exist.");
 	public static final String MESSAGE_DONE_PASS = ("1%1$s has been set to done.");
-	public static final String MESSAGE_DONE_FAIL = ("2%1$s cannot be set to done.");
+	public static final String MESSAGE_DONE_FAIL = ("2Task cannot be set to done.");
 	public static final String MESSAGE_SEARCH_PASS = ("1Search successful.");
 	public static final String MESSAGE_SEARCH_FAIL = ("2Search unsuccessful.");
 	public static final String MESSAGE_UNDO_PASS = ("1Undo successful.");
