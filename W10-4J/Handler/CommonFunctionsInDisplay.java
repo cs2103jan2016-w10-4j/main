@@ -111,9 +111,14 @@ public class CommonFunctionsInDisplay {
 		boolean isSameEndTime = compareEndTime(previousTask, currentTask);
 		boolean isSameDetails = compareDetails(previousTask, currentTask);
 		boolean isSameTaskID = compareTaskID(previousTask, currentTask);
+		boolean isSameDay = compareDay(previousTask, currentTask);
+		boolean isSameWeek = compareWeek(previousTask, currentTask);
+		boolean isSameMonth = compareMonth(previousTask, currentTask);
+		boolean isSameYear = compareYear(previousTask, currentTask);
 
 		if (isSameName && isSameStartDate && isSameEndDate && isSameStartTime 
-				&& isSameEndTime && isSameDetails && isSameTaskID) {
+				&& isSameEndTime && isSameDetails && isSameTaskID 
+				&& isSameDay && isSameWeek && isSameMonth && isSameYear) {
 			return true;
 		} else {
 			return false;
@@ -224,6 +229,54 @@ public class CommonFunctionsInDisplay {
 
 	private static boolean compareTaskID(Task previousTask, Task currentTask) {
 		return previousTask.getTaskID() == currentTask.getTaskID();
+	}
+	
+	private static boolean compareDay(Task readFromFileTask, Task task) {
+		if (readFromFileTask.getDay() == false && task.getDay() == false) {
+			return true;
+		} else if (readFromFileTask.getDay() == false && task.getDay() == true) {
+			return false;
+		} else if (readFromFileTask.getDay() == true && task.getDay() == false) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	private static boolean compareWeek(Task readFromFileTask, Task task) {
+		if (readFromFileTask.getWeek() == false && task.getWeek() == false) {
+			return true;
+		} else if (readFromFileTask.getWeek() == false && task.getWeek() == true) {
+			return false;
+		} else if (readFromFileTask.getWeek() == true && task.getWeek() == false) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	private static boolean compareMonth(Task readFromFileTask, Task task) {
+		if (readFromFileTask.getMonth() == false && task.getMonth() == false) {
+			return true;
+		} else if (readFromFileTask.getMonth() == false && task.getMonth() == true) {
+			return false;
+		} else if (readFromFileTask.getMonth() == true && task.getMonth() == false) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	private static boolean compareYear(Task readFromFileTask, Task task) {
+		if (readFromFileTask.getYear() == false && task.getYear() == false) {
+			return true;
+		} else if (readFromFileTask.getYear() == false && task.getYear() == true) {
+			return false;
+		}  else if (readFromFileTask.getYear() == true && task.getYear() == false) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public static String determineColor(Task t) {
