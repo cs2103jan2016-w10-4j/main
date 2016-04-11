@@ -1,3 +1,4 @@
+//@@author A0140114A
 package test;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -59,7 +60,7 @@ public class NaturalDateTest {
 			}
 		}
 	}
-	
+
 	@Test
 	public void testCharTypeSplit() {
 		NaturalDate n = new NaturalDate();
