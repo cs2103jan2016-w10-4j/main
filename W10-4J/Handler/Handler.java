@@ -39,6 +39,7 @@ public class Handler {
 		setDirTask = new SetDir(arraylistStorage);
 		undoTask = new Undo(arraylistStorage);
 		helpTask = new Help();
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_INITIALISATION);
 	}
 	//@@author 
 	//@@author A0149174Y-unused

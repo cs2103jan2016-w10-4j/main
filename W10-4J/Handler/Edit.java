@@ -3,6 +3,7 @@ package Handler;
 
 import main.Task;
 
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,9 +74,13 @@ public class Edit implements Command {
 	}
 
 	public String execute(String[] task) {
+		
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
+		LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_EXISTENCE_CHECK);
+		
 		if (eachTask == null) {
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else if (taskID <= 0) {
@@ -83,17 +88,24 @@ public class Edit implements Command {
 		} else {
 			// remember previous state
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			Task oldTask = cloneTask(eachTask);
 			// edits the task
 			fieldEditor(eachTask, task);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_SET);
 			if (isDateAndTimeValid(eachTask)) {
+				LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_VALIDDATETIME);
 				// write to mainStorage
 				arraylistStorage_.writeToStorage();
+				LOGGER.log(Level.INFO, Constants.MESSAGE_WRITETOSTORAGE);
 				return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 			} else {
+				
+				LOGGER.log(Level.WARNING, Constants.MESSAGE_TASK_INVALIDDATETIME);
 				arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
 				arraylistStorage_.addTaskToNotDoneStorage(oldTask);
+				LOGGER.log(Level.INFO, Constants.MESSAGE_EDITARRAYLISTSTORAGE);
 				return Constants.MESSAGE_TIME_FAIL;
 			}
 		}

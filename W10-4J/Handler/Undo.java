@@ -1,6 +1,9 @@
 //@@author A0135779M
 package Handler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 import main.Task;
@@ -68,16 +71,19 @@ public class Undo implements Command{
 	
 	//@@author A0135779M
 	ArraylistStorage arraylistStorage_;
+	private final Logger LOGGER = Logger.getLogger(Undo.class.getName());
 	
 	public Undo(ArraylistStorage arraylistStorage) {
 		arraylistStorage_ = arraylistStorage;
 	}
 
 	public String execute(String[] notUsedInThisCommand) {
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		String actionToBeUndone;
 		try{
 			actionToBeUndone = arraylistStorage_.getPreviousInputAction();
 		} catch(IndexOutOfBoundsException e){
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_UNDO_FAIL);
 			return Constants.MESSAGE_UNDO_FAIL;
 		}
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
@@ -86,70 +92,89 @@ public class Undo implements Command{
 		case Constants.MESSAGE_ACTION_BASICOP:
 			arraylistStorage_.rememberPreviousStorages();
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
+			arraylistStorage_.setNewStorages();
+			LOGGER.log(Level.INFO, Constants.MESSAGE_EDITARRAYLISTSTORAGE);
+			break;
+		
+		//@@author
+			
+		/////UNUSED/////
+		//@@author A0135779M-unused	
+		case Constants.MESSAGE_ACTION_ADD:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
+			arraylistStorage_.setNewStorages();
+			break;
+			
+		case Constants.MESSAGE_ACTION_DELETE:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
+			arraylistStorage_.setNewStorages();
+			break;
+			
+		case Constants.MESSAGE_ACTION_EDIT:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
+			arraylistStorage_.setNewStorages();
+			break;
+			
+		case Constants.MESSAGE_ACTION_DONE:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNDO);
+			arraylistStorage_.setNewStorages();
+			break;
+			
+		case Constants.MESSAGE_ACTION_UNDO:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
 			arraylistStorage_.setNewStorages();
 			break;
 		
-//		case Constants.MESSAGE_ACTION_ADD:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DELETE);
-//			arraylistStorage_.setNewStorages();
-//			break;
-//			
-//		case Constants.MESSAGE_ACTION_DELETE:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_ADD);
-//			arraylistStorage_.setNewStorages();
-//			break;
-//			
-//		case Constants.MESSAGE_ACTION_EDIT:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_EDIT);
-//			arraylistStorage_.setNewStorages();
-//			break;
-//			
-//		case Constants.MESSAGE_ACTION_DONE:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNDO);
-//			arraylistStorage_.setNewStorages();
-//			break;
-//			
-//		case Constants.MESSAGE_ACTION_UNDO:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_DONE);
-//			arraylistStorage_.setNewStorages();
-//			break;
-//		
-//		case Constants.MESSAGE_ACTION_RETRIEVE:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNRETRIEVE);
-//			arraylistStorage_.setNewStorages();
-//			break;
-//			
-//		case Constants.MESSAGE_ACTION_UNRETRIEVE:
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
-//			arraylistStorage_.setNewStorages();
-//			break;
+		case Constants.MESSAGE_ACTION_RETRIEVE:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_UNRETRIEVE);
+			arraylistStorage_.setNewStorages();
+			break;
 			
+		case Constants.MESSAGE_ACTION_UNRETRIEVE:
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_RETRIEVE);
+			arraylistStorage_.setNewStorages();
+			break;
+			
+		//@@author
+		/////UNUSED/////
+			
+		//@@author A0135779M
 		case Constants.MESSAGE_ACTION_SETDIR:
 			arraylistStorage_.getNewDirectory();
 			arraylistStorage_.rememberOldDirectory();
+			LOGGER.log(Level.INFO, Constants.MESSAGE_DIRECTORY_REMEMBERED);
 			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
 			arraylistStorage_.setNewDirectory();
 			break;
+		//@@author
 			
-//		case Constants.MESSAGE_ACTION_UNSETDIR:
-//			arraylistStorage_.rememberOldDirectory();
-//			arraylistStorage_.getNewDirectory();
-//			arraylistStorage_.rememberPreviousStorages();
-//			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
-//			arraylistStorage_.setNewDirectory();
-//			arraylistStorage_.setNewStorages();
-//			break;
-//			
+		/////UNUSED/////	
+		//@@author A0135779M-unused
+		case Constants.MESSAGE_ACTION_UNSETDIR:
+			arraylistStorage_.rememberOldDirectory();
+			arraylistStorage_.getNewDirectory();
+			arraylistStorage_.rememberPreviousStorages();
+			arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
+			arraylistStorage_.setNewDirectory();
+			arraylistStorage_.setNewStorages();
+			break;
+		//@@author
+		/////UNUSED/////	
+			
+		//@@author A0135779M
 		}
 		// write to mainStorage
 		arraylistStorage_.writeToStorage();
+		LOGGER.log(Level.INFO, Constants.MESSAGE_WRITETOSTORAGE);
 		return Constants.MESSAGE_UNDO_PASS;
 	}
 }

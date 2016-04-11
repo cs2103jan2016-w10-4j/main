@@ -65,6 +65,8 @@ public class Recurrence implements Command {
 		}
 	}
 	//@@author
+	
+	//@@author A0135779M
 	private Task cloneTask(Task task,int taskID) {
 		Task result = new Task(task.getName());
 		result.setStartDate(task.getStartDate());
@@ -90,6 +92,8 @@ public class Recurrence implements Command {
 	}
 
 	public String execute(String[] task) {
+		
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
 		switch (task[1]) {
@@ -106,7 +110,9 @@ public class Recurrence implements Command {
 			eachTask.setYear(true);
 			break;
 		}
+		LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_SET);
 		arraylistStorage_.writeToStorage();
+		LOGGER.log(Level.INFO, Constants.MESSAGE_WRITETOSTORAGE);
 		return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 	}
 }

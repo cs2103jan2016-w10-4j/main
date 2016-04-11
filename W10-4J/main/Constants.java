@@ -87,6 +87,25 @@ public class Constants {
 	public static final String MESSAGE_RECUR_FAIL = ("2Start date must exist for recurrance to occur.");
 	public static final String MESSAGE_RECUR_PASS = ("Task is set to reccurring task.");
 	public static final String MESSAGE_ALIAS_PASS = ("1Alias set successfully.");
+	public static final String MESSAGE_FUNCTION_INITIALISATION = ("All functions were initialised correctly");
+	public static final String MESSAGE_FUNCTION_EXECUTION = ("Function execution in progress");
+	public static final String MESSAGE_WRITETOSTORAGE = ("Write to Storage successfully");
+	public static final String MESSAGE_TASK_ADDEDTOSTORAGE = ("Task has been added to arraylist storage");
+	public static final String MESSAGE_TASK_REMOVEDFROMSTORAGE = ("Task has been removed to arraylist storage");
+	public static final String MESSAGE_EDITARRAYLISTSTORAGE = ("ArrayLists in ArraylistStorage has been edited");
+	public static final String MESSAGE_SEARCHARRAYLISTSTORAGE = ("ArrayLists in ArraylistStorage has been searched");
+	public static final String MESSAGE_TASK_EXISTENCE_CHECK = ("Checking for task existence");
+	public static final String MESSAGE_TASK_SET = ("Task fields has been set/edited");
+	public static final String MESSAGE_TASK_VALIDDATETIME = ("Task has valid date and time");
+	public static final String MESSAGE_TASK_INVALIDDATETIME = ("Task has invalid date and time");
+	public static final String MESSAGE_INVALIDFIELD = ("Invalid fields");
+	public static final String MESSAGE_PREVIOUSSTATE_STORED = ("Previous state has been stored");
+	public static final String MESSAGE_DISPLAY_STRING_FORMATTED = ("Output display has been successfully formatted");
+	public static final String MESSAGE_DISPLAY_STRING_DEFAULT = ("Display by default has been successfully");
+	public static final String MESSAGE_DISPLAY_STRING_TODAY = ("Display by today has been successfully");
+	public static final String MESSAGE_DISPLAY_STRING_OVERDUE = ("Display by overdue has been successfully");
+	public static final String MESSAGE_DISPLAY_STRING_STARTDATE = ("Display by start date has been successfully");
+	public static final String MESSAGE_DIRECTORY_REMEMBERED = ("File path remembered successfully");
 
 	public static final String MESSAGE_ADD_ACTION_STARTDATE = ("startdate");
 	public static final String MESSAGE_ADD_ACTION_ENDDATE = ("enddate");
@@ -100,6 +119,9 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY_FIELD_OVERDUE = ("overdue");
 	public static final String MESSAGE_DISPLAY_FIELD_TODAY = ("today");
 	public static final String MESSAGE_DISPLAY_FIELD_STARTDATE = ("startdate");
+	public static final String MESSAGE_DISPLAY_FIELD_ENDDATE = ("enddate");
+	public static final String MESSAGE_DISPLAY_FIELD_STARTTIME = ("starttime");
+	public static final String MESSAGE_DISPLAY_FIELD_ENDTIME = ("endtime");
 	public static final String MESSAGE_DISPLAY_FIELD_TASKS = ("tasks");
 	public static final String MESSAGE_DISPLAY_FIELD_DONE = ("done");
 
