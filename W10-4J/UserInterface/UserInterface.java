@@ -39,17 +39,17 @@ public class UserInterface {
 	private static final int OUTPUT_DISPLAY_INDEX = 0;
 	private static final int OUTPUT_SIZE = 2;
 
-	private static JFrame f = new JFrame("Docket");
-	private static JScrollPane jScrollPane1 = new JScrollPane();
-	private static JTextPane outputDisplay = new JTextPane();
+	private static JFrame f;
+	private static JScrollPane jScrollPane1;
+	private static JTextPane outputDisplay;
 	private static JButton homeButton = new JButton();
 	private static JButton overdueButton = new JButton();
 	private static JButton doneButton = new JButton();
 	private static JButton allButton = new JButton();
 	private static JButton helpButton = new JButton();
 	private static JButton settingsButton = new JButton();
-	private static JScrollPane jScrollPane2 = new JScrollPane();
-	private static JTextArea cmdDisplay = new JTextArea();
+	private static JScrollPane jScrollPane2;
+	private static JTextArea cmdDisplay;
 	private static JTextField cmdEntry = new JTextField();
 	private static JLabel commandText = new JLabel();
 
@@ -84,7 +84,13 @@ public class UserInterface {
 	public static String[] initComponents(String command) {
 		Parser p = new Parser();
 		UIController uiControl = new UIController();
-
+		
+		outputDisplay = new JTextPane();
+		cmdDisplay = new JTextArea();
+		f = new JFrame("Docket");
+		jScrollPane1 = new JScrollPane();
+		jScrollPane2 = new JScrollPane();
+		
 		setIcon();
 		commandTextSettings();
 		cmdEntrySettings();
