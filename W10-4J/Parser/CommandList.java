@@ -26,7 +26,6 @@ public class CommandList {
 	private ArrayList<String> addArgumentList = new ArrayList<>();
 	private ArrayList<String> editArgumentList = new ArrayList<>();
 	private ArrayList<String> displayArgumentList = new ArrayList<>();
-	private ArrayList<String> searchArgumentList = new ArrayList<>();
 	private ArrayList<String> recurrenceArgumentList = new ArrayList<>();
 	private ArrayList<String> helpArgumentList = new ArrayList<>();
 
@@ -197,10 +196,6 @@ public class CommandList {
 			displayArgumentList.add(Constants.displayDefaultArgumentList[i]);
 		}
 		assert displayArgumentList.size() >= 1;
-		for (int i = 0; i < Constants.searchDefaultArgumentList.length; i++) {
-			searchArgumentList.add(Constants.searchDefaultArgumentList[i]);
-		}
-		assert searchArgumentList.size() >= 1;
 		for (int i = 0; i < Constants.recurrenceDefaultArgumentList.length; i++) {
 			recurrenceArgumentList.add(Constants.recurrenceDefaultArgumentList[i]);
 		}
@@ -300,10 +295,6 @@ public class CommandList {
 
 	public ArrayList<String> getDisplayArgumentList() {
 		return displayArgumentList;
-	}
-
-	public ArrayList<String> getSearchArgumentList() {
-		return searchArgumentList;
 	}
 
 	public ArrayList<String> getRecurrenceArgumentList() {

@@ -124,8 +124,6 @@ public class Parser {
 			return compactArguments(tokens, this.commandList_.getEditArgumentList());
 		} else if (commandType == COMMAND_TYPE.DISPLAY) {
 			return compactArguments(tokens, this.commandList_.getDisplayArgumentList());
-		} else if (commandType == COMMAND_TYPE.SEARCH) {
-			return compactArguments(tokens, this.commandList_.getSearchArgumentList());
 		} else {
 			return tokens.toArray(new String[0]);
 		}
