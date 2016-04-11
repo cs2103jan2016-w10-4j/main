@@ -3,6 +3,12 @@
 package test;
 
 import static org.junit.Assert.*;
+
+import java.io.File;
+
+import org.junit.After;
+import org.junit.Before;
+
 import main.Task;
 
 import org.junit.Test;
@@ -11,6 +17,28 @@ import org.junit.Test;
 import Handler.ArraylistStorage;
 import Handler.Delete;
 public class DeleteTest {
+	
+	@Before
+	public void Before() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+
+	@After
+	public void After() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
 	
 	private ArraylistStorage arraylistStorage = new ArraylistStorage();
 	private Delete deleteTask = new Delete(arraylistStorage);
@@ -39,8 +67,8 @@ public class DeleteTest {
 		arraylistStorage.getNotDoneStorage().add(secondTask);
 
 		// test the delete method
-		assertEquals("sampleTask1 has been deleted.", deleteTask.execute(input1));
-		assertEquals("sampleTask2 has been deleted.", deleteTask.execute(input2));
-		assertEquals("Task cannot be deleted.", deleteTask.execute(input3));
+		assertEquals("1sampleTask1 has been deleted.", deleteTask.execute(input1));
+		assertEquals("1sampleTask2 has been deleted.", deleteTask.execute(input2));
+		assertEquals("2Task cannot be deleted.", deleteTask.execute(input3));
 	}
 }

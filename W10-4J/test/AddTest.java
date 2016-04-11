@@ -3,6 +3,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import Handler.Add;
@@ -10,6 +14,29 @@ import Handler.ArraylistStorage;
 import main.Constants;
 //@@author A0149174Y
 public class AddTest {
+	
+	@Before
+	public void Before() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+
+	@After
+	public void After() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+	
 	private ArraylistStorage arraylistStorage = new ArraylistStorage();
 	private Add addTask = new Add(arraylistStorage);
 

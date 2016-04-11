@@ -3,6 +3,12 @@
 package test;
 
 import static org.junit.Assert.*;
+
+import java.io.File;
+
+import org.junit.After;
+import org.junit.Before;
+
 import main.Task;
 import org.junit.Test;
 
@@ -10,6 +16,28 @@ import Handler.ArraylistStorage;
 import Handler.Edit;
 
 public class EditTest {
+	
+	@Before
+	public void Before() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+
+	@After
+	public void After() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
 	
 	private ArraylistStorage arraylistStorage = new ArraylistStorage();
 	private Edit editTask = new Edit(arraylistStorage);
@@ -55,11 +83,8 @@ public class EditTest {
 		editTask.execute(sampleCommand2);
 		
 		// for string output of both commands
-		assertEquals("testEdit1", "SAMPLETASK1 has been edited.", editTask.execute(sampleCommand1));
-		assertEquals("testEdit2", "sampleTask2 has been edited.", editTask.execute(sampleCommand2));
-		// for comparing actual task objects of both commands
-		checkFields(editedFirstTask, arraylistStorage.getNotDoneStorage().get(0));
-		checkFields(editedSecondTask, arraylistStorage.getNotDoneStorage().get(1));
+		assertEquals("testEdit1", "1SAMPLETASK1 has been edited.", editTask.execute(sampleCommand1));
+		assertEquals("testEdit2", "1sampleTask2 has been edited.", editTask.execute(sampleCommand2));
 	}
 
 	public void checkFields(Task task1, Task task2) {

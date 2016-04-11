@@ -3,7 +3,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import Handler.Add;
@@ -13,9 +16,33 @@ import main.Constants;
 //@@author A0149174Y
 public class DoneTest {
 
+	@Before
+	public void Before() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+
+	@After
+	public void After() {
+		try {
+			File f = new File("mytextfile.txt");
+			f.delete();
+			f = new File("a.txt");
+			f.delete();
+		} catch (Exception e) {
+		}
+	}
+	
 	private ArraylistStorage arraylistStorage = new ArraylistStorage();
 	private Add addTask = new Add(arraylistStorage);
 	private Done doneTask = new Done(arraylistStorage);
+	
+	
 	
 	@Test
 	public void test() {
@@ -25,7 +52,7 @@ public class DoneTest {
 		addTask.execute(task2);
 		String doneTask1[]={"1"};
 		assertEquals(String.format(Constants.MESSAGE_DONE_PASS, "test1"),doneTask.execute(doneTask1));
-		assertTrue(arraylistStorage.getDoneStorage().get(0).getName()=="test1");
+		assertTrue(arraylistStorage.getDoneStorage().get(0).getName().equals("test1"));
 		assertTrue(arraylistStorage.getNotDoneStorage().get(0).getName()=="test2");
 	}
 
