@@ -36,7 +36,7 @@ public class SetDirectoryTest {
 		
 		boolean isSameToDoList = compareTask.checkTask(readFromFileToDoTaskList, toDoTaskList);
 		boolean isSameDoneList = compareTask.checkTask(readFromFileDoneTaskList, doneTaskList);
-		if(isSameToDoList && isSameDoneList) {
+		if (isSameToDoList && isSameDoneList) {
 			isSameTaskList = true;
 		} else {
 			isSameTaskList = false;

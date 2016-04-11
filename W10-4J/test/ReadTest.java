@@ -7,10 +7,12 @@ package test;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,25 +32,25 @@ public class ReadTest {
 	@Before
 	public void setUpBefore() {
 		Task taskOne = new Task("Task 1");
-		taskOne.setStartDate("1/4/2016");
+		taskOne.setStartDate("1/10/2016");
 		
 		Task taskTwo = new Task("Task 2");
-		taskTwo.setStartDate("2/4/2016");
-		taskTwo.setEndDate("2/4/2016");
+		taskTwo.setStartDate("2/10/2016");
+		taskTwo.setEndDate("2/10/2016");
 		
 		Task taskThree = new Task("Task 3");		
-		taskThree.setStartDate("2/4/2016");
-		taskThree.setEndDate("5/4/2016");
+		taskThree.setStartDate("2/10/2016");
+		taskThree.setEndDate("5/10/2016");
 		taskThree.setStartTime("14:00");
 		taskThree.setEndTime("18:00");
 		
 		Task taskFour = new Task("Task 4");
-		taskFour.setStartDate("2/4/2016");
+		taskFour.setStartDate("2/10/2016");
 		taskFour.setWeek(true);
 		
 		Task taskFive = new Task("Task 5");
-		taskFive.setStartDate("2/4/2016");
-		taskFive.setEndDate("5/4/2016");
+		taskFive.setStartDate("2/10/2016");
+		taskFive.setEndDate("5/10/2016");
 		taskFive.setStartTime("15:00");
 		taskFive.setEndTime("17:00");
 		taskFive.setWeek(true);
@@ -62,6 +64,16 @@ public class ReadTest {
 		taskList.add(doneTaskList);
 	}
 
+	@After
+	public void setUpAfter() {
+		try {
+			File file = new File("mytextfile.txt");
+			file.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	public void testReadDefaultFile() {
 		taskWriter.writeToFile(toDoTaskList, doneTaskList);
