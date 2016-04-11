@@ -1,6 +1,9 @@
 //@@author A0135779M
 package Handler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.*;
 
@@ -27,15 +30,19 @@ public class SetDir implements Command {
 	
 	//@@author A0135779M
 	ArraylistStorage arraylistStorage_;
+	private final Logger LOGGER = Logger.getLogger(SetDir.class.getName());
 	
 	public SetDir(ArraylistStorage arraylistStorage) {
 		arraylistStorage_ = arraylistStorage;
 	}
 	
 	public String execute(String[] task) {
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
 		arraylistStorage_.rememberOldDirectory();
+		LOGGER.log(Level.INFO, Constants.MESSAGE_EDITARRAYLISTSTORAGE);
 		arraylistStorage_.addPreviousDirectory(Constants.MESSAGE_ACTION_SETDIR);
+		LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
   		if (arraylistStorage_.setDirectory(task[0])) {
   			return Constants.MESSAGE_SETDIR_PASS;
   		} else {

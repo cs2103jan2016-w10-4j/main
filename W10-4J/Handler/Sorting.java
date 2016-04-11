@@ -53,14 +53,19 @@ public class Sorting {
 				}
 			}
 			break;
-			/*case Constants.MESSAGE_DISPLAY_FIELD_START:
+			
+	//@@author
+	
+	/////UNUSED/////
+	//@@author A0135779M-unused
+			case Constants.MESSAGE_DISPLAY_FIELD_STARTTIME:
 			for (Task task : taskArray) {
 				if (task.getStartTime() == null) {
 					result.add(task);
 				}
 			}
 			break;
-			case Constants.MESSAGE_DISPLAY_FIELD_END:
+			case Constants.MESSAGE_DISPLAY_FIELD_ENDTIME:
 			for (Task task : taskArray) {
 				if (task.getEndTime() == null) {
 					result.add(task);
@@ -69,17 +74,25 @@ public class Sorting {
 			break;
 			case Constants.MESSAGE_DISPLAY_FIELD_ENDDATE:
 				for (Task task : taskArray) {
-					if (task.getStartDate() == null) {
+					if (task.getEndDate() == null) {
 						result.add(task);
 					}
 				}
-			break;*/
+			break;
+			
+	//@@author
+	/////UNUSED/////
+			
+	//@@author A0135779M
 		}
 		return result;
 	}
-
-	/*private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
-		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_START);
+	//@@author
+	
+	/////UNUSED/////
+	//@@author A0135779M-unused	
+	private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_STARTTIME);
 		Collections.sort(clonenotDoneYetStorage, Task.taskStarttimeComparator);
 		if (exclusivenotDoneYetStorage != null){
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
@@ -87,7 +100,7 @@ public class Sorting {
 	}
 	
 	private void sortByEnd(ArrayList<Task> clonenotDoneYetStorage){
-		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_END);
+		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_ENDTIME);
 		Collections.sort(clonenotDoneYetStorage, Task.taskEndtimeComparator);
 		if (exclusivenotDoneYetStorage != null){
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
@@ -96,10 +109,13 @@ public class Sorting {
 	 
 	private void sortByEndDate(ArrayList<Task> clonenotDoneYetStorage){
 		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_ENDDATE);
-		Collections.sort(clonenotDoneYetStorage, Task.taskDateComparator);
+		Collections.sort(clonenotDoneYetStorage, Task.taskEndDateComparator);
 		if (exclusivenotDoneYetStorage != null){
 			clonenotDoneYetStorage.addAll(exclusivenotDoneYetStorage);
 		}
 	}
-	*/
+	//@@author
+	/////UNUSED/////
+	
+	//@@author A0135779M
 }

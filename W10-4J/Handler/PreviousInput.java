@@ -20,6 +20,7 @@ public class PreviousInput {
 	// only for setdir method
 	private String fileName_;
 
+	
 /////UNUSED//////
 	public PreviousInput(String action, Task task) {
 		action_ = action;
@@ -30,7 +31,20 @@ public class PreviousInput {
 		task_ = task;
 		editedTask_ = editedTask;
 	}
+	public Task getTask() {
+		return task_;
+	}
+	public Task getEditedTask() {
+		return editedTask_;
+	}
+	public void setTask(Task task) {
+		task_ = task;
+	}
+	public void setEditedTask(Task editedTask) {
+		editedTask_ = editedTask;
+	}
 /////UNUSED//////
+	
 	
 	public PreviousInput(String action, ArrayList<Task> previousNotDoneStorage, ArrayList<Task> previousDoneStorage) {
 		action_ = action;
@@ -46,15 +60,6 @@ public class PreviousInput {
 	public String getAction() {
 		return action_;
 	}
-
-/////UNUSED//////
-	public Task getTask() {
-		return task_;
-	}
-	public Task getEditedTask() {
-		return editedTask_;
-	}
-/////UNUSED//////
 	
 	public ArrayList<Task> getPreviousNotDoneStorage(){
 		return previousNotDoneStorage_;
@@ -75,15 +80,6 @@ public class PreviousInput {
 	public void setFileName(String fileName) {
 		fileName_ = fileName;
 	}
-
-/////UNUSED//////
-	public void setTask(Task task) {
-		task_ = task;
-	}
-	public void setEditedTask(Task editedTask) {
-		editedTask_ = editedTask;
-	}
-/////UNUSED//////
 	
 	public void setPreviousStorages(ArrayList<Task> notDoneStorage, ArrayList<Task> doneStorage){
 		setPreviousNotDoneStorage(notDoneStorage);

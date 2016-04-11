@@ -4,6 +4,8 @@ package Handler;
 import main.Constants;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.Task;
@@ -54,16 +56,20 @@ public class Search implements Command {
 	
 	//@@author A0135779M
 	ArraylistStorage arraylistStorage_;
+	private final Logger LOGGER = Logger.getLogger(Search.class.getName());
 
 	public Search(ArraylistStorage arraylistStorage) {
 		arraylistStorage_ = arraylistStorage;
 	}
 
 	public String execute(String[] task) {
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		ArrayList<Task> results = new ArrayList<Task>();
 		// each task is certain to have a name
 		results = arraylistStorage_.searchNotDoneStorage(task);
+		LOGGER.log(Level.INFO, Constants.MESSAGE_SEARCHARRAYLISTSTORAGE);
 		if (results.size() != 0) {
+			LOGGER.log(Level.INFO, Constants.MESSAGE_SEARCH_PASS);
 			return Constants.IS_DISPLAY_FLAG  + DisplayTableFormat.displayTableFormat(results, arraylistStorage_.getPreviousInputStorage());
 		}
 		return Constants.MESSAGE_SEARCH_FAIL;

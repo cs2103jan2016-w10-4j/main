@@ -2,6 +2,10 @@
 package Handler;
 
 import main.Task;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 
@@ -53,35 +57,45 @@ public class Done implements Command {
 
 	// @@author A0135779M
 	ArraylistStorage arraylistStorage_;
+	private final Logger LOGGER = Logger.getLogger(Done.class.getName());
 
 	public Done(ArraylistStorage arraylistStorage) {
 		arraylistStorage_ = arraylistStorage;
 	}
 
 	public String execute(String[] task) {
+		
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
 		Task eachTask = arraylistStorage_.getTaskByIndex(taskID - 1);
+		LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_EXISTENCE_CHECK);
+		
 		if (eachTask == null) {
 			return Constants.MESSAGE_DONE_FAIL;
 		} else if (eachTask.isRecurring()) {
+			
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
 			eachTask.nextStartDate();
 			eachTask.nextEndDate();
 			arraylistStorage_.writeToStorage();
+			LOGGER.log(Level.INFO, Constants.MESSAGE_WRITETOSTORAGE);
 			assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+			
 		} else {
+			
 			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
 			// remember previous state
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
 			arraylistStorage_.delTaskFromNotDoneStorage(eachTask);
 			arraylistStorage_.addTaskToDoneStorage(eachTask);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_EDITARRAYLISTSTORAGE);
 			// write to mainStorage
 			arraylistStorage_.writeToStorage();
-			// remember previous state
-			// arraylistStorage_.addTaskToPreInputStorage(new
-			// PreviousInput(Constants.MESSAGE_ACTION_DONE, eachTask));
+			LOGGER.log(Level.INFO, Constants.MESSAGE_WRITETOSTORAGE);
 			assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 			return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
 		}

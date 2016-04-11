@@ -1,6 +1,9 @@
 //@@author A0135779M
 package Handler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 import main.Task;
@@ -98,12 +101,14 @@ public class Add implements Command {
 	
 	//@@author A0135779M
 	ArraylistStorage arraylistStorage_;
+	private final Logger LOGGER = Logger.getLogger(Add.class.getName());
 
 	public Add(ArraylistStorage arraylistStorage) {
 		this.arraylistStorage_ = arraylistStorage;
 	}
 
 	public String execute(String[] task) {
+		LOGGER.log(Level.INFO, Constants.MESSAGE_FUNCTION_EXECUTION);
 		assert task[0] != null : Constants.ASSERT_FIELD_EXISTENCE;
 		Task eachTask = new Task(task[0].trim());
 		int taskID = arraylistStorage_.getTaskID();
@@ -151,15 +156,21 @@ public class Add implements Command {
 				assert false;
 			}
 		}
+		LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_SET);
 		if (isDateAndTimeValid(eachTask)) {
+			LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_VALIDDATETIME);
 			// remember previous state via arraylistStorage
 			arraylistStorage_.addPreviousInputStorages(Constants.MESSAGE_ACTION_BASICOP);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_PREVIOUSSTATE_STORED);
 			// add to arraylist storage
 			arraylistStorage_.addTaskToNotDoneStorage(eachTask);
+			LOGGER.log(Level.INFO, Constants.MESSAGE_TASK_ADDEDTOSTORAGE);
 			// write to mainStorage via arraylistStorage
 			arraylistStorage_.writeToStorage();
+			LOGGER.log(Level.INFO, Constants.MESSAGE_WRITETOSTORAGE);
 			return String.format(Constants.MESSAGE_ADD_PASS, eachTask.getName());
 		} else {
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_TASK_INVALIDDATETIME);
 			return Constants.MESSAGE_TIME_FAIL;
 		}
 	}
