@@ -85,6 +85,7 @@ public class Constants {
 	public static final String MESSAGE_SETDIR_FAIL = ("2Set directory unsuccessful.");
 	public static final String MESSAGE_TIME_FAIL = ("2Start time must be before end time.");
 	public static final String MESSAGE_RECUR_FAIL = ("2Start date must exist for recurrance to occur.");
+	public static final String MESSAGE_RECUR_PASS = ("Task is set to reccurring task.");
 	public static final String MESSAGE_ALIAS_PASS = ("1Alias set successfully.");
 
 	public static final String MESSAGE_ADD_ACTION_STARTDATE = ("startdate");

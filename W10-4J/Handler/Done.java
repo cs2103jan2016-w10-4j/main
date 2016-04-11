@@ -10,12 +10,12 @@ public class Done implements Command {
 	/////// UNUSED////////
 	// @@author A0149174Y-unused
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -29,22 +29,22 @@ public class Done implements Command {
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(handlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
 			commandState = COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_DONE_FAIL;
 		} else {
-			if (eachTask.isRecurring() && eachTask.getEndDate() != null) {
-				forEachTask = eachTask;
-				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
+			if (currentTask.isRecurring() && currentTask.getEndDate() != null) {
+				forCurrentTask = currentTask;
+				assert currentTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
 				commandState = COMMAND_STATE.RECURRINGDONE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+				return String.format(Constants.MESSAGE_DONE_PASS, currentTask.getName());
 			} else {
-				assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-				assert eachTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
-				forEachTask = eachTask;
+				assert currentTask != null : Constants.ASSERT_TASK_EXISTENCE;
+				assert currentTask.getName() != null : Constants.ASSERT_TASKNAME_EXISTENCE;
+				forCurrentTask = currentTask;
 				commandState = COMMAND_STATE.NONRECURRINGDONE;
-				return String.format(Constants.MESSAGE_DONE_PASS, eachTask.getName());
+				return String.format(Constants.MESSAGE_DONE_PASS, currentTask.getName());
 			}
 		}
 	}

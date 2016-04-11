@@ -3,15 +3,18 @@
  * @author A0149174Y
  *The idea to handle all the sequential storage in the handler through a separate class called HandlerMemory was proposed by me before V0.3.
  *I implemented all the unused codes present under the name for A0149174Y-unused until V0.3.
- *Basically it stores all the arraylists and updates all of them after each command operation. 
- *Rather than updating the memory in each execute function, the command just stores it's end state after it's executed.
- *According to which state the command ended in (forexample in FAIL state) the updateMemory function decides how to update the memory accordingly.
- *After V0.3 this design was decided to be changed by my teammates. Now the class ArrayListStorage handles the job of HandlerMemory.
- *Now I changed my execute functions as execute_OLD and change all the ArrayList names as _OLD as well so that it wont collide with the new version.
+ *Basically it stores all the ArrayLists and updates all of them after each command operation. 
+ *Rather than updating the memory in each execute function, the command just remembers it's end state after it's executed.
+ *It also remembers the current task and the old task it is asked by the user to work on as a static object. 
+ *According to which state the command ended in (for example in FAIL state) the updateMemory function decides how to update the memory accordingly by using the currentTask and oldTask.
+ *After V0.3 this design was decided to be changed by my team mates. Now the class ArrayListStorage handles the job of HandlerMemory.
+ *Now I changed my execute functions as execute_OLD and changed all the ArrayList names as _OLD as well so that it wont collide with the new version.
  */
 package Handler;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Storage.Storage;
 import main.Constants;
@@ -23,7 +26,7 @@ public class HandlerMemory {
 	public enum COMMAND_STATE {
 		FAILED,UNDOADD,UNDODELETE,UNDOUNDO,UNDODONE,UNDOEDIT,DELETEDONETASK,DELETEUNDONETASK,RECURRINGDONE,NONRECURRINGDONE
 	};
-	
+	private final static Logger LOGGER = Logger.getLogger(HandlerMemory.class.getName());
 	private static ArrayList<Task> notDoneYetStorage_OLD;
 	private static ArrayList<Task> doneStorage_OLD;
 	private static ArrayList<PreviousInput> previousInputStorage_OLD;
@@ -97,47 +100,47 @@ public class HandlerMemory {
 		case UNDOUNDO:
 			updateMemoryUndoUndo(cmd);
 		default:
-			System.out.println(cmd.returnCommandState());
+			LOGGER.log(Level.INFO, Constants.MESSAGE_ACTION_UNDO+cmd.returnCommandState());
 			break;
 		}
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
 	}
 
 	private static void updateMemoryUndoUndo(Command cmd) {
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
-		doneStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
+		doneStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoDone(Command cmd) {
-		doneStorage_OLD.remove(cmd.returnEachTask());
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnEachTask()));
+		doneStorage_OLD.remove(cmd.returnCurrentTask());
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_UNDO, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoEdit(Command cmd) {
 		// to restore the previous state, must edit again
 		Task eachTask = previousInputStorage_OLD.get(0).getEditedTask();
 		notDoneYetStorage_OLD.remove(eachTask);
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnEachTask()));
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, eachTask, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoDelete(Command cmd) {
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryUndoAdd(Command cmd) {
 		// to restore to previous state, must unadd the task
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
 		// remember previous state
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnCurrentTask()));
 	}
 
 	private static void recurrenceUpdateMemory(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnCurrentTask()));
 	}
 
 	private static void setdirUpdateMemory() {
@@ -156,14 +159,14 @@ public class HandlerMemory {
 
 	private static void updateMemoryForNonReccurringTask(Command cmd) {
 		assert cmd.returnCommandState() == COMMAND_STATE.NONRECURRINGDONE;
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
-		doneStorage_OLD.add(cmd.returnEachTask());
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
+		doneStorage_OLD.add(cmd.returnCurrentTask());
 		updateMemoryForReccurringTask(cmd);
 	}
 
 	private static void updateMemoryForReccurringTask(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DONE, cmd.returnCurrentTask()));
 	}
 
 	private static void deleteUpdateMemory(Command cmd) {
@@ -176,25 +179,25 @@ public class HandlerMemory {
 
 	private static void updateMemoryForDeletedNotYetDoneTask(Command cmd) {
 		assert cmd.returnCommandState() == COMMAND_STATE.DELETEUNDONETASK;
-		notDoneYetStorage_OLD.remove(cmd.returnEachTask());
+		notDoneYetStorage_OLD.remove(cmd.returnCurrentTask());
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnCurrentTask()));
 	}
 
 	private static void updateMemoryForDeletedDoneTask(Command cmd) {
-		doneStorage_OLD.remove(cmd.returnEachTask());
+		doneStorage_OLD.remove(cmd.returnCurrentTask());
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_DELETE, cmd.returnCurrentTask()));
 	}
 
 	private static void editUpdateMemory(Command cmd) {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnEachTask()));
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_EDIT, cmd.returnOldTask(), cmd.returnCurrentTask()));
 	}
 
 	private static void addUpdateMemory(Command cmd) {
-		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnEachTask()));
-		notDoneYetStorage_OLD.add(cmd.returnEachTask());
+		clearAndAdd(previousInputStorage_OLD, new PreviousInput(Constants.MESSAGE_ACTION_ADD, cmd.returnCurrentTask()));
+		notDoneYetStorage_OLD.add(cmd.returnCurrentTask());
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
 	}
 	//@@author

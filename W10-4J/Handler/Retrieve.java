@@ -10,12 +10,12 @@ public class Retrieve implements Command{
 ///////UNUSED////////
 	//@@author A0149174Y-unused
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
+	private Task forCurrentTask;
 	private Task forOldTask;
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {

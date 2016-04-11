@@ -10,12 +10,12 @@ public class Delete implements Command {
 ///////UNUSED////////
 	//@@author A0149174Y-unused
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -29,26 +29,25 @@ public class Delete implements Command {
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
-			eachTask = handlerMemory.findByTaskID(HandlerMemory.getDoneStorage_OLD(), taskID);
-			if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
+			currentTask = handlerMemory.findByTaskID(HandlerMemory.getDoneStorage_OLD(), taskID);
+			if (currentTask == null) {
 				commandState = HandlerMemory.COMMAND_STATE.FAILED;
 				return Constants.MESSAGE_DELETE_FAIL;
 			} else {
-				forEachTask = eachTask;
+				forCurrentTask = currentTask;
 				commandState = HandlerMemory.COMMAND_STATE.DELETEDONETASK;
-				return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
+				return String.format(Constants.MESSAGE_DELETE_PASS, currentTask.getName());
 			}
 		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
 			commandState = HandlerMemory.COMMAND_STATE.FAILED;
 			return Constants.MESSAGE_DELETE_FAIL;
 		} else {
-			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-			forEachTask = eachTask;
+			assert currentTask != null : Constants.ASSERT_TASK_EXISTENCE;
+			forCurrentTask = currentTask;
 			commandState = HandlerMemory.COMMAND_STATE.DELETEUNDONETASK;
-
-			return String.format(Constants.MESSAGE_DELETE_PASS, eachTask.getName());
+			return String.format(Constants.MESSAGE_DELETE_PASS, currentTask.getName());
 		}
 	}
 	//@@author 

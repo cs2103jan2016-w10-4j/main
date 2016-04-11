@@ -10,12 +10,12 @@ public class Undo implements Command{
 ///////UNUSED////////
 	//@@author A0149174Y-unused
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -35,33 +35,31 @@ public class Undo implements Command{
 		Task previousTask = HandlerMemory.getPreviousInputStorage_OLD().get(0).getTask();
 		assert actionToBeUndone != null : Constants.ASSERT_ACTION_EXISTENCE;
 		assert previousTask != null : Constants.ASSERT_TASK_EXISTENCE;
-		Task eachTask = null;
-		undoTheAction(actionToBeUndone, previousTask, eachTask);
+		undoTheAction(actionToBeUndone, previousTask);
 		return Constants.MESSAGE_UNDO_PASS;
 	}
 	
-	private void undoTheAction(String actionToBeUndone, Task previousTask, Task eachTask) {
+	private void undoTheAction(String actionToBeUndone, Task previousTask) {
 		switch (actionToBeUndone) {
 		case Constants.MESSAGE_ACTION_ADD:
 			commandState = COMMAND_STATE.UNDOADD;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_DELETE:
 			commandState = COMMAND_STATE.UNDODELETE;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_EDIT:
 			commandState = COMMAND_STATE.UNDOEDIT;
-			forEachTask = previousTask;
-			forOldTask = eachTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_DONE:
 			commandState = COMMAND_STATE.UNDODONE;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		case Constants.MESSAGE_ACTION_UNDO:
 			commandState = COMMAND_STATE.UNDOUNDO;
-			forEachTask = previousTask;
+			forCurrentTask = previousTask;
 			break;
 		}
 	}

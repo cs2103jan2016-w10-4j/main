@@ -2,6 +2,10 @@
 package Handler;
 
 import main.Task;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Handler.HandlerMemory.COMMAND_STATE;
 import main.Constants;
 
@@ -9,13 +13,14 @@ public class Edit implements Command {
 	
 ///////UNUSED////////
 	//@@author A0149174Y-unused
+	private final Logger LOGGER = Logger.getLogger(Edit.class.getName());
 	private COMMAND_STATE commandState;
-	private Task forEachTask;
-	private Task forOldTask;
+	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
+	private Task forOldTask;//The Task which after this command will be an oldTask to be stored in the previousInputStorage by HandlerMemory.
 	private HandlerMemory handlerMemory;
 
-	public Task returnEachTask() {
-		return forEachTask;
+	public Task returnCurrentTask() {
+		return forCurrentTask;
 	}
 
 	public COMMAND_STATE returnCommandState() {
@@ -29,24 +34,27 @@ public class Edit implements Command {
 	public String execute_OLD(String[] task, int notUsedInThisCommand) {
 		assert task[0] != null : Constants.ASSERT_TASKID_EXISTENCE;
 		int taskID = Integer.parseInt(task[0].trim());
-		Task eachTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
-		if (eachTask == null) {
+		Task currentTask = handlerMemory.findByTaskID(HandlerMemory.getNotDoneYetStorage_OLD(), taskID);
+		if (currentTask == null) {
 			commandState = COMMAND_STATE.FAILED;
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_EDIT_FAIL);
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else if (taskID <= 0 || taskID > HandlerMemory.getTaskID()) {
 			commandState = COMMAND_STATE.FAILED;
+			LOGGER.log(Level.WARNING, Constants.MESSAGE_EDIT_FAIL);
 			return Constants.MESSAGE_EDIT_FAIL;
 		} else {
-			assert eachTask != null : Constants.ASSERT_TASK_EXISTENCE;
-			Task oldTask = cloneTask(eachTask);
-			fieldEditor(eachTask, task); //edits the task.
-			return checkWhetherDateAndTimeValidAndReturnMessage(eachTask, oldTask);
+			assert currentTask != null : Constants.ASSERT_TASK_EXISTENCE;
+			Task oldTask = cloneTask(currentTask);
+			fieldEditor(currentTask, task); //edits the task.
+			LOGGER.log(Level.INFO, Constants.MESSAGE_EDIT_PASS);
+			return checkWhetherDateAndTimeValidAndReturnMessage(currentTask, oldTask);
 		}
 	}
 	
 	private String checkWhetherDateAndTimeValidAndReturnMessage(Task eachTask, Task oldTask) {
 		if (isDateAndTimeValid(eachTask)) {
-			forEachTask = eachTask;
+			forCurrentTask = eachTask;
 			forOldTask = oldTask;
 			return String.format(Constants.MESSAGE_EDIT_PASS, eachTask.getName());
 		} else {
