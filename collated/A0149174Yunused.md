@@ -1,5 +1,5 @@
 # A0149174Yunused
-###### W10-4J\Handler\Add.java
+###### Handler\Add.java
 ``` java
 	private COMMAND_STATE commandState;
 	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
@@ -86,14 +86,14 @@
 		}
 	}
 ```
-###### W10-4J\Handler\Command.java
+###### Handler\Command.java
 ``` java
 	Task returnCurrentTask(); //The task the command is currently editing.
 	COMMAND_STATE returnCommandState(); //Current state of the command execute function.
 	Task returnOldTask(); //The old Task the command is editing or reaching.
 }
 ```
-###### W10-4J\Handler\Delete.java
+###### Handler\Delete.java
 ``` java
 	private COMMAND_STATE commandState;
 	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
@@ -137,7 +137,7 @@
 		}
 	}
 ```
-###### W10-4J\Handler\Done.java
+###### Handler\Done.java
 ``` java
 	private COMMAND_STATE commandState;
 	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
@@ -179,7 +179,7 @@
 		}
 	}
 ```
-###### W10-4J\Handler\Edit.java
+###### Handler\Edit.java
 ``` java
 	private final Logger LOGGER = Logger.getLogger(Edit.class.getName());
 	private COMMAND_STATE commandState;
@@ -231,7 +231,7 @@
 		}
 	}
 ```
-###### W10-4J\Handler\Handler.java
+###### Handler\Handler.java
 ``` java
 	public String executeCommand_OLD(COMMAND_TYPE command, String[] task) {
 		try {
@@ -248,7 +248,7 @@
 		}
 	}
 ```
-###### W10-4J\Handler\HandlerMemory.java
+###### Handler\HandlerMemory.java
 ``` java
 /**
  * @author A0149174Y
@@ -452,7 +452,7 @@ public class HandlerMemory {
 		mainStorage_OLD.write(notDoneYetStorage_OLD, doneStorage_OLD);
 	}
 ```
-###### W10-4J\Handler\Recurrence.java
+###### Handler\Recurrence.java
 ``` java
 	private final Logger LOGGER = Logger.getLogger(Recurrence.class.getName());
 	private COMMAND_STATE commandState;
@@ -506,7 +506,7 @@ public class HandlerMemory {
 		}
 	}
 ```
-###### W10-4J\Handler\Retrieve.java
+###### Handler\Retrieve.java
 ``` java
 	private COMMAND_STATE commandState;
 	private Task forCurrentTask;
@@ -525,7 +525,7 @@ public class HandlerMemory {
 		return forOldTask;
 	}
 ```
-###### W10-4J\Handler\Search.java
+###### Handler\Search.java
 ``` java
 	private COMMAND_STATE commandState;
 	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.
@@ -565,7 +565,7 @@ public class HandlerMemory {
 		}
 	}
 ```
-###### W10-4J\Handler\Undo.java
+###### Handler\Undo.java
 ``` java
 	private COMMAND_STATE commandState;
 	private Task forCurrentTask; //currentTask the command is working on which will be updated in the HandlerMemory later.

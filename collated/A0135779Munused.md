@@ -1,5 +1,5 @@
 # A0135779Munused
-###### W10-4J\Handler\Sorting.java
+###### Handler\Sorting.java
 ``` java
 			case Constants.MESSAGE_DISPLAY_FIELD_STARTTIME:
 			for (Task task : taskArray) {
@@ -24,7 +24,7 @@
 			break;
 			
 ```
-###### W10-4J\Handler\Sorting.java
+###### Handler\Sorting.java
 ``` java
 	private void sortByStart(ArrayList<Task> clonenotDoneYetStorage){
 		ArrayList<Task> exclusivenotDoneYetStorage = separateArrayList(clonenotDoneYetStorage, Constants.MESSAGE_DISPLAY_FIELD_STARTTIME);
@@ -50,7 +50,7 @@
 		}
 	}
 ```
-###### W10-4J\Handler\Undo.java
+###### Handler\Undo.java
 ``` java
 		case Constants.MESSAGE_ACTION_ADD:
 			arraylistStorage_.rememberPreviousStorages();
@@ -95,7 +95,7 @@
 			break;
 			
 ```
-###### W10-4J\Handler\Undo.java
+###### Handler\Undo.java
 ``` java
 		case Constants.MESSAGE_ACTION_UNSETDIR:
 			arraylistStorage_.rememberOldDirectory();
