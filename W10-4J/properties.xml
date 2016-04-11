@@ -6,6 +6,6 @@
 <entry key="colorOption"/>
 <entry key="buttonsColor"/>
 <entry key="fontSize"/>
-<entry key="bottomBg"/>
 <entry key="topBg"/>
+<entry key="bottomBg"/>
 </properties>
