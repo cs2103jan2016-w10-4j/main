@@ -358,7 +358,7 @@ public class UserInterface {
 		return p.parse(Constants.DISPLAY_TODAY_COMMAND).substring(1);
 	}
 
-	public static Timer setTodayTaskMessage(Parser p) {
+	public static Timer setTodayTaskMessage(final Parser p) {
 		Timer timer = new Timer(3000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {

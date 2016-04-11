@@ -48,11 +48,13 @@ public class SettingsUIController {
 	}
 
 	/* These are the sets of listeners for the various buttons in SettingsUI */
-	private static void saveButtonListener(JFrame f, JRadioButton defaultRadioButton, JRadioButton seaRadioButton,
-			JRadioButton sunsetRadioButton, JRadioButton dawnRadioButton, JRadioButton natureRadioButton, Button save,
-			ArrayList<String> properties, JTextPane outputDisplay, JTextArea cmdDisplay, JComboBox<String> fontSizeBox,
-			JComboBox<String> fontFamilyBox, JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue,
-			JButton all, JButton done, JButton help, JButton settings) {
+	private static void saveButtonListener(final JFrame f, final JRadioButton defaultRadioButton,
+			final JRadioButton seaRadioButton, final JRadioButton sunsetRadioButton, final JRadioButton dawnRadioButton,
+			final JRadioButton natureRadioButton, Button save, final ArrayList<String> properties,
+			final JTextPane outputDisplay, final JTextArea cmdDisplay, final JComboBox<String> fontSizeBox,
+			final JComboBox<String> fontFamilyBox, final JLabel commandText, final JTextField cmdEntry,
+			final JButton home, final JButton overdue, final JButton all, final JButton done, final JButton help,
+			final JButton settings) {
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (defaultRadioButton.isSelected()) {
@@ -89,7 +91,7 @@ public class SettingsUIController {
 		});
 	}
 
-	private static void cancelButtonListener(JFrame f, Button cancel) {
+	private static void cancelButtonListener(final JFrame f, Button cancel) {
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				f.dispose();
@@ -97,8 +99,9 @@ public class SettingsUIController {
 		});
 	}
 
-	private static void optionFourListener(JRadioButton natureRadioButton, JTextPane textPane1, JTextPane textPane2,
-			JButton home, JButton overdue, JButton all, JButton done, JButton help, JButton settings) {
+	private static void optionFourListener(JRadioButton natureRadioButton, final JTextPane textPane1,
+			final JTextPane textPane2, JButton home, JButton overdue, JButton all, JButton done, JButton help,
+			JButton settings) {
 		natureRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				colors.optionFourColor(textPane1, textPane2);
@@ -106,7 +109,8 @@ public class SettingsUIController {
 		});
 	}
 
-	private static void optionThreeListener(JRadioButton dawnRadioButton, JTextPane textPane1, JTextPane textPane2) {
+	private static void optionThreeListener(JRadioButton dawnRadioButton, final JTextPane textPane1,
+			final JTextPane textPane2) {
 		dawnRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				colors.optionThreeColor(textPane1, textPane2);
@@ -114,7 +118,7 @@ public class SettingsUIController {
 		});
 	}
 
-	private static void optionTwoListener(JRadioButton sunsetRadioButton, JTextPane textPane1, JTextPane textPane2) {
+	private static void optionTwoListener(JRadioButton sunsetRadioButton, final JTextPane textPane1, final JTextPane textPane2) {
 		sunsetRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				colors.optionTwoColor(textPane1, textPane2);
@@ -122,7 +126,7 @@ public class SettingsUIController {
 		});
 	}
 
-	private static void optionOneListener(JRadioButton seaRadioButton, JTextPane textPane1, JTextPane textPane2) {
+	private static void optionOneListener(JRadioButton seaRadioButton, final JTextPane textPane1, final JTextPane textPane2) {
 		seaRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				colors.optionOneColor(textPane1, textPane2);
@@ -130,8 +134,8 @@ public class SettingsUIController {
 		});
 	}
 
-	private static void defaultRadioListener(JRadioButton defaultRadioButton, JTextPane textPane1,
-			JTextPane textPane2) {
+	private static void defaultRadioListener(JRadioButton defaultRadioButton, final JTextPane textPane1,
+			final JTextPane textPane2) {
 		defaultRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				colors.defaultColor(textPane1, textPane2);

@@ -10,8 +10,8 @@
 <entry key="display"/>
 <entry key="undo"/>
 <entry key="edit"/>
-<entry key="recurrence"/>
-<entry key="delete"/>
 <entry key="add"/>
+<entry key="delete"/>
+<entry key="recurrence"/>
 <entry key="search"/>
 </properties>

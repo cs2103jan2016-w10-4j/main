@@ -58,19 +58,19 @@ public class UIController {
 		}
 	}
 
-	private void settingsListener(Timer timer, JButton settings, JTextArea cmdDisplay, JTextPane displayOutput,
-			JLabel commandText, JTextField cmdEntry, JButton home, JButton overdue, JButton all, JButton done,
-			JButton help) {
+	private void settingsListener(final Timer timer, final JButton settings, final JTextArea cmdDisplay, final JTextPane displayOutput,
+			final JLabel commandText, final JTextField cmdEntry, final JButton home, final JButton overdue, final JButton all, final JButton done,
+			final JButton help) {
 		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
-				new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help,
+				SettingsUI settingsUI = new SettingsUI(displayOutput, cmdDisplay, commandText, cmdEntry, home, overdue, all, done, help,
 						settings);
 			}
 		});
 	}
 
-	private void allListener(Timer timer, JButton all, Parser p, JTextPane displayOutput) {
+	private void allListener(final Timer timer, JButton all, final Parser p, final JTextPane displayOutput) {
 		all.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
@@ -82,7 +82,7 @@ public class UIController {
 		});
 	}
 
-	private void doneListener(Timer timer, JButton done, Parser p, JTextPane displayOutput) {
+	private void doneListener(final Timer timer, JButton done, final Parser p, final JTextPane displayOutput) {
 		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
@@ -94,7 +94,7 @@ public class UIController {
 		});
 	}
 
-	private void homeListener(Timer timer, JButton home, Parser p, JTextPane displayOutput) {
+	private void homeListener(final Timer timer, JButton home, final Parser p, final JTextPane displayOutput) {
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
@@ -105,7 +105,7 @@ public class UIController {
 		});
 	}
 
-	private void helpListener(Timer timer, JButton help, Parser p, JTextPane displayOutput) {
+	private void helpListener(final Timer timer, JButton help, final Parser p, final JTextPane displayOutput) {
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
@@ -117,7 +117,7 @@ public class UIController {
 		});
 	}
 
-	private void overdueListener(Timer timer, JButton overdue, Parser p, JTextPane displayOutput) {
+	private void overdueListener(final Timer timer, JButton overdue, final Parser p, final JTextPane displayOutput) {
 		overdue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stopTimer(timer);
@@ -129,8 +129,8 @@ public class UIController {
 		});
 	}
 
-	private void cmdEntryListener(Timer timer, Parser p, JTextField cmdEntry, JTextArea cmdDisplay,
-			JTextPane displayOutput) {
+	private void cmdEntryListener(final Timer timer, final Parser p, final JTextField cmdEntry, final JTextArea cmdDisplay,
+			final JTextPane displayOutput) {
 		cmdEntry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String s = cmdEntry.getText();
@@ -222,7 +222,7 @@ public class UIController {
 	}
 
 	/* This listens to the keyboard shortcuts that the user used in Docket */
-	public void keyboardActions(JTextPane outputDisplay, JTextField cmdEntry, JScrollPane outputScrollpane) {
+	public void keyboardActions(final JTextPane outputDisplay, final JTextField cmdEntry, final JScrollPane outputScrollpane) {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				keyPressed(e, outputDisplay, cmdEntry, outputScrollpane);
